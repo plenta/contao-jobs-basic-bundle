@@ -26,6 +26,7 @@ composer.phar
 gulp.config.js
 /node_modules/
 /app/Resources/contao/config/runonce.php
+.phpunit.result.cache
 
 # Contao Manager
 /contao-manager/
