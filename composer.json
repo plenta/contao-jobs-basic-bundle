@@ -2,7 +2,7 @@
   "name": "plenta/contao-jobs-basic-bundle",
   "type": "contao-bundle",
   "description": "Basic Job Manager for Contao (including Google Jobs).",
-  "license": "proprietary",
+  "license": "LGPL-3.0-or-later",
   "authors": [
     {
       "name": "Christian Barkowsky",
