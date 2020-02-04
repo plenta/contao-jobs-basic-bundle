@@ -1,0 +1,69 @@
+<?php
+
+$date = date('Y');
+
+$header = <<<EOF
+Plenta Jobs Basic Bundle for Contao CMS
+
+@copyright     Copyright (c) $date, Christian Barkowsky & Christoph Werner
+@author        Christian Barkowsky <https://plenta.io>
+@author        Christoph Werner <https://plenta.io>
+@link          https://plenta.io
+@license       proprietary
+EOF;
+
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('Resources')
+    ->exclude('Fixtures')
+    ->in([__DIR__.'/src'])
+;
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        '@PHP71Migration' => true,
+        '@PHP71Migration:risky' => true,
+        '@PHPUnit60Migration:risky' => true,
+        'align_multiline_comment' => true,
+        'array_indentation' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'combine_consecutive_issets' => true,
+        'combine_consecutive_unsets' => true,
+        'comment_to_phpdoc' => true,
+        'compact_nullable_typehint' => true,
+        'general_phpdoc_annotation_remove' => [
+            'author',
+            'expectedException',
+            'expectedExceptionMessage',
+        ],
+        'fully_qualified_strict_types' => true,
+        'header_comment' => ['header' => $header, 'comment_type' => 'PHPDoc'],
+        'heredoc_to_nowdoc' => true,
+        'linebreak_after_opening_tag' => true,
+        'list_syntax' => ['syntax' => 'short'],
+        'no_null_property_initialization' => true,
+        'no_superfluous_elseif' => true,
+        'no_superfluous_phpdoc_tags' => false,
+        'no_unreachable_default_argument_value' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_class_elements' => true,
+        'ordered_imports' => true,
+        'php_unit_strict' => true,
+        'phpdoc_add_missing_param_annotation' => true,
+        'phpdoc_order' => true,
+        'phpdoc_types_order' => [
+            'null_adjustment' => 'always_last',
+            'sort_algorithm' => 'none',
+        ],
+        'strict_comparison' => false,
+        'strict_param' => true,
+        'void_return' => true,
+        // Remove when https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/3222 has been merged
+        //'LeoFeyer/optimize_native_functions' => true,
+    ])
+    ->setFinder($finder)
+    ->setRiskyAllowed(true)
+    ->setUsingCache(false)
+    ;

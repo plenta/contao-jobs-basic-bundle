@@ -1,0 +1,39 @@
+{
+  "name": "plenta/contao-jobs-basic-bundle",
+  "type": "contao-bundle",
+  "description": "Basic Job Manager for Contao (including Google Jobs).",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Christian Barkowsky",
+      "homepage": "https://plenta.io"
+    },
+    {
+      "name": "Christoph Werner",
+      "homepage": "https://plenta.io"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "contao/manager-bundle": "4.8.* || 4.9.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.4.2",
+    "contao/test-case": "^1.2",
+    "symfony/phpunit-bridge": "^4",
+    "sensiolabs/security-checker": "^6.0.2",
+    "phpstan/phpstan": "^0.11.19",
+    "phpstan/phpstan-symfony": "^0.11.6",
+    "contao/phpstan": "^0.8.1",
+    "phpstan/phpstan-phpunit": "^0.11.2",
+    "contao/news-bundle": "4.8.* || 4.9.*"
+  },
+  "extra": {
+    "contao-manager-plugin": "Plenta\\ContaoJobsBasic\\ContaoManager\\Plugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Plenta\\": "src/Plenta"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.buildpath
+.project
+.settings/
+.build/
+.idea/
+nbproject/
+
+# App config
+/app/config/parameters.yml
+
+# Generated folders
+/assets/
+/files/
+/system/
+/templates/
+/var/
+/vendor/
+/web/*
+.htaccess
+composer.phar
+gulp.config.js
+/node_modules/
+/app/Resources/contao/config/runonce.php
+.phpunit.result.cache
+
+# Contao Manager
+/contao-manager/
+
+# Custom
+/packages
