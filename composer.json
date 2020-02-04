@@ -25,7 +25,8 @@
     "phpstan/phpstan": "^0.11.19",
     "phpstan/phpstan-symfony": "^0.11.6",
     "contao/phpstan": "^0.8.1",
-    "phpstan/phpstan-phpunit": "^0.11.2"
+    "phpstan/phpstan-phpunit": "^0.11.2",
+    "contao/news-bundle": "4.8.* || 4.9.*"
   },
   "extra": {
     "contao-manager-plugin": "Plenta\\ContaoJobsBasic\\ContaoManager\\Plugin"

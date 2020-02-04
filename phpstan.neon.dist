@@ -1,0 +1,30 @@
+# Start phpstan with: php -d memory_limit=-1 vendor/bin/phpstan analyse
+
+includes:
+    - vendor/contao/phpstan/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+
+parameters:
+    level: 4
+    paths:
+        - src/
+
+    autoload_files:
+        - vendor/contao/core-bundle/src/Resources/contao/helper/functions.php
+        - vendor/contao/core-bundle/src/Resources/contao/config/constants.php
+        - vendor/contao/core-bundle/src/Framework/ContaoFramework.php
+
+    autoload_directories:
+        - src/
+
+    ignoreErrors:
+        - '#Access to an undefined property Contao(.*)#'
+        - '#Constant TL_MODE not found.#'
+        - '#Constant FE_USER_LOGGED_IN not found.#'
+        - '#Constant TL_ROOT not found.#'
+        - '#Constant TL_PATH not found.#'
+        - '#Constant BE_USER_LOGGED_IN not found.#'
+        - '#Constant TL_SCRIPT not found.#'
+
+    contao:
+        services_yml_path: %currentWorkingDirectory%/src/Plenta/ContaoJobsBasic/Resources/config/services.yml

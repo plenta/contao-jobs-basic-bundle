@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Plenta\ContaoJobsBasic\:
+        resource: ../src/Plenta/ContaoJobsBasic
+        exclude: ../src/Plenta/ContaoJobsBasic/{Entity,Migrations,Resources,Tests}

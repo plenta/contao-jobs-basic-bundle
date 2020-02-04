@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0115f6feaf2948c39d19d6555e370d9e",
+    "content-hash": "43e126ee55116d98ae7577afa7de9d2d",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -9389,6 +9389,81 @@
                 "performance"
             ],
             "time": "2019-11-06T16:40:04+00:00"
+        },
+        {
+            "name": "contao/news-bundle",
+            "version": "4.8.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contao/news-bundle.git",
+                "reference": "0244fdf77de6aa868cf7775bb669cb9bf47b6975"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contao/news-bundle/zipball/0244fdf77de6aa868cf7775bb669cb9bf47b6975",
+                "reference": "0244fdf77de6aa868cf7775bb669cb9bf47b6975",
+                "shasum": ""
+            },
+            "require": {
+                "contao/core-bundle": "self.version",
+                "friendsofsymfony/http-cache": "^2.4",
+                "patchwork/utf8": "^1.2",
+                "php": "^7.1",
+                "symfony/config": "4.2.* || 4.3.*",
+                "symfony/dependency-injection": "4.2.* || 4.3.*",
+                "symfony/http-foundation": "4.2.* || 4.3.*",
+                "symfony/http-kernel": "4.2.* || 4.3.*",
+                "symfony/yaml": "4.2.* || 4.3.*"
+            },
+            "conflict": {
+                "contao/core": "*",
+                "contao/manager-plugin": "<2.0 || >=3.0"
+            },
+            "require-dev": {
+                "contao/manager-plugin": "^2.3.1",
+                "contao/test-case": "^3.0",
+                "php-http/guzzle6-adapter": "^1.1",
+                "phpunit/phpunit": "^7.5",
+                "symfony/phpunit-bridge": "^4.3"
+            },
+            "type": "contao-bundle",
+            "extra": {
+                "contao-manager-plugin": "Contao\\NewsBundle\\ContaoManager\\Plugin",
+                "symfony": {
+                    "require": "^4.2"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Contao\\NewsBundle\\": "src/"
+                },
+                "classmap": [
+                    "src/Resources/contao/"
+                ],
+                "exclude-from-classmap": [
+                    "src/Resources/contao/config/",
+                    "src/Resources/contao/dca/",
+                    "src/Resources/contao/languages/",
+                    "src/Resources/contao/templates/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Leo Feyer",
+                    "homepage": "https://github.com/leofeyer"
+                },
+                {
+                    "name": "Contao Community",
+                    "homepage": "https://contao.org/contributors"
+                }
+            ],
+            "description": "Adds news functionality to Contao",
+            "homepage": "https://contao.org",
+            "time": "2019-12-17T10:43:43+00:00"
         },
         {
             "name": "contao/phpstan",
