@@ -5,5 +5,5 @@ services:
         public: false
 
     Plenta\ContaoJobsBasic\:
-        resource: ../src/Plenta/ContaoJobsBasic
-        exclude: ../src/Plenta/ContaoJobsBasic/{Entity,Migrations,Resources,Tests}
+        resource: ../../../../../src/Plenta/ContaoJobsBasic/*
+        exclude: ../../../../../src/Plenta/ContaoJobsBasic/{Entity,Migrations,Resources,Tests}
