@@ -1,7 +1,8 @@
 Contao Jobs Basic Bundle
 ======================================
 
-Basic Job Manager for Contao (including Google Jobs)
+Basic Job Manager for Contao (including Google Jobs)  
+Open source and free.
 
 
 ## Install using Contao Manager

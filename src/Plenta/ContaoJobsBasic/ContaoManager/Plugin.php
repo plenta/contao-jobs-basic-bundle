@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license       proprietary
  */
 
-namespace Plenta\ContaoJobsBasic;
+namespace Plenta\ContaoJobsBasic\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
