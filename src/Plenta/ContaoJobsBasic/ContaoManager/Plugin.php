@@ -19,6 +19,7 @@ use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Plenta\ContaoJobsBasic\PlentaContaoJobsBasicBundle;
+use Symfony\Component\Config\Loader\LoaderInterface;
 
 /**
  * Class ContaoManagerPlugin.
@@ -36,5 +37,15 @@ class Plugin implements BundlePluginInterface
                     ContaoCoreBundle::class,
                 ]),
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Exception
+     */
+    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
+    {
+        $loader->load('@PlentaContaoJobsBasicBundle/Resources/config/config.yml');
     }
 }

@@ -1,0 +1,6 @@
+doctrine:
+    orm:
+        entity_managers:
+            default:
+                mappings:
+                    PlentaContaoJobsBasicBundle: ~
