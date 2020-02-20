@@ -15,7 +15,8 @@
   ],
   "require": {
     "php": "^7.2",
-    "contao/manager-bundle": "4.8.* || 4.9.*"
+    "contao/manager-bundle": "4.8.* || 4.9.*",
+    "doctrine/orm": "^2.6.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.4.2",
