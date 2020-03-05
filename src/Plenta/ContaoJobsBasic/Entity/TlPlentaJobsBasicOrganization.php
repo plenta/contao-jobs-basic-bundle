@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license       proprietary
  */
 
-namespace Plenta\Products\Entity;
+namespace Plenta\ContaoJobsBasic\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -43,7 +43,7 @@ class TlPlentaJobsBasicOrganization extends DCADefault
     protected $logoUUID;
 
     /**
-     * @var @ORM\OneToMany(targetEntity="Plenta\Products\Entity\TlPlentaJobsBasicJobLocation", mappedBy="pid")
+     * @var @ORM\OneToMany(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation", mappedBy="pid")
      */
     protected $jobLocation;
 }

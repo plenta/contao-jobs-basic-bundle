@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Plenta\Products\Entity;
+namespace Plenta\ContaoJobsBasic\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;

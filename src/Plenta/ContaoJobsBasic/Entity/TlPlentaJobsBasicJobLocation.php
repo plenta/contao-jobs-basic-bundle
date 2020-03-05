@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @license       proprietary
  */
 
-namespace Plenta\Products\Entity;
+namespace Plenta\ContaoJobsBasic\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,7 +25,7 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
 {
     /**
      * @var int
-     * @ORM\ManyToOne(targetEntity="Plenta\Products\Entity\TlPlentaJobsBasicOrganization" inversedBy="jobLocation")
+     * @ORM\ManyToOne(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization", inversedBy="jobLocation")
      */
     protected $pid;
 

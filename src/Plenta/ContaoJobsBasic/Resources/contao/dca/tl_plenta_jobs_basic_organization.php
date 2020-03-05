@@ -16,11 +16,35 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
     // Config
     'config' => [
         'dataContainer' => 'Table',
-        'enableVersioning' => true,
-        'closed' => true,
+        'enableVersioning' => true
     ],
 
-    'list' => [],
+    'list' => [
+        'sorting' => [
+            'mode' => 2,
+            'fields' => ['name'],
+            'flag' => 1,
+            'disableGrouping' => true,
+        ],
+        'label' => [
+            'fields' => ['name'],
+            'format' => '%s',
+        ],
+        'global_operations' => [
+            'all' => [
+                'href' => 'act=select',
+                'class' => 'header_edit_all',
+                'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
+            ],
+        ],
+        'operations' => [
+            'edit' => [
+                //'label' => &$GLOBALS['TL_LANG']['tl_jobs_product_config']['edit'],
+                'href' => 'act=edit',
+                'icon' => 'edit.svg',
+            ],
+        ],
+    ],
 
     // Palettes
     'palettes' => [
@@ -46,6 +70,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
             'inputType' => 'text',
             'default' => '',
             'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr'],
-        ]
+        ],
     ],
 ];
