@@ -14,8 +14,10 @@
     }
   ],
   "require": {
-    "php": "^7.2",
-    "contao/manager-bundle": "4.8.* || 4.9.*",
+    "php": "^7.4",
+    "ext-json": "*",
+    "contao/core-bundle": "^4.9",
+    "contao/conflicts": "@dev",
     "doctrine/orm": "^2.6.4",
     "doctrine/data-fixtures": "^1.4.2",
     "doctrine/dbal": "^2.10.1"
@@ -29,7 +31,7 @@
     "phpstan/phpstan-symfony": "^0.11.6",
     "contao/phpstan": "^0.8.1",
     "phpstan/phpstan-phpunit": "^0.11.2",
-    "contao/news-bundle": "4.8.* || 4.9.*"
+    "contao/news-bundle": "4.9.*"
   },
   "extra": {
     "contao-manager-plugin": "Plenta\\ContaoJobsBasic\\ContaoManager\\Plugin"
@@ -37,6 +39,15 @@
   "autoload": {
     "psr-4": {
       "Plenta\\": "src/Plenta"
-    }
+    },
+    "classmap": [
+      "src/Resources/contao"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/config/",
+      "src/Resources/contao/dca/",
+      "src/Resources/contao/languages/",
+      "src/Resources/contao/templates/"
+    ]
   }
 }
