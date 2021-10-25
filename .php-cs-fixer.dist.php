@@ -36,11 +36,6 @@ return $config
         'combine_consecutive_unsets' => true,
         'comment_to_phpdoc' => true,
         'compact_nullable_typehint' => true,
-        'general_phpdoc_annotation_remove' => [
-            'author',
-            'expectedException',
-            'expectedExceptionMessage',
-        ],
         'fully_qualified_strict_types' => true,
         'header_comment' => ['header' => $header, 'comment_type' => 'PHPDoc'],
         'heredoc_to_nowdoc' => true,
@@ -64,7 +59,6 @@ return $config
         'strict_comparison' => false,
         'strict_param' => true,
         'void_return' => true,
-        'trailing_comma_in_multiline_array' => false,
         // Remove when https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/3222 has been merged
         //'LeoFeyer/optimize_native_functions' => true,
     ])
