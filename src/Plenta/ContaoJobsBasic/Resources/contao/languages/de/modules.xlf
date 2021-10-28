@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+  <file datatype="php">
+    <body>
+      <trans-unit id="MOD.plenta_jobs_basic">
+        <source>Jobs</source>
+        <target>Jobs</target>
+      </trans-unit>
+      <trans-unit id="MOD.plenta_jobs_offers">
+        <source>Jobs</source>
+        <target>Stellenangebote</target>
+      </trans-unit>
+      <trans-unit id="MOD.plenta_jobs_organizations">
+        <source>Companies</source>
+        <target>Unternehmen</target>
+      </trans-unit>
+      <trans-unit id="MOD.plenta_jobs_settings">
+        <source>Settings</source>
+        <target>Einstellungen</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

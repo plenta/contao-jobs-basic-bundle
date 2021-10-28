@@ -12,14 +12,15 @@ declare(strict_types=1);
  * @license       proprietary
  */
 
-array_insert($GLOBALS['BE_MOD'], 1,
-[
+array_insert($GLOBALS['BE_MOD'], 1, [
     'plenta_jobs_basic' => [
-        'jobOffer' => [
+        'plenta_jobs_offers' => [
             'tables' => ['tl_plenta_jobs_basic_offer'],
         ],
-        'organization' => [
+        'plenta_jobs_organizations' => [
             'tables' => ['tl_plenta_jobs_basic_organization'],
         ],
+        'plenta_jobs_settings' => [
+        ]
     ],
 ]);
