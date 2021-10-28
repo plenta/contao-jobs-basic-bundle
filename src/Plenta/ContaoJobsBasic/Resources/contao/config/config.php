@@ -15,11 +15,11 @@ declare(strict_types=1);
 array_insert($GLOBALS['BE_MOD'], 1,
 [
     'plenta_jobs_basic' => [
-        'organization' => [
-            'tables' => ['tl_plenta_jobs_basic_organization'],
-        ],
         'jobOffer' => [
             'tables' => ['tl_plenta_jobs_basic_offer'],
+        ],
+        'organization' => [
+            'tables' => ['tl_plenta_jobs_basic_organization'],
         ],
     ],
 ]);
