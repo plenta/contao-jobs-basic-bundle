@@ -3,20 +3,36 @@
   <file datatype="php">
     <body>
       <trans-unit id="MOD.plenta_jobs_basic">
-        <source>Jobs</source>
-        <target>Jobs</target>
+        <source>Jobs (Basic)</source>
+        <target>Jobs (Basic)</target>
       </trans-unit>
-      <trans-unit id="MOD.plenta_jobs_offers">
+      <trans-unit id="MOD.plenta_jobs_offers.0">
         <source>Jobs</source>
         <target>Stellenangebote</target>
       </trans-unit>
-      <trans-unit id="MOD.plenta_jobs_organizations">
+      <trans-unit id="MOD.plenta_jobs_offers.1">
+        <source>Manage job offers</source>
+        <target>Stellenangebote verwalten</target>
+      </trans-unit>
+      <trans-unit id="MOD.plenta_jobs_organizations.0">
         <source>Companies</source>
         <target>Unternehmen</target>
       </trans-unit>
-      <trans-unit id="MOD.plenta_jobs_settings">
+      <trans-unit id="MOD.plenta_jobs_organizations.1">
+        <source>Manage companies</source>
+        <target>Unternehmen verwalten</target>
+      </trans-unit>
+      <trans-unit id="MOD.plenta_jobs_settings.0">
         <source>Settings</source>
         <target>Einstellungen</target>
+      </trans-unit>
+      <trans-unit id="MOD.plenta_jobs_settings.1">
+        <source>Manage settings</source>
+        <target>Einstellungen verwalten</target>
+      </trans-unit>
+      <trans-unit id="MOD.plenta_jobs_dashboard">
+        <source>Dashboard</source>
+        <target>Dashboard</target>
       </trans-unit>
     </body>
   </file>
