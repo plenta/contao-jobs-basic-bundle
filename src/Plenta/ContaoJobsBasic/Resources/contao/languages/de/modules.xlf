@@ -34,6 +34,14 @@
         <source>Dashboard</source>
         <target>Dashboard</target>
       </trans-unit>
+      <trans-unit id="MOD.plenta_jobs_support.0">
+        <source>Support</source>
+        <target>Support</target>
+      </trans-unit>
+      <trans-unit id="MOD.plenta_jobs_support.1">
+        <source>Here you will find support and options for assistance.</source>
+        <target>Hier findest du Support und Optionen zur Unterstützung.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
