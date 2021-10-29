@@ -16,8 +16,8 @@
   "require": {
     "php": "^7.4",
     "ext-json": "*",
-    "contao/core-bundle": "^4.9",
     "contao/conflicts": "@dev",
+    "contao/core-bundle": "^4.9",
     "doctrine/orm": "^2.6.4",
     "doctrine/data-fixtures": "^1.4.2",
     "doctrine/dbal": "^2.10.1"
@@ -38,7 +38,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Plenta\\": "src/Plenta"
+      "Plenta\\ContaoJobsBasic\\": "src/"
     },
     "classmap": [
       "src/Resources/contao"
