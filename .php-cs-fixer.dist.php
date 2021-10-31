@@ -17,8 +17,9 @@ $finder = PhpCsFixer\Finder::create()
 ;
 
 $config = new PhpCsFixer\Config();
-return $config
-    ->setRules([
+
+return $config->setRules(
+    [
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@PHP71Migration' => true,
@@ -36,6 +37,13 @@ return $config
         'combine_consecutive_unsets' => true,
         'comment_to_phpdoc' => true,
         'compact_nullable_typehint' => true,
+        'general_phpdoc_annotation_remove' => [
+            'annotations' => [
+                'author',
+                'expectedException',
+                'expectedExceptionMessage',
+            ],
+        ],
         'fully_qualified_strict_types' => true,
         'header_comment' => ['header' => $header, 'comment_type' => 'PHPDoc'],
         'heredoc_to_nowdoc' => true,
@@ -59,9 +67,8 @@ return $config
         'strict_comparison' => false,
         'strict_param' => true,
         'void_return' => true,
-        // Remove when https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/3222 has been merged
-        //'LeoFeyer/optimize_native_functions' => true,
-    ])
+    ]
+)
     ->setFinder($finder)
     ->setRiskyAllowed(true)
     ->setUsingCache(false)
