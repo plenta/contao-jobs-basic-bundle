@@ -74,11 +74,13 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
 
     /**
      * @param TlPlentaJobsBasicOrganization $organization
+     *
      * @return TlPlentaJobsBasicJobLocation
      */
     public function setOrganization(TlPlentaJobsBasicOrganization $organization): self
     {
         $this->organization = $organization;
+
         return $this;
     }
 

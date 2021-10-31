@@ -60,6 +60,7 @@ class TlPlentaJobsBasicOrganization extends DCADefault
 
     /**
      * @param TlPlentaJobsBasicJobLocation $jobLocation
+     *
      * @return $this
      */
     public function addJobLocation(TlPlentaJobsBasicJobLocation $jobLocation): self

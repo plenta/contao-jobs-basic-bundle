@@ -43,11 +43,13 @@ class TlPlentaJobsBasicOffer extends DCADefault
 
     /**
      * @param TlPlentaJobsBasicJobLocation $jobLocation
+     *
      * @return TlPlentaJobsBasicOffer
      */
     public function setJobLocation(TlPlentaJobsBasicJobLocation $jobLocation): self
     {
         $this->jobLocation = $jobLocation;
+
         return $this;
     }
 }
