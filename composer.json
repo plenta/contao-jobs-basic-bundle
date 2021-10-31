@@ -17,7 +17,7 @@
     "php": "^7.4",
     "ext-json": "*",
     "contao/conflicts": "@dev",
-    "contao/core-bundle": "^4.9",
+    "contao/manager-bundle": "4.9.*",
     "doctrine/orm": "^2.6.4",
     "doctrine/data-fixtures": "^1.4.2",
     "doctrine/dbal": "^2.10.1"
