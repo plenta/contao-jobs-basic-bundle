@@ -12,15 +12,18 @@ declare(strict_types=1);
 
 array_insert($GLOBALS['BE_MOD'], 1, [
     'plenta_jobs_basic' => [
-        'plenta_jobs_offers' => [
+        'plenta_jobs_basic_offers' => [
             'tables' => ['tl_plenta_jobs_basic_offer'],
         ],
-        'plenta_jobs_organizations' => [
+        'plenta_jobs_basic_organizations' => [
             'tables' => ['tl_plenta_jobs_basic_organization'],
         ],
-        'plenta_jobs_settings' => [
+        'plenta_jobs_basic_location' => [
+            'tables' => ['tl_plenta_jobs_basic_location'],
         ],
-        'plenta_jobs_support' => [
+        'plenta_jobs_basic_settings' => [
+        ],
+        'plenta_jobs_basic_support' => [
         ],
     ],
 ]);
