@@ -15,12 +15,12 @@ namespace Plenta\ContaoJobsBasic\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class TlPlentaJobsOffer.
+ * Class TlPlentaJobsBasicOffer.
  *
  * @ORM\Entity
- * @ORM\Table(name="tl_plenta_jobs_offer")
+ * @ORM\Table(name="tl_plenta_jobs_basic_offer")
  */
-class TlPlentaJobsOffer extends DCADefault
+class TlPlentaJobsBasicOffer extends DCADefault
 {
     /**
      * @ORM\Column(type="string", length=255, options={"default": ""})

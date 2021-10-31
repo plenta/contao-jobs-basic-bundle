@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
-$GLOBALS['TL_DCA']['tl_plenta_jobs_offer'] = [
+$GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     // Config
     'config' => [
         'dataContainer' => 'Table',
