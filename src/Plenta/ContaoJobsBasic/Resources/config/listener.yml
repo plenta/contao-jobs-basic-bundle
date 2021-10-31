@@ -1,0 +1,5 @@
+services:
+    Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer:
+        public: true
+        arguments:
+            - '@Plenta\ContaoJobsBasic\Helper\EmploymentType'

@@ -29,9 +29,24 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected TlPlentaJobsBasicJobLocation $jobLocation;
 
     /**
+     * @ORM\Column(type="text", nullable=true, options={"default": NULL})
+     */
+    protected string $description = '';
+
+    /**
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true, "default": NULL})
+     */
+    protected int $datePosted;
+
+    /**
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected string $name = '';
+    protected string $title = '';
+
+    /**
+     * @ORM\Column (type="json", nullable=true, options={"default": NULL})
+     */
+    protected string $employmentType = '';
 
     /**
      * @return TlPlentaJobsBasicJobLocation

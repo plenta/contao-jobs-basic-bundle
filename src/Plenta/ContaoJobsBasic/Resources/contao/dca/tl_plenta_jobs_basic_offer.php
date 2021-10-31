@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
+use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer;
+
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     // Config
     'config' => [
@@ -19,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{settings_legend},jobLocation;',
+        'default' => '{settings_legend},jobLocation,employmentType;',
     ],
 
     // Fields
@@ -37,6 +39,45 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'includeBlankOption' => false,
                 'tl_class' => 'w50',
                 'mandatory' => true,
+            ],
+        ],
+        'title' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'default' => '',
+            'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr'],
+        ],
+        'employmentType' => [
+            'exclude' => true,
+            'inputType' => 'select',
+            'options_callback' => [
+                TlPlentaJobsBasicOffer::class,
+                'employmentTypeOptionsCallback',
+            ],
+            'load_callback' => [[
+                TlPlentaJobsBasicOffer::class,
+                'employmentTypeLoadCallback',
+            ]],
+            'save_callback' => [[
+                TlPlentaJobsBasicOffer::class,
+                'employmentTypeSaveCallback',
+            ]],
+            'sorting' => true,
+            'eval' => [
+                'includeBlankOption' => true,
+                'tl_class' => 'w50',
+                'mandatory' => true,
+                'multiple' => true,
+                'chosen' => true,
+            ],
+        ],
+        'description' => [
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'textarea',
+            'eval' => [
+                'rte' => 'tinyMCE',
+                'tl_class' => 'clr',
             ],
         ],
     ],

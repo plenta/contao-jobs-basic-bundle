@@ -7,3 +7,6 @@ services:
     Plenta\ContaoJobsBasic\:
         resource: ../../../../../src/Plenta/ContaoJobsBasic/*
         exclude: ../../../../../src/Plenta/ContaoJobsBasic/{Entity,Migrations,Resources,Tests}
+
+    Plenta\ContaoJobsBasic\Helper\EmploymentType:
+        class: Plenta\ContaoJobsBasic\Helper\EmploymentType
