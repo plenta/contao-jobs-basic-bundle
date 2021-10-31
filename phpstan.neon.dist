@@ -10,15 +10,6 @@ parameters:
         - src
         - tests
 
-    autoload_files:
-        - vendor/contao/core-bundle/src/Resources/contao/helper/functions.php
-        - vendor/contao/core-bundle/src/Resources/contao/config/constants.php
-        - vendor/contao/core-bundle/src/Framework/ContaoFramework.php
-
-    autoload_directories:
-        - src/
-        - tests/
-
     ignoreErrors:
         - '#Access to an undefined property Contao(.*)#'
         - '#Constant TL_MODE not found.#'
