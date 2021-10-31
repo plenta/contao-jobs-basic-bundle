@@ -3,13 +3,11 @@
 declare(strict_types=1);
 
 /**
- * Plenta Jobs Basic Bundle for Contao CMS
+ * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2020, Christian Barkowsky & Christoph Werner
- * @author        Christian Barkowsky <https://plenta.io>
- * @author        Christoph Werner <https://plenta.io>
- * @link          https://plenta.io
- * @license       proprietary
+ * @copyright     Copyright (c) 2021, Plenta.io
+ * @author        Plenta.io <https://plenta.io>
+ * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic;

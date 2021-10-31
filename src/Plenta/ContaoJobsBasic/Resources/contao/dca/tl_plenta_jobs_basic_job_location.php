@@ -3,20 +3,18 @@
 declare(strict_types=1);
 
 /**
- * Plenta Jobs Basic Bundle for Contao CMS
+ * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2020, Christian Barkowsky & Christoph Werner
- * @author        Christian Barkowsky <https://plenta.io>
- * @author        Christoph Werner <https://plenta.io>
- * @link          https://plenta.io
- * @license       proprietary
+ * @copyright     Copyright (c) 2021, Plenta.io
+ * @author        Plenta.io <https://plenta.io>
+ * @link          https://github.com/plenta/
  */
 
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
     // Config
     'config' => [
         'dataContainer' => 'Table',
-        'enableVersioning' => true
+        'enableVersioning' => true,
     ],
 
     'list' => [
@@ -24,11 +22,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'mode' => 1,
             'fields' => [''],
             'flag' => 1,
-            'disableGrouping' => true
+            'disableGrouping' => true,
         ],
         'label' => [
             'fields' => [''],
-            'format' => '%s'
+            'format' => '%s',
         ],
         'global_operations' => [
             'all' => [
@@ -41,9 +39,9 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'edit' => [
                 //'label' => &$GLOBALS['TL_LANG']['tl_jobs_product_config']['edit'],
                 'href' => 'act=edit',
-                'icon' => 'edit.svg'
-            ]
-        ]
+                'icon' => 'edit.svg',
+            ],
+        ],
     ],
 
     // Palettes
@@ -62,7 +60,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'exclude' => true,
             'inputType' => 'text',
             'default' => '',
-            'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr']
-        ]
+            'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr'],
+        ],
     ],
 ];
