@@ -19,7 +19,7 @@ array_insert($GLOBALS['BE_MOD'], 1, [
             'tables' => ['tl_plenta_jobs_basic_organization'],
         ],
         'plenta_jobs_basic_location' => [
-            'tables' => ['tl_plenta_jobs_basic_location'],
+            'tables' => ['tl_plenta_jobs_basic_job_location'],
         ],
         'plenta_jobs_basic_settings' => [
         ],

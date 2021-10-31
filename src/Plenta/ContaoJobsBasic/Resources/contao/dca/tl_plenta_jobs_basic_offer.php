@@ -17,11 +17,27 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'enableVersioning' => true,
     ],
 
+    // Palettes
+    'palettes' => [
+        'default' => '{settings_legend},jobLocation;',
+    ],
+
     // Fields
     'fields' => [
         'id' => [
         ],
         'tstamp' => [
+        ],
+        'jobLocation' => [
+            'exclude' => true,
+            'filter' => true,
+            'inputType' => 'select',
+            'foreignKey' => 'tl_plenta_jobs_basic_job_location.streetAddress',
+            'eval' => [
+                'includeBlankOption' => false,
+                'tl_class' => 'w50',
+                'mandatory' => true,
+            ],
         ],
     ],
 ];

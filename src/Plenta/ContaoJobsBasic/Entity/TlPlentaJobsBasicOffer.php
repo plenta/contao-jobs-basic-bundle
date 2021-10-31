@@ -23,7 +23,31 @@ use Doctrine\ORM\Mapping as ORM;
 class TlPlentaJobsBasicOffer extends DCADefault
 {
     /**
+     * @ORM\JoinColumn(name="jobLocation", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation", inversedBy="jobOffer")
+     */
+    protected TlPlentaJobsBasicJobLocation $jobLocation;
+
+    /**
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
     protected string $name = '';
+
+    /**
+     * @return TlPlentaJobsBasicJobLocation
+     */
+    public function getJobLocation(): TlPlentaJobsBasicJobLocation
+    {
+        return $this->jobLocation;
+    }
+
+    /**
+     * @param TlPlentaJobsBasicJobLocation $jobLocation
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setJobLocation(TlPlentaJobsBasicJobLocation $jobLocation): self
+    {
+        $this->jobLocation = $jobLocation;
+        return $this;
+    }
 }

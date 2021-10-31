@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,12 +35,37 @@ class TlPlentaJobsBasicOrganization extends DCADefault
     protected string $sameAs;
 
     /**
-     * @ORM\Column(type="string", length=16, nullable=true,  options={"default": null})
+     * @ORM\Column (type="binary_string", nullable=true, options={"default": NULL})
      */
     protected string $logoUUID;
 
     /**
-     * @var @ORM\OneToMany(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation", mappedBy="pid")
+     * @var Collection|TlPlentaJobsBasicJobLocation[]
+     * @ORM\OneToMany(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation", mappedBy="organization")
      */
-    protected $jobLocation;
+    protected Collection $jobLocation;
+
+    public function __construct()
+    {
+        $this->jobLocation = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|TlPlentaJobsBasicJobLocation[]
+     */
+    public function getJobLocation(): Collection
+    {
+        return $this->jobLocation;
+    }
+
+    /**
+     * @param TlPlentaJobsBasicJobLocation $jobLocation
+     * @return $this
+     */
+    public function addJobLocation(TlPlentaJobsBasicJobLocation $jobLocation): self
+    {
+        $this->jobLocation->add($jobLocation);
+
+        return $this;
+    }
 }

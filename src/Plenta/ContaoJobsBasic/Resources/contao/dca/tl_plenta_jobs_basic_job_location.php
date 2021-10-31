@@ -19,13 +19,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 1,
-            'fields' => [''],
+            'mode' => 2,
+            'fields' => ['streetAddress'],
             'flag' => 1,
-            'disableGrouping' => true,
+            'panelLayout' => 'filter;sort,search,limit',
         ],
         'label' => [
-            'fields' => [''],
+            'fields' => ['streetAddress'],
             'format' => '%s',
         ],
         'global_operations' => [
@@ -46,17 +46,30 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{settings_legend},streetAddress;',
+        'default' => '{settings_legend},organization,streetAddress;',
     ],
 
     // Fields
     'fields' => [
         'id' => [
+            'search' => true,
         ],
         'tstamp' => [
+            'sorting' => true,
+            'flag' => 6,
+        ],
+        'organization' => [
+            'exclude' => true,
+            'filter' => true,
+            'inputType' => 'select',
+            'foreignKey' => 'tl_plenta_jobs_basic_organization.name',
+            'eval' => [
+                'includeBlankOption' => false,
+                'tl_class' => 'w50',
+                'mandatory' => true,
+            ],
         ],
         'streetAddress' => [
-            'label' => &$GLOBALS['TL_LANG']['tl_jobs_product_config']['streetAddress'],
             'exclude' => true,
             'inputType' => 'text',
             'default' => '',
