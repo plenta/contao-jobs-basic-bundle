@@ -25,12 +25,12 @@ abstract class DCADefault
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\Column(type="integer", options={"unsigned": true, "default": 0})
      */
-    protected $tstamp;
+    protected int $tstamp;
 
     public function getId(): int
     {
@@ -45,6 +45,6 @@ abstract class DCADefault
      */
     public function touch(): void
     {
-        $this->timestamp = time();
+        $this->tstamp = time();
     }
 }

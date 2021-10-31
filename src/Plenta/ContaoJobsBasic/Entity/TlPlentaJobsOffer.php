@@ -23,8 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
 class TlPlentaJobsOffer extends DCADefault
 {
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected $name = '';
+    protected string $name = '';
 }

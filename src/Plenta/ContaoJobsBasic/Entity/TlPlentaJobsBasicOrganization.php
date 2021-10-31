@@ -23,22 +23,19 @@ use Doctrine\ORM\Mapping as ORM;
 class TlPlentaJobsBasicOrganization extends DCADefault
 {
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected $sameAs;
+    protected string $sameAs;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=16, nullable=true,  options={"default": null})
      */
-    protected $logoUUID;
+    protected string $logoUUID;
 
     /**
      * @var @ORM\OneToMany(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation", mappedBy="pid")

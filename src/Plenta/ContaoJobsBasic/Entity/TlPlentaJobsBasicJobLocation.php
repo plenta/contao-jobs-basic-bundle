@@ -21,38 +21,32 @@ use Doctrine\ORM\Mapping as ORM;
 class TlPlentaJobsBasicJobLocation extends DCADefault
 {
     /**
-     * @var int
      * @ORM\ManyToOne(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization", inversedBy="jobLocation")
      */
-    protected $pid;
+    protected int $pid;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected $streetAddress;
+    protected string $streetAddress;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected $addressLocality;
+    protected string $addressLocality;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected $addressRegion;
+    protected string $addressRegion;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=32, options={"default": ""})
      */
-    protected $postalCode;
+    protected string $postalCode;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=2, options={"default": ""})
      */
-    protected $addressCountry;
+    protected string $addressCountry;
 }
