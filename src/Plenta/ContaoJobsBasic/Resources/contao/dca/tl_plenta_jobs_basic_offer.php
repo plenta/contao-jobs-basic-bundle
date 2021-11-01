@@ -22,8 +22,22 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'enableVersioning' => true,
     ],
 
+    'list' => [
+        'sorting' => [
+            'mode' => 2,
+            'fields' => ['title'],
+            'flag' => 1,
+            'panelLayout' => 'filter;search,sort,limit',
+        ],
+        'label' => [
+            'fields' => ['title'],
+            'showColumns' => false,
+        ],
+    ],
+
     // Palettes
     'palettes' => [
+        // {meta_legend},pageTitle,description,serpPreview;
         'default' => '{title_legend},title;{settings_legend},jobLocation,employmentType;',
     ],
 
@@ -33,25 +47,27 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         ],
         'tstamp' => [
         ],
-        'jobLocation' => [
-            'exclude' => true,
-            'filter' => true,
-            'inputType' => 'select',
-            'foreignKey' => 'tl_plenta_jobs_basic_job_location.streetAddress',
-            'eval' => [
-                'includeBlankOption' => false,
-                'tl_class' => 'w50',
-                'mandatory' => true,
-            ],
-        ],
         'title' => [
-            'exclude' => true,
             'inputType' => 'text',
+            'exclude' => true,
             'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr'],
         ],
-        'employmentType' => [
-            'exclude' => true,
+        'jobLocation' => [
             'inputType' => 'select',
+            'exclude' => true,
+            'filter' => true,
+            'foreignKey' => 'tl_plenta_jobs_basic_job_location.streetAddress',
+            'eval' => [
+                'includeBlankOption' => true,
+                'tl_class' => 'w50',
+                'mandatory' => false,
+            ],
+        ],
+        'employmentType' => [
+            'inputType' => 'select',
+            'exclude' => true,
+            'sorting' => true,
+            'filter' => true,
             'options_callback' => [
                 TlPlentaJobsBasicOffer::class,
                 'employmentTypeOptionsCallback',
@@ -64,7 +80,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 TlPlentaJobsBasicOffer::class,
                 'employmentTypeSaveCallback',
             ]],
-            'sorting' => true,
             'eval' => [
                 'includeBlankOption' => true,
                 'tl_class' => 'w50',
@@ -73,6 +88,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'chosen' => true,
             ],
         ],
+        /*
         'description' => [
             'exclude' => true,
             'search' => true,
@@ -82,5 +98,18 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'tl_class' => 'clr',
             ],
         ],
+        'serpPreview' => [
+            'label' => &$GLOBALS['TL_LANG']['MSC']['serpPreview'],
+            'exclude' => true,
+            'inputType' => 'serpPreview',
+            'eval' => [
+                'titleFields' => ['pageTitle', 'title'],
+                'descriptionFields' => ['description', 'teaser'],
+                //'title_tag_callback' => ['tl_page', 'getTitleTag'],
+                //'url_callback' => ['tl_page', 'getSerpUrl']
+            ],
+            'sql' => null,
+        ],
+        */
     ],
 ];
