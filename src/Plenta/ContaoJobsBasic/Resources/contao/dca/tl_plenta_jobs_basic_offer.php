@@ -16,12 +16,15 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     // Config
     'config' => [
         'dataContainer' => 'Table',
+        //'ctable' => ['tl_content'],
+        //'switchToEdit' => true,
+        'markAsCopy' => 'title',
         'enableVersioning' => true,
     ],
 
     // Palettes
     'palettes' => [
-        'default' => '{settings_legend},jobLocation,employmentType;',
+        'default' => '{title_legend},title;{settings_legend},jobLocation,employmentType;',
     ],
 
     // Fields
@@ -44,7 +47,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'title' => [
             'exclude' => true,
             'inputType' => 'text',
-            'default' => '',
             'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr'],
         ],
         'employmentType' => [

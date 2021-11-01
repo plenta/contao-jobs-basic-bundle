@@ -15,14 +15,18 @@ namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 use Contao\DataContainer;
 use Contao\StringUtil;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 class TlPlentaJobsBasicOffer
 {
     protected EmploymentType $employmentTypeHelper;
 
-    public function __construct(EmploymentType $employmentTypeHelper)
+    protected $translator;
+
+    public function __construct(EmploymentType $employmentTypeHelper, LocaleAwareInterface $translator)
     {
         $this->employmentTypeHelper = $employmentTypeHelper;
+        $this->translator = $translator;
     }
 
     public function employmentTypeOptionsCallback(): array
@@ -36,7 +40,11 @@ class TlPlentaJobsBasicOffer
                 $employmentTypeName = $employmentType;
             }
 
-            $return[$employmentType] = $employmentTypeName;
+            $return[$employmentType] = $this->translator->trans(
+                'MSC.PLENTA_JOBS.'.$employmentTypeName,
+                [],
+                'contao_default'
+            );
         }
 
         return $return;

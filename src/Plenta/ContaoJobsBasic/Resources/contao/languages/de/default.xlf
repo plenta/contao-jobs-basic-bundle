@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file>
+        <body>
+            <trans-unit id="MSC.PLENTA_JOBS.FULL_TIME">
+                <source>Full time</source>
+                <target>Vollzeit</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.PART_TIME">
+                <source>Part time</source>
+                <target>Teilzeit</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.CONTRACTOR">
+                <source>Contractor</source>
+                <target>Anbieter</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.TEMPORARY">
+                <source>Temporary</source>
+                <target>Befristet</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.INTERN">
+                <source>Intern</source>
+                <target>Intern</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.VOLUNTEER">
+                <source>Volunteer</source>
+                <target>Freischaffender</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.PER_DIEM">
+                <source>Per diem</source>
+                <target>Tageweise</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.OTHER">
+                <source>Other</source>
+                <target>Andere</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

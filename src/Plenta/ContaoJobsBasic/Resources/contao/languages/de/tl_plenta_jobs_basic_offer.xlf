@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file>
+        <body>
+            <trans-unit id="tl_plenta_jobs_basic_offer.title.0">
+                <target>Jobtitel</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.title.1">
+                <target>Bitte geben sie den Jobtitel ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.employmentType.0">
+                <target>Stellenarten</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.employmentType.1">
+                <target>Bitte wählen sie ein oder mehrere Stellenarten aus.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
