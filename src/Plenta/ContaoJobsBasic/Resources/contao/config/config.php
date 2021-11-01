@@ -21,6 +21,7 @@ array_insert($GLOBALS['BE_MOD'], 1, [
         'plenta_jobs_basic_settings' => [
         ],
         'plenta_jobs_basic_support' => [
+            'callback' => 'Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\Support',
         ],
     ],
 ]);

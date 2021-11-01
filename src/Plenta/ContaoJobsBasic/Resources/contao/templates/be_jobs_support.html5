@@ -1,0 +1,44 @@
+
+<div id="tl_buttons">
+<a href="<?php echo $this->href; ?>" class="header_back" title="<?php echo $this->title; ?>"><?php echo $this->button; ?></a>
+</div>
+
+<?php if($this->content): ?>
+<div id="lu_message" class="tl_message mb10">
+    <p class="tl_confirm"><?php echo $this->content; ?></p>
+</div>
+<?php endif; ?>
+
+<div class="be_jobs_support">
+
+    <h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['JOBS_SUPPORT']['headline']; ?></h2>
+
+    <form method="post" class="tl_form" action="<?php echo $this->action; ?>" id="<?php echo $this->formId; ?>">
+    <div class="tl_formbody_edit">
+        <input type="hidden" name="FORM_SUBMIT" value="<?php echo $this->formId; ?>">
+        <input type="hidden" name="rt" value="<?php echo REQUEST_TOKEN; ?>">
+        <input type="hidden" name="REQUEST_TOKEN" value="<?php echo REQUEST_TOKEN; ?>">
+        <div class="tl_tbox">
+            <div>
+                <h3><label for="ctrl_subject"><?php echo $GLOBALS['TL_LANG']['JOBS_SUPPORT']['subject']; ?></label></h3>
+                <select name="subject" id="ctrl_subject" class="tl_select">
+                    <option value="">-</option>
+                    <option value="feature"><?php echo $GLOBALS['TL_LANG']['JOBS_SUPPORT']['feature']; ?></option>
+                    <option value="error"><?php echo $GLOBALS['TL_LANG']['JOBS_SUPPORT']['error']; ?></option>
+                    <option value="criticism"><?php echo $GLOBALS['TL_LANG']['JOBS_SUPPORT']['criticism']; ?></option>
+                    <option value="praise"><?php echo $GLOBALS['TL_LANG']['JOBS_SUPPORT']['praise']; ?></option>
+                    <option value="other"><?php echo $GLOBALS['TL_LANG']['JOBS_SUPPORT']['other']; ?></option>
+                </select>
+            </div>
+            <div>
+                <h3><label for="ctrl_message"><?php echo $GLOBALS['TL_LANG']['JOBS_SUPPORT']['message']; ?></label></h3>
+                <textarea onfocus="Backend.getScrollOffset()" cols="80" rows="12" class="tl_textarea jobs_textarea" id="ctrl_message" name="message"></textarea>
+            </div>
+            <div>
+                <h3></h3>
+                <input type="submit" name="submit" value="<?php echo $GLOBALS['TL_LANG']['JOBS_SUPPORT']['submit']; ?>" class="submit tl_submit" id="ctrl_submit">
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
