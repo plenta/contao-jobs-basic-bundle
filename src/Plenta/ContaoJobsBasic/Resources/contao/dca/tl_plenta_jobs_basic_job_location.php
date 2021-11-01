@@ -14,13 +14,14 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
     // Config
     'config' => [
         'dataContainer' => 'Table',
+        'ptable' => 'tl_plenta_jobs_basic_organization',
         'enableVersioning' => true,
     ],
 
     'list' => [
         'sorting' => [
             'mode' => 2,
-            'fields' => ['streetAddress'],
+            'fields' => ['pid'],
             'flag' => 1,
             'panelLayout' => 'filter;sort,search,limit',
         ],
@@ -37,7 +38,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         ],
         'operations' => [
             'edit' => [
-                //'label' => &$GLOBALS['TL_LANG']['tl_jobs_product_config']['edit'],
+                'label' => &$GLOBALS['TL_LANG']['tl_jobs_product_config']['edit'],
                 'href' => 'act=edit',
                 'icon' => 'edit.svg',
             ],
@@ -54,10 +55,15 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         'id' => [
             'search' => true,
         ],
+        'pid' => [
+            'foreignKey' => 'tl_plenta_jobs_basic_organization.name',
+            'relation' => ['type'=>'belongsTo', 'load'=>'lazy']
+        ],
         'tstamp' => [
             'sorting' => true,
             'flag' => 6,
         ],
+        /*
         'organization' => [
             'exclude' => true,
             'filter' => true,
@@ -69,6 +75,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
                 'mandatory' => true,
             ],
         ],
+        */
         'streetAddress' => [
             'exclude' => true,
             'inputType' => 'text',

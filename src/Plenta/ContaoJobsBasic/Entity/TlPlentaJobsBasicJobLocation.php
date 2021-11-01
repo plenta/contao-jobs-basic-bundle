@@ -23,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
 class TlPlentaJobsBasicJobLocation extends DCADefault
 {
     /**
-     * @ORM\JoinColumn(name="organization", referencedColumnName="id")
+     * @ORM\JoinColumn(name="pid", referencedColumnName="id")
      * @ORM\ManyToOne(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization", inversedBy="jobLocation")
      */
     protected TlPlentaJobsBasicOrganization $organization;

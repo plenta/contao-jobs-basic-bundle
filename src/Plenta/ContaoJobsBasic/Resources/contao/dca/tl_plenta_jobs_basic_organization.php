@@ -14,6 +14,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
     // Config
     'config' => [
         'dataContainer' => 'Table',
+        'ctable' => ['tl_plenta_jobs_basic_job_location'],
         'enableVersioning' => true,
     ],
 
@@ -36,10 +37,23 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
             ],
         ],
         'operations' => [
+            /*
             'edit' => [
                 //'label' => &$GLOBALS['TL_LANG']['tl_jobs_product_config']['edit'],
                 'href' => 'act=edit',
                 'icon' => 'edit.svg',
+            ],
+            */
+
+            'edit' => array
+            (
+                'href' => 'table=tl_plenta_jobs_basic_job_location',
+                'icon' => 'edit.svg'
+            ),
+            'editheader' => [
+                'href' => 'act=edit',
+                'icon' => 'header.svg',
+                //'button_callback'     => array('tl_news_archive', 'editHeader')
             ],
         ],
     ],
