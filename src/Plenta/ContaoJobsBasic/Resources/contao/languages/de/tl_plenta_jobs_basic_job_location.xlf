@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file>
+        <body>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.streetAddress.0">
+                <target>Straße/Hausnummer</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.streetAddress.1">
+                <target>Bitte geben Sie die Straße und Hausnummer ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.addressLocality.0">
+                <target>Stadt</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.addressLocality.1">
+                <target>Bitte geben Sie die Stadt ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.addressRegion.0">
+                <target>Bundesland/Kanton</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.addressRegion.1">
+                <target>Bitte geben Sie das Bundesland oder den Kanton ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.postalCode.0">
+                <target>Postleitzahl</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.postalCode.1">
+                <target>Bitte geben Sie Postleitzahl ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.addressCountry.0">
+                <target>Land</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.addressCountry.1">
+                <target>Bitte wählen Sie ein Land aus.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

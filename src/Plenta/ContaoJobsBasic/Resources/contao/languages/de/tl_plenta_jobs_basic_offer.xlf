@@ -6,13 +6,13 @@
                 <target>Jobtitel</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.title.1">
-                <target>Bitte geben sie den Jobtitel ein.</target>
+                <target>Bitte geben Sie den Jobtitel ein.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.employmentType.0">
                 <target>Stellenarten</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.employmentType.1">
-                <target>Bitte wählen sie ein oder mehrere Stellenarten aus.</target>
+                <target>Bitte wählen Sie ein oder mehrere Stellenarten aus.</target>
             </trans-unit>
         </body>
     </file>

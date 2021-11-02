@@ -16,6 +16,8 @@ use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\ModuleModel;
 use Contao\Template;
+use Doctrine\Persistence\ManagerRegistry;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,11 +25,18 @@ use Symfony\Component\HttpFoundation\Response;
  * @FrontendModule("plenta_jobs_basic_offer_list",
  *   category="plentaJobsBasic",
  *   template="mod_plenta_jobs_basic_offer_list",
- *   renderer="esi"
+ *   renderer="forward"
  * )
  */
 class JobOfferListController extends AbstractFrontendModuleController
 {
+    protected ManagerRegistry $registry;
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        $this->registry = $registry;
+    }
+
     /**
      * @param Template    $template
      * @param ModuleModel $model
@@ -37,6 +46,10 @@ class JobOfferListController extends AbstractFrontendModuleController
      */
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
+        $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
+
+        $jobOffer = $jobOfferRepository->findAllPublished();
+
         return $template->getResponse();
     }
 }

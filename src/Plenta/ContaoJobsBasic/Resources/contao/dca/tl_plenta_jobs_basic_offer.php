@@ -33,12 +33,18 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'fields' => ['title'],
             'showColumns' => false,
         ],
+        'operations' => [
+            'edit' => [
+                'label' => &$GLOBALS['TL_LANG']['tl_jobs_product_config']['edit'],
+                'href' => 'act=edit',
+                'icon' => 'edit.svg',
+            ],
+        ],
     ],
 
     // Palettes
     'palettes' => [
-        // {meta_legend},pageTitle,description,serpPreview;
-        'default' => '{title_legend},title;{settings_legend},jobLocation,employmentType;',
+        'default' => '{title_legend},title,description;{settings_legend},jobLocation,employmentType;',
     ],
 
     // Fields
@@ -88,7 +94,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'chosen' => true,
             ],
         ],
-        /*
         'description' => [
             'exclude' => true,
             'search' => true,
@@ -97,7 +102,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'rte' => 'tinyMCE',
                 'tl_class' => 'clr',
             ],
-        ],
+        ],/*
         'serpPreview' => [
             'label' => &$GLOBALS['TL_LANG']['MSC']['serpPreview'],
             'exclude' => true,

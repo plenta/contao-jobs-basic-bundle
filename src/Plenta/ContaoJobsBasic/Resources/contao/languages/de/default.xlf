@@ -12,19 +12,19 @@
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.CONTRACTOR">
                 <source>Contractor</source>
-                <target>Anbieter</target>
+                <target>Befristet</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.TEMPORARY">
                 <source>Temporary</source>
-                <target>Befristet</target>
+                <target>Leiharbeit</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.INTERN">
                 <source>Intern</source>
-                <target>Intern</target>
+                <target>Praktikum</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.VOLUNTEER">
                 <source>Volunteer</source>
-                <target>Freischaffender</target>
+                <target>Ehrenamt</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.PER_DIEM">
                 <source>Per diem</source>

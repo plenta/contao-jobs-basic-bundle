@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
+use Contao\System;
+
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
     // Config
     'config' => [
@@ -26,8 +28,12 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'panelLayout' => 'filter;sort,search,limit',
         ],
         'label' => [
-            'fields' => ['streetAddress'],
-            'format' => '%s',
+            'fields' => [
+                'streetAddress',
+                'postalCode',
+                'addressLocality',
+            ],
+            'format' => '%s, %s %s',
         ],
         'global_operations' => [
             'all' => [
@@ -47,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{settings_legend},organization,streetAddress;',
+        'default' => '{settings_legend},organization,streetAddress,postalCode,addressLocality,addressRegion,addressCountry;',
     ],
 
     // Fields
@@ -70,7 +76,47 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'exclude' => true,
             'inputType' => 'text',
             'default' => '',
-            'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr'],
+            'eval' => [
+                'maxlength' => 255,
+                'tl_class' => 'w50',
+            ],
+        ],
+        'postalCode' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'default' => '',
+            'eval' => [
+                'maxlength' => 255,
+                'tl_class' => 'w50 clr',
+            ],
+        ],
+        'addressLocality' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'default' => '',
+            'eval' => [
+                'maxlength' => 255,
+                'tl_class' => 'w50',
+            ],
+        ],
+        'addressRegion' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'default' => '',
+            'eval' => [
+                'maxlength' => 255,
+                'tl_class' => 'w50 clr',
+            ],
+        ],
+        'addressCountry' => [
+            'exclude' => true,
+            'inputType' => 'select',
+            'options' => System::getCountries(),
+            'eval' => [
+                'includeBlankOption' => true,
+                'chosen' => true,
+                'tl_class' => 'w50',
+            ],
         ],
     ],
 ];

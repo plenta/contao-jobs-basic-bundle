@@ -59,6 +59,13 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
      */
     protected string $addressCountry;
 
+    /**
+     * Options => ['onPremise', 'Telecommute'].
+     *
+     * @ORM\Column(type="string", length=32, options={"default": "onPremise"})
+     */
+    protected string $jobTypeLocation = 'onPremise';
+
     public function __construct()
     {
         $this->jobOffer = new ArrayCollection();
@@ -95,6 +102,126 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     public function addJobOffer(TlPlentaJobsBasicOffer $jobOffer): self
     {
         $this->jobOffer->add($jobOffer);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStreetAddress(): string
+    {
+        return $this->streetAddress;
+    }
+
+    /**
+     * @param string $streetAddress
+     *
+     * @return TlPlentaJobsBasicJobLocation
+     */
+    public function setStreetAddress(string $streetAddress): self
+    {
+        $this->streetAddress = $streetAddress;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddressLocality(): string
+    {
+        return $this->addressLocality;
+    }
+
+    /**
+     * @param string $addressLocality
+     *
+     * @return TlPlentaJobsBasicJobLocation
+     */
+    public function setAddressLocality(string $addressLocality): self
+    {
+        $this->addressLocality = $addressLocality;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddressRegion(): string
+    {
+        return $this->addressRegion;
+    }
+
+    /**
+     * @param string $addressRegion
+     *
+     * @return TlPlentaJobsBasicJobLocation
+     */
+    public function setAddressRegion(string $addressRegion): self
+    {
+        $this->addressRegion = $addressRegion;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostalCode(): string
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * @param string $postalCode
+     *
+     * @return TlPlentaJobsBasicJobLocation
+     */
+    public function setPostalCode(string $postalCode): self
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddressCountry(): string
+    {
+        return $this->addressCountry;
+    }
+
+    /**
+     * @param string $addressCountry
+     *
+     * @return TlPlentaJobsBasicJobLocation
+     */
+    public function setAddressCountry(string $addressCountry): self
+    {
+        $this->addressCountry = $addressCountry;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getJobTypeLocation(): string
+    {
+        return $this->jobTypeLocation;
+    }
+
+    /**
+     * @param string $jobTypeLocation
+     *
+     * @return TlPlentaJobsBasicJobLocation
+     */
+    public function setJobTypeLocation(string $jobTypeLocation): self
+    {
+        $this->jobTypeLocation = $jobTypeLocation;
 
         return $this;
     }

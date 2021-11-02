@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class TlPlentaJobsBasicOffer.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Plenta\ContaoJobsBasic\TlPlentaJobsBasicOfferRepository\TlPlentaJobsBasicOfferRepository")
  * @ORM\Table(name="tl_plenta_jobs_basic_offer")
  */
 class TlPlentaJobsBasicOffer extends DCADefault
