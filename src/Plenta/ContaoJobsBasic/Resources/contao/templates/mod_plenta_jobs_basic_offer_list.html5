@@ -1,4 +1,3 @@
 <?php foreach ($this->jobOffers as $jobOffer): ?>
     <?= $jobOffer->getTitle(); ?>
-    <?= $jobOffer->getJobLocation()->getStreetAddress(); ?>
 <?php endforeach; ?>

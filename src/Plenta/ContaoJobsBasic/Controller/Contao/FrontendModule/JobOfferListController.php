@@ -51,7 +51,6 @@ class JobOfferListController extends AbstractFrontendModuleController
         $jobOffers = $jobOfferRepository->findAllPublished();
 
         $template->jobOffers = $jobOffers;
-        $template->location = $jobOffers[0]->getJobLocation();
 
         return $template->getResponse();
     }
