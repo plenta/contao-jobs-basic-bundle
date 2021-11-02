@@ -57,25 +57,15 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         ],
         'pid' => [
             'foreignKey' => 'tl_plenta_jobs_basic_organization.name',
-            'relation' => ['type'=>'belongsTo', 'load'=>'lazy']
+            'relation' => [
+                'type' => 'belongsTo',
+                'load' => 'lazy',
+            ],
         ],
         'tstamp' => [
             'sorting' => true,
             'flag' => 6,
         ],
-        /*
-        'organization' => [
-            'exclude' => true,
-            'filter' => true,
-            'inputType' => 'select',
-            'foreignKey' => 'tl_plenta_jobs_basic_organization.name',
-            'eval' => [
-                'includeBlankOption' => false,
-                'tl_class' => 'w50',
-                'mandatory' => true,
-            ],
-        ],
-        */
         'streetAddress' => [
             'exclude' => true,
             'inputType' => 'text',

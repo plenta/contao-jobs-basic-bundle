@@ -45,11 +45,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
             ],
             */
 
-            'edit' => array
-            (
+            'edit' => [
                 'href' => 'table=tl_plenta_jobs_basic_job_location',
-                'icon' => 'edit.svg'
-            ),
+                'icon' => 'edit.svg',
+            ],
             'editheader' => [
                 'href' => 'act=edit',
                 'icon' => 'header.svg',
