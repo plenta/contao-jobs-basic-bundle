@@ -48,7 +48,10 @@ class JobOfferListController extends AbstractFrontendModuleController
     {
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
 
-        $jobOffer = $jobOfferRepository->findAllPublished();
+        $jobOffers = $jobOfferRepository->findAllPublished();
+
+        $template->jobOffers = $jobOffers;
+        $template->location = $jobOffers[0]->getJobLocation();
 
         return $template->getResponse();
     }

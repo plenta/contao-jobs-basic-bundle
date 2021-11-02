@@ -37,27 +37,27 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     /**
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected string $streetAddress;
+    protected string $streetAddress = '';
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected string $addressLocality;
+    protected string $addressLocality = '';
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": ""})
      */
-    protected string $addressRegion;
+    protected string $addressRegion = '';
 
     /**
      * @ORM\Column(type="string", length=32, options={"default": ""})
      */
-    protected string $postalCode;
+    protected string $postalCode = '';
 
     /**
      * @ORM\Column(type="string", length=2, options={"default": ""})
      */
-    protected string $addressCountry;
+    protected string $addressCountry = '';
 
     /**
      * Options => ['onPremise', 'Telecommute'].

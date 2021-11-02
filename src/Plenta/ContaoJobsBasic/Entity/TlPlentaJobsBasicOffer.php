@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class TlPlentaJobsBasicOffer.
  *
- * @ORM\Entity(repositoryClass="Plenta\ContaoJobsBasic\TlPlentaJobsBasicOfferRepository\TlPlentaJobsBasicOfferRepository")
+ * @ORM\Entity(repositoryClass="Plenta\ContaoJobsBasic\Repository\TlPlentaJobsBasicOfferRepository")
  * @ORM\Table(name="tl_plenta_jobs_basic_offer")
  */
 class TlPlentaJobsBasicOffer extends DCADefault
@@ -31,12 +31,12 @@ class TlPlentaJobsBasicOffer extends DCADefault
     /**
      * @ORM\Column(type="text", nullable=true, options={"default": NULL})
      */
-    protected string $description = '';
+    protected ?string $description;
 
     /**
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true, "default": NULL})
      */
-    protected int $datePosted;
+    protected ?int $datePosted;
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": ""})
@@ -46,7 +46,7 @@ class TlPlentaJobsBasicOffer extends DCADefault
     /**
      * @ORM\Column (type="json", nullable=true, options={"default": NULL})
      */
-    protected string $employmentType = '';
+    protected ?array $employmentType;
 
     /**
      * @return TlPlentaJobsBasicJobLocation
@@ -65,6 +65,78 @@ class TlPlentaJobsBasicOffer extends DCADefault
     {
         $this->jobLocation = $jobLocation;
 
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setDescription(?string $description): TlPlentaJobsBasicOffer
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDatePosted(): ?int
+    {
+        return $this->datePosted;
+    }
+
+    /**
+     * @param int|null $datePosted
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setDatePosted(?int $datePosted): TlPlentaJobsBasicOffer
+    {
+        $this->datePosted = $datePosted;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setTitle(string $title): TlPlentaJobsBasicOffer
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmploymentType(): ?array
+    {
+        return $this->employmentType;
+    }
+
+    /**
+     * @param string|null $employmentType
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setEmploymentType(?array $employmentType): TlPlentaJobsBasicOffer
+    {
+        $this->employmentType = $employmentType;
         return $this;
     }
 }

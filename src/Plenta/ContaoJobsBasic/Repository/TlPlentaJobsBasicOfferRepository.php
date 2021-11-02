@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Plenta\ContaoJobsBasic\TlPlentaJobsBasicOfferRepository;
+namespace Plenta\ContaoJobsBasic\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
