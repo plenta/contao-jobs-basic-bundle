@@ -23,10 +23,9 @@ use Doctrine\ORM\Mapping as ORM;
 class TlPlentaJobsBasicOffer extends DCADefault
 {
     /**
-     * @ORM\JoinColumn(name="jobLocation", referencedColumnName="id")
-     * @ORM\ManyToOne(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation", inversedBy="jobOffer")
+     * @ORM\Column(type="text", nullable=true, options={"default": NULL})
      */
-    protected TlPlentaJobsBasicJobLocation $jobLocation;
+    protected ?string $jobLocation;
 
     /**
      * @ORM\Column(type="text", nullable=true, options={"default": NULL})
@@ -49,26 +48,6 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected ?array $employmentType;
 
     /**
-     * @return TlPlentaJobsBasicJobLocation
-     */
-    public function getJobLocation(): TlPlentaJobsBasicJobLocation
-    {
-        return $this->jobLocation;
-    }
-
-    /**
-     * @param TlPlentaJobsBasicJobLocation $jobLocation
-     *
-     * @return TlPlentaJobsBasicOffer
-     */
-    public function setJobLocation(TlPlentaJobsBasicJobLocation $jobLocation): self
-    {
-        $this->jobLocation = $jobLocation;
-
-        return $this;
-    }
-
-    /**
      * @return string|null
      */
     public function getDescription(): ?string
@@ -78,11 +57,13 @@ class TlPlentaJobsBasicOffer extends DCADefault
 
     /**
      * @param string|null $description
+     *
      * @return TlPlentaJobsBasicOffer
      */
-    public function setDescription(?string $description): TlPlentaJobsBasicOffer
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -96,11 +77,13 @@ class TlPlentaJobsBasicOffer extends DCADefault
 
     /**
      * @param int|null $datePosted
+     *
      * @return TlPlentaJobsBasicOffer
      */
-    public function setDatePosted(?int $datePosted): TlPlentaJobsBasicOffer
+    public function setDatePosted(?int $datePosted): self
     {
         $this->datePosted = $datePosted;
+
         return $this;
     }
 
@@ -114,29 +97,45 @@ class TlPlentaJobsBasicOffer extends DCADefault
 
     /**
      * @param string $title
+     *
      * @return TlPlentaJobsBasicOffer
      */
-    public function setTitle(string $title): TlPlentaJobsBasicOffer
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getEmploymentType(): ?array
+    {
+        return $this->employmentType;
+    }
+
+    public function setEmploymentType(?array $employmentType): self
+    {
+        $this->employmentType = $employmentType;
+
         return $this;
     }
 
     /**
      * @return string|null
      */
-    public function getEmploymentType(): ?array
+    public function getJobLocation(): ?string
     {
-        return $this->employmentType;
+        return $this->jobLocation;
     }
 
     /**
-     * @param string|null $employmentType
+     * @param string|null $jobLocation
+     *
      * @return TlPlentaJobsBasicOffer
      */
-    public function setEmploymentType(?array $employmentType): TlPlentaJobsBasicOffer
+    public function setJobLocation(?string $jobLocation): self
     {
-        $this->employmentType = $employmentType;
+        $this->jobLocation = $jobLocation;
+
         return $this;
     }
 }

@@ -12,12 +12,10 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Plenta\ContaoJobsBasic\Repository\TlPlentaJobsBasicJobLocationRepository")
  * @ORM\Table(name="tl_plenta_jobs_basic_job_location")
  */
 class TlPlentaJobsBasicJobLocation extends DCADefault
@@ -27,12 +25,6 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
      * @ORM\ManyToOne(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization", inversedBy="jobLocation")
      */
     protected TlPlentaJobsBasicOrganization $organization;
-
-    /**
-     * @var Collection|TlPlentaJobsBasicOffer[]
-     * @ORM\OneToMany(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer", mappedBy="jobLocation")
-     */
-    protected Collection $jobOffer;
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": ""})
@@ -66,11 +58,6 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
      */
     protected string $jobTypeLocation = 'onPremise';
 
-    public function __construct()
-    {
-        $this->jobOffer = new ArrayCollection();
-    }
-
     /**
      * @return TlPlentaJobsBasicOrganization
      */
@@ -87,21 +74,6 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     public function setOrganization(TlPlentaJobsBasicOrganization $organization): self
     {
         $this->organization = $organization;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|TlPlentaJobsBasicOffer[]
-     */
-    public function getJobOffer(): Collection
-    {
-        return $this->jobOffer;
-    }
-
-    public function addJobOffer(TlPlentaJobsBasicOffer $jobOffer): self
-    {
-        $this->jobOffer->add($jobOffer);
 
         return $this;
     }

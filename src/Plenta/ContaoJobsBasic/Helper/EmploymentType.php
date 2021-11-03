@@ -12,8 +12,18 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Helper;
 
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+
 class EmploymentType
 {
+    protected LocaleAwareInterface $translator;
+
+    public function __construct(
+        LocaleAwareInterface $translator
+    ) {
+        $this->translator = $translator;
+    }
+
     /**
      * @return string[]
      */
@@ -31,11 +41,33 @@ class EmploymentType
         ];
     }
 
-    /**
-     * @TODO Get employment type name from language files
-     */
     public function getEmploymentTypeName(string $employmentType): ?string
     {
-        return $employmentType;
+        $translation = $this->translator->trans(
+            'MSC.PLENTA_JOBS.'.$employmentType,
+            [],
+            'contao_default'
+        );
+
+        if ($translation === 'MSC.PLENTA_JOBS.'.$employmentType) {
+            return null;
+        }
+
+        return $translation;
+    }
+
+    public function getEmploymentTypesFormatted(?array $employmentTypes): string
+    {
+        if (null === $employmentTypes) {
+            return '';
+        }
+
+        $employmentTypesTemp = [];
+
+        foreach ($employmentTypes as $employmentType) {
+            $employmentTypesTemp[] = $this->getEmploymentTypeName($employmentType);
+        }
+
+        return implode(', ', $employmentTypesTemp);
     }
 }

@@ -1,0 +1,18 @@
+<div class="layout_default block">
+    <div class="first-column">
+        <div class="title">
+            <?= $this->jobOffer->getTitle(); ?>
+        </div>
+        <div class="jobLocation">
+            <?= $this->jobOfferMeta['employmentTypeFormatted']; ?>
+        </div>
+    </div>
+    <div class="second-column">
+        <div class="publication-date">
+            <?= $this->jobOfferMeta['publicationDateFormatted']; ?>
+        </div>
+        <div class="employment-type">
+            <?= $this->jobOfferMeta['addressLocalityFormatted']; ?>
+        </div>
+    </div>
+</div>

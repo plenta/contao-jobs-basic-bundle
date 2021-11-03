@@ -3,4 +3,4 @@ services:
         public: true
         arguments:
             - '@Plenta\ContaoJobsBasic\Helper\EmploymentType'
-            - '@translator'
+            - '@Doctrine\Persistence\ManagerRegistry'

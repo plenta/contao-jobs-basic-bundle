@@ -10,3 +10,5 @@ services:
 
     Plenta\ContaoJobsBasic\Helper\EmploymentType:
         class: Plenta\ContaoJobsBasic\Helper\EmploymentType
+        arguments:
+            - '@translator'

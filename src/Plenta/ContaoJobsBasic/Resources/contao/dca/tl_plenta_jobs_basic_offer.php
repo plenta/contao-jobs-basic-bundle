@@ -62,11 +62,16 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'inputType' => 'select',
             'exclude' => true,
             'filter' => true,
-            'foreignKey' => 'tl_plenta_jobs_basic_job_location.streetAddress',
+            'options_callback' => [
+                TlPlentaJobsBasicOffer::class,
+                'jobLocationOptionsCallback',
+            ],
             'eval' => [
                 'includeBlankOption' => true,
                 'tl_class' => 'w50',
                 'mandatory' => false,
+                'multiple' => true,
+                'chosen' => true,
             ],
         ],
         'employmentType' => [
@@ -102,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'rte' => 'tinyMCE',
                 'tl_class' => 'clr',
             ],
-        ],/*
+        ], /*
         'serpPreview' => [
             'label' => &$GLOBALS['TL_LANG']['MSC']['serpPreview'],
             'exclude' => true,

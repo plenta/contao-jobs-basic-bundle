@@ -14,19 +14,40 @@ namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
 use Contao\DataContainer;
 use Contao\StringUtil;
+use Doctrine\Persistence\ManagerRegistry;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
-use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 class TlPlentaJobsBasicOffer
 {
     protected EmploymentType $employmentTypeHelper;
 
-    protected $translator;
+    protected ManagerRegistry $registry;
 
-    public function __construct(EmploymentType $employmentTypeHelper, LocaleAwareInterface $translator)
-    {
+    public function __construct(
+        EmploymentType $employmentTypeHelper,
+        ManagerRegistry $registry
+    ) {
         $this->employmentTypeHelper = $employmentTypeHelper;
-        $this->translator = $translator;
+        $this->registry = $registry;
+    }
+
+    public function jobLocationOptionsCallback(): array
+    {
+        $jobLocationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
+
+        $jobLocations = $jobLocationRepository->findAll();
+
+        $return = [];
+        foreach ($jobLocations as $jobLocation) {
+            $return[$jobLocation->getId()] = $jobLocation->getOrganization()->getName().': '.$jobLocation->getStreetAddress();
+
+            if ('' !== $jobLocation->getAddressLocality()) {
+                $return[$jobLocation->getId()] .= ', '.$jobLocation->getAddressLocality();
+            }
+        }
+
+        return $return;
     }
 
     public function employmentTypeOptionsCallback(): array
@@ -35,16 +56,7 @@ class TlPlentaJobsBasicOffer
 
         $return = [];
         foreach ($employmentTypes as $employmentType) {
-            $employmentTypeName = $this->employmentTypeHelper->getEmploymentTypeName($employmentType);
-            if (null === $employmentTypeName) {
-                $employmentTypeName = $employmentType;
-            }
-
-            $return[$employmentType] = $this->translator->trans(
-                'MSC.PLENTA_JOBS.'.$employmentTypeName,
-                [],
-                'contao_default'
-            );
+            $return[$employmentType] = $this->employmentTypeHelper->getEmploymentTypeName($employmentType);
         }
 
         return $return;

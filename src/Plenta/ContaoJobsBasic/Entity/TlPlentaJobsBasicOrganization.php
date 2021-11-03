@@ -69,4 +69,24 @@ class TlPlentaJobsBasicOrganization extends DCADefault
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return TlPlentaJobsBasicOrganization
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 }

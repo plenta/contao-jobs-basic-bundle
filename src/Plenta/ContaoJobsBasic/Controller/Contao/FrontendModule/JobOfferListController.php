@@ -14,10 +14,12 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
+use Contao\FrontendTemplate;
 use Contao\ModuleModel;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,9 +34,14 @@ class JobOfferListController extends AbstractFrontendModuleController
 {
     protected ManagerRegistry $registry;
 
-    public function __construct(ManagerRegistry $registry)
-    {
+    protected MetaFieldsHelper $metaFieldsHelper;
+
+    public function __construct(
+        ManagerRegistry $registry,
+        MetaFieldsHelper $metaFieldsHelper
+    ) {
         $this->registry = $registry;
+        $this->metaFieldsHelper = $metaFieldsHelper;
     }
 
     /**
@@ -50,7 +57,19 @@ class JobOfferListController extends AbstractFrontendModuleController
 
         $jobOffers = $jobOfferRepository->findAllPublished();
 
-        $template->jobOffers = $jobOffers;
+        $items = [];
+
+        foreach ($jobOffers as $jobOffer) {
+            $itemTemplate = new FrontendTemplate('plenta_jobs_basic_offer_default');
+            $itemTemplate->jobOffer = $jobOffer;
+            $itemTemplate->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
+
+            $items[] = $itemTemplate->parse();
+        }
+
+        $template->empty = 'Es sind momentan keine Stellenanzeigen vorhanden.';
+
+        $template->items = $items;
 
         return $template->getResponse();
     }
