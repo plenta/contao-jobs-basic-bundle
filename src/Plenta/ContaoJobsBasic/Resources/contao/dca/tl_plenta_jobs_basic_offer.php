@@ -16,15 +16,15 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     // Config
     'config' => [
         'dataContainer' => 'Table',
-        //'ctable' => ['tl_content'],
-        //'switchToEdit' => true,
+        'ctable' => ['tl_content'],
+        'switchToEdit' => true,
         'markAsCopy' => 'title',
         'enableVersioning' => true,
     ],
 
     'list' => [
         'sorting' => [
-            'mode' => 2,
+            'mode' => 1,
             'fields' => ['title'],
             'flag' => 1,
             'panelLayout' => 'filter;search,sort,limit',
@@ -35,16 +35,19 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         ],
         'operations' => [
             'edit' => [
-                'label' => &$GLOBALS['TL_LANG']['tl_jobs_product_config']['edit'],
-                'href' => 'act=edit',
+                'href' => 'table=tl_content',
                 'icon' => 'edit.svg',
+            ],
+            'editheader' => [
+                'href' => 'act=edit',
+                'icon' => 'header.svg',
             ],
         ],
     ],
 
     // Palettes
     'palettes' => [
-        'default' => '{title_legend},title,description;{settings_legend},jobLocation,employmentType;',
+        'default' => '{title_legend},title,alias,description;{settings_legend},jobLocation,employmentType;',
     ],
 
     // Fields
@@ -52,6 +55,15 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'id' => [
         ],
         'tstamp' => [
+        ],
+        'alias' => [
+            'inputType' => 'text',
+            'exclude' => true,
+            'eval' => ['tl_class' => 'w50 clr'],
+            'save_callback' => [[
+                TlPlentaJobsBasicOffer::class,
+                'aliasSaveCallback'
+            ]],
         ],
         'title' => [
             'inputType' => 'text',

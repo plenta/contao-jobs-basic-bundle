@@ -4,3 +4,12 @@ services:
         arguments:
             - '@Plenta\ContaoJobsBasic\Helper\EmploymentType'
             - '@Doctrine\Persistence\ManagerRegistry'
+            - '@contao.slug'
+
+    # Contao Hooks
+    Plenta\ContaoJobsBasic\EventListener\Contao\DCA\SetPtableForContentListener:
+        tags:
+            - { name: contao.hook, hook: loadDataContainer, method: setPtableForContentListener, priority: 0 }
+        arguments:
+            - '@request_stack'
+            - '@contao.routing.scope_matcher'
