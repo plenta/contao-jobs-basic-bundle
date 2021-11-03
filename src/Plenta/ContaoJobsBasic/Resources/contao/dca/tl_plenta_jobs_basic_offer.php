@@ -62,7 +62,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'eval' => ['tl_class' => 'w50 clr'],
             'save_callback' => [[
                 TlPlentaJobsBasicOffer::class,
-                'aliasSaveCallback'
+                'aliasSaveCallback',
             ]],
         ],
         'title' => [
