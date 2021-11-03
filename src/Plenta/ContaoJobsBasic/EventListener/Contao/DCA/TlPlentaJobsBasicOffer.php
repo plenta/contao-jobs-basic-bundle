@@ -12,10 +12,13 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
+use Contao\CoreBundle\Slug\Slug;
 use Contao\DataContainer;
 use Contao\StringUtil;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer as TlPlentaJobsBasicOfferEntity;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 
 class TlPlentaJobsBasicOffer
@@ -24,12 +27,42 @@ class TlPlentaJobsBasicOffer
 
     protected ManagerRegistry $registry;
 
+    protected Slug $slugGenerator;
+
     public function __construct(
         EmploymentType $employmentTypeHelper,
-        ManagerRegistry $registry
+        ManagerRegistry $registry,
+        Slug $slugGenerator
     ) {
         $this->employmentTypeHelper = $employmentTypeHelper;
         $this->registry = $registry;
+        $this->slugGenerator = $slugGenerator;
+    }
+
+    /**
+     * @param mixed $varValue
+     *
+     * @throws Exception
+     */
+    public function aliasSaveCallback($varValue, DataContainer $dc): string
+    {
+        $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferEntity::class);
+
+        $aliasExists = fn (string $alias): bool => $jobOfferRepository->doesAliasExist($alias, (int) $dc->activeRecord->id);
+
+        if (empty($varValue)) {
+            $varValue = $this->slugGenerator->generate(
+                $dc->activeRecord->title,
+                [],
+                $aliasExists
+            );
+        } elseif (preg_match('/^[1-9]\d*$/', $varValue)) {
+            throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasNumeric'], $varValue));
+        } elseif ($aliasExists($varValue)) {
+            throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
+        }
+
+        return $varValue;
     }
 
     public function jobLocationOptionsCallback(): array

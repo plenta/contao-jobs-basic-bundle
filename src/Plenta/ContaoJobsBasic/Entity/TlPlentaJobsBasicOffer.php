@@ -48,6 +48,11 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected ?array $employmentType;
 
     /**
+     * @ORM\Column(type="text", nullable=true, options={"default": NULL})
+     */
+    protected ?string $alias;
+
+    /**
      * @return string|null
      */
     public function getDescription(): ?string
