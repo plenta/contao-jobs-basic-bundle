@@ -143,4 +143,22 @@ class TlPlentaJobsBasicOffer extends DCADefault
 
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getAlias(): ?string
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @param string|null $alias
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setAlias(?string $alias): TlPlentaJobsBasicOffer
+    {
+        $this->alias = $alias;
+        return $this;
+    }
 }

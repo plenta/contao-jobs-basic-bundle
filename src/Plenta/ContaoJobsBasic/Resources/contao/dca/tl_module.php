@@ -11,5 +11,5 @@ declare(strict_types=1);
  */
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
-    '{title_legend},name,type'
+    '{title_legend},name,type;{redirect_legend},jumpTo'
 ;

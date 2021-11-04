@@ -1,9 +1,9 @@
 <div class="layout_default block">
     <div class="first-column">
         <div class="title">
-            <?= $this->jobOffer->getTitle(); ?>
+            <a href="<?= $this->link; ?>"><?= $this->jobOffer->getTitle(); ?></a>
         </div>
-        <div class="jobLocation">
+        <div class="job-location">
             <?= $this->jobOfferMeta['employmentTypeFormatted']; ?>
         </div>
     </div>

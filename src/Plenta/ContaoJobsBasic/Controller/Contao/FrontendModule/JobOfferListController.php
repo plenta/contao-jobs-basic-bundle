@@ -12,10 +12,13 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
+use Contao\Config;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
+use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\ModuleModel;
+use Contao\PageModel;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
@@ -64,6 +67,8 @@ class JobOfferListController extends AbstractFrontendModuleController
             $itemTemplate->jobOffer = $jobOffer;
             $itemTemplate->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
 
+            $itemTemplate->link = $this->generateJobOfferUrl($jobOffer, $model);
+
             $items[] = $itemTemplate->parse();
         }
 
@@ -72,5 +77,20 @@ class JobOfferListController extends AbstractFrontendModuleController
         $template->items = $items;
 
         return $template->getResponse();
+    }
+
+    public function generateJobOfferUrl(TlPlentaJobsBasicOffer $jobOffer, ModuleModel  $model): string
+    {
+        $objPage = $model->getRelated('jumpTo');
+
+        if (!$objPage instanceof PageModel) {
+            $url = ampersand(Environment::get('request'));
+        } else {
+            $params = (Config::get('useAutoItem') ? '/' : '/items/') . ($jobOffer->getAlias() ?: $jobOffer->getId());
+
+            $url = ampersand($objPage->getFrontendUrl($params));
+        }
+
+        return $url;
     }
 }
