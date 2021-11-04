@@ -10,8 +10,9 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
+$GLOBALS['TL_DCA']['tl_content']['palettes']['plenta_jobs_basic_job_offer_details'] = '{type_legend},type,plenta_jobs_basic_job_offer_details;{expert_legend},guests,cssID;{invisible_legend:hide},invisible,start,stop';
+
 $GLOBALS['TL_DCA']['tl_content']['fields']['plenta_jobs_basic_job_offer_details'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_content']['mycheckboxwizard'],
     'exclude' => true,
     'inputType' => 'checkboxWizard',
     'options' => [
