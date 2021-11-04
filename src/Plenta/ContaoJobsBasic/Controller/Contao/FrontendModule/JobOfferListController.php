@@ -47,6 +47,21 @@ class JobOfferListController extends AbstractFrontendModuleController
         $this->metaFieldsHelper = $metaFieldsHelper;
     }
 
+    public function generateJobOfferUrl(TlPlentaJobsBasicOffer $jobOffer, ModuleModel $model): string
+    {
+        $objPage = $model->getRelated('jumpTo');
+
+        if (!$objPage instanceof PageModel) {
+            $url = ampersand(Environment::get('request'));
+        } else {
+            $params = (Config::get('useAutoItem') ? '/' : '/items/').($jobOffer->getAlias() ?: $jobOffer->getId());
+
+            $url = ampersand($objPage->getFrontendUrl($params));
+        }
+
+        return $url;
+    }
+
     /**
      * @param Template    $template
      * @param ModuleModel $model
@@ -77,20 +92,5 @@ class JobOfferListController extends AbstractFrontendModuleController
         $template->items = $items;
 
         return $template->getResponse();
-    }
-
-    public function generateJobOfferUrl(TlPlentaJobsBasicOffer $jobOffer, ModuleModel  $model): string
-    {
-        $objPage = $model->getRelated('jumpTo');
-
-        if (!$objPage instanceof PageModel) {
-            $url = ampersand(Environment::get('request'));
-        } else {
-            $params = (Config::get('useAutoItem') ? '/' : '/items/') . ($jobOffer->getAlias() ?: $jobOffer->getId());
-
-            $url = ampersand($objPage->getFrontendUrl($params));
-        }
-
-        return $url;
     }
 }
