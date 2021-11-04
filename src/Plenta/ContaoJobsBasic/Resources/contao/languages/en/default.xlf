@@ -4,47 +4,36 @@
         <body>
             <trans-unit id="MSC.PLENTA_JOBS.FULL_TIME">
                 <source>Full time</source>
-                <target>Vollzeit</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.PART_TIME">
                 <source>Part time</source>
-                <target>Teilzeit</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.CONTRACTOR">
                 <source>Contractor</source>
-                <target>Befristet</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.TEMPORARY">
                 <source>Temporary</source>
-                <target>Leiharbeit</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.INTERN">
                 <source>Intern</source>
-                <target>Praktikum</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.VOLUNTEER">
                 <source>Volunteer</source>
-                <target>Ehrenamt</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.PER_DIEM">
                 <source>Per diem</source>
-                <target>Tageweise</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.OTHER">
                 <source>Other</source>
-                <target>Andere</target>
             </trans-unit>
             <trans-unit id="CTE.plentaJobsBasic">
                 <source>Jobs (Basic)</source>
-                <target>Jobs (Basic)</target>
             </trans-unit>
             <trans-unit id="CTE.plenta_jobs_basic_job_offer_details.0">
                 <source>Job offer details</source>
-                <target>Details zum Jobangebot</target>
             </trans-unit>
             <trans-unit id="CTE.plenta_jobs_basic_job_offer_details.1">
                 <source>Job offer details</source>
-                <target>Details zum Jobangebot</target>
             </trans-unit>
         </body>
     </file>
