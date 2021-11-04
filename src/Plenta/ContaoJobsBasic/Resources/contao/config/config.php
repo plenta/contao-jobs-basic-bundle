@@ -18,8 +18,10 @@ array_insert($GLOBALS['BE_MOD'], 1, [
         'plenta_jobs_basic_organizations' => [
             'tables' => ['tl_plenta_jobs_basic_organization', 'tl_plenta_jobs_basic_job_location'],
         ],
+        /*
         'plenta_jobs_basic_settings' => [
         ],
+        */
         'plenta_jobs_basic_support' => [
             'callback' => 'Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\Support',
         ],
