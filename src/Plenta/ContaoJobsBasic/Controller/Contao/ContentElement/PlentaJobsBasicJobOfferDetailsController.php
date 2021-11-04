@@ -92,8 +92,6 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
                 }
             }
 
-
-
             $template->jobOfferMeta = $this->getMetaFields();
             $template->jobOffer = $this->getJobOffer();
         }
