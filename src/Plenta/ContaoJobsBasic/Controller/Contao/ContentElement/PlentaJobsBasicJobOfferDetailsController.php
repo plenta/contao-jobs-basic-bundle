@@ -86,8 +86,8 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
 
     protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {
-        $metaFields = $this->getMetaFields();
         if ('FE' === TL_MODE) {
+            $metaFields = $this->getMetaFields();
             if (!empty($model->plenta_jobs_basic_job_offer_details)) {
                 $detailsSelected = StringUtil::deserialize($model->plenta_jobs_basic_job_offer_details);
 
