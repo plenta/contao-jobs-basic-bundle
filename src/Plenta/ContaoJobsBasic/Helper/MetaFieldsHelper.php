@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Helper;
 
+use Contao\Controller;
 use Contao\Date;
 use Contao\StringUtil;
 use Doctrine\Persistence\ManagerRegistry;
@@ -42,6 +43,8 @@ class MetaFieldsHelper
         $metaFields['employmentTypeFormatted'] = $this->employmentTypeHelper->getEmploymentTypesFormatted($jobOffer->getEmploymentType());
         $metaFields['locationFormatted'] = $this->formatLocation($jobOffer);
         $metaFields['addressLocalityFormatted'] = $this->formatAddressLocality($jobOffer);
+        $metaFields['title'] = Controller::replaceInsertTags($jobOffer->getTitle());
+        $metaFields['description'] = Controller::replaceInsertTags($jobOffer->getDescription());
 
         return $metaFields;
     }
