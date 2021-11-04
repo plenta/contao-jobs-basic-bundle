@@ -23,6 +23,7 @@ use Contao\StringUtil;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,10 +38,14 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 {
     protected ManagerRegistry $registry;
 
+    protected MetaFieldsHelper $metaFieldsHelper;
+
     public function __construct(
-        ManagerRegistry $registry
+        ManagerRegistry $registry,
+        MetaFieldsHelper $metaFieldsHelper
     ) {
         $this->registry = $registry;
+        $this->metaFieldsHelper = $metaFieldsHelper;
     }
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
@@ -68,7 +73,8 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $parentId = $jobOffer->getId();
 
         // Fill the template with data from the parent record
-        //$template->setData(array_merge($jobOffer->row(), $template->getData()));
+        $template->jobOffer = $jobOffer;
+        $template->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
 
         $template->content = function () use ($request, $parentId): ?string {
             // Get all the content elements belonging to this parent ID and parent table
@@ -92,7 +98,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         };
 
         $template->headline = StringUtil::stripInsertTags($jobOffer->getTitle());
-        $objPage->parentPageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
+        $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
 
         return $template->getResponse();
     }
