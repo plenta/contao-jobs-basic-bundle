@@ -77,6 +77,10 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
 
     public function renderDetails(string $data, string $class): string
     {
+        if (empty($data)) {
+            return '';
+        }
+
         return '<div class="'.$class.'">'.$data.'</div>';
     }
 
