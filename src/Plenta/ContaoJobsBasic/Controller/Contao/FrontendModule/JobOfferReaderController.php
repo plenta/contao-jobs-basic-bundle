@@ -16,8 +16,14 @@ use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
+use Contao\Input;
 use Contao\ModuleModel;
+use Contao\PageModel;
+use Contao\StringUtil;
 use Contao\Template;
+use Doctrine\Persistence\ManagerRegistry;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,27 +36,44 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class JobOfferReaderController extends AbstractFrontendModuleController
 {
+    protected ManagerRegistry $registry;
+
+    public function __construct(
+        ManagerRegistry $registry
+    ) {
+        $this->registry = $registry;
+    }
+
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
+        /** @var PageModel $objPage */
+        global $objPage;
+
         $template->referer = 'javascript:history.go(-1)';
         $template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
 
-        // Get the parent ID via a query parameter
-        $parentId = $request->query->get('example_id');
+        $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
 
-        // Get the parent record
-        $example = ExampleModel::findById($parentId);
+        $alias = Input::get('auto_item');
 
-        if (null === $example) {
+        if (!preg_match('/^[1-9]\d*$/', $alias)) {
+            $jobOffer = $jobOfferRepository->findOneBy(['alias' => $alias]);
+        } else {
+            $jobOffer = $jobOfferRepository->find($alias);
+        }
+
+        if (null === $jobOffer) {
             return new Response();
         }
 
+        $parentId = $jobOffer->getId();
+
         // Fill the template with data from the parent record
-        $template->setData(array_merge($example->row(), $template->getData()));
+        //$template->setData(array_merge($jobOffer->row(), $template->getData()));
 
         $template->content = function () use ($request, $parentId): ?string {
             // Get all the content elements belonging to this parent ID and parent table
-            $elements = ContentModel::findPublishedByPidAndTable($parentId, 'tl_example');
+            $elements = ContentModel::findPublishedByPidAndTable($parentId, 'tl_plenta_jobs_basic_offer');
 
             if (null === $elements) {
                 return null;
@@ -68,6 +91,9 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
             return $content;
         };
+
+        $template->headline = StringUtil::stripInsertTags($jobOffer->getTitle());
+        $objPage->parentPageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
 
         return $template->getResponse();
     }
