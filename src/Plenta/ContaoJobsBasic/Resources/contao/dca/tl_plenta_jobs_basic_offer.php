@@ -146,7 +146,14 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'filter' => true,
             'flag' => 1,
             'inputType' => 'checkbox',
-            'eval' => ['doNotCopy' => true],
+            'eval' => [
+                'doNotCopy' => true,
+                'isBoolean' => true
+            ],
+            'sql' => [
+                'type' => 'boolean',
+                'default' => false
+            ],
         ],
         'start' => [
             'exclude' => true,
