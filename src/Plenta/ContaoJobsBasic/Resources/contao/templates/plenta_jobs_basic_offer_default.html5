@@ -4,7 +4,7 @@
             <a href="<?= $this->link; ?>"><?= $this->jobOffer->getTitle(); ?></a>
         </div>
         <div class="job-location">
-            <?= $this->jobOfferMeta['employmentTypeFormatted']; ?>
+            <?= $this->jobOfferMeta['addressLocalityFormatted']; ?>
         </div>
     </div>
     <div class="second-column">
@@ -12,7 +12,7 @@
             <?= $this->jobOfferMeta['publicationDateFormatted']; ?>
         </div>
         <div class="employment-type">
-            <?= $this->jobOfferMeta['addressLocalityFormatted']; ?>
+            <?= $this->jobOfferMeta['employmentTypeFormatted']; ?>
         </div>
     </div>
 </div>
