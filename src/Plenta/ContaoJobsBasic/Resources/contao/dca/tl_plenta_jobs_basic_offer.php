@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{title_legend},title,alias,description;{settings_legend},jobLocation,employmentType;',
+        'default' => '{title_legend},title,alias,description;{settings_legend},jobLocation,employmentType;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
 
     // Fields
@@ -56,19 +56,28 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         ],
         'tstamp' => [
         ],
+        'title' => [
+            'inputType' => 'text',
+            'exclude' => true,
+            'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
+        ],
         'alias' => [
             'inputType' => 'text',
             'exclude' => true,
-            'eval' => ['tl_class' => 'w50 clr'],
+            'eval' => ['tl_class' => 'w50'],
             'save_callback' => [[
                 TlPlentaJobsBasicOffer::class,
                 'aliasSaveCallback',
             ]],
         ],
-        'title' => [
-            'inputType' => 'text',
+        'description' => [
             'exclude' => true,
-            'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr'],
+            'search' => true,
+            'inputType' => 'textarea',
+            'eval' => [
+                'rte' => 'tinyMCE',
+                'tl_class' => 'clr',
+            ],
         ],
         'jobLocation' => [
             'inputType' => 'select',
@@ -111,15 +120,31 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'chosen' => true,
             ],
         ],
-        'description' => [
+        'cssClass' => [
             'exclude' => true,
-            'search' => true,
-            'inputType' => 'textarea',
-            'eval' => [
-                'rte' => 'tinyMCE',
-                'tl_class' => 'clr',
-            ],
-        ], /*
+            'inputType' => 'text',
+            'eval' => ['tl_class' => 'w50'],
+            'sql' => "varchar(255) NOT NULL default ''",
+        ],
+        'published' => [
+            'exclude' => true,
+            'filter' => true,
+            'flag' => 1,
+            'inputType' => 'checkbox',
+            'eval' => ['doNotCopy' => true],
+        ],
+        'start' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+        ],
+        'stop' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+        ],
+
+        /*
         'serpPreview' => [
             'label' => &$GLOBALS['TL_LANG']['MSC']['serpPreview'],
             'exclude' => true,

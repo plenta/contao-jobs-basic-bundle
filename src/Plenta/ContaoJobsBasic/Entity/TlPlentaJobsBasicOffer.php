@@ -53,6 +53,26 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected ?string $alias;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default": false})
+     */
+    protected bool $published;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"default": ""})
+     */
+    protected string $cssClass = '';
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=false, options={"default": ""})
+     */
+    protected string $stop;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=false, options={"default": ""})
+     */
+    protected string $start;
+
+    /**
      * @return string|null
      */
     public function getDescription(): ?string
@@ -160,6 +180,86 @@ class TlPlentaJobsBasicOffer extends DCADefault
     public function setAlias(?string $alias): self
     {
         $this->alias = $alias;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStop(): string
+    {
+        return $this->stop;
+    }
+
+    /**
+     * @param string $stop
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setStop(string $stop): self
+    {
+        $this->stop = $stop;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStart(): string
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param string $start
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setStart(string $start): self
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPublished(): bool
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param bool $published
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCssClass(): string
+    {
+        return $this->cssClass;
+    }
+
+    /**
+     * @param string $cssClass
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setCssClass(string $cssClass): self
+    {
+        $this->cssClass = $cssClass;
 
         return $this;
     }

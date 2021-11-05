@@ -2,11 +2,20 @@
 <xliff version="1.1">
     <file>
         <body>
+            <trans-unit id="tl_plenta_jobs_basic_offer.title_legend">
+                <target>Stellentitel und Details</target>
+            </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.title.0">
                 <target>Jobtitel</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.title.1">
                 <target>Bitte geben Sie den Jobtitel ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.description.0">
+                <target>Stellenbeschreibung</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.description.1">
+                <target>Bitte geben sie eine aussagekräftige Stellenbeschreibung ein.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.employmentType.0">
                 <target>Stellenarten</target>
@@ -15,10 +24,40 @@
                 <target>Bitte wählen Sie ein oder mehrere Stellenarten aus.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.alias.0">
-                <target>Stellenanzeigenalias</target>
+                <target>Alias</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.alias.1">
                 <target>Der Stellenanzeigenalias ist eine eindeutige Referenz, die anstelle der numerischen Stellenanzeigen-ID aufgerufen werden kann.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.expert_legend">
+                <target>Experteneinstellungen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.cssClass.0">
+                <target>CSS-Klasse</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.cssClass.1">
+                <target>Hier können Sie eine oder mehrere Klassen eingeben.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.publish_legend">
+                <target>Veröffentlichung</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.published.0">
+                <target>Stellenangebot veröffentlichen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.published.1">
+                <target>Das Stellenangebot auf der Webseite anzeigen.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.start.0">
+                <target>Anzeigen ab</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.start.1">
+                <target>Wenn Sie ein Stellenangebot erst ab einem bestimmten Zeitpunkt auf der Webseite anzeigen möchten, können Sie diesen hier eingeben. Andernfalls lassen Sie das Feld leer.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.stop.0">
+                <target>Anzeigen bis</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.stop.1">
+                <target>Wenn Sie ein Stellenangebot nur bis zu einem bestimmten Zeitpunkt auf der Webseite anzeigen möchten, können Sie diesen hier eingeben. Andernfalls lassen Sie das Feld leer.</target>
             </trans-unit>
         </body>
     </file>
