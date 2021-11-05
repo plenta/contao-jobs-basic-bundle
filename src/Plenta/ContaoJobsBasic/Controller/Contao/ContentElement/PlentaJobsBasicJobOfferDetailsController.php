@@ -92,7 +92,13 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
                 $detailsSelected = StringUtil::deserialize($model->plenta_jobs_basic_job_offer_details);
 
                 foreach ($detailsSelected as $details) {
-                    $template->content .= $this->renderDetails($metaFields[$details], $details);
+                    $cssClass = $details;
+
+                    if ('description' === $details) {
+                        $cssClass .= ' ce_text';
+                    }
+
+                    $template->content .= $this->renderDetails($metaFields[$details], $cssClass);
                 }
             }
 
