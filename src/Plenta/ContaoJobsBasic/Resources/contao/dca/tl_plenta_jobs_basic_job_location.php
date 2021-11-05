@@ -31,6 +31,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'child_record_callback' => [TlPlentaJobsBasicJobLocation::class, 'listLocations'],
             'child_record_class' => 'no_padding',
             'panelLayout' => 'filter;sort,search,limit',
+            'disableGrouping' => true,
         ],
         'label' => [
             'fields' => [
