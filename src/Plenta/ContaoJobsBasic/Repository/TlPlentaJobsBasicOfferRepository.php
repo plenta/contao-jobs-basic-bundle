@@ -27,7 +27,15 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
 
     public function findAllPublished(): array
     {
-        return $this->findAll();
+        return $this->createQueryBuilder('a')
+            ->andwhere('a.published=:published')
+            ->andWhere('a.start<:time OR a.start=:empty')
+            ->andWhere('a.stop>:time OR a.stop=:empty')
+            ->setParameter('published', '1')
+            ->setParameter('time', time())
+            ->setParameter('empty', '')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
 
     /**
