@@ -50,7 +50,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'toggle' => [
                 'icon' => 'visible.svg',
                 'attributes' => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-                //'button_callback' => ['tl_news', 'toggleIcon'],
+                //'button_callback' => ['tl_plenta_jobs_basic_offer', 'toggleIcon'],
                 'showInHeader' => true,
             ],
             'show' => [

@@ -11,20 +11,25 @@ declare(strict_types=1);
  */
 
 use Contao\System;
+use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicJobLocation;
 
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
     // Config
     'config' => [
         'dataContainer' => 'Table',
         'ptable' => 'tl_plenta_jobs_basic_organization',
+        'switchToEdit' => true,
         'enableVersioning' => true,
     ],
 
     'list' => [
         'sorting' => [
-            'mode' => 2,
-            'fields' => ['pid'],
+            'mode' => 4,
             'flag' => 1,
+            'fields' => ['pid'],
+            'headerFields' => ['name'],
+            'child_record_callback' => [TlPlentaJobsBasicJobLocation::class, 'listLocations'],
+            'child_record_class' => 'no_padding',
             'panelLayout' => 'filter;sort,search,limit',
         ],
         'label' => [
@@ -86,6 +91,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'inputType' => 'text',
             'default' => '',
             'eval' => [
+                'mandatory' => true,
                 'maxlength' => 255,
                 'tl_class' => 'w50 clr',
             ],
@@ -95,6 +101,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'inputType' => 'text',
             'default' => '',
             'eval' => [
+                'mandatory' => true,
                 'maxlength' => 255,
                 'tl_class' => 'w50',
             ],
@@ -113,6 +120,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'inputType' => 'select',
             'options' => System::getCountries(),
             'eval' => [
+                'mandatory' => true,
                 'includeBlankOption' => true,
                 'chosen' => true,
                 'tl_class' => 'w50',
