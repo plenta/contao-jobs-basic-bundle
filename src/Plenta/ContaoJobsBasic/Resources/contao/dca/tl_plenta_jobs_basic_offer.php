@@ -42,6 +42,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'href' => 'act=edit',
                 'icon' => 'header.svg',
             ],
+            'copy' => [
+                'href' => 'act=copy',
+                'icon' => 'copy.svg',
+            ],
             'delete' => [
                 'href' => 'act=delete',
                 'icon' => 'delete.svg',
@@ -50,7 +54,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'toggle' => [
                 'icon' => 'visible.svg',
                 'attributes' => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-                //'button_callback' => ['tl_news', 'toggleIcon'],
+                //'button_callback' => ['tl_plenta_jobs_basic_offer', 'toggleIcon'],
                 'showInHeader' => true,
             ],
             'show' => [
@@ -165,15 +169,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
         ],
-
         /*
         'serpPreview' => [
-            'label' => &$GLOBALS['TL_LANG']['MSC']['serpPreview'],
             'exclude' => true,
             'inputType' => 'serpPreview',
             'eval' => [
-                'titleFields' => ['pageTitle', 'title'],
-                'descriptionFields' => ['description', 'teaser'],
+                'titleFields' => ['title'],
+                'descriptionFields' => ['teaser'],
                 //'title_tag_callback' => ['tl_page', 'getTitleTag'],
                 //'url_callback' => ['tl_page', 'getSerpUrl']
             ],

@@ -6,6 +6,9 @@ services:
             - '@Doctrine\Persistence\ManagerRegistry'
             - '@contao.slug'
 
+    Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicJobLocation:
+        public: true
+
     # Contao Hooks
     Plenta\ContaoJobsBasic\EventListener\Contao\DCA\SetPtableForContentListener:
         tags:
