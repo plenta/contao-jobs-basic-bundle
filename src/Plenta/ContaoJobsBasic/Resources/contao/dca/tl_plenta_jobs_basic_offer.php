@@ -38,6 +38,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'href' => 'table=tl_content',
                 'icon' => 'edit.svg',
             ],
+            'copy' => [
+                'href' => 'act=copy',
+                'icon' => 'copy.svg',
+            ],
             'editheader' => [
                 'href' => 'act=edit',
                 'icon' => 'header.svg',
