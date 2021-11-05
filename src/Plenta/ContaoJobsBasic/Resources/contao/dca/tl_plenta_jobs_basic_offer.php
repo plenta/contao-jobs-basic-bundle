@@ -38,13 +38,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'href' => 'table=tl_content',
                 'icon' => 'edit.svg',
             ],
-            'copy' => [
-                'href' => 'act=copy',
-                'icon' => 'copy.svg',
-            ],
             'editheader' => [
                 'href' => 'act=edit',
                 'icon' => 'header.svg',
+            ],
+            'copy' => [
+                'href' => 'act=copy',
+                'icon' => 'copy.svg',
             ],
             'delete' => [
                 'href' => 'act=delete',
@@ -162,15 +162,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
         ],
-
         /*
         'serpPreview' => [
-            'label' => &$GLOBALS['TL_LANG']['MSC']['serpPreview'],
             'exclude' => true,
             'inputType' => 'serpPreview',
             'eval' => [
-                'titleFields' => ['pageTitle', 'title'],
-                'descriptionFields' => ['description', 'teaser'],
+                'titleFields' => ['title'],
+                'descriptionFields' => ['teaser'],
                 //'title_tag_callback' => ['tl_page', 'getTitleTag'],
                 //'url_callback' => ['tl_page', 'getSerpUrl']
             ],
