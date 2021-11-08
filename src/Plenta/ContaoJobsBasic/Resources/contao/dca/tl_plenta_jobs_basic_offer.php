@@ -169,18 +169,5 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
         ],
-        /*
-        'serpPreview' => [
-            'exclude' => true,
-            'inputType' => 'serpPreview',
-            'eval' => [
-                'titleFields' => ['title'],
-                'descriptionFields' => ['teaser'],
-                //'title_tag_callback' => ['tl_page', 'getTitleTag'],
-                //'url_callback' => ['tl_page', 'getSerpUrl']
-            ],
-            'sql' => null,
-        ],
-        */
     ],
 ];

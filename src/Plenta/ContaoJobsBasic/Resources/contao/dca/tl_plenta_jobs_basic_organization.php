@@ -66,14 +66,22 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
             'exclude' => true,
             'inputType' => 'text',
             'default' => '',
-            'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr'],
+            'eval' => [
+                'maxlength' => 255,
+                'tl_class' => 'w50 clr',
+                'mandatory' => true,
+            ],
         ],
         'sameAs' => [
             'label' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_organization']['sameAs'],
             'exclude' => true,
             'inputType' => 'text',
             'default' => '',
-            'eval' => ['maxlength' => 255, 'tl_class' => 'w50 clr'],
+            'eval' => [
+                'maxlength' => 255,
+                'tl_class' => 'w50 clr',
+                'rgxp' => 'url',
+            ],
         ],
     ],
 ];

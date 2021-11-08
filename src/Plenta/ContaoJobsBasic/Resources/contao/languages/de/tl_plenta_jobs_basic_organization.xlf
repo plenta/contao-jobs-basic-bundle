@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file>
+        <body>
+            <trans-unit id="tl_plenta_jobs_basic_organization.settings_legend">
+                <target>Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_organization.name.0">
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_organization.name.1">
+                <target>Bitte geben Sie den Name des Unternehmens ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_organization.sameAs.0">
+                <target>Unternehmens-Url</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_organization.sameAs.1">
+                <target>Bitte geben Sie die Website-Adresse des Unternehmens ein.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

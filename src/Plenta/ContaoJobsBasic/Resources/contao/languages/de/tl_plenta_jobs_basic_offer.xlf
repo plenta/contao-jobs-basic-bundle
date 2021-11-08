@@ -5,6 +5,9 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.title_legend">
                 <target>Stellentitel und Details</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.settings_legend">
+                <target>Einstellungen</target>
+            </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.title.0">
                 <target>Stellentitel</target>
             </trans-unit>
@@ -60,12 +63,16 @@
                 <target>Wenn Sie ein Stellenangebot nur bis zu einem bestimmten Zeitpunkt auf der Webseite anzeigen möchten, können Sie diesen hier eingeben. Andernfalls lassen Sie das Feld leer.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.tstamp.0">
-                <source>Revision date</source>
                 <target>Änderungsdatum</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.tstamp.1">
-                <source>Date and time of the latest revision</source>
                 <target>Datum und Uhrzeit der letzten Änderung</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.jobLocation.0">
+                <target>Arbeitsort</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.jobLocation.1">
+                <target>Bitte wählen Sie ein Arbeitsort aus.</target>
             </trans-unit>
         </body>
     </file>
