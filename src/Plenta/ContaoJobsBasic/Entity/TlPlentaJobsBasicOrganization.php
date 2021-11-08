@@ -89,4 +89,22 @@ class TlPlentaJobsBasicOrganization extends DCADefault
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getSameAs(): string
+    {
+        return $this->sameAs;
+    }
+
+    /**
+     * @param string $sameAs
+     * @return TlPlentaJobsBasicOrganization
+     */
+    public function setSameAs(string $sameAs): TlPlentaJobsBasicOrganization
+    {
+        $this->sameAs = $sameAs;
+        return $this;
+    }
 }
