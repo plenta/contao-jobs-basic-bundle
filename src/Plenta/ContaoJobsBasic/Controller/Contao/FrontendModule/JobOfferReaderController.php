@@ -98,6 +98,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         };
 
         $template->headline = StringUtil::stripInsertTags($jobOffer->getTitle());
+        $template->hl = $model->plentaJobsBasicHeadlineTag;
         $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
 
         return $template->getResponse();

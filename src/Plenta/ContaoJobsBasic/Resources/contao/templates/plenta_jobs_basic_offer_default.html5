@@ -1,8 +1,8 @@
 <div class="layout_default block">
     <div class="first-column">
-        <div class="title">
+        <<?= $this->headlineUnit; ?> class="title">
             <a href="<?= $this->link; ?>"><?= $this->jobOffer->getTitle(); ?></a>
-        </div>
+        </<?= $this->headlineUnit; ?>>
         <div class="job-location">
             <?= $this->jobOfferMeta['addressLocalityFormatted']; ?>
         </div>

@@ -81,6 +81,7 @@ class JobOfferListController extends AbstractFrontendModuleController
             $itemTemplate = new FrontendTemplate('plenta_jobs_basic_offer_default');
             $itemTemplate->jobOffer = $jobOffer;
             $itemTemplate->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
+            $itemTemplate->headlineUnit = $model->plentaJobsBasicHeadlineTag;
 
             $itemTemplate->link = $this->generateJobOfferUrl($jobOffer, $model);
 
