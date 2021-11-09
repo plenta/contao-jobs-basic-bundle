@@ -52,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{settings_legend},name,sameAs;',
+        'default' => '{settings_legend},name,sameAs;{logo_legend},singleSRC',
     ],
 
     // Fields
@@ -81,6 +81,15 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
                 'maxlength' => 255,
                 'tl_class' => 'w50 clr',
                 'rgxp' => 'url',
+            ],
+        ],
+        'singleSRC' => [
+            'exclude' => true,
+            'inputType' => 'fileTree',
+            'eval' => [
+                'fieldType' => 'radio',
+                'filesOnly' => true,
+                'extensions' => Contao\Config::get('validImageTypes'),
             ],
         ],
     ],

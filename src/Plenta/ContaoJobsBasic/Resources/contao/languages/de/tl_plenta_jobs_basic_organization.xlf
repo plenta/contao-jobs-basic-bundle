@@ -17,6 +17,15 @@
             <trans-unit id="tl_plenta_jobs_basic_organization.sameAs.1">
                 <target>Bitte geben Sie die Website-Adresse des Unternehmens ein.</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_organization.logo_legend">
+                <target>Firmenlogo</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_organization.singleSRC.0">
+                <target>Firmenlogo</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_organization.singleSRC.1">
+                <target>Bitte wählen Sie eine Datei aus der Dateiübersicht.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

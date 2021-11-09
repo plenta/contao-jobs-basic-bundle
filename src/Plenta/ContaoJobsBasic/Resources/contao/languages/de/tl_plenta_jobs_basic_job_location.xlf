@@ -2,6 +2,9 @@
 <xliff version="1.1">
     <file>
         <body>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.address_legend">
+                <target>Adressdaten</target>
+            </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_job_location.streetAddress.0">
                 <target>Straße/Hausnummer</target>
             </trans-unit>
@@ -31,6 +34,15 @@
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_job_location.addressCountry.1">
                 <target>Bitte wählen Sie ein Land aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.logo_legend">
+                <target>Firmenlogo</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.singleSRC.0">
+                <target>Firmenlogo</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.singleSRC.1">
+                <target>Bitte wählen Sie eine Datei aus der Dateiübersicht.</target>
             </trans-unit>
         </body>
     </file>

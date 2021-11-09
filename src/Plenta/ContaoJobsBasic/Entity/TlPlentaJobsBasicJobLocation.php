@@ -59,6 +59,11 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     protected string $jobTypeLocation = 'onPremise';
 
     /**
+     * @ORM\Column (type="binary_string", nullable=true, options={"default": NULL})
+     */
+    protected ?string $singleSRC;
+
+    /**
      * @return TlPlentaJobsBasicOrganization
      */
     public function getOrganization(): TlPlentaJobsBasicOrganization
@@ -194,6 +199,26 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     public function setJobTypeLocation(string $jobTypeLocation): self
     {
         $this->jobTypeLocation = $jobTypeLocation;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSingleSRC(): ?string
+    {
+        return $this->singleSRC;
+    }
+
+    /**
+     * @param string|null $singleSRC
+     *
+     * @return TLWuerthEyeCatcher
+     */
+    public function setSingleSRC(?string $singleSRC): self
+    {
+        $this->singleSRC = $singleSRC;
 
         return $this;
     }

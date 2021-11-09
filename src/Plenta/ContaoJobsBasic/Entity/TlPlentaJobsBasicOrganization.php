@@ -45,6 +45,11 @@ class TlPlentaJobsBasicOrganization extends DCADefault
      */
     protected Collection $jobLocation;
 
+    /**
+     * @ORM\Column (type="binary_string", nullable=true, options={"default": NULL})
+     */
+    protected ?string $singleSRC;
+
     public function __construct()
     {
         $this->jobLocation = new ArrayCollection();
@@ -105,6 +110,26 @@ class TlPlentaJobsBasicOrganization extends DCADefault
     public function setSameAs(string $sameAs): TlPlentaJobsBasicOrganization
     {
         $this->sameAs = $sameAs;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSingleSRC(): ?string
+    {
+        return $this->singleSRC;
+    }
+
+    /**
+     * @param string|null $singleSRC
+     *
+     * @return TLWuerthEyeCatcher
+     */
+    public function setSingleSRC(?string $singleSRC): self
+    {
+        $this->singleSRC = $singleSRC;
+
         return $this;
     }
 }
