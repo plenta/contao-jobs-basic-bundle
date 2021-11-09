@@ -3,6 +3,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            $projectDir: '%kernel.project_dir%'
 
     Plenta\ContaoJobsBasic\:
         resource: ../../../../../src/Plenta/ContaoJobsBasic/*

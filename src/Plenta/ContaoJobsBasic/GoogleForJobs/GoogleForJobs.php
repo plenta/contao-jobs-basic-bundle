@@ -12,19 +12,39 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\GoogleForJobs;
 
+use Contao\CoreBundle\Asset\ContaoContext;
+use Contao\CoreBundle\Image\PictureFactory;
+use Contao\Environment;
+use Contao\FilesModel;
+use Contao\Image\PictureConfiguration;
+use Contao\Image\PictureConfigurationItem;
+use Contao\Image\ResizeConfiguration;
 use Contao\StringUtil;
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization;
 
 class GoogleForJobs
 {
     protected ManagerRegistry $registry;
 
+    protected PictureFactory $pictureFactory;
+
+    protected ContaoContext $contaoFileContext;
+
+    protected string $projectDir;
+
     public function __construct(
-        ManagerRegistry $registry
+        ManagerRegistry $registry,
+        PictureFactory $pictureFactory,
+        ContaoContext $contaoFileContext,
+        string $projectDir
     ) {
         $this->registry = $registry;
+        $this->pictureFactory = $pictureFactory;
+        $this->contaoFileContext = $contaoFileContext;
+        $this->projectDir = $projectDir;
     }
 
     public function generateStructuredData(?TlPlentaJobsBasicOffer $jobOffer): ?string
@@ -69,18 +89,16 @@ class GoogleForJobs
         $jobLocationIds = $jobOffer->getJobLocation();
         $jobLocationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
 
-        $structuredDataTemp = [];
-
         if (null !== $jobLocationIds) {
             $jobLocations = StringUtil::deserialize($jobLocationIds);
 
             $jobLocation = $jobLocationRepository->find($jobLocations[0]);
             $hiringOrganization = $jobLocation->getOrganization();
 
-            $arrStructuredData['hiringOrganization'] = [];
-            $arrStructuredData['hiringOrganization']['@type'] = 'Organization';
+            $structuredData['hiringOrganization'] = [];
+            $structuredData['hiringOrganization']['@type'] = 'Organization';
 
-            $arrStructuredData['hiringOrganization']['name'] = StringUtil::restoreBasicEntities($hiringOrganization->getName());
+            $structuredData['hiringOrganization']['name'] = StringUtil::restoreBasicEntities($hiringOrganization->getName());
 
             if ('' !== $hiringOrganization->getSameAs()) {
                 $sameAs = $hiringOrganization->getSameAs();
@@ -89,8 +107,47 @@ class GoogleForJobs
                     $sameAs = 'https://'.$sameAs;
                 }
 
-                $arrStructuredData['hiringOrganization']['sameAs'] = $sameAs;
+                $structuredData['hiringOrganization']['sameAs'] = $sameAs;
             }
+
+            $structuredData = $this->generateLogo($hiringOrganization, $structuredData);
+        }
+
+        return $structuredData;
+    }
+
+    public function generateLogo(TlPlentaJobsBasicOrganization $hiringOrganization, array $structuredData): array
+    {
+        $uuid = $hiringOrganization->getLogo();
+
+        if (null !== $uuid) {
+            $image = FilesModel::findByUuid($uuid);
+            $staticUrl = $this->contaoFileContext->getStaticUrl();
+
+            $imageConfigItem = new PictureConfigurationItem();
+            $resizeConfig = new ResizeConfiguration();
+            $pictureConfiguration = new PictureConfiguration();
+
+            // Set sizes
+            $resizeConfig->setWidth(700);
+            $resizeConfig->setHeight(700);
+            $resizeConfig->setZoomLevel(100);
+            $resizeConfig->setMode(ResizeConfiguration::MODE_PROPORTIONAL);
+            $pictureConfiguration->setSize($imageConfigItem->setResizeConfig($resizeConfig));
+
+            $pictureConfiguration->setFormats([
+                'svg' => ['png'],
+            ]);
+
+            // Create Contao picture factory object
+            $picture = $this->pictureFactory->create(
+                $this->projectDir.'/'.$image->path,
+                $pictureConfiguration
+            );
+
+            $imgSrc = $picture->getImg($this->projectDir, $staticUrl)['src'];
+
+            $structuredData['hiringOrganization']['logo'] = Environment::get('url').'/'.$imgSrc;
         }
 
         return $structuredData;
