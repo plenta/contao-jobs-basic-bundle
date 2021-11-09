@@ -45,14 +45,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
             'editheader' => [
                 'href' => 'act=edit',
                 'icon' => 'header.svg',
-                //'button_callback'     => array('tl_news_archive', 'editHeader')
             ],
         ],
     ],
 
     // Palettes
     'palettes' => [
-        'default' => '{settings_legend},name,sameAs;{logo_legend},singleSRC',
+        'default' => '{organization_legend},name,sameAs;{logo_legend},logo',
     ],
 
     // Fields
@@ -83,7 +82,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
                 'rgxp' => 'url',
             ],
         ],
-        'singleSRC' => [
+        'logo' => [
             'exclude' => true,
             'inputType' => 'fileTree',
             'eval' => [

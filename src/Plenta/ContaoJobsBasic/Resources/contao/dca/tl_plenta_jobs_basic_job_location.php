@@ -54,12 +54,21 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
                 'href' => 'act=edit',
                 'icon' => 'edit.svg',
             ],
+            'delete' => [
+                'href' => 'act=delete',
+                'icon' => 'delete.svg',
+                'attributes' => 'onclick="if(!confirm(\''.$GLOBALS['TL_LANG']['MSC']['deleteConfirm'].'\'))return false;Backend.getScrollOffset()"',
+            ],
+            'show' => [
+                'href' => 'act=show',
+                'icon' => 'show.svg',
+            ],
         ],
     ],
 
     // Palettes
     'palettes' => [
-        'default' => '{address_legend},organization,streetAddress,postalCode,addressLocality,addressRegion,addressCountry;{logo_legend},singleSRC',
+        'default' => '{address_legend},organization,streetAddress,postalCode,addressLocality,addressRegion,addressCountry;{logo_legend},logo',
     ],
 
     // Fields
@@ -127,7 +136,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
                 'tl_class' => 'w50',
             ],
         ],
-        'singleSRC' => [
+        'logo' => [
             'exclude' => true,
             'inputType' => 'fileTree',
             'eval' => [

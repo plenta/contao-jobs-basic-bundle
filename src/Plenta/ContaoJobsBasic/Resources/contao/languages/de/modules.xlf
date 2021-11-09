@@ -22,10 +22,10 @@
                 <target>Unternehmen verwalten</target>
             </trans-unit>
             <trans-unit id="MOD.tl_plenta_jobs_basic_job_location">
-                <target>Arbeitsort</target>
+                <target>Standort</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_location.0">
-                <target>Arbeitsorte</target>
+                <target>Standorte</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_location.1">
                 <target>Arbeitsorte verwalten</target>

@@ -37,18 +37,13 @@ class TlPlentaJobsBasicOrganization extends DCADefault
     /**
      * @ORM\Column (type="binary_string", nullable=true, options={"default": NULL})
      */
-    protected string $logoUUID;
+    protected string $logo;
 
     /**
      * @var Collection|TlPlentaJobsBasicJobLocation[]
      * @ORM\OneToMany(targetEntity="Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation", mappedBy="organization")
      */
     protected Collection $jobLocation;
-
-    /**
-     * @ORM\Column (type="binary_string", nullable=true, options={"default": NULL})
-     */
-    protected ?string $singleSRC;
 
     public function __construct()
     {
@@ -116,9 +111,9 @@ class TlPlentaJobsBasicOrganization extends DCADefault
     /**
      * @return string|null
      */
-    public function getSingleSRC(): ?string
+    public function getLogo(): ?string
     {
-        return $this->singleSRC;
+        return $this->logo;
     }
 
     /**
@@ -126,9 +121,9 @@ class TlPlentaJobsBasicOrganization extends DCADefault
      *
      * @return TLWuerthEyeCatcher
      */
-    public function setSingleSRC(?string $singleSRC): self
+    public function setSingleSRC(?string $logo): self
     {
-        $this->singleSRC = $singleSRC;
+        $this->logo = $logo;
 
         return $this;
     }

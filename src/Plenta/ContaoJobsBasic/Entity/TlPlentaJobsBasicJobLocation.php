@@ -61,7 +61,7 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     /**
      * @ORM\Column (type="binary_string", nullable=true, options={"default": NULL})
      */
-    protected ?string $singleSRC;
+    protected ?string $logo;
 
     /**
      * @return TlPlentaJobsBasicOrganization
@@ -206,9 +206,9 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     /**
      * @return string|null
      */
-    public function getSingleSRC(): ?string
+    public function getLogo(): ?string
     {
-        return $this->singleSRC;
+        return $this->logo;
     }
 
     /**
@@ -216,9 +216,9 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
      *
      * @return TLWuerthEyeCatcher
      */
-    public function setSingleSRC(?string $singleSRC): self
+    public function setSingleSRC(?string $logo): self
     {
-        $this->singleSRC = $singleSRC;
+        $this->logo = $logo;
 
         return $this;
     }
