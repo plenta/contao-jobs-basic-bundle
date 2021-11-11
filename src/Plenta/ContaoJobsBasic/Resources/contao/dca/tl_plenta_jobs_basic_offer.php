@@ -146,6 +146,22 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'clr w50 wizard'],
         ],
 
+        'url' => [
+            'label' => &$GLOBALS['TL_LANG']['MSC']['url'],
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => [
+                'mandatory' => true,
+                'rgxp' => 'url',
+                'decodeEntities' => true,
+                'maxlength' => 255,
+                'dcaPicker' => true,
+                'addWizardClass' => false,
+                'tl_class' => 'w50'
+            ],
+            'sql' => "varchar(255) NOT NULL default ''",
+        ],
+
         'cssClass' => [
             'exclude' => true,
             'inputType' => 'text',

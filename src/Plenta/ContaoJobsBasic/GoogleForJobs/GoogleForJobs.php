@@ -85,7 +85,7 @@ class GoogleForJobs
             return null;
         }
 
-        return $json;
+        return '<script type="application/ld+json">'.$json.'</script>';
     }
 
     public function generateHiringOrganization(TlPlentaJobsBasicOffer $jobOffer, array $structuredData): array
@@ -114,7 +114,7 @@ class GoogleForJobs
                 $structuredData['hiringOrganization']['sameAs'] = $sameAs;
             }
 
-            $structuredData = $this->generateLogo($hiringOrganization, $structuredData);
+            //$structuredData = $this->generateLogo($hiringOrganization, $structuredData);
         }
 
         return $structuredData;

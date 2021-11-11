@@ -3,8 +3,6 @@ services:
         autowire: true
         autoconfigure: true
         public: false
-        bind:
-            $projectDir: '%kernel.project_dir%'
 
     Plenta\ContaoJobsBasic\:
         resource: ../../../../../src/Plenta/ContaoJobsBasic/*
@@ -14,3 +12,11 @@ services:
         class: Plenta\ContaoJobsBasic\Helper\EmploymentType
         arguments:
             - '@translator'
+
+    Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs:
+        class: Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+            - '@contao.image.picture_factory'
+            - '@contao.assets.files_context'
+            - '%kernel.project_dir%'

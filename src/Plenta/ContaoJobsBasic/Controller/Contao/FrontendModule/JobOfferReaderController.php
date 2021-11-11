@@ -23,6 +23,7 @@ use Contao\StringUtil;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,12 +41,16 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     protected MetaFieldsHelper $metaFieldsHelper;
 
+    protected GoogleForJobs $googleForJobs;
+
     public function __construct(
         ManagerRegistry $registry,
-        MetaFieldsHelper $metaFieldsHelper
+        MetaFieldsHelper $metaFieldsHelper,
+        GoogleForJobs $googleForJobs
     ) {
         $this->registry = $registry;
         $this->metaFieldsHelper = $metaFieldsHelper;
+        $this->googleForJobs = $googleForJobs;
     }
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
@@ -100,6 +105,12 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template->headline = StringUtil::stripInsertTags($jobOffer->getTitle());
         $template->hl = $model->plentaJobsBasicHeadlineTag;
         $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
+
+        $meta = $this->googleForJobs->generateStructuredData($jobOffer);
+        
+        if (null !== $meta) {
+            $GLOBALS['TL_BODY'][] = $meta;
+        }
 
         return $template->getResponse();
     }
