@@ -107,7 +107,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
 
         $meta = $this->googleForJobs->generateStructuredData($jobOffer);
-        
+
         if (null !== $meta) {
             $GLOBALS['TL_BODY'][] = $meta;
         }
