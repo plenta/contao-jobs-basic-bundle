@@ -58,6 +58,10 @@ class GoogleForJobs
         $arrStructuredData['title'] = StringUtil::restoreBasicEntities($jobOffer->getTitle());
         $arrStructuredData['datePosted'] = date('c', (int) $jobOffer->getDatePosted());
 
+        if (!empty($jobOffer->getValidThrough())) {
+            $arrStructuredData['validThrough'] = date('Y-m-d\TH:i:sP', (int) $jobOffer->getValidThrough());
+        }
+
         if ($description = null !== $this->sanitizeDescription($jobOffer->getDescription())) {
             $arrStructuredData['description'] = $description;
         }

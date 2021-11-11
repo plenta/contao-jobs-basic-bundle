@@ -66,7 +66,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{title_legend},title,alias,description;{settings_legend},jobLocation,employmentType;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        'default' => '{title_legend},title,alias,description;{settings_legend},jobLocation,employmentType,validThrough;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
 
     // Fields
@@ -139,6 +139,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'chosen' => true,
             ],
         ],
+
+        'validThrough' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'clr w50 wizard'],
+        ],
+
         'cssClass' => [
             'exclude' => true,
             'inputType' => 'text',

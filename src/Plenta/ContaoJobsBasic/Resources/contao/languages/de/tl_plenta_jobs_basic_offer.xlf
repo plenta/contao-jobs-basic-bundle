@@ -6,7 +6,7 @@
                 <target>Stellentitel und Details</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.settings_legend">
-                <target>Einstellungen</target>
+                <target>Eigenschaften</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.title.0">
                 <target>Stellentitel</target>
@@ -73,6 +73,12 @@
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.jobLocation.1">
                 <target>Bitte wählen Sie ein Arbeitsort aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.validThrough.0">
+                <target>Bewerbungsfrist</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.validThrough.1">
+                <target>Diese Angabe ist nur für Stellenausschreibungen mit Bewerbungsfrist erforderlich.</target>
             </trans-unit>
         </body>
     </file>

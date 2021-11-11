@@ -65,12 +65,19 @@ class TlPlentaJobsBasicOffer extends DCADefault
     /**
      * @ORM\Column(type="string", length=10, nullable=false, options={"default": ""})
      */
-    protected string $stop;
+    protected string $validThrough;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=false, options={"default": ""})
      */
     protected string $start;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=false, options={"default": ""})
+     */
+    protected string $stop;
+
+
 
     /**
      * @return string|null
@@ -187,19 +194,19 @@ class TlPlentaJobsBasicOffer extends DCADefault
     /**
      * @return string
      */
-    public function getStop(): string
+    public function getValidThrough(): string
     {
-        return $this->stop;
+        return $this->validThrough;
     }
 
     /**
-     * @param string $stop
+     * @param string $start
      *
      * @return TlPlentaJobsBasicOffer
      */
-    public function setStop(string $stop): self
+    public function setValidThrough(string $validThrough): self
     {
-        $this->stop = $stop;
+        $this->validThrough = $validThrough;
 
         return $this;
     }
@@ -220,6 +227,26 @@ class TlPlentaJobsBasicOffer extends DCADefault
     public function setStart(string $start): self
     {
         $this->start = $start;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStop(): string
+    {
+        return $this->stop;
+    }
+
+    /**
+     * @param string $stop
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setStop(string $stop): self
+    {
+        $this->stop = $stop;
 
         return $this;
     }
