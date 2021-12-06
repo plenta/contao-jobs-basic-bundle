@@ -2,4 +2,6 @@
 
 <?php $this->block('content'); ?>
 
+<?= $this->types ?>
+
 <?php $this->endblock(); ?>
