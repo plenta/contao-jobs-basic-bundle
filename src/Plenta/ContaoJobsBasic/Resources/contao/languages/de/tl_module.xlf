@@ -8,6 +8,12 @@
             <trans-unit id="tl_module.plentaJobsBasicHeadlineTag.1">
                 <target>Bitte wählen Sie ein Überschriftentyp aus.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsShowQuantity.0">
+                <target>Anzahl der Stellenangebote anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsShowQuantity.1">
+                <target>Die Anzahl der Stellenangebote eines jeden Typens anzeigen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
