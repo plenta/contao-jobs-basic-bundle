@@ -12,21 +12,12 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
-use Contao\ContentModel;
-use Contao\Controller;
-use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
-use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
-use Contao\Input;
-use Contao\ModuleModel;
-use Contao\PageModel;
-use Contao\StringUtil;
 use Contao\Template;
-use Doctrine\Persistence\ManagerRegistry;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
-use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
-use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
+use Contao\ModuleModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
+use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 
 /**
  * @FrontendModule("plenta_jobs_basic_filter_reader",
