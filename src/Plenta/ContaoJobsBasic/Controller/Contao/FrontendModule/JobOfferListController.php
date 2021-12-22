@@ -85,7 +85,7 @@ class JobOfferListController extends AbstractFrontendModuleController
 
             $itemTemplate->link = $this->generateJobOfferUrl($jobOffer, $model);
 
-            $items[] = $itemTemplate->parse();
+             $itemTemplate->parse();
         }
 
         $template->empty = 'Es sind momentan keine Stellenanzeigen vorhanden.';

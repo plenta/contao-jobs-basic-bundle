@@ -70,11 +70,11 @@
                 <source>Job offer reader</source>
                 <target>Details des Stellenangebots</target>
             </trans-unit>
-            <trans-unit id="FMD.plenta_jobs_basic_filter_reader.0">
+            <trans-unit id="FMD.plenta_jobs_basic_filter.0">
                 <source>Job offer filter</source>
                 <target>Filter für Stellenangebote</target>
             </trans-unit>
-            <trans-unit id="FMD.plenta_jobs_basic_filter_reader.1">
+            <trans-unit id="FMD.plenta_jobs_basic_filter.1">
                 <source>Job offer filter</source>
                 <target>Filter für Stellenangebote</target>
             </trans-unit>
