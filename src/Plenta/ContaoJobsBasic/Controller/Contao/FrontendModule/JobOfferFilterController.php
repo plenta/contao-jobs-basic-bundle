@@ -59,10 +59,19 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
+        if (0 !== (int) $model->jumpTo) {
+            $form->setFormActionFromPageId($model->jumpTo);
+        }
+
         $form->addFormField('types', [
             'inputType' => 'checkbox',
             'options' => $this->getTypes($model),
             'eval' => ['multiple' => true]
+        ]);
+
+        $form->addFormField('submit', [
+            'label' => $model->plentaJobsSubmit,
+            'inputType' => 'submit'
         ]);
 
         $template->form = $form->generate();

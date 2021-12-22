@@ -20,6 +20,12 @@
             <trans-unit id="tl_module.plentaJobsShowQuantity.1">
                 <target>Die Anzahl der Stellenangebote pri Stellenart anzeigen.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsSubmit.0">
+                <target>Bezeichnung der Absende-Schaltfläche</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsSubmit.1">
+                <target>Bitte geben Sie die Bezeichnung der Absende-Schaltfläche ein.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
