@@ -2,6 +2,6 @@
 
 <?php $this->block('content'); ?>
 
-<?= $this->types ?>
+<?= $this->form ?>
 
 <?php $this->endblock(); ?>

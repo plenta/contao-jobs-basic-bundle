@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
+use Contao\Input;
+use Haste\Form\Form as HasteForm;
 use Contao\Template;
 use Contao\ModuleModel;
 use Contao\FormCheckBox;
@@ -53,19 +55,48 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-        $tmpModel = new ModuleModel();
-        $tmpModel->tstamp = time();
+        $form = new HasteForm('someid', 'POST', function($objHaste) {
+            return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
+        });
 
-        $checkbox = new FormCheckBox($tmpModel);
-        $checkbox->options = $this->getTypes($model);
-        $checkbox->eval = ['multiple'=>true];
+        $form->addFormField('types', [
+            'inputType' => 'checkbox',
+            'options' => $this->getTypes($model),
+            'eval' => ['multiple' => true]
+        ]);
 
-        $template->types = $checkbox->generate();
+        $template->form = $form->generate();
 
         return $template->getResponse();
     }
 
     public function getTypes(ModuleModel $model): ?array
+    {
+        $options = [];
+        $employmentTypes = [];
+        $employmentTypeHelper = $this->employmentTypeHelper;
+        $this->getAllOffers();
+
+        foreach ($employmentTypeHelper->getEmploymentTypes() as $employmentType) {
+            $employmentTypes[$employmentType] = $employmentTypeHelper->getEmploymentTypeName($employmentType);
+        }
+
+        if (array_is_assoc($employmentTypes)) {
+            foreach ($employmentTypes as $k => $v) {
+                if (true !== (bool) $model->plentaJobsShowAllTypes) {
+                    if (!array_key_exists($k, $this->counterEmploymentType)) {
+                        continue;
+                    }
+                }
+
+                $options[$k] = $v.$this->addItemCounter($model, $k);
+            }
+        }
+
+        return $options;
+    }
+
+    public function getTypesOld(ModuleModel $model): ?array
     {
         $options = [];
         $employmentTypes = [];
