@@ -63,7 +63,7 @@ class JobOfferListController extends AbstractFrontendModuleController
     {
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
 
-        if ($request->query->has('types') && !empty($request->query->has('types'))) {
+        if ($request->query->has('types') && is_array($request->query->get('types'))) {
             $jobOffers = $jobOfferRepository->findAllPublishedByTypes($request->query->get('types'));
         } else {
             $jobOffers = $jobOfferRepository->findAllPublished();
