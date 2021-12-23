@@ -55,7 +55,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-        $form = new HasteForm('someid', 'POST', function($objHaste) {
+        $form = new HasteForm('someid', 'GET', function($objHaste) {
             return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 

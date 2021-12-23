@@ -58,4 +58,30 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
 
         return false;
     }
+
+    public function findAllPublishedByTypes(array $types): array
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb
+            ->andwhere('a.published=:published')
+            ->andWhere('a.start<:time OR a.start=:empty')
+            ->andWhere('a.stop>:time OR a.stop=:empty')
+            ->setParameter('published', '1')
+            ->setParameter('time', time())
+            ->setParameter('empty', '')
+        ;
+
+        $criterion = [];
+
+        foreach ($types as $type) {
+            $criterion[] = "a.employmentType LIKE '%".$type."%'";
+        }
+
+        if (count($criterion)) {
+            $qb->andWhere(implode(' OR ', $criterion));
+        }
+
+        return $qb->getQuery()->getResult(AbstractQuery::HYDRATE_OBJECT);
+    }
 }
