@@ -35,6 +35,9 @@
             <trans-unit id="CTE.plenta_jobs_basic_job_offer_details.1">
                 <target>Details zum Jobangebot</target>
             </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.emptyList">
+                <target>Es sind momentan keine Stellenanzeigen vorhanden.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

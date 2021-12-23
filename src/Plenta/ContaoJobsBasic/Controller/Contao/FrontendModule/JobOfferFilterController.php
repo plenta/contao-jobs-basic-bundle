@@ -105,36 +105,6 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return $options;
     }
 
-    public function getTypesOld(ModuleModel $model): ?array
-    {
-        $options = [];
-        $employmentTypes = [];
-        $employmentTypeHelper = $this->employmentTypeHelper;
-        $this->getAllOffers();
-
-        foreach ($employmentTypeHelper->getEmploymentTypes() as $employmentType) {
-            $employmentTypes[$employmentType] = $employmentTypeHelper->getEmploymentTypeName($employmentType);
-        }
-
-        if (array_is_assoc($employmentTypes)) {
-            foreach ($employmentTypes as $k => $v) {
-                if (true !== (bool) $model->plentaJobsShowAllTypes) {
-                    if (!array_key_exists($k, $this->counterEmploymentType)) {
-                        continue;
-                    }
-                }
-
-                $options[] = [
-                    'label' => $v.$this->addItemCounter($model, $k),
-                    'value' => $k,
-                    'group' => '1',
-                ];
-            }
-        }
-
-        return $options;
-    }
-
     public function addItemCounter(ModuleModel $model, string $key): string
     {
         if (true === (bool) $model->plentaJobsShowQuantity &&

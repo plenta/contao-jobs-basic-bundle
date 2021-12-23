@@ -25,6 +25,7 @@ use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @FrontendModule("plenta_jobs_basic_offer_list",
@@ -39,12 +40,16 @@ class JobOfferListController extends AbstractFrontendModuleController
 
     protected MetaFieldsHelper $metaFieldsHelper;
 
+    protected TranslatorInterface $translator;
+
     public function __construct(
         ManagerRegistry $registry,
-        MetaFieldsHelper $metaFieldsHelper
+        MetaFieldsHelper $metaFieldsHelper,
+        TranslatorInterface $translator
     ) {
         $this->registry = $registry;
         $this->metaFieldsHelper = $metaFieldsHelper;
+        $this->translator = $translator;
     }
 
     /**
@@ -77,7 +82,7 @@ class JobOfferListController extends AbstractFrontendModuleController
             $items[] = $itemTemplate->parse();
         }
 
-        $template->empty = 'Es sind momentan keine Stellenanzeigen vorhanden.';
+        $template->empty = $this->translator->trans('MSC.PLENTA_JOBS.emptyList', [], 'contao_default');
 
         $template->items = $items;
 
