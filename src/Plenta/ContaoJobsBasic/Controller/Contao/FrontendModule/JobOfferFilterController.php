@@ -65,6 +65,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
         $form->addFormField('types', [
             'inputType' => 'checkbox',
+            'default' => $request->query->get('types'),
             'options' => $this->getTypes($model),
             'eval' => ['multiple' => true]
         ]);
