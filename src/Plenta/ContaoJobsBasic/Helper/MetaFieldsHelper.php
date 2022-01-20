@@ -35,11 +35,9 @@ class MetaFieldsHelper
 
     public function getMetaFields(TlPlentaJobsBasicOffer $jobOffer): array
     {
-        global $objPage;
-
         $metaFields = [];
 
-        $metaFields['publicationDateFormatted'] = Date::parse($objPage->dateFormat, $jobOffer->getDatePosted());
+        $metaFields['publicationDateFormatted'] = Date::parse(Date::getNumericDateFormat(), $jobOffer->getDatePosted());
         $metaFields['employmentTypeFormatted'] = $this->employmentTypeHelper->getEmploymentTypesFormatted($jobOffer->getEmploymentType());
         $metaFields['locationFormatted'] = $this->formatLocation($jobOffer);
         $metaFields['addressLocalityFormatted'] = $this->formatAddressLocality($jobOffer);

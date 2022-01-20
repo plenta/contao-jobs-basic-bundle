@@ -1,0 +1,6 @@
+plenta_jobs_basic.offer_filter:
+    path: /_jobs/plenta/offer/filter
+    defaults:
+        _scope: frontend
+        _token_check: false
+        _controller: "PlentaContaoJobsBasicBundle:JobsOfferFilterRequest:filterOffers"

@@ -59,7 +59,7 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
         return false;
     }
 
-    public function findAllPublishedByTypes(array $types): array
+    public function findAllPublishedByTypesAndLocation(array $types, array $locations): array
     {
         $qb = $this->createQueryBuilder('a');
 
@@ -72,15 +72,28 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
             ->setParameter('empty', '')
         ;
 
-        $criterion = [];
+        $criterionType = [];
 
         foreach ($types as $type) {
-            $criterion[] = "a.employmentType LIKE '%".$type."%'";
+            $criterionType[] = "a.employmentType LIKE '%".$type."%'";
         }
 
-        if (count($criterion)) {
-            $qb->andWhere(implode(' OR ', $criterion));
+        if (count($criterionType)) {
+            $qb->andWhere(implode(' OR ', $criterionType));
         }
+
+        $criterionLocation = [];
+
+        foreach ($locations as $location) {
+            foreach(explode('|', $location) as $l) {
+                $criterionLocation[] = "a.jobLocation LIKE '%\"".$l."\"%'";
+            }
+        }
+
+        if (count($criterionLocation)) {
+            $qb->andWhere(implode(' OR ', $criterionLocation));
+        }
+
 
         return $qb->getQuery()->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
