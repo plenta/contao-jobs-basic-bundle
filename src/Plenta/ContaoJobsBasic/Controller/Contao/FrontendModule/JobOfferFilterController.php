@@ -157,34 +157,40 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             $form->setFormActionFromPageId($model->jumpTo);
         }
 
-        $form->addFormField('typesHeadline', [
-            'inputType' => 'html',
-            'eval' => ['html' => 'Kategorie'],
-        ]);
+        if ($model->plentaJobsShowTypes) {
+            $form->addFormField('typesHeadline', [
+                'inputType' => 'html',
+                'eval' => ['html' => $model->plentaJobsTypesHeadline],
+            ]);
 
-        $form->addFormField('types', [
-            'inputType' => 'checkbox',
-            'default' => $request->query->get('types'),
-            'options' => $this->getTypes($model),
-            'eval' => ['multiple' => true],
-        ]);
+            $form->addFormField('types', [
+                'inputType' => 'checkbox',
+                'default' => $request->query->get('types'),
+                'options' => $this->getTypes($model),
+                'eval' => ['multiple' => true],
+            ]);
+        }
 
-        $form->addFormField('locationHeadline', [
-            'inputType' => 'html',
-            'eval' => ['html' => 'Standort'],
-        ]);
+        if ($model->plentaJobsShowLocations) {
+            $form->addFormField('locationHeadline', [
+                'inputType' => 'html',
+                'eval' => ['html' => $model->plentaJobsLocationsHeadline],
+            ]);
 
-        $form->addFormField('location', [
-            'inputType' => 'checkbox',
-            'default' => $request->query->get('location'),
-            'options' => $this->getLocations($model),
-            'eval' => ['multiple' => true],
-        ]);
+            $form->addFormField('location', [
+                'inputType' => 'checkbox',
+                'default' => $request->query->get('location'),
+                'options' => $this->getLocations($model),
+                'eval' => ['multiple' => true],
+            ]);
+        }
 
-        $form->addFormField('submit', [
-            'label' => $model->plentaJobsSubmit,
-            'inputType' => 'submit',
-        ]);
+        if ($model->plentaJobsShowButton) {
+            $form->addFormField('submit', [
+                'label' => $model->plentaJobsSubmit,
+                'inputType' => 'submit',
+            ]);
+        }
 
         $template->form = $form->generate();
 
