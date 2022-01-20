@@ -19,7 +19,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
-    '{title_legend},name,type;{config_legend},plentaJobsShowAllTypes,plentaJobsShowQuantity,plentaJobsSubmit;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
+    '{title_legend},name,type;{config_legend},plentaJobsShowAllTypes,plentaJobsShowQuantity,plentaJobsShowAllLocations,plentaJobsShowLocationQuantity,plentaJobsSubmit;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicHeadlineTag'] = [
@@ -39,6 +39,20 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowAllTypes'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowQuantity'] = [
+    'exclude' => true,
+    'inputType' => 'checkbox',
+    'eval' => ['tl_class' => 'w50 m12'],
+    'sql' => "char(1) NOT NULL default ''"
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowAllLocations'] = [
+    'exclude' => true,
+    'inputType' => 'checkbox',
+    'eval' => ['tl_class' => 'w50 m12'],
+    'sql' => "char(1) NOT NULL default ''"
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowLocationQuantity'] = [
     'exclude' => true,
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'w50 m12'],

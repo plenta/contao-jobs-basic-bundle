@@ -68,7 +68,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{address_legend},organization,streetAddress,postalCode,addressLocality,addressRegion,addressCountry;{logo_legend},logo',
+        'default' => '{address_legend},organization,streetAddress,postalCode,addressLocality,addressRegion,addressCountry',
     ],
 
     // Fields
@@ -108,6 +108,8 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         ],
         'addressLocality' => [
             'exclude' => true,
+            'sorting' => true,
+            'flag' => 5,
             'inputType' => 'text',
             'default' => '',
             'eval' => [
@@ -134,15 +136,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
                 'includeBlankOption' => true,
                 'chosen' => true,
                 'tl_class' => 'w50',
-            ],
-        ],
-        'logo' => [
-            'exclude' => true,
-            'inputType' => 'fileTree',
-            'eval' => [
-                'fieldType' => 'radio',
-                'filesOnly' => true,
-                'extensions' => Contao\Config::get('validImageTypes'),
             ],
         ],
     ],

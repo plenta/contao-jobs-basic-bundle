@@ -5,26 +5,26 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
+use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\Input;
-use Haste\Form\Form as HasteForm;
-use Contao\Template;
 use Contao\ModuleModel;
-use Contao\FormCheckBox;
+use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
+use Haste\Form\Form as HasteForm;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
-use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 
 /**
  * @FrontendModule("plenta_jobs_basic_filter",
@@ -53,33 +53,6 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         $this->employmentTypeHelper = $employmentTypeHelper;
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
-    {
-        $form = new HasteForm('someid', 'GET', function($objHaste) {
-            return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
-        });
-
-        if (0 !== (int) $model->jumpTo) {
-            $form->setFormActionFromPageId($model->jumpTo);
-        }
-
-        $form->addFormField('types', [
-            'inputType' => 'checkbox',
-            'default' => $request->query->get('types'),
-            'options' => $this->getTypes($model),
-            'eval' => ['multiple' => true]
-        ]);
-
-        $form->addFormField('submit', [
-            'label' => $model->plentaJobsSubmit,
-            'inputType' => 'submit'
-        ]);
-
-        $template->form = $form->generate();
-
-        return $template->getResponse();
-    }
-
     public function getTypes(ModuleModel $model): ?array
     {
         $options = [];
@@ -94,7 +67,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         if (array_is_assoc($employmentTypes)) {
             foreach ($employmentTypes as $k => $v) {
                 if (true !== (bool) $model->plentaJobsShowAllTypes) {
-                    if (!array_key_exists($k, $this->counterEmploymentType)) {
+                    if (!\array_key_exists($k, $this->counterEmploymentType)) {
                         continue;
                     }
                 }
@@ -109,7 +82,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
     public function addItemCounter(ModuleModel $model, string $key): string
     {
         if (true === (bool) $model->plentaJobsShowQuantity &&
-            array_key_exists($key, $this->counterEmploymentType)
+            \array_key_exists($key, $this->counterEmploymentType)
         ) {
             return '<span class="item-counter">['.$this->counterEmploymentType[$key].']</span>';
         }
@@ -134,14 +107,87 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     public function collectEmploymenttypes(?array $employmentTypes): void
     {
-        if (is_array($employmentTypes)) {
+        if (\is_array($employmentTypes)) {
             foreach ($employmentTypes as $employmentType) {
-                if (array_key_exists($employmentType, $this->counterEmploymentType)) {
+                if (\array_key_exists($employmentType, $this->counterEmploymentType)) {
                     $this->counterEmploymentType[$employmentType] = ++$this->counterEmploymentType[$employmentType];
                 } else {
                     $this->counterEmploymentType[$employmentType] = 1;
                 }
             }
         }
+    }
+
+    public function getLocations(ModuleModel $model): ?array
+    {
+        $options = [];
+
+        foreach ($this->getAllLocations() as $k) {
+            if (array_key_exists($k->getAddressLocality(), $options)) {
+                $options[$k->getAddressLocality()] = $options[$k->getAddressLocality()].'|'.$k->getId();
+            } else {
+                $options[$k->getAddressLocality()] = $k->getId();
+            }
+        }
+
+        $options = array_flip($options);
+
+        return $options;
+    }
+
+    public function getAllLocations(): array
+    {
+        $items = [];
+
+        $locationsRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
+        $locations = $locationsRepository->findAll();
+
+        foreach ($locations as $location) {
+            $items[] = $location;
+        }
+
+        return $items;
+    }
+
+    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    {
+        $form = new HasteForm('someid', 'GET', fn ($objHaste) => Input::post('FORM_SUBMIT') === $objHaste->getFormId());
+
+        if (0 !== (int) $model->jumpTo) {
+            $form->setFormActionFromPageId($model->jumpTo);
+        }
+
+        $form->addFormField('typesHeadline', [
+            'inputType' => 'html',
+            'eval' => ['html' => 'Kategorie'],
+        ]);
+
+        $form->addFormField('types', [
+            'inputType' => 'checkbox',
+            'default' => $request->query->get('types'),
+            'options' => $this->getTypes($model),
+            'eval' => ['multiple' => true],
+        ]);
+
+        $form->addFormField('locationHeadline', [
+            'inputType' => 'html',
+            'eval' => ['html' => 'Standort'],
+        ]);
+
+        $form->addFormField('location', [
+            'inputType' => 'checkbox',
+            'default' => $request->query->get('location'),
+            'options' => $this->getLocations($model),
+            'eval' => ['multiple' => true],
+        ]);
+
+        $form->addFormField('submit', [
+            'label' => $model->plentaJobsSubmit,
+            'inputType' => 'submit',
+        ]);
+
+        $template->form = $form->generate();
+
+        return $template->getResponse();
     }
 }

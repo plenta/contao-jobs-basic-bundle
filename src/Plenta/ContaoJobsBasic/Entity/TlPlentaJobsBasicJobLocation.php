@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -57,11 +57,6 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
      * @ORM\Column(type="string", length=32, options={"default": "onPremise"})
      */
     protected string $jobTypeLocation = 'onPremise';
-
-    /**
-     * @ORM\Column (type="binary_string", nullable=true, options={"default": NULL})
-     */
-    protected ?string $logo;
 
     /**
      * @return TlPlentaJobsBasicOrganization
@@ -199,26 +194,6 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     public function setJobTypeLocation(string $jobTypeLocation): self
     {
         $this->jobTypeLocation = $jobTypeLocation;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLogo(): ?string
-    {
-        return $this->logo;
-    }
-
-    /**
-     * @param string|null $singleSRC
-     *
-     * @return TLWuerthEyeCatcher
-     */
-    public function setSingleSRC(?string $logo): self
-    {
-        $this->logo = $logo;
 
         return $this;
     }

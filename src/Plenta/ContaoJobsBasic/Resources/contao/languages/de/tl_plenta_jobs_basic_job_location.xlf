@@ -38,12 +38,6 @@
             <trans-unit id="tl_plenta_jobs_basic_job_location.logo_legend">
                 <target>Firmenlogo</target>
             </trans-unit>
-            <trans-unit id="tl_plenta_jobs_basic_job_location.logo.0">
-                <target>Firmenlogo</target>
-            </trans-unit>
-            <trans-unit id="tl_plenta_jobs_basic_job_location.logo.1">
-                <target>Bitte wählen Sie eine Datei aus der Dateiübersicht.</target>
-            </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_job_location.new.0">
                 <target>Neuer Standort</target>
             </trans-unit>
