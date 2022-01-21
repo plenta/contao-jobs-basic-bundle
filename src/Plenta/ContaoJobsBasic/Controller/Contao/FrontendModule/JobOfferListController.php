@@ -81,6 +81,8 @@ class JobOfferListController extends AbstractFrontendModuleController
             $items[] = $itemTemplate->parse();
         }
 
+        $template->attributes = 'data-id="'.$model->id.'"';
+
         $template->empty = $this->translator->trans('MSC.PLENTA_JOBS.emptyList', [], 'contao_default');
 
         $template->items = $items;

@@ -24,6 +24,7 @@ use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @FrontendModule("plenta_jobs_basic_filter",
@@ -35,21 +36,21 @@ use Symfony\Component\HttpFoundation\Response;
 class JobOfferFilterController extends AbstractFrontendModuleController
 {
     protected ManagerRegistry $registry;
-
     protected MetaFieldsHelper $metaFieldsHelper;
-
     protected EmploymentType $employmentTypeHelper;
-
+    protected RouterInterface $router;
     protected array $counterEmploymentType = [];
 
     public function __construct(
         ManagerRegistry $registry,
         MetaFieldsHelper $metaFieldsHelper,
-        EmploymentType $employmentTypeHelper
+        EmploymentType $employmentTypeHelper,
+        RouterInterface $router
     ) {
         $this->registry = $registry;
         $this->metaFieldsHelper = $metaFieldsHelper;
         $this->employmentTypeHelper = $employmentTypeHelper;
+        $this->router = $router;
     }
 
     public function getTypes(ModuleModel $model): ?array
@@ -192,6 +193,8 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         }
 
         $template->form = $form->generate();
+        $template->local = $request->getLocale();
+        $template->ajaxRoute = $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath();
 
         return $template->getResponse();
     }

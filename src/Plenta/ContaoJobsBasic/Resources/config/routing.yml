@@ -1,5 +1,5 @@
 plenta_jobs_basic.offer_filter:
-    path: /_jobs/plenta/offer/filter
+    path: /_plenta-jobs-basic/offer/filter
     defaults:
         _scope: frontend
         _token_check: false

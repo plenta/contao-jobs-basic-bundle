@@ -1,11 +1,16 @@
-<?php $this->extend('block_unsearchable'); ?>
+<div class="<?= $this->class ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?><?= $this->attributes ? ' '.$this->attributes : ''; ?> >
 
-<?php $this->block('content'); ?>
+    <?php $this->block('headline'); ?>
+        <?php if ($this->headline): ?>
+            <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+        <?php endif; ?>
+    <?php $this->endblock(); ?>
 
-<?php if (empty($this->items)): ?>
-    <p class="empty"><?= $this->empty ?></p>
-<?php else: ?>
-    <?= implode('', $this->items) ?>
-<?php endif; ?>
-
-<?php $this->endblock(); ?>
+    <?php $this->block('content'); ?>
+        <?php if (empty($this->items)): ?>
+            <p class="empty"><?= $this->empty ?></p>
+        <?php else: ?>
+            <?= implode('', $this->items) ?>
+        <?php endif; ?>
+    <?php $this->endblock(); ?>
+</div>

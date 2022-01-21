@@ -7,50 +7,59 @@
 
 <script>
     (function ($) {
-        <?php if ($this->plentaJobsMethod === 'POST'): ?>
-        $(document).ready(function () {
-            $('input:checked').first().change();
-        })
-        <?php endif; ?>
+        document.addEventListener('DOMContentLoaded', function () {
+            let jobList = document.querySelector('.mod_plenta_jobs_basic_offer_list');
 
-        $('input').on('change', function () {
-            let args = {};
-            $('input:checked').each(function () {
-                let name = $(this).prop('name');
-                if (name.endsWith('[]')) {
-                    name = name.replace('[]', '');
-                    if (typeof(args[name]) === 'undefined') {
-                        args[name] = [];
-                    }
-                    args[name].push($(this).val());
-                } else {
-                    args[name] = $(this).val();
-                }
-            })
-            <?php if ($this->plentaJobsMethod === 'GET'): ?>
-            let str_args = '';
-            Object.entries(args).forEach(function (item) {
-                if (typeof(item[1]) === 'object') {
-                    item[1].forEach(function (arrItem) {
-                        str_args += str_args === '' ? '?' : '&';
-                        str_args += item[0] + '[]=' + arrItem;
+            if (null !== jobList) {
+                <?php if ($this->plentaJobsMethod === 'POST'): ?>
+                $(document).ready(function () {
+                    $('input:checked').first().change();
+                })
+                <?php endif; ?>
+
+                $('input').on('change', function () {
+                    let args = {};
+                    $('input:checked').each(function () {
+                        let name = $(this).prop('name');
+                        if (name.endsWith('[]')) {
+                            name = name.replace('[]', '');
+                            if (typeof (args[name]) === 'undefined') {
+                                args[name] = [];
+                            }
+                            args[name].push($(this).val());
+                        } else {
+                            args[name] = $(this).val();
+                        }
                     })
-                } else {
-                    str_args += str_args === '' ? '?' : '&';
-                    str_args += item[0] + '=' + item[1];
-                }
-            });
-            history.replaceState(null, null, location.pathname + str_args);
-            <?php endif; ?>
-            args['id'] = '<?= $this->plentaJobsListModule ?>';
-            $.ajax('/_jobs/plenta/offer/filter', {
-                method: '<?= $this->plentaJobsMethod ?>',
-                data: args,
-                success: function (data) {
-                    $('.mod_plenta_jobs_basic_offer_list').replaceWith(data);
-                }
-            })
-        })
+                    <?php if ($this->plentaJobsMethod === 'GET'): ?>
+                    let str_args = '';
+                    Object.entries(args).forEach(function (item) {
+                        if (typeof (item[1]) === 'object') {
+                            item[1].forEach(function (arrItem) {
+                                str_args += str_args === '' ? '?' : '&';
+                                str_args += item[0] + '[]=' + arrItem;
+                            })
+                        } else {
+                            str_args += str_args === '' ? '?' : '&';
+                            str_args += item[0] + '=' + item[1];
+                        }
+                    });
+                    history.replaceState(null, null, location.pathname + str_args);
+                    <?php endif; ?>
+                    args['id'] = jobList.dataset.id;
+                    $.ajax('<?= $this->ajaxRoute ?>', {
+                        method: '<?= $this->plentaJobsMethod ?>',
+                        data: args,
+                        headers: {
+                            'Accept-Language': '<?= $this->local ?>'
+                        },
+                        success: function (data) {
+                            $('.mod_plenta_jobs_basic_offer_list').replaceWith(data);
+                        }
+                    })
+                })
+            }
+        });
     })(jQuery);
 </script>
 <?php $this->endblock(); ?>
