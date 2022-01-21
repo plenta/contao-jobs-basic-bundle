@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
-    '{title_legend},name,type;{config_legend},plentaJobsListModule,plentaJobsShowButton,plentaJobsShowTypes,plentaJobsShowLocations;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
+    '{title_legend},name,type;{config_legend},plentaJobsListModule,plentaJobsMethod,plentaJobsShowButton,plentaJobsShowTypes,plentaJobsShowLocations;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsShowButton'] = 'plentaJobsSubmit';
@@ -44,8 +44,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsListModule'] = [
     'exclude' => true,
     'inputType' => 'select',
     'foreignKey' => 'tl_module.name',
-    'eval' => ['mandatory' => true, 'tl_class' => 'w50 clr'],
+    'eval' => ['mandatory' => true, 'tl_class' => 'w50'],
     'sql' => "int(10) unsigned NOT NULL default '0'",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsMethod'] = [
+    'exclude' => true,
+    'inputType' => 'select',
+    'options' => ['POST', 'GET'],
+    'eval' => ['tl_class'=>'w50'],
+    'sql' => "varchar(12) NOT NULL default 'POST'"
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowButton'] = [

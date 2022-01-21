@@ -74,6 +74,12 @@
             <trans-unit id="tl_module.plentaJobsShowLocationQuantity.1">
                 <target>Die Anzahl der Stellenangebote pro Standort werden angezeigt.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsMethod.0">
+                <target>Übertragungsmethode</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsMethod.1">
+                <target>Die Standard-Übertragungsmethode ist POST.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
