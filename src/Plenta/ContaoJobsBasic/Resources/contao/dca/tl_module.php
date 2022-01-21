@@ -79,9 +79,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowTypes'] = [
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsTypesHeadline'] = [
     'exclude' => true,
-    'inputType' => 'text',
-    'eval' => ['allowHtml' => true, 'tl_class' => 'w50'],
-    'sql' => "varchar(255) NOT NULL default ''"
+    'inputType' => 'inputUnit',
+    'options' => ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    'eval' => ['maxlength'=>200, 'tl_class'=>'w50 clr'],
+    'sql' => "varchar(255) NOT NULL default 'a:2:{s:5:\"value\";s:0:\"\";s:4:\"unit\";s:2:\"h3\";}'"
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowAllTypes'] = [
@@ -107,9 +108,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowLocations'] = [
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsLocationsHeadline'] = [
     'exclude' => true,
-    'inputType' => 'text',
-    'eval' => ['allowHtml' => true, 'tl_class' => 'w50 clr'],
-    'sql' => "varchar(255) NOT NULL default ''"
+    'inputType' => 'inputUnit',
+    'options' => ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    'eval' => ['maxlength'=>200, 'tl_class'=>'w50 clr'],
+    'sql' => "varchar(255) NOT NULL default 'a:2:{s:5:\"value\";s:0:\"\";s:4:\"unit\";s:2:\"h3\";}'"
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowAllLocations'] = [
