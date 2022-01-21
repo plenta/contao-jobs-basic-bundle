@@ -14,7 +14,6 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
-use Contao\Input;
 use Contao\ModuleModel;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
@@ -123,7 +122,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         $options = [];
 
         foreach ($this->getAllLocations() as $k) {
-            if (array_key_exists($k->getAddressLocality(), $options)) {
+            if (\array_key_exists($k->getAddressLocality(), $options)) {
                 $options[$k->getAddressLocality()] = $options[$k->getAddressLocality()].'|'.$k->getId();
             } else {
                 $options[$k->getAddressLocality()] = $k->getId();
@@ -151,7 +150,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-        $form = new HasteForm('someid', $model->plentaJobsMethod,  fn ($objHaste) => false);
+        $form = new HasteForm('someid', $model->plentaJobsMethod, fn ($objHaste) => false);
 
         if (0 !== (int) $model->jumpTo) {
             $form->setFormActionFromPageId($model->jumpTo);
