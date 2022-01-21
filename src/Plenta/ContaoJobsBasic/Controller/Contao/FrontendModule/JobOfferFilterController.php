@@ -151,7 +151,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-        $form = new HasteForm('someid', 'GET', fn ($objHaste) => Input::post('FORM_SUBMIT') === $objHaste->getFormId());
+        $form = new HasteForm('someid', $model->plentaJobsMethod,  fn ($objHaste) => false);
 
         if (0 !== (int) $model->jumpTo) {
             $form->setFormActionFromPageId($model->jumpTo);
@@ -165,7 +165,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
             $form->addFormField('types', [
                 'inputType' => 'checkbox',
-                'default' => $request->query->get('types'),
+                'default' => $request->get('types'),
                 'options' => $this->getTypes($model),
                 'eval' => ['multiple' => true],
             ]);
@@ -179,7 +179,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
             $form->addFormField('location', [
                 'inputType' => 'checkbox',
-                'default' => $request->query->get('location'),
+                'default' => $request->get('location'),
                 'options' => $this->getLocations($model),
                 'eval' => ['multiple' => true],
             ]);
