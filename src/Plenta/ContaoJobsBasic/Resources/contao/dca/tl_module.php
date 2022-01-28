@@ -44,7 +44,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsMethod'] = [
     'inputType' => 'select',
     'options' => ['POST', 'GET'],
     'eval' => ['tl_class' => 'w50'],
-    'sql' => "varchar(12) NOT NULL default 'POST'",
+    'sql' => "varchar(12) NOT NULL default 'GET'",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsShowButton'] = [

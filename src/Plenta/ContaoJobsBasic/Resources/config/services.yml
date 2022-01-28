@@ -20,3 +20,8 @@ services:
             - '@contao.image.picture_factory'
             - '@contao.assets.files_context'
             - '%kernel.project_dir%'
+
+    # Migrations
+    Plenta\ContaoJobsBasic\Migration\RenameDatabaseColumnsMigration:
+        tags:
+            - { name: contao.migration, priority: 0 }
