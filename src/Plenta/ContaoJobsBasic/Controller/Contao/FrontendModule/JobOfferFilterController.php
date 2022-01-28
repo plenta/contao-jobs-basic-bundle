@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
+use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\ModuleModel;
@@ -149,6 +150,19 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return $items;
     }
 
+    public function getHeadlineHtml(string $content, string $type): string
+    {
+        if (empty($content)) {
+            return '';
+        }
+
+        $return = '<div class="plenta_jobs_basic_filter_widget_headline '.$type.'">';
+        $return .= Controller::replaceInsertTags($content);
+        $return .= '</div>';
+
+        return $return;
+    }
+
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
         $form = new HasteForm('plenta_jobs_basic_filter_'.$model->id, $model->plentaJobsBasicMethod, fn ($objHaste) => false);
@@ -160,7 +174,9 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         if ($model->plentaJobsBasicShowTypes) {
             $form->addFormField('typesHeadline', [
                 'inputType' => 'html',
-                'eval' => ['html' => $model->plentaJobsBasicTypesHeadline],
+                'eval' => [
+                    'html' => $this->getHeadlineHtml($model->plentaJobsBasicTypesHeadline, 'jobTypes'),
+                ],
             ]);
 
             $form->addFormField('types', [
@@ -174,7 +190,9 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         if ($model->plentaJobsBasicShowLocations) {
             $form->addFormField('locationHeadline', [
                 'inputType' => 'html',
-                'eval' => ['html' => $model->plentaJobsBasicLocationsHeadline],
+                'eval' => [
+                    'html' => $this->getHeadlineHtml($model->plentaJobsBasicLocationsHeadline, 'jobLocation'),
+                ],
             ]);
 
             $form->addFormField('location', [
