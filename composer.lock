@@ -263,16 +263,16 @@
         },
         {
             "name": "codefog/contao-haste",
-            "version": "4.25.1",
+            "version": "4.25.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/codefog/contao-haste.git",
-                "reference": "fdc5756a4e9a72f090115a0a1afa36eebd41d0d1"
+                "reference": "493c855cd081a32ff24dcb648f924a9c5892eb20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/fdc5756a4e9a72f090115a0a1afa36eebd41d0d1",
-                "reference": "fdc5756a4e9a72f090115a0a1afa36eebd41d0d1",
+                "url": "https://api.github.com/repos/codefog/contao-haste/zipball/493c855cd081a32ff24dcb648f924a9c5892eb20",
+                "reference": "493c855cd081a32ff24dcb648f924a9c5892eb20",
                 "shasum": ""
             },
             "require": {
@@ -330,7 +330,7 @@
             ],
             "support": {
                 "issues": "https://github.com/codefog/contao-haste/issues",
-                "source": "https://github.com/codefog/contao-haste/tree/4.25.1"
+                "source": "https://github.com/codefog/contao-haste/tree/4.25.2"
             },
             "funding": [
                 {
@@ -338,7 +338,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-29T15:34:08+00:00"
+            "time": "2022-01-21T09:00:09+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -1187,16 +1187,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/conflicts.git",
-                "reference": "dcbdd8d1873ea4a394b88377ea3a4338a47a6ee3"
+                "reference": "e04afb38687222fcf56c72ad76d85157db874f0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/conflicts/zipball/dcbdd8d1873ea4a394b88377ea3a4338a47a6ee3",
-                "reference": "dcbdd8d1873ea4a394b88377ea3a4338a47a6ee3",
+                "url": "https://api.github.com/repos/contao/conflicts/zipball/e04afb38687222fcf56c72ad76d85157db874f0d",
+                "reference": "e04afb38687222fcf56c72ad76d85157db874f0d",
                 "shasum": ""
             },
             "conflict": {
-                "doctrine/dbal": "2.9.* <2.9.3",
+                "doctrine/dbal": "2.9.* <2.9.3 || 3.3.0",
                 "doctrine/doctrine-migrations-bundle": "<1.1",
                 "doctrine/orm": "<2.4",
                 "doctrine/persistence": "1.3.2",
@@ -1227,7 +1227,7 @@
             "support": {
                 "source": "https://github.com/contao/conflicts/tree/main"
             },
-            "time": "2021-12-10T13:51:12+00:00"
+            "time": "2022-01-27T14:57:55+00:00"
         },
         {
             "name": "contao/core-bundle",
@@ -2159,16 +2159,16 @@
         },
         {
             "name": "doctrine/data-fixtures",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/data-fixtures.git",
-                "reference": "f18adf13f6c81c67a88360dca359ad474523f8e3"
+                "reference": "51c1890e8c5467c421c7cab4579f059ebf720278"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/f18adf13f6c81c67a88360dca359ad474523f8e3",
-                "reference": "f18adf13f6c81c67a88360dca359ad474523f8e3",
+                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/51c1890e8c5467c421c7cab4579f059ebf720278",
+                "reference": "51c1890e8c5467c421c7cab4579f059ebf720278",
                 "shasum": ""
             },
             "require": {
@@ -2177,15 +2177,20 @@
                 "php": "^7.2 || ^8.0"
             },
             "conflict": {
+                "doctrine/dbal": "<2.13",
                 "doctrine/phpcr-odm": "<1.3.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0",
-                "doctrine/dbal": "^2.5.4 || ^3.0",
+                "doctrine/dbal": "^2.13 || ^3.0",
                 "doctrine/mongodb-odm": "^1.3.0 || ^2.0.0",
                 "doctrine/orm": "^2.7.0",
                 "ext-sqlite3": "*",
-                "phpunit/phpunit": "^8.0"
+                "jangregor/phpstan-prophecy": "^0.8.1",
+                "phpstan/phpstan": "^0.12.99",
+                "phpunit/phpunit": "^8.0",
+                "symfony/cache": "^5.0 || ^6.0",
+                "vimeo/psalm": "^4.10"
             },
             "suggest": {
                 "alcaeus/mongo-php-adapter": "For using MongoDB ODM 1.3 with PHP 7 (deprecated)",
@@ -2210,13 +2215,13 @@
                 }
             ],
             "description": "Data Fixtures for all Doctrine Object Managers",
-            "homepage": "http://www.doctrine-project.org",
+            "homepage": "https://www.doctrine-project.org",
             "keywords": [
                 "database"
             ],
             "support": {
                 "issues": "https://github.com/doctrine/data-fixtures/issues",
-                "source": "https://github.com/doctrine/data-fixtures/tree/1.5.1"
+                "source": "https://github.com/doctrine/data-fixtures/tree/1.5.2"
             },
             "funding": [
                 {
@@ -2232,7 +2237,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-20T21:51:43+00:00"
+            "time": "2022-01-20T17:10:56+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -3284,16 +3289,16 @@
         },
         {
             "name": "friendsofsymfony/http-cache",
-            "version": "2.12.0",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSHttpCache.git",
-                "reference": "7ec24eb8fec96ae10d36a2e698acedde6e0493dd"
+                "reference": "8e46af3721e032a87b2b27782efa173ecda3cc1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCache/zipball/7ec24eb8fec96ae10d36a2e698acedde6e0493dd",
-                "reference": "7ec24eb8fec96ae10d36a2e698acedde6e0493dd",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSHttpCache/zipball/8e46af3721e032a87b2b27782efa173ecda3cc1a",
+                "reference": "8e46af3721e032a87b2b27782efa173ecda3cc1a",
                 "shasum": ""
             },
             "require": {
@@ -3302,8 +3307,8 @@
                 "php-http/client-implementation": "^1.0 || ^2.0",
                 "php-http/discovery": "^1.12",
                 "php-http/message": "^1.0 || ^2.0",
-                "symfony/event-dispatcher": "^3.4 || ^4.3 || ^5.0",
-                "symfony/options-resolver": "^3.4 || ^4.3 || ^5.0"
+                "symfony/event-dispatcher": "^4.3 || ^5.0 || ^6.0",
+                "symfony/options-resolver": "^4.3 || ^5.0 || ^6.0"
             },
             "conflict": {
                 "toflar/psr6-symfony-http-cache-store": "<2.2.1"
@@ -3313,9 +3318,9 @@
                 "monolog/monolog": "^1.0",
                 "php-http/guzzle7-adapter": "^0.1.1",
                 "php-http/mock-client": "^1.2",
-                "symfony/http-kernel": "^3.4 || ^4.3 || ^5.0",
-                "symfony/phpunit-bridge": "^5.0",
-                "symfony/process": "^3.4 || ^4.3 || ^5.0"
+                "symfony/http-kernel": "^4.3 || ^5.0 || ^6.0",
+                "symfony/phpunit-bridge": "^5.0 || ^6.0",
+                "symfony/process": "^4.3 || ^5.0 || ^6.0"
             },
             "suggest": {
                 "friendsofsymfony/http-cache-bundle": "For integration with the Symfony framework",
@@ -3363,9 +3368,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfSymfony/FOSHttpCache/issues",
-                "source": "https://github.com/FriendsOfSymfony/FOSHttpCache/tree/2.12.0"
+                "source": "https://github.com/FriendsOfSymfony/FOSHttpCache/tree/2.13.0"
             },
-            "time": "2022-01-12T13:14:10+00:00"
+            "time": "2022-01-25T12:27:12+00:00"
         },
         {
             "name": "friendsofsymfony/http-cache-bundle",
@@ -11871,23 +11876,23 @@
     "packages-dev": [
         {
             "name": "composer/pcre",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/pcre.git",
-                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2"
+                "reference": "67a32d7d6f9f560b726ab25a061b38ff3a80c560"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/3d322d715c43a1ac36c7fe215fa59336265500f2",
-                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/67a32d7d6f9f560b726ab25a061b38ff3a80c560",
+                "reference": "67a32d7d6f9f560b726ab25a061b38ff3a80c560",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.3.2 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "phpstan/phpstan": "^1",
+                "phpstan/phpstan": "^1.3",
                 "phpstan/phpstan-strict-rules": "^1.1",
                 "symfony/phpunit-bridge": "^4.2 || ^5"
             },
@@ -11922,7 +11927,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/pcre/issues",
-                "source": "https://github.com/composer/pcre/tree/1.0.0"
+                "source": "https://github.com/composer/pcre/tree/1.0.1"
             },
             "funding": [
                 {
@@ -11938,7 +11943,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-06T15:17:27+00:00"
+            "time": "2022-01-21T20:24:37+00:00"
         },
         {
             "name": "composer/semver",
@@ -13382,16 +13387,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.11",
+            "version": "9.5.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "2406855036db1102126125537adb1406f7242fdd"
+                "reference": "597cb647654ede35e43b137926dfdfef0fb11743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2406855036db1102126125537adb1406f7242fdd",
-                "reference": "2406855036db1102126125537adb1406f7242fdd",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/597cb647654ede35e43b137926dfdfef0fb11743",
+                "reference": "597cb647654ede35e43b137926dfdfef0fb11743",
                 "shasum": ""
             },
             "require": {
@@ -13469,7 +13474,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.11"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.13"
             },
             "funding": [
                 {
@@ -13481,7 +13486,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-25T07:07:57+00:00"
+            "time": "2022-01-24T07:33:35+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -14593,5 +14598,8 @@
         "ext-json": "*"
     },
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "7.4"
+    },
     "plugin-api-version": "2.2.0"
 }
