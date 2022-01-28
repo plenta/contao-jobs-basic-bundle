@@ -1,7 +1,6 @@
 <?php $this->extend('block_unsearchable'); ?>
 
 <?php $this->block('content'); ?>
-<p class="heading">Filter</p>
 
 <?= $this->form ?>
 

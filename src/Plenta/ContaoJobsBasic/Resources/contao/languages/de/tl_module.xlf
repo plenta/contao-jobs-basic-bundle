@@ -8,76 +8,76 @@
             <trans-unit id="tl_module.plentaJobsBasicHeadlineTag.1">
                 <target>Bitte wählen Sie ein Überschriftentyp aus.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsSubmit.0">
+            <trans-unit id="tl_module.plentaJobsBasicSubmit.0">
                 <target>Bezeichnung der Absende-Schaltfläche</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsSubmit.1">
+            <trans-unit id="tl_module.plentaJobsBasicSubmit.1">
                 <target>Bitte geben Sie die Bezeichnung der Absende-Schaltfläche ein.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsListModule.0">
+            <trans-unit id="tl_module.plentaJobsBasicListModule.0">
                 <target>Listenmodul</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsListModule.1">
+            <trans-unit id="tl_module.plentaJobsBasicListModule.1">
                 <target>Bitte wählen Sie das zugehörige Listenmodul.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowButton.0">
+            <trans-unit id="tl_module.plentaJobsBasicShowButton.0">
                 <target>Absende-Button hinzufügen</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowButton.1">
+            <trans-unit id="tl_module.plentaJobsBasicShowButton.1">
                 <target>Soll ein Absende-Button dem Filter hinzufügt werden?</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowTypes.0">
+            <trans-unit id="tl_module.plentaJobsBasicShowTypes.0">
                 <target>Stellenarten-Filter hinzufügen</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowTypes.1">
+            <trans-unit id="tl_module.plentaJobsBasicShowTypes.1">
                 <target>Sollen die Stellenarten filterbar werden?</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsTypesHeadline.0">
+            <trans-unit id="tl_module.plentaJobsBasicTypesHeadline.0">
                 <target>Stellenarten-Überschrift</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsTypesHeadline.1">
+            <trans-unit id="tl_module.plentaJobsBasicTypesHeadline.1">
                 <target>Hier können Sie den Stellenarten eine Überschrift hinzufügen.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowAllTypes.0">
+            <trans-unit id="tl_module.plentaJobsBasicShowAllTypes.0">
                 <target>Alle Stellenarten anzeigen</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowAllTypes.1">
+            <trans-unit id="tl_module.plentaJobsBasicShowAllTypes.1">
                 <target>Alle Stellenarten werden im Filter anzeigen.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowQuantity.0">
+            <trans-unit id="tl_module.plentaJobsBasicShowQuantity.0">
                 <target>Anzahl der Stellenangebote pro Stellenarten</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowQuantity.1">
+            <trans-unit id="tl_module.plentaJobsBasicShowQuantity.1">
                 <target>Die Anzahl der Stellenangebote pro Stellenart werden angezeigt.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowLocations.0">
+            <trans-unit id="tl_module.plentaJobsBasicShowLocations.0">
                 <target>Standorte-Filter hinzufügen</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowLocations.1">
+            <trans-unit id="tl_module.plentaJobsBasicShowLocations.1">
                 <target>Sollen die Standorte filterbar werden?</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsLocationsHeadline.0">
+            <trans-unit id="tl_module.plentaJobsBasicLocationsHeadline.0">
                 <target>Standorte-Überschrift</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsLocationsHeadline.1">
+            <trans-unit id="tl_module.plentaJobsBasicLocationsHeadline.1">
                 <target>Hier können Sie den Standorten eine Überschrift hinzufügen.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowAllLocations.0">
+            <trans-unit id="tl_module.plentaJobsBasicShowAllLocations.0">
                 <target>Alle Standorte anzeigen</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowAllLocations.1">
+            <trans-unit id="tl_module.plentaJobsBasicShowAllLocations.1">
                 <target>Alle Standorte werden im Filter anzeigen.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowLocationQuantity.0">
+            <trans-unit id="tl_module.plentaJobsBasicShowLocationQuantity.0">
                 <target>Anzahl der Stellenangebote pro Standort</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsShowLocationQuantity.1">
+            <trans-unit id="tl_module.plentaJobsBasicShowLocationQuantity.1">
                 <target>Die Anzahl der Stellenangebote pro Standort werden angezeigt.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsMethod.0">
+            <trans-unit id="tl_module.plentaJobsBasicMethod.0">
                 <target>Übertragungsmethode</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsMethod.1">
+            <trans-unit id="tl_module.plentaJobsBasicMethod.1">
                 <target>Die Standard-Übertragungsmethode ist POST.</target>
             </trans-unit>
         </body>

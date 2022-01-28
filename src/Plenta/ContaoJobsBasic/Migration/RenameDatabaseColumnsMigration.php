@@ -20,7 +20,7 @@ class RenameDatabaseColumnsMigration extends AbstractMigration
 {
     private Connection $database;
     private array $oldColumnNames = [
-        'plentaJobsMethod' => "varchar(12) NOT NULL default 'GET'",
+        'plentaJobsMethod' => "varchar(12) NOT NULL default 'POST'",
         'plentaJobsShowButton' => "char(1) NOT NULL default ''",
         'plentaJobsSubmit' => "varchar(255) NOT NULL default ''",
         'plentaJobsShowTypes' => "char(1) NOT NULL default ''",

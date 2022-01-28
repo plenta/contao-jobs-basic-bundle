@@ -66,7 +66,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
         if (array_is_assoc($employmentTypes)) {
             foreach ($employmentTypes as $k => $v) {
-                if (true !== (bool) $model->plentaJobsShowAllTypes) {
+                if (true !== (bool) $model->plentaJobsBasicShowAllTypes) {
                     if (!\array_key_exists($k, $this->counterEmploymentType)) {
                         continue;
                     }
@@ -81,7 +81,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     public function addItemCounter(ModuleModel $model, string $key): string
     {
-        if (true === (bool) $model->plentaJobsShowQuantity &&
+        if (true === (bool) $model->plentaJobsBasicShowQuantity &&
             \array_key_exists($key, $this->counterEmploymentType)
         ) {
             return '<span class="item-counter">['.$this->counterEmploymentType[$key].']</span>';
@@ -151,16 +151,16 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-        $form = new HasteForm('someid', $model->plentaJobsMethod, fn ($objHaste) => false);
+        $form = new HasteForm('plenta_jobs_basic_filter_'.$model->id, $model->plentaJobsBasicMethod, fn ($objHaste) => false);
 
         if (0 !== (int) $model->jumpTo) {
             $form->setFormActionFromPageId($model->jumpTo);
         }
 
-        if ($model->plentaJobsShowTypes) {
+        if ($model->plentaJobsBasicShowTypes) {
             $form->addFormField('typesHeadline', [
                 'inputType' => 'html',
-                'eval' => ['html' => $model->plentaJobsTypesHeadline],
+                'eval' => ['html' => $model->plentaJobsBasicTypesHeadline],
             ]);
 
             $form->addFormField('types', [
@@ -171,10 +171,10 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             ]);
         }
 
-        if ($model->plentaJobsShowLocations) {
+        if ($model->plentaJobsBasicShowLocations) {
             $form->addFormField('locationHeadline', [
                 'inputType' => 'html',
-                'eval' => ['html' => $model->plentaJobsLocationsHeadline],
+                'eval' => ['html' => $model->plentaJobsBasicLocationsHeadline],
             ]);
 
             $form->addFormField('location', [
@@ -185,9 +185,9 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             ]);
         }
 
-        if ($model->plentaJobsShowButton) {
+        if ($model->plentaJobsBasicShowButton) {
             $form->addFormField('submit', [
-                'label' => $model->plentaJobsSubmit,
+                'label' => $model->plentaJobsBasicSubmit,
                 'inputType' => 'submit',
             ]);
         }
