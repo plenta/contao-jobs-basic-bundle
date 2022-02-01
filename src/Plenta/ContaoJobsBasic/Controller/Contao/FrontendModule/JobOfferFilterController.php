@@ -16,6 +16,7 @@ use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\ModuleModel;
+use Contao\StringUtil;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
 use Haste\Form\Form as HasteForm;
@@ -41,6 +42,9 @@ class JobOfferFilterController extends AbstractFrontendModuleController
     protected EmploymentType $employmentTypeHelper;
     protected RouterInterface $router;
     protected array $counterEmploymentType = [];
+    protected array $counterLocation = [];
+    protected array $locations = [];
+    protected array $offers = [];
 
     public function __construct(
         ManagerRegistry $registry,
@@ -91,19 +95,28 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return '';
     }
 
+    public function addLocationCounter(ModuleModel $model, string $key): string
+    {
+        if (true === (bool) $model->plentaJobsBasicShowLocationQuantity && array_key_exists($key, $this->counterLocation)) {
+            return '<span class="item-counter">['.$this->counterLocation[$key].']</span>';
+        }
+        return '';
+    }
+
     public function getAllOffers(): array
     {
-        $items = [];
+        if (empty($this->offers)) {
+            $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
+            $jobOffers = $jobOfferRepository->findAllPublished();
 
-        $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
-        $jobOffers = $jobOfferRepository->findAllPublished();
-
-        foreach ($jobOffers as $jobOffer) {
-            $this->collectEmploymenttypes($jobOffer->getEmploymentType());
-            $items[] = $jobOffer;
+            foreach ($jobOffers as $jobOffer) {
+                $this->collectEmploymenttypes($jobOffer->getEmploymentType());
+                $this->collectLocations(StringUtil::deserialize($jobOffer->getJobLocation()));
+                $this->offers[] = $jobOffer;
+            }
         }
 
-        return $items;
+        return $this->offers;
     }
 
     public function collectEmploymenttypes(?array $employmentTypes): void
@@ -119,8 +132,35 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         }
     }
 
+    public function collectLocations(?array $locations) {
+        $addedLocations = [];
+        if (is_array($locations)) {
+            foreach ($locations as $locationId) {
+                /** @var TlPlentaJobsBasicJobLocation $location */
+                $location = $this->getAllLocations()[(int) $locationId] ?? null;
+
+                if (null === $location) {
+                    continue;
+                }
+
+                if (in_array($location->getAddressLocality(), $addedLocations)) {
+                    continue;
+                }
+
+                if (array_key_exists($location->getAddressLocality(), $this->counterLocation)) {
+                    $this->counterLocation[$location->getAddressLocality()] += 1;
+                } else {
+                    $this->counterLocation[$location->getAddressLocality()] = 1;
+                }
+                $addedLocations[] = $location->getAddressLocality();
+            }
+        }
+    }
+
     public function getLocations(ModuleModel $model): ?array
     {
+        $this->getAllOffers();
+
         $options = [];
 
         foreach ($this->getAllLocations() as $k) {
@@ -133,21 +173,25 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
         $options = array_flip($options);
 
+        foreach ($options as $key => $option) {
+            $options[$key] = $option.$this->addLocationCounter($model, $option);
+        }
+
         return $options;
     }
 
     public function getAllLocations(): array
     {
-        $items = [];
+        if (empty($this->locations)) {
+            $locationsRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
+            $locations = $locationsRepository->findAll();
 
-        $locationsRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
-        $locations = $locationsRepository->findAll();
-
-        foreach ($locations as $location) {
-            $items[] = $location;
+            foreach ($locations as $location) {
+                $this->locations[$location->getId()] = $location;
+            }
         }
 
-        return $items;
+        return $this->locations;
     }
 
     public function getHeadlineHtml(string $content, string $type): string
