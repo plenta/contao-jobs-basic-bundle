@@ -23,5 +23,6 @@ services:
 
     # Migrations
     Plenta\ContaoJobsBasic\Migration\RenameDatabaseColumnsMigration:
+        public: true
         tags:
             - { name: contao.migration, priority: 0 }
