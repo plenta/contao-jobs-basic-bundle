@@ -106,10 +106,10 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template->hl = $model->plentaJobsBasicHeadlineTag;
         $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
 
-        $meta = $this->googleForJobs->generateStructuredData($jobOffer);
+        $StructuredData = $this->googleForJobs->generatestructuredData($jobOffer);
 
-        if (null !== $meta) {
-            $GLOBALS['TL_BODY'][] = $meta;
+        if (null !== $StructuredData) {
+            $GLOBALS['TL_BODY'][] = $StructuredData;
         }
 
         return $template->getResponse();

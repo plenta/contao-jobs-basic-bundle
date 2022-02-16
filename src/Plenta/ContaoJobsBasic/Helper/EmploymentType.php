@@ -158,7 +158,7 @@ class EmploymentType
             $employmentTypesTemp[] = $this->getEmploymentTypeName($employmentType);
         }
 
-        return implode(', ', $employmentTypesTemp);
+        return implode(', ', array_filter($employmentTypesTemp));
     }
 
     public function getCustomEmploymentTypePrefix(): string
