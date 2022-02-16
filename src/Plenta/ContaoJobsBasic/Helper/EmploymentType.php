@@ -122,7 +122,7 @@ class EmploymentType
             2
         );
 
-        if (true === isset($employmentTypes[$employmentTypeId]->getTranslation()[$language]['title'])) {
+        if (false === empty($employmentTypes[$employmentTypeId]->getTranslation()[$language]['title'])) {
             $translation = $employmentTypes[$employmentTypeId]->getTranslation()[$language]['title'];
         } else {
             $translation = $employmentTypes[$employmentTypeId]->getTitle();
