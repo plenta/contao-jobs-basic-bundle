@@ -13,6 +13,7 @@ services:
         arguments:
             - '@translator'
             - '@Doctrine\Persistence\ManagerRegistry'
+            - '@request_stack'
 
     Plenta\ContaoJobsBasic\Helper\DataTypeMapper:
         class: Plenta\ContaoJobsBasic\Helper\DataTypeMapper
@@ -25,6 +26,7 @@ services:
             - '@Doctrine\Persistence\ManagerRegistry'
             - '@contao.image.picture_factory'
             - '@contao.assets.files_context'
+            - '@Plenta\ContaoJobsBasic\Helper\EmploymentType'
             - '%kernel.project_dir%'
 
     # Migrations

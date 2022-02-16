@@ -6,19 +6,15 @@
                 <target>Jobs (Basic)</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_offers.0">
-                <source>Jobs</source>
                 <target>Stellenangebote</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_offers.1">
-                <source>Manage job offers</source>
                 <target>Stellenangebote verwalten</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_organizations.0">
-                <source>Companies</source>
                 <target>Unternehmen</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_organizations.1">
-                <source>Manage companies</source>
                 <target>Unternehmen verwalten</target>
             </trans-unit>
             <trans-unit id="MOD.tl_plenta_jobs_basic_job_location">
@@ -31,51 +27,42 @@
                 <target>Arbeitsorte verwalten</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_settings.0">
-                <source>Settings</source>
                 <target>Einstellungen</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_settings.1">
-                <source>Manage settings</source>
                 <target>Einstellungen verwalten</target>
             </trans-unit>
-            <trans-unit id="MOD.plenta_jobs_dashboard">
-                <source>Dashboard</source>
-                <target>Dashboard</target>
-            </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_support.0">
-                <source>Support</source>
                 <target>Support</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_support.1">
-                <source>Here you will find support and options for assistance.</source>
                 <target>Hier findest du Support und Optionen zur Unterstützung.</target>
             </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_settings_employment_type.0">
+                <target>Zusätzliche Stellenarten</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_settings_employment_type.1">
+                <target>Hier können Sie weitere Stellenarten konfigurieren.</target>
+            </trans-unit>
             <trans-unit id="FMD.plentaJobsBasic">
-                <source>Jobs (Basic)</source>
                 <target>Jobs (Basic)</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_offer_list.0">
-                <source>Job offer list</source>
                 <target>Stellenangebotsliste</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_offer_list.1">
-                <source>Job offer list</source>
                 <target>Stellenangebotsliste</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_offer_reader.0">
-                <source>Job offer reader</source>
                 <target>Stellenangebotsleser</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_offer_reader.1">
-                <source>Job offer reader</source>
                 <target>Stellenangebotsleser</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_filter.0">
-                <source>Job offer filter</source>
                 <target>Stellenangebotsfilter</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_filter.1">
-                <source>Job offer filter</source>
                 <target>Stellenangebotsfilter</target>
             </trans-unit>
         </body>

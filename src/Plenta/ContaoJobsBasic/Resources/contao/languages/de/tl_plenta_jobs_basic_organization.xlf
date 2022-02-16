@@ -9,7 +9,7 @@
                 <target>Name</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_organization.name.1">
-                <target>Bitte geben Sie den Name des Unternehmens ein.</target>
+                <target>Bitte geben Sie den Namen des Unternehmens ein.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_organization.sameAs.0">
                 <target>Unternehmens-Url</target>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file>
+        <body>
+            <trans-unit id="tl_plenta_jobs_basic_settings_employment_type.settings_legend">
+                <target>Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_settings_employment_type.title.0">
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_settings_employment_type.title.1">
+                <target>Bitte geben Sie den Namen der Stellenart ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_settings_employment_type.google_for_jobs_mapping.0">
+                <target>Google For Jobs - Zuordung</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_settings_employment_type.google_for_jobs_mapping.1">
+                <target>Bitte wählen Sie eine Zuordnung.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_settings_employment_type.translation.0">
+                <target>Übersetzung</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_settings_employment_type.translation.1">
+                <target>Hier können Sie Übersetzungen anlegen.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

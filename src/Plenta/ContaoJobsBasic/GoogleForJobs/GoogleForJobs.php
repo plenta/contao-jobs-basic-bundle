@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -24,12 +24,14 @@ use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization;
+use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 
 class GoogleForJobs
 {
     protected ManagerRegistry $registry;
     protected PictureFactory $pictureFactory;
     protected ContaoContext $contaoFileContext;
+    protected EmploymentType $employmentTypeHelper;
 
     protected string $projectDir;
 
@@ -37,11 +39,13 @@ class GoogleForJobs
         ManagerRegistry $registry,
         PictureFactory $pictureFactory,
         ContaoContext $contaoFileContext,
+        EmploymentType $employmentTypeHelper,
         string $projectDir
     ) {
         $this->registry = $registry;
         $this->pictureFactory = $pictureFactory;
         $this->contaoFileContext = $contaoFileContext;
+        $this->employmentTypeHelper = $employmentTypeHelper;
         $this->projectDir = $projectDir;
     }
 
@@ -64,7 +68,7 @@ class GoogleForJobs
             $arrStructuredData['description'] = $description;
         }
 
-        $employmentType = $jobOffer->getEmploymentType();
+        $employmentType = $this->employmentTypeHelper->getMappedEmploymentTypesForGoogleForJobs($jobOffer->getEmploymentType());
 
         if (null !== $employmentType) {
             if (1 === \count($employmentType)) {

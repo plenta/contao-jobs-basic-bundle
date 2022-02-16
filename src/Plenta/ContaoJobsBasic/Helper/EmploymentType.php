@@ -14,21 +14,25 @@ namespace Plenta\ContaoJobsBasic\Helper;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicSettingsEmploymentType;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 class EmploymentType
 {
     protected LocaleAwareInterface $translator;
     protected ManagerRegistry $registry;
+    protected RequestStack $requestStack;
     protected string $customEmploymentTypePrefix = 'CUSTOM_';
     private ?array $customEmploymentTypes = null;
 
     public function __construct(
         LocaleAwareInterface $translator,
-        ManagerRegistry $registry
+        ManagerRegistry $registry,
+        RequestStack $requestStack
     ) {
         $this->translator = $translator;
         $this->registry = $registry;
+        $this->requestStack = $requestStack;
     }
 
     public function getGoogleForJobsEmploymentTypes(): array
@@ -61,6 +65,9 @@ class EmploymentType
         return $return;
     }
 
+    /**
+     * @return TlPlentaJobsBasicSettingsEmploymentType[]
+     */
     public function getAndSetCustomEmploymentTypes(): array
     {
         if (null === $this->customEmploymentTypes) {
@@ -109,7 +116,19 @@ class EmploymentType
             return null;
         }
 
-        return $employmentTypes[$employmentTypeId]->getTitle();
+        $language = substr(
+            $this->requestStack->getMasterRequest()->getLocale(),
+            0,
+            2
+        );
+
+        if (true === isset($employmentTypes[$employmentTypeId]->getTranslation()[$language]['title'])) {
+            $translation = $employmentTypes[$employmentTypeId]->getTranslation()[$language]['title'];
+        } else {
+            $translation = $employmentTypes[$employmentTypeId]->getTitle();
+        }
+
+        return $translation;
     }
 
     public function getEmploymentTypeNameFromTranslator(string $employmentType): ?string
@@ -145,5 +164,27 @@ class EmploymentType
     public function getCustomEmploymentTypePrefix(): string
     {
         return $this->customEmploymentTypePrefix;
+    }
+
+    public function getMappedEmploymentTypesForGoogleForJobs(array $employmentTypesUnmapped): array
+    {
+        $employmentTypes = $this->getAndSetCustomEmploymentTypes();
+        $return = [];
+
+        foreach ($employmentTypesUnmapped as $employmentTypeUnmapped) {
+            if (0 === strpos($employmentTypeUnmapped, $this->customEmploymentTypePrefix)) {
+                $employmentTypeId = str_replace($this->customEmploymentTypePrefix, '', $employmentTypeUnmapped);
+
+                if (false === isset($employmentTypes[$employmentTypeId])) {
+                    continue;
+                }
+
+                $return[] = $employmentTypes[$employmentTypeId]->getGoogleForJobsMapping();
+            } else {
+                $return[] = $employmentTypeUnmapped;
+            }
+        }
+
+        return array_unique($return);
     }
 }
