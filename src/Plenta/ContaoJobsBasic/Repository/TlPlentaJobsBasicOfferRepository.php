@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -78,22 +78,21 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
             $criterionType[] = "a.employmentType LIKE '%".$type."%'";
         }
 
-        if (count($criterionType)) {
+        if (\count($criterionType)) {
             $qb->andWhere(implode(' OR ', $criterionType));
         }
 
         $criterionLocation = [];
 
         foreach ($locations as $location) {
-            foreach(explode('|', $location) as $l) {
+            foreach (explode('|', $location) as $l) {
                 $criterionLocation[] = "a.jobLocation LIKE '%\"".$l."\"%'";
             }
         }
 
-        if (count($criterionLocation)) {
+        if (\count($criterionLocation)) {
             $qb->andWhere(implode(' OR ', $criterionLocation));
         }
-
 
         return $qb->getQuery()->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
