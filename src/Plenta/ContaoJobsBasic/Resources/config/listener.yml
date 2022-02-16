@@ -9,6 +9,12 @@ services:
     Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicJobLocation:
         public: true
 
+    Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicSettingsEmploymentType:
+        public: true
+        arguments:
+            - '@Plenta\ContaoJobsBasic\Helper\DataTypeMapper'
+            - '@Plenta\ContaoJobsBasic\Helper\EmploymentType'
+
     # Contao Hooks
     Plenta\ContaoJobsBasic\EventListener\Contao\DCA\SetPtableForContentListener:
         tags:

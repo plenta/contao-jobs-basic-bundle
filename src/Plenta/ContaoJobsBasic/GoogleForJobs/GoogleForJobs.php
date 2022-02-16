@@ -28,9 +28,7 @@ use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization;
 class GoogleForJobs
 {
     protected ManagerRegistry $registry;
-
     protected PictureFactory $pictureFactory;
-
     protected ContaoContext $contaoFileContext;
 
     protected string $projectDir;

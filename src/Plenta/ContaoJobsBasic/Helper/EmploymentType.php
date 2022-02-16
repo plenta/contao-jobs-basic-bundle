@@ -5,29 +5,33 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\Helper;
 
+use Doctrine\Persistence\ManagerRegistry;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicSettingsEmploymentType;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 class EmploymentType
 {
     protected LocaleAwareInterface $translator;
+    protected ManagerRegistry $registry;
+    protected string $customEmploymentTypePrefix = 'CUSTOM_';
+    private ?array $customEmploymentTypes = null;
 
     public function __construct(
-        LocaleAwareInterface $translator
+        LocaleAwareInterface $translator,
+        ManagerRegistry $registry
     ) {
         $this->translator = $translator;
+        $this->registry = $registry;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getEmploymentTypes(): array
+    public function getGoogleForJobsEmploymentTypes(): array
     {
         return [
             'FULL_TIME',
@@ -41,7 +45,74 @@ class EmploymentType
         ];
     }
 
+    public function getCustomEmploymentTypes(): array
+    {
+        $customEmploymentTypes = $this->getAndSetCustomEmploymentTypes();
+        $return = [];
+
+        if (empty($customEmploymentTypes)) {
+            return $return;
+        }
+
+        foreach ($customEmploymentTypes as $customEmploymentType) {
+            $return[] = $this->customEmploymentTypePrefix.$customEmploymentType->getId();
+        }
+
+        return $return;
+    }
+
+    public function getAndSetCustomEmploymentTypes(): array
+    {
+        if (null === $this->customEmploymentTypes) {
+            $employmentTypeRepository = $this->registry->getRepository(TlPlentaJobsBasicSettingsEmploymentType::class);
+
+            $this->customEmploymentTypes = $employmentTypeRepository->findAllIndexed();
+        }
+
+        return $this->customEmploymentTypes;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getEmploymentTypes(): array
+    {
+        return array_merge(
+            $this->getGoogleForJobsEmploymentTypes(),
+            $this->getCustomEmploymentTypes()
+        );
+    }
+
     public function getEmploymentTypeName(string $employmentType): ?string
+    {
+        if (0 === strpos($employmentType, $this->customEmploymentTypePrefix)) {
+            $translation = $this->getEmploymentTypeNameFromDatabase($employmentType);
+        } else {
+            $translation = $this->getEmploymentTypeNameFromTranslator($employmentType);
+        }
+
+        return $translation;
+    }
+
+    public function getEmploymentTypeNameFromDatabase(string $identifier): ?string
+    {
+        /** @var TlPlentaJobsBasicSettingsEmploymentType[] $employmentTypes */
+        $employmentTypes = $this->getAndSetCustomEmploymentTypes();
+
+        if (empty($employmentTypes)) {
+            return null;
+        }
+
+        $employmentTypeId = str_replace($this->customEmploymentTypePrefix, '', $identifier);
+
+        if (false === isset($employmentTypes[$employmentTypeId])) {
+            return null;
+        }
+
+        return $employmentTypes[$employmentTypeId]->getTitle();
+    }
+
+    public function getEmploymentTypeNameFromTranslator(string $employmentType): ?string
     {
         $translation = $this->translator->trans(
             'MSC.PLENTA_JOBS.'.$employmentType,
@@ -69,5 +140,10 @@ class EmploymentType
         }
 
         return implode(', ', $employmentTypesTemp);
+    }
+
+    public function getCustomEmploymentTypePrefix(): string
+    {
+        return $this->customEmploymentTypePrefix;
     }
 }

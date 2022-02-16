@@ -29,7 +29,7 @@ class DataTypeMapper
         /** @var StringUtil $stringUtil */
         $stringUtil = $this->framework->getAdapter(StringUtil::class);
 
-        $data = $stringUtil::deserialize($serializedData);
+        $data = $stringUtil->deserialize($serializedData);
 
         return json_encode($data);
     }
@@ -40,6 +40,6 @@ class DataTypeMapper
             return serialize([]);
         }
 
-        return serialize(json_decode($jsonData));
+        return serialize(json_decode($jsonData, true));
     }
 }

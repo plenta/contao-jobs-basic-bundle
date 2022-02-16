@@ -20,9 +20,44 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
         'enableVersioning' => true,
     ],
 
+    'list' => [
+        'sorting' => [
+            'mode' => 1,
+            'fields' => ['title'],
+            'flag' => 1,
+            'panelLayout' => 'filter;search,sort,limit',
+        ],
+        'label' => [
+            'fields' => ['title'],
+            'showColumns' => false,
+        ],
+        'global_operations' => [
+            'all' => [
+                'href' => 'act=select',
+                'class' => 'header_edit_all',
+                'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
+            ],
+        ],
+        'operations' => [
+            'edit' => [
+                'href' => 'act=edit',
+                'icon' => 'edit.svg',
+            ],
+            'copy' => [
+                'href' => 'act=copy',
+                'icon' => 'copy.svg',
+            ],
+            'delete' => [
+                'href' => 'act=delete',
+                'icon' => 'delete.svg',
+                'attributes' => 'onclick="if(!confirm(\''.$GLOBALS['TL_LANG']['MSC']['deleteConfirm'].'\'))return false;Backend.getScrollOffset()"',
+            ],
+        ],
+    ],
+
     // Palettes
     'palettes' => [
-        'default' => '{settings_legend},title,google_for_jobs_mapping,translation',
+        'default' => '{settings_legend},title,google_for_jobs_mapping;translation',
     ],
 
     // Fields
@@ -35,18 +70,28 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
             'exclude' => true,
             'search' => true,
             'inputType' => 'text',
-            'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
+            'eval' => [
+                'maxlength' => 255,
+                'tl_class' => 'w50',
+                'mandatory' => true,
+            ],
         ],
         'google_for_jobs_mapping' => [
             'exclude' => true,
             'inputType' => 'select',
-            'options' => ['ascending', 'descending'],
-            'reference' => &$GLOBALS['TL_LANG']['MSC'],
-            'eval' => ['tl_class' => 'w50'],
+            'options_callback' => [
+                TlPlentaJobsBasicSettingsEmploymentType::class,
+                'googleForJobsMappingOptionsCallback',
+            ],
+            'eval' => [
+                'tl_class' => 'w50',
+                'mandatory' => true,
+            ],
         ],
         'translation' => [
             'inputType' => 'metaWizard',
             'eval' => [
+                'class' => 'clr',
                 'allowHtml' => true,
                 'multiple' => true,
                 'metaFields' => [
@@ -55,7 +100,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
             ],
             'load_callback' => [[
                 TlPlentaJobsBasicSettingsEmploymentType::class,
-                'etranslationLoadCallback',
+                'translationLoadCallback',
             ]],
             'save_callback' => [[
                 TlPlentaJobsBasicSettingsEmploymentType::class,

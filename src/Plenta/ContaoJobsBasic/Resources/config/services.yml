@@ -12,6 +12,12 @@ services:
         class: Plenta\ContaoJobsBasic\Helper\EmploymentType
         arguments:
             - '@translator'
+            - '@Doctrine\Persistence\ManagerRegistry'
+
+    Plenta\ContaoJobsBasic\Helper\DataTypeMapper:
+        class: Plenta\ContaoJobsBasic\Helper\DataTypeMapper
+        arguments:
+            - '@contao.framework'
 
     Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs:
         class: Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs

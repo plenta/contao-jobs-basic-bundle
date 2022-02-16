@@ -22,4 +22,13 @@ class TlPlentaJobsBasicSettingsEmploymentTypeRepository extends ServiceEntityRep
     {
         parent::__construct($registry, TlPlentaJobsBasicSettingsEmploymentType::class);
     }
+
+    public function findAllIndexed(): array
+    {
+        return $this
+            ->createQueryBuilder('e', 'e.id')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
