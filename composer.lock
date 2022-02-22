@@ -161,12 +161,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Assert\\": "lib/Assert"
-                },
                 "files": [
                     "lib/Assert/functions.php"
-                ]
+                ],
+                "psr-4": {
+                    "Assert\\": "lib/Assert"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -904,16 +904,16 @@
         },
         {
             "name": "contao-components/jquery-ui",
-            "version": "1.12.1.1",
+            "version": "1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/jquery-ui.git",
-                "reference": "1fabbe27469a6b44130c1ad38bd1aa0a2a3720a1"
+                "reference": "3ab2e7e9a2828bb9f84a37558040fd2bcb0e3c01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/jquery-ui/zipball/1fabbe27469a6b44130c1ad38bd1aa0a2a3720a1",
-                "reference": "1fabbe27469a6b44130c1ad38bd1aa0a2a3720a1",
+                "url": "https://api.github.com/repos/contao-components/jquery-ui/zipball/3ab2e7e9a2828bb9f84a37558040fd2bcb0e3c01",
+                "reference": "3ab2e7e9a2828bb9f84a37558040fd2bcb0e3c01",
                 "shasum": ""
             },
             "require": {
@@ -933,9 +933,9 @@
             "description": "jQuery UI integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/jquery-ui/issues",
-                "source": "https://github.com/contao-components/jquery-ui/tree/master"
+                "source": "https://github.com/contao-components/jquery-ui/tree/1.13.1"
             },
-            "time": "2017-09-26T08:11:43+00:00"
+            "time": "2022-02-16T14:55:44+00:00"
         },
         {
             "name": "contao-components/mediabox",
@@ -14531,8 +14531,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "platform-overrides": {
-        "php": "7.4"
-    },
     "plugin-api-version": "2.2.0"
 }
