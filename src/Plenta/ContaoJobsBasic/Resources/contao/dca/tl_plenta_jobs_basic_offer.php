@@ -62,6 +62,18 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 //'button_callback' => ['tl_plenta_jobs_basic_offer', 'toggleIcon'],
                 'showInHeader' => true,
             ],
+            'renewDatePosted' => [
+                'attributes' => 'onclick="Backend.getScrollOffset();"',
+                'haste_ajax_operation' => [
+                    'field' => 'datePosted',
+                    'options' => [
+                        [
+                            'value' => time(),
+                            'icon' => 'sync.svg',
+                        ],
+                    ],
+                ],
+            ],
             'show' => [
                 'href' => 'act=show',
                 'icon' => 'show.svg',
@@ -196,12 +208,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
-        ],
-        'datePosted' => [
-            'save_callback' => [[
-                TlPlentaJobsBasicOffer::class,
-                'saveCallbackGlobal2',
-            ]],
         ],
     ],
 ];

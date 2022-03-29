@@ -80,6 +80,12 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.validThrough.1">
                 <target>Diese Angabe ist nur für Stellenausschreibungen mit Bewerbungsfrist erforderlich.</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.renewDatePosted.0">
+                <target>Veröffentlichungsdatum erneuern</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.renewDatePosted.1">
+                <target>Veröffentlichungsdatum für Stellenanzeige ID %s erneuern.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
