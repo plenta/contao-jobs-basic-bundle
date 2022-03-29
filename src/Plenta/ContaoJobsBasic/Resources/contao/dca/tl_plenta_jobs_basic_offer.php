@@ -20,6 +20,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'switchToEdit' => true,
         'markAsCopy' => 'title',
         'enableVersioning' => true,
+        'onsubmit_callback' => [[
+            TlPlentaJobsBasicOffer::class,
+            'saveCallbackGlobal',
+        ]],
     ],
 
     'list' => [
@@ -52,6 +56,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'attributes' => 'onclick="if(!confirm(\''.$GLOBALS['TL_LANG']['MSC']['deleteConfirm'].'\'))return false;Backend.getScrollOffset()"',
             ],
             'toggle' => [
+                'href' => null,
                 'icon' => 'visible.svg',
                 'attributes' => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
                 //'button_callback' => ['tl_plenta_jobs_basic_offer', 'toggleIcon'],
@@ -191,6 +196,12 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+        ],
+        'datePosted' => [
+            'save_callback' => [[
+                TlPlentaJobsBasicOffer::class,
+                'saveCallbackGlobal2',
+            ]],
         ],
     ],
 ];

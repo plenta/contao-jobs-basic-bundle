@@ -14,6 +14,7 @@ namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
 use Contao\CoreBundle\Slug\Slug;
 use Contao\DataContainer;
+use Contao\Input;
 use Contao\StringUtil;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
@@ -109,5 +110,26 @@ class TlPlentaJobsBasicOffer
         }
 
         return serialize(json_decode($value));
+    }
+
+    public function saveCallbackGlobal(DataContainer $dc): void
+    {
+        // Front end call
+        if (!$dc instanceof DataContainer) {
+            return;
+        }
+
+        if (!$dc->activeRecord) {
+            return;
+        }
+
+        if (null === $dc->activeRecord->datePosted && !empty(Input::post('published'))) {
+            $offerRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferEntity::class);
+            $offer = $offerRepository->find($dc->activeRecord->id);
+
+            $offer->setDatePosted(time());
+            $this->registry->getManager()->persist($offer);
+            $this->registry->getManager()->flush();
+        }
     }
 }
