@@ -17,14 +17,14 @@
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
         "contao/conflicts": "@dev",
-        "contao/core-bundle": "^4.9",
+        "contao/core-bundle": "^4.9.26",
         "codefog/contao-haste": "^4.25",
         "doctrine/orm": "^2.6.4",
         "doctrine/data-fixtures": "^1.4.2",
         "doctrine/dbal": "^2.10.1 || ^3.2.0"
     },
     "require-dev": {
-        "contao/manager-bundle": "^4.9",
+        "contao/manager-bundle": "^4.9.26",
         "phpunit/phpunit": "^9.5.10",
         "contao/test-case": "^4.4.0",
         "symfony/phpunit-bridge": "v5.3.8",
