@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -126,7 +126,6 @@ class TlPlentaJobsBasicOffer
         if (null === $dc->activeRecord->datePosted && !empty(Input::post('published'))) {
             $offerRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferEntity::class);
             $offer = $offerRepository->find($dc->activeRecord->id);
-
             $offer->setDatePosted(time());
             $this->registry->getManager()->persist($offer);
             $this->registry->getManager()->flush();
