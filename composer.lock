@@ -646,16 +646,16 @@
         },
         {
             "name": "contao-components/colorpicker",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/colorpicker.git",
-                "reference": "b9545f1fa3e4f0f4f577caf7fc743c0530157122"
+                "reference": "ce0732ff1d0bd952a3642fd639e3d6a93bd08c94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/colorpicker/zipball/b9545f1fa3e4f0f4f577caf7fc743c0530157122",
-                "reference": "b9545f1fa3e4f0f4f577caf7fc743c0530157122",
+                "url": "https://api.github.com/repos/contao-components/colorpicker/zipball/ce0732ff1d0bd952a3642fd639e3d6a93bd08c94",
+                "reference": "ce0732ff1d0bd952a3642fd639e3d6a93bd08c94",
                 "shasum": ""
             },
             "require": {
@@ -675,9 +675,9 @@
             "description": "Color picker integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/colorpicker/issues",
-                "source": "https://github.com/contao-components/colorpicker/tree/1.5.1"
+                "source": "https://github.com/contao-components/colorpicker/tree/1.5.2"
             },
-            "time": "2019-07-12T07:24:03+00:00"
+            "time": "2022-03-30T15:30:28+00:00"
         },
         {
             "name": "contao-components/contao",
@@ -1232,16 +1232,16 @@
         },
         {
             "name": "contao/core-bundle",
-            "version": "4.9.27",
+            "version": "4.9.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/core-bundle.git",
-                "reference": "d77d12a58689b1b1779c63e4ba478c2d64eabf58"
+                "reference": "66c14bc21dcde0e15f2412e25f4e61f8b586d756"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/core-bundle/zipball/d77d12a58689b1b1779c63e4ba478c2d64eabf58",
-                "reference": "d77d12a58689b1b1779c63e4ba478c2d64eabf58",
+                "url": "https://api.github.com/repos/contao/core-bundle/zipball/66c14bc21dcde0e15f2412e25f4e61f8b586d756",
+                "reference": "66c14bc21dcde0e15f2412e25f4e61f8b586d756",
                 "shasum": ""
             },
             "require": {
@@ -1348,7 +1348,7 @@
             "require-dev": {
                 "composer/composer": "^1.0 || ^2.0",
                 "contao/manager-plugin": "^2.3.1",
-                "contao/test-case": "^4.4",
+                "contao/test-case": "self.version",
                 "ext-fileinfo": "*",
                 "lexik/maintenance-bundle": "^2.1.5",
                 "phpunit/phpunit": "^8.5",
@@ -1405,7 +1405,7 @@
                 "issues": "https://github.com/contao/contao/issues",
                 "source": "https://github.com/contao/core-bundle"
             },
-            "time": "2022-03-09T08:13:30+00:00"
+            "time": "2022-03-31T08:19:46+00:00"
         },
         {
             "name": "contao/image",
@@ -2138,16 +2138,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.5.7",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "1e0d1d7a5982eeebc37dcb4d77bb1a5c5961d96d"
+                "reference": "eca20633225fde77d042ecdac222bc9a5cb20f6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/1e0d1d7a5982eeebc37dcb4d77bb1a5c5961d96d",
-                "reference": "1e0d1d7a5982eeebc37dcb4d77bb1a5c5961d96d",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/eca20633225fde77d042ecdac222bc9a5cb20f6a",
+                "reference": "eca20633225fde77d042ecdac222bc9a5cb20f6a",
                 "shasum": ""
             },
             "require": {
@@ -2167,12 +2167,12 @@
                 "symfony/service-contracts": "^1.1.1|^2.0|^3"
             },
             "conflict": {
-                "doctrine/orm": "<2.9|>=3.0",
+                "doctrine/orm": "<2.10|>=3.0",
                 "twig/twig": "<1.34|>=2.0,<2.4"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0",
-                "doctrine/orm": "^2.9 || ^3.0",
+                "doctrine/orm": "^2.10 || ^3.0",
                 "friendsofphp/proxy-manager-lts": "^1.0",
                 "phpunit/phpunit": "^7.5 || ^8.0 || ^9.3 || ^10.0",
                 "psalm/plugin-phpunit": "^0.16.1",
@@ -2231,7 +2231,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.5.7"
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.6.0"
             },
             "funding": [
                 {
@@ -2247,7 +2247,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-05T10:29:13+00:00"
+            "time": "2022-03-05T10:43:39+00:00"
         },
         {
             "name": "doctrine/event-manager",
@@ -3409,30 +3409,31 @@
         },
         {
             "name": "lcobucci/clock",
-            "version": "2.1.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/clock.git",
-                "reference": "903513d28e85376a33385ebc601afd2ee69e5653"
+                "reference": "353d83fe2e6ae95745b16b3d911813df6a05bfb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/clock/zipball/903513d28e85376a33385ebc601afd2ee69e5653",
-                "reference": "903513d28e85376a33385ebc601afd2ee69e5653",
+                "url": "https://api.github.com/repos/lcobucci/clock/zipball/353d83fe2e6ae95745b16b3d911813df6a05bfb3",
+                "reference": "353d83fe2e6ae95745b16b3d911813df6a05bfb3",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "infection/infection": "^0.25",
-                "lcobucci/coding-standard": "^8.0",
-                "phpstan/extension-installer": "^1.1",
+                "infection/infection": "^0.17",
+                "lcobucci/coding-standard": "^6.0",
+                "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12",
                 "phpstan/phpstan-deprecation-rules": "^0.12",
                 "phpstan/phpstan-phpunit": "^0.12",
                 "phpstan/phpstan-strict-rules": "^0.12",
-                "phpunit/phpunit": "^9.5"
+                "phpunit/php-code-coverage": "9.1.4",
+                "phpunit/phpunit": "9.3.7"
             },
             "type": "library",
             "autoload": {
@@ -3453,7 +3454,7 @@
             "description": "Yet another clock abstraction",
             "support": {
                 "issues": "https://github.com/lcobucci/clock/issues",
-                "source": "https://github.com/lcobucci/clock/tree/2.1.0"
+                "source": "https://github.com/lcobucci/clock/tree/2.0.x"
             },
             "funding": [
                 {
@@ -3465,7 +3466,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-10-31T21:32:07+00:00"
+            "time": "2020-08-27T18:56:02+00:00"
         },
         {
             "name": "lcobucci/jwt",
@@ -4632,20 +4633,20 @@
         },
         {
             "name": "psr/cache",
-            "version": "2.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/cache.git",
-                "reference": "213f9dbc5b9bfbc4f8db86d2838dc968752ce13b"
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/cache/zipball/213f9dbc5b9bfbc4f8db86d2838dc968752ce13b",
-                "reference": "213f9dbc5b9bfbc4f8db86d2838dc968752ce13b",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.0"
+                "php": ">=5.3.0"
             },
             "type": "library",
             "extra": {
@@ -4665,7 +4666,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
+                    "homepage": "http://www.php-fig.org/"
                 }
             ],
             "description": "Common interface for caching libraries",
@@ -4675,9 +4676,9 @@
                 "psr-6"
             ],
             "support": {
-                "source": "https://github.com/php-fig/cache/tree/2.0.0"
+                "source": "https://github.com/php-fig/cache/tree/master"
             },
-            "time": "2021-02-03T23:23:37+00:00"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "psr/container",
@@ -9297,33 +9298,34 @@
         },
         {
             "name": "symfony/string",
-            "version": "v6.0.3",
+            "version": "v5.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "522144f0c4c004c80d56fa47e40e17028e2eefc2"
+                "reference": "92043b7d8383e48104e411bc9434b260dbeb5a10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/522144f0c4c004c80d56fa47e40e17028e2eefc2",
-                "reference": "522144f0c4c004c80d56fa47e40e17028e2eefc2",
+                "url": "https://api.github.com/repos/symfony/string/zipball/92043b7d8383e48104e411bc9434b260dbeb5a10",
+                "reference": "92043b7d8383e48104e411bc9434b260dbeb5a10",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.2",
+                "php": ">=7.2.5",
                 "symfony/polyfill-ctype": "~1.8",
                 "symfony/polyfill-intl-grapheme": "~1.0",
                 "symfony/polyfill-intl-normalizer": "~1.0",
-                "symfony/polyfill-mbstring": "~1.0"
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php80": "~1.15"
             },
             "conflict": {
-                "symfony/translation-contracts": "<2.0"
+                "symfony/translation-contracts": ">=3.0"
             },
             "require-dev": {
-                "symfony/error-handler": "^5.4|^6.0",
-                "symfony/http-client": "^5.4|^6.0",
-                "symfony/translation-contracts": "^2.0|^3.0",
-                "symfony/var-exporter": "^5.4|^6.0"
+                "symfony/error-handler": "^4.4|^5.0|^6.0",
+                "symfony/http-client": "^4.4|^5.0|^6.0",
+                "symfony/translation-contracts": "^1.1|^2",
+                "symfony/var-exporter": "^4.4|^5.0|^6.0"
             },
             "type": "library",
             "autoload": {
@@ -9362,7 +9364,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v6.0.3"
+                "source": "https://github.com/symfony/string/tree/v5.4.3"
             },
             "funding": [
                 {
@@ -9378,7 +9380,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T09:55:41+00:00"
+            "time": "2022-01-02T09:53:40+00:00"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -10186,24 +10188,23 @@
         },
         {
             "name": "thecodingmachine/safe",
-            "version": "v2.1.2",
+            "version": "v1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thecodingmachine/safe.git",
-                "reference": "e19610c7bb1f829bf0886f5a94a21924141212de"
+                "reference": "a8ab0876305a4cdaef31b2350fcb9811b5608dbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/e19610c7bb1f829bf0886f5a94a21924141212de",
-                "reference": "e19610c7bb1f829bf0886f5a94a21924141212de",
+                "url": "https://api.github.com/repos/thecodingmachine/safe/zipball/a8ab0876305a4cdaef31b2350fcb9811b5608dbc",
+                "reference": "a8ab0876305a4cdaef31b2350fcb9811b5608dbc",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
+                "php": ">=7.2"
             },
             "require-dev": {
                 "phpstan/phpstan": "^0.12",
-                "phpunit/phpunit": "^9.5",
                 "squizlabs/php_codesniffer": "^3.2",
                 "thecodingmachine/phpstan-strict-rules": "^0.12"
             },
@@ -10216,15 +10217,10 @@
             "autoload": {
                 "files": [
                     "deprecated/apc.php",
-                    "deprecated/array.php",
-                    "deprecated/datetime.php",
                     "deprecated/libevent.php",
-                    "deprecated/password.php",
                     "deprecated/mssql.php",
                     "deprecated/stats.php",
-                    "deprecated/strings.php",
                     "lib/special_cases.php",
-                    "deprecated/mysqli.php",
                     "generated/apache.php",
                     "generated/apcu.php",
                     "generated/array.php",
@@ -10245,7 +10241,6 @@
                     "generated/fpm.php",
                     "generated/ftp.php",
                     "generated/funchand.php",
-                    "generated/gettext.php",
                     "generated/gmp.php",
                     "generated/gnupg.php",
                     "generated/hash.php",
@@ -10255,6 +10250,7 @@
                     "generated/image.php",
                     "generated/imap.php",
                     "generated/info.php",
+                    "generated/ingres-ii.php",
                     "generated/inotify.php",
                     "generated/json.php",
                     "generated/ldap.php",
@@ -10263,14 +10259,20 @@
                     "generated/mailparse.php",
                     "generated/mbstring.php",
                     "generated/misc.php",
+                    "generated/msql.php",
                     "generated/mysql.php",
+                    "generated/mysqli.php",
+                    "generated/mysqlndMs.php",
+                    "generated/mysqlndQc.php",
                     "generated/network.php",
                     "generated/oci8.php",
                     "generated/opcache.php",
                     "generated/openssl.php",
                     "generated/outcontrol.php",
+                    "generated/password.php",
                     "generated/pcntl.php",
                     "generated/pcre.php",
+                    "generated/pdf.php",
                     "generated/pgsql.php",
                     "generated/posix.php",
                     "generated/ps.php",
@@ -10281,6 +10283,7 @@
                     "generated/sem.php",
                     "generated/session.php",
                     "generated/shmop.php",
+                    "generated/simplexml.php",
                     "generated/sockets.php",
                     "generated/sodium.php",
                     "generated/solr.php",
@@ -10318,9 +10321,9 @@
             "description": "PHP core functions that throw exceptions instead of returning FALSE on error",
             "support": {
                 "issues": "https://github.com/thecodingmachine/safe/issues",
-                "source": "https://github.com/thecodingmachine/safe/tree/v2.1.2"
+                "source": "https://github.com/thecodingmachine/safe/tree/v1.3.3"
             },
-            "time": "2022-02-01T21:08:44+00:00"
+            "time": "2020-10-28T17:51:34+00:00"
         },
         {
             "name": "true/punycode",
@@ -11014,16 +11017,16 @@
         },
         {
             "name": "contao/installation-bundle",
-            "version": "4.9.27",
+            "version": "4.9.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/installation-bundle.git",
-                "reference": "b8e416d95f4568fbb2b2f9eecfa048e605dba784"
+                "reference": "aad3db796d112f71cf3c7a4fb960dcd02a1b4b60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/b8e416d95f4568fbb2b2f9eecfa048e605dba784",
-                "reference": "b8e416d95f4568fbb2b2f9eecfa048e605dba784",
+                "url": "https://api.github.com/repos/contao/installation-bundle/zipball/aad3db796d112f71cf3c7a4fb960dcd02a1b4b60",
+                "reference": "aad3db796d112f71cf3c7a4fb960dcd02a1b4b60",
                 "shasum": ""
             },
             "require": {
@@ -11085,20 +11088,20 @@
                 "issues": "https://github.com/contao/contao/issues",
                 "source": "https://github.com/contao/installation-bundle"
             },
-            "time": "2022-02-03T11:45:37+00:00"
+            "time": "2022-03-31T08:19:46+00:00"
         },
         {
             "name": "contao/manager-bundle",
-            "version": "4.9.27",
+            "version": "4.9.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/manager-bundle.git",
-                "reference": "027e547af2ada3925d217b949cf0f479d5f3b3c5"
+                "reference": "518e20ca8b3d3e391d7739c5ffdd95b2ceeaadc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/027e547af2ada3925d217b949cf0f479d5f3b3c5",
-                "reference": "027e547af2ada3925d217b949cf0f479d5f3b3c5",
+                "url": "https://api.github.com/repos/contao/manager-bundle/zipball/518e20ca8b3d3e391d7739c5ffdd95b2ceeaadc0",
+                "reference": "518e20ca8b3d3e391d7739c5ffdd95b2ceeaadc0",
                 "shasum": ""
             },
             "require": {
@@ -11147,7 +11150,7 @@
                 "symfony/security-bundle": "4.4.* <4.4.5"
             },
             "require-dev": {
-                "contao/test-case": "^4.2",
+                "contao/test-case": "self.version",
                 "phpunit/phpunit": "^8.5",
                 "symfony/phpunit-bridge": "4.4.*"
             },
@@ -11188,7 +11191,7 @@
                 "issues": "https://github.com/contao/contao/issues",
                 "source": "https://github.com/contao/manager-bundle"
             },
-            "time": "2022-03-04T15:16:33+00:00"
+            "time": "2022-03-31T08:19:46+00:00"
         },
         {
             "name": "contao/manager-plugin",
@@ -11262,16 +11265,16 @@
         },
         {
             "name": "contao/news-bundle",
-            "version": "4.9.27",
+            "version": "4.9.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/news-bundle.git",
-                "reference": "8e5397cf5f741897366e80356b0c9e672aec59c4"
+                "reference": "2c25adc1a443e94e5f70b5fa15c437984d0660bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/news-bundle/zipball/8e5397cf5f741897366e80356b0c9e672aec59c4",
-                "reference": "8e5397cf5f741897366e80356b0c9e672aec59c4",
+                "url": "https://api.github.com/repos/contao/news-bundle/zipball/2c25adc1a443e94e5f70b5fa15c437984d0660bc",
+                "reference": "2c25adc1a443e94e5f70b5fa15c437984d0660bc",
                 "shasum": ""
             },
             "require": {
@@ -11291,7 +11294,7 @@
             },
             "require-dev": {
                 "contao/manager-plugin": "^2.3.1",
-                "contao/test-case": "^4.2",
+                "contao/test-case": "self.version",
                 "phpunit/phpunit": "^8.5",
                 "symfony/http-client": "4.4.*",
                 "symfony/phpunit-bridge": "4.4.*"
@@ -11336,7 +11339,7 @@
                 "issues": "https://github.com/contao/contao/issues",
                 "source": "https://github.com/contao/news-bundle"
             },
-            "time": "2022-03-09T08:13:30+00:00"
+            "time": "2022-03-31T08:19:46+00:00"
         },
         {
             "name": "contao/phpstan",
@@ -11405,33 +11408,32 @@
         },
         {
             "name": "contao/test-case",
-            "version": "4.6.1",
+            "version": "4.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/test-case.git",
-                "reference": "c368458f88dbb9e2576c54691d88a2ce2c0cfcb7"
+                "reference": "4eec286fa2b614eb5291ff9e9863462cbaa46c27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/test-case/zipball/c368458f88dbb9e2576c54691d88a2ce2c0cfcb7",
-                "reference": "c368458f88dbb9e2576c54691d88a2ce2c0cfcb7",
+                "url": "https://api.github.com/repos/contao/test-case/zipball/4eec286fa2b614eb5291ff9e9863462cbaa46c27",
+                "reference": "4eec286fa2b614eb5291ff9e9863462cbaa46c27",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2 || ^8.0"
+                "php": "^7.4 || ^8.0",
+                "phpunit/phpunit": "^9.3"
             },
             "conflict": {
-                "contao/core-bundle": "<4.9",
                 "phpunit/phpunit": "<8.0",
                 "roave/better-reflection": "<4.12.2 || >=6.0"
             },
             "require-dev": {
-                "contao/core-bundle": "^4.9",
-                "doctrine/dbal": "^2.11 || ^3.0",
-                "doctrine/orm": "^2.6.3",
+                "contao/core-bundle": "self.version",
+                "doctrine/dbal": "^3.3",
+                "doctrine/orm": "^2.10",
                 "ext-pdo": "*",
-                "friendsofphp/php-cs-fixer": "^2.12",
-                "php-http/guzzle6-adapter": "^1.1"
+                "symfony/http-client": "^5.4"
             },
             "type": "library",
             "autoload": {
@@ -11452,9 +11454,9 @@
             "description": "Contao 4 test case",
             "support": {
                 "issues": "https://github.com/contao/test-case/issues",
-                "source": "https://github.com/contao/test-case/tree/4.6.1"
+                "source": "https://github.com/contao/test-case/tree/4.13.2"
             },
-            "time": "2022-03-18T16:52:34+00:00"
+            "time": "2022-03-29T15:37:56+00:00"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
@@ -12160,16 +12162,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "93ebd0014cab80c4ea9f5e297ea48672f1b87706"
+                "reference": "77a32518733312af16a44300404e945338981de3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/93ebd0014cab80c4ea9f5e297ea48672f1b87706",
-                "reference": "93ebd0014cab80c4ea9f5e297ea48672f1b87706",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/77a32518733312af16a44300404e945338981de3",
+                "reference": "77a32518733312af16a44300404e945338981de3",
                 "shasum": ""
             },
             "require": {
@@ -12204,9 +12206,9 @@
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "support": {
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
-                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.6.0"
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.6.1"
             },
-            "time": "2022-01-04T19:58:01+00:00"
+            "time": "2022-03-15T21:29:03+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -14532,5 +14534,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
