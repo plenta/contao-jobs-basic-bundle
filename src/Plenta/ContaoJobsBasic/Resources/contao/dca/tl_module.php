@@ -18,15 +18,26 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasic
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowSorting';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
-    '{title_legend},name,type;{config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicShowSorting;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
+    '{title_legend},name,type;
+    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicShowSorting;
+    {redirect_legend},jumpTo;
+    {template_legend:hide},customTpl;
+    {expert_legend:hide},cssID'
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
-    '{title_legend},name,type;{config_legend},plentaJobsBasicHeadlineTag;{expert_legend:hide},cssID'
+    '{title_legend},name,type;
+    {config_legend},plentaJobsBasicHeadlineTag;
+    {template_legend:hide},customTpl;
+    {expert_legend:hide},cssID'
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
-    '{title_legend},name,type;{config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
+    '{title_legend},name,type;
+    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations;
+    {template_legend:hide},customTpl;
+    {redirect_legend},jumpTo;
+    {expert_legend:hide},cssID'
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowButton'] = 'plentaJobsBasicSubmit';
