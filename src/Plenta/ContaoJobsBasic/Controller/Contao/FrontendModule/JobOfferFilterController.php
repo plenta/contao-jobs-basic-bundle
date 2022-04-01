@@ -209,7 +209,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-        $form = new HasteForm('plenta_jobs_basic_filter_'.$model->id, $model->plentaJobsBasicMethod, fn ($objHaste) => false);
+        $form = new HasteForm('plenta_jobs_basic_filter_'.$model->id, 'GET', fn ($objHaste) => false);
 
         if (0 !== (int) $model->jumpTo) {
             $form->setFormActionFromPageId($model->jumpTo);

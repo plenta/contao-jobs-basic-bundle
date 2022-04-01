@@ -59,7 +59,7 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
         return false;
     }
 
-    public function findAllPublishedByTypesAndLocation(array $types, array $locations): array
+    public function findAllPublishedByTypesAndLocation(array $types, array $locations, ?string $sortBy = null, ?string $order = null): array
     {
         $qb = $this->createQueryBuilder('a');
 
@@ -92,6 +92,10 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
 
         if (\count($criterionLocation)) {
             $qb->andWhere(implode(' OR ', $criterionLocation));
+        }
+
+        if (null !== $sortBy) {
+            $qb->orderBy('a.'.$sortBy, $order);
         }
 
         return $qb->getQuery()->getResult(AbstractQuery::HYDRATE_OBJECT);

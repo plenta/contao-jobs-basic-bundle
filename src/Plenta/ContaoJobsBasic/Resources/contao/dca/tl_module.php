@@ -10,12 +10,15 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
+use Plenta\ContaoJobsBasic\EventListener\JobOfferFields;
+
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowTypes';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowLocations';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowButton';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowSorting';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
-    '{title_legend},name,type;{config_legend},plentaJobsBasicHeadlineTag;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
+    '{title_legend},name,type;{config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicShowSorting;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
@@ -23,12 +26,13 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
-    '{title_legend},name,type;{config_legend},plentaJobsBasicMethod,plentaJobsBasicShowButton,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
+    '{title_legend},name,type;{config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations;{redirect_legend},jumpTo;{expert_legend:hide},cssID'
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowButton'] = 'plentaJobsBasicSubmit';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowTypes'] = 'plentaJobsBasicTypesHeadline,plentaJobsBasicShowAllTypes,plentaJobsBasicShowQuantity';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowLocations'] = 'plentaJobsBasicLocationsHeadline,plentaJobsBasicShowAllLocations,plentaJobsBasicShowLocationQuantity';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowSorting'] = 'plentaJobsBasicSortingFields,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicHeadlineTag'] = [
     'exclude' => true,
@@ -37,14 +41,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicHeadlineTag'] = [
     'options' => ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'],
     'eval' => ['maxlength' => 8, 'tl_class' => 'w50 clr'],
     'sql' => "varchar(8) NOT NULL default 'h2'",
-];
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicMethod'] = [
-    'exclude' => true,
-    'inputType' => 'select',
-    'options' => ['POST', 'GET'],
-    'eval' => ['tl_class' => 'w50'],
-    'sql' => "varchar(12) NOT NULL default 'POST'",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicShowButton'] = [
@@ -115,4 +111,46 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicShowLocationQuantity']
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'w50'],
     'sql' => "char(1) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicShowSorting'] = [
+    'exclude' => true,
+    'inputType' => 'checkbox',
+    'eval' => [
+        'submitOnChange' => true,
+        'tl_class' => 'clr'
+    ],
+    'sql' => "char(1) NOT NULL default ''"
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSortingFields'] = [
+    'exclude' => true,
+    'inputType' => 'checkboxWizard',
+    'options' => JobOfferFields::getFields(),
+    'eval' => [
+        'multiple' => true,
+    ],
+    'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicSortingFields']['fields'],
+    'sql' => "mediumtext NULL",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSortingDefaultField'] = [
+    'exclude' => true,
+    'inputType' => 'select',
+    'options' => JobOfferFields::getFields(),
+    'eval' => [
+        'tl_class' => 'w50',
+    ],
+    'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicSortingFields']['fields'],
+    'sql' => "varchar(255) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSortingDefaultDirection'] = [
+    'exclude' => true,
+    'inputType' => 'select',
+    'options' => ['ASC', 'DESC'],
+    'eval' => [
+        'tl_class' => 'w50',
+    ],
+    'sql' => "varchar(4) NOT NULL default ''"
 ];

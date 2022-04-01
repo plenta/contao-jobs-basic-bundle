@@ -74,11 +74,56 @@
             <trans-unit id="tl_module.plentaJobsBasicShowLocationQuantity.1">
                 <target>Die Anzahl der Stellenangebote pro Standort werden angezeigt.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicMethod.0">
-                <target>Übertragungsmethode</target>
+            <trans-unit id="tl_module.plentaJobsBasicShowSorting.0">
+                <target>Sortierung anzeigen</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicMethod.1">
-                <target>Die Standard-Übertragungsmethode ist POST.</target>
+            <trans-unit id="tl_module.plentaJobsBasicShowSorting.1">
+                <target>Im Frontend wird eine Sortier-Funktion angezeigt.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.0">
+                <target>Sortierungs-Felder</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.1">
+                <target>Bitte wählen Sie die Felder aus, die dem Nutzer zur Sortierung angezeigt werden sollen.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingDefaultField.0">
+                <target>Standard-Feld</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingDefaultField.1">
+                <target>Bitte wählen Sie das Feld aus, nach dem standardmäßig sortiert werden soll.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingDefaultDirection.0">
+                <target>Standard-Richtung</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingDefaultDirection.1">
+                <target>Bitte wählen Sie die Richtung aus, nach der standardmäßig sortiert werden soll.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.tstamp">
+                <target>Aktualisierungsdatum</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.datePosted">
+                <target>Veröffentlichungsdatum</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title">
+                <target>Anzeigentitel</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.tstamp__ASC">
+                <target>Aktualisierungsdatum (aufsteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.datePosted__ASC">
+                <target>Veröffentlichungsdatum (aufsteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title__ASC">
+                <target>A-Z</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.tstamp__DESC">
+                <target>Aktualisierungsdatum (absteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.datePosted__DESC">
+                <target>Veröffentlichungsdatum (absteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title__DESC">
+                <target>Z-A</target>
             </trans-unit>
         </body>
     </file>

@@ -6,6 +6,24 @@
         <?php endif; ?>
     <?php $this->endblock(); ?>
 
+    <?php $this->block('sorting'); ?>
+    <?php if ($this->showSorting): ?>
+    <?= $this->sortingForm; ?>
+
+        <script>
+            (function ($) {
+                $('.hasteform_<?= $this->formId ?> select#ctrl_sort').on('change', function () {
+                    let searchParams = new URLSearchParams(location.search);
+                    let vals = $(this).val().split('__');
+                    searchParams.set('sortBy', vals[0]);
+                    searchParams.set('order', vals[1]);
+                    window.location.href = location.pathname + '?' + searchParams.toString();
+                })
+            })(jQuery);
+        </script>
+    <?php endif; ?>
+    <?php $this->endblock(); ?>
+
     <?php $this->block('content'); ?>
         <?php if (empty($this->items)): ?>
             <p class="empty"><?= $this->empty ?></p>

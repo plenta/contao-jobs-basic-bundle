@@ -19,8 +19,11 @@ use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\ModuleModel;
 use Contao\PageModel;
+use Contao\StringUtil;
+use Contao\System;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
+use Haste\Form\Form;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,7 +69,36 @@ class JobOfferListController extends AbstractFrontendModuleController
         $types = is_array($request->get('types')) ? $request->get('types') : [];
         $locations = is_array($request->get('location')) ? $request->get('location') : [];
 
-        $jobOffers = $jobOfferRepository->findAllPublishedByTypesAndLocation($types, $locations);
+        if ($model->plentaJobsBasicShowSorting) {
+            System::loadLanguageFile('tl_module');
+            $sortBy = $request->get('sortBy') ?? $model->plentaJobsBasicSortingDefaultField;
+            $order = $request->get('order') ?? $model->plentaJobsBasicSortingDefaultDirection;
+
+            $formId = 'plenta_jobs_basic_sorting_'.$model->id;
+            $default = $sortBy.'__'.$order;
+
+            $fields = StringUtil::deserialize($model->plentaJobsBasicSortingFields);
+            $options = [];
+
+            foreach ($fields as $field) {
+                $options[] = $field.'__ASC';
+                $options[] = $field.'__DESC';
+            }
+
+            $form = new Form($formId, 'POST', fn ($objHaste) => false);
+            $form->addFormField('sort', [
+                'inputType' => 'select',
+                'default' => $default,
+                'options' => $options,
+                'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicSortingFields']['fields'],
+            ]);
+
+            $template->sortingForm = $form->generate();
+            $template->showSorting = true;
+            $template->formId = $formId;
+        }
+
+        $jobOffers = $jobOfferRepository->findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order);
 
         $items = [];
 
