@@ -1,6 +1,6 @@
 <?php
 
-namespace Plenta\ContaoJobsBasic\EventListener;
+namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
 class JobOfferFields
 {
