@@ -1,0 +1,17 @@
+.plenta-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.plenta-box {
+    flex: 50%;
+}
+
+.plenta-box a {
+    text-decoration: underline;
+}
+
+.plenta-box.last {
+    text-align: right;
+}
+

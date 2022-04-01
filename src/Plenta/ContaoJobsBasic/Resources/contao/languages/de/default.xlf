@@ -38,6 +38,15 @@
             <trans-unit id="MSC.PLENTA_JOBS.emptyList">
                 <target>Es sind momentan keine Stellenanzeigen vorhanden.</target>
             </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.documentation">
+                <target>Dokumentation</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.report_error">
+                <target>Fehler melden</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.sponsor">
+                <target>Sponsor werden</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
