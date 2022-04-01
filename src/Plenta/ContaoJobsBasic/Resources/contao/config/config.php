@@ -20,6 +20,7 @@ array_insert($GLOBALS['BE_MOD'], 1, [
         ],
         'plenta_jobs_basic_settings_employment_type' => [
             'tables' => ['tl_plenta_jobs_basic_settings_employment_type'],
+            'hideInNavigation' => true,
         ],
     ],
 ]);

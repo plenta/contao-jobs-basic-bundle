@@ -1,0 +1,20 @@
+{% extends "@ContaoCore/Backend/be_page.html.twig" %}
+
+{% block headline %}
+{{ title }}
+{% endblock %}
+
+{% block error %}
+{% endblock %}
+
+{% block main %}
+    <div class="tl_listing_container">
+        <table class="tl_listing">
+            <tr>
+                {% for key, mod in mods %}
+                <td><a href="/contao?do={{ key }}">{{ mod.title.0 }}</a></td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+{% endblock %}

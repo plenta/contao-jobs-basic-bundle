@@ -22,3 +22,11 @@ services:
         arguments:
             - '@request_stack'
             - '@contao.routing.scope_matcher'
+
+    Plenta\ContaoJobsBasic\EventListener\Contao\BackendMenuListener:
+        public: true
+        tags:
+            - { name: kernel.event_listener, event: contao.backend_menu_build, priority: -255 }
+        arguments:
+          - '@router'
+          - '@request_stack'

@@ -59,6 +59,12 @@
             <trans-unit id="FMD.plenta_jobs_basic_filter.1">
                 <target>Stellenangebotsfilter</target>
             </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_settings.0">
+                <target>Zusätzliche Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_settings.1">
+                <target>Zusätzliche Einstellungen verwalten</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
