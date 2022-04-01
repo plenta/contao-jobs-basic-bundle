@@ -32,12 +32,6 @@
             <trans-unit id="MOD.plenta_jobs_basic_settings.1">
                 <target>Einstellungen verwalten</target>
             </trans-unit>
-            <trans-unit id="MOD.plenta_jobs_basic_support.0">
-                <target>Support</target>
-            </trans-unit>
-            <trans-unit id="MOD.plenta_jobs_basic_support.1">
-                <target>Hier findest du Support und Optionen zur Unterstützung.</target>
-            </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_settings_employment_type.0">
                 <target>Zusätzliche Stellenarten</target>
             </trans-unit>
