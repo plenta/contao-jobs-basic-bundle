@@ -32,6 +32,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
             'showColumns' => false,
         ],
         'global_operations' => [
+            'back' => [
+                'route' => 'Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\SettingsController',
+                'label' => &$GLOBALS['TL_LANG']['MSC']['backBT'],
+                'icon' => 'back.svg',
+            ],
             'all' => [
                 'href' => 'act=select',
                 'class' => 'header_edit_all',

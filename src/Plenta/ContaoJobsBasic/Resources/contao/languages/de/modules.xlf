@@ -60,10 +60,10 @@
                 <target>Stellenangebotsfilter</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_settings.0">
-                <target>Zusätzliche Einstellungen</target>
+                <target>Einstellungen</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_settings.1">
-                <target>Zusätzliche Einstellungen verwalten</target>
+                <target>Einstellungen verwalten</target>
             </trans-unit>
         </body>
     </file>
