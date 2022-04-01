@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
-use Plenta\ContaoJobsBasic\EventListener\JobOfferFields;
+use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\JobOfferFields;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowTypes';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowLocations';
