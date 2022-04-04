@@ -1,9 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Plenta Jobs Basic Bundle for Contao Open Source CMS
+ *
+ * @copyright     Copyright (c) 2022, Plenta.io
+ * @author        Plenta.io <https://plenta.io>
+ * @link          https://github.com/plenta/
+ */
+
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
 use Contao\CoreBundle\Event\MenuEvent;
-use Contao\System;
 use Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\SettingsController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;

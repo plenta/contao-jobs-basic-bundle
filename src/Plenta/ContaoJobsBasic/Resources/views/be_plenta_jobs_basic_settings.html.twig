@@ -8,13 +8,17 @@
 {% endblock %}
 
 {% block main %}
+    {% include('@PlentaContaoJobsBasic/be_plenta_info.html.twig') %}
+
     <div class="tl_listing_container">
         <table class="tl_listing">
-            <tr>
-                {% for key, mod in mods %}
-                <td><a href="/contao?do={{ key }}">{{ mod.title.0 }}</a></td>
-                {% endfor %}
-            </tr>
+            <tbody>
+            {% for key, mod in mods %}
+                <tr class="{% if loop.index0 % 2 == 0 %}even{% else %}odd{% endif %}">
+                    <td class="tl_file_list"><a href="/contao?do={{ key }}">{{ mod.title.0 }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
         </table>
     </div>
 {% endblock %}

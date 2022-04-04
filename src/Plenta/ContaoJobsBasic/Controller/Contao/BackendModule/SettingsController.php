@@ -1,8 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Plenta Jobs Basic Bundle for Contao Open Source CMS
+ *
+ * @copyright     Copyright (c) 2022, Plenta.io
+ * @author        Plenta.io <https://plenta.io>
+ * @link          https://github.com/plenta/
+ */
+
 namespace Plenta\ContaoJobsBasic\Controller\Contao\BackendModule;
 
 use Contao\CoreBundle\Controller\AbstractController;
+use Contao\CoreBundle\Util\PackageUtil;
 use Contao\System;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +32,8 @@ class SettingsController extends AbstractController
     {
         System::loadLanguageFile('modules');
 
+        $GLOBALS['TL_CSS'][] = 'bundles/plentacontaojobsbasic/dashboard.css';
+
         $mods = [];
 
         foreach ($GLOBALS['BE_MOD']['plenta_jobs_basic'] as $key => $mod) {
@@ -34,7 +47,8 @@ class SettingsController extends AbstractController
             '@PlentaContaoJobsBasic/be_plenta_jobs_basic_settings.html.twig',
             [
                 'title' => $GLOBALS['TL_LANG']['MOD']['plenta_jobs_basic_settings'][0],
-                'mods' => $mods
+                'mods' => $mods,
+                'version' => PackageUtil::getVersion('plenta/contao-jobs-basic-bundle'),
             ]
         ));
     }
@@ -45,6 +59,7 @@ class SettingsController extends AbstractController
         if (isset($GLOBALS['BE_MOD']['plenta_jobs_basic'][$do]) && $GLOBALS['BE_MOD']['plenta_jobs_basic'][$do]['hideInNavigation']) {
             return true;
         }
+
         return false;
     }
 }
