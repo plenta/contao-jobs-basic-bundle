@@ -72,7 +72,7 @@
                 <target>Arbeitsort</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.jobLocation.1">
-                <target>Bitte wählen Sie ein Arbeitsort aus.</target>
+                <target>Bitte wählen Sie einen Arbeitsort aus.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.validThrough.0">
                 <target>Bewerbungsfrist</target>
@@ -85,6 +85,18 @@
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.renewDatePosted.1">
                 <target>Veröffentlichungsdatum der Stellenanzeige erneuern.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.addImage.0">
+                <target>Ein Bild hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.addImage.1">
+                <target>Dem Stellenangebot ein Bild hinzufügen.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.singleSRC.0">
+                <target>Quelldatei</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.singleSRC.1">
+                <target>Bitte wählen Sie eine Datei aus der Dateiübersicht.</target>
             </trans-unit>
         </body>
     </file>

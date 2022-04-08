@@ -77,7 +77,15 @@ class TlPlentaJobsBasicOffer extends DCADefault
      */
     protected string $stop;
 
+    /**
+     * @ORM\Column (type="boolean", nullable=false, options={"default": false})
+     */
+    protected bool $addImage;
 
+    /**
+     * @ORM\Column (type="binary", nullable=true)
+     */
+    protected $singleSRC;
 
     /**
      * @return string|null
@@ -289,5 +297,37 @@ class TlPlentaJobsBasicOffer extends DCADefault
         $this->cssClass = $cssClass;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAddImage(): bool
+    {
+        return $this->addImage;
+    }
+
+    /**
+     * @param bool $addImage
+     */
+    public function setAddImage(bool $addImage): void
+    {
+        $this->addImage = $addImage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSingleSRC()
+    {
+        return $this->singleSRC;
+    }
+
+    /**
+     * @param mixed $singleSRC
+     */
+    public function setSingleSRC($singleSRC): void
+    {
+        $this->singleSRC = $singleSRC;
     }
 }

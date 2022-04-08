@@ -4,8 +4,10 @@
 
 <?= $this->content ?>
 
-<!-- indexer::stop -->
-<p class="back"><a href="<?= $this->referer ?>" title="<?= $this->back ?>"><?= $this->back ?></a></p>
-<!-- indexer::continue -->
+<?php if ($this->back): ?>
+    <!-- indexer::stop -->
+    <p class="back"><a href="<?= $this->referer ?>" title="<?= $this->back ?>"><?= $this->back ?></a></p>
+    <!-- indexer::continue -->
+<?php endif; ?>
 
 <?php $this->endblock(); ?>

@@ -83,7 +83,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{title_legend},title,alias,description;{settings_legend},jobLocation,employmentType,validThrough;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        '__selector__' => ['addImage'],
+        'default' => '{title_legend},title,alias,description,addImage;{settings_legend},jobLocation,employmentType,validThrough;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+    ],
+    'subpalettes' => [
+        'addImage' => 'singleSRC',
     ],
 
     // Fields
@@ -208,6 +212,17 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+        ],
+        'addImage' => [
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['submitOnChange' => true],
+            'sql' => ['type' => 'boolean', 'default' => false],
+        ],
+        'singleSRC' => [
+            'exclude' => true,
+            'inputType' => 'fileTree',
+            'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'mandatory' => true, 'tl_class' => 'clr'],
         ],
     ],
 ];

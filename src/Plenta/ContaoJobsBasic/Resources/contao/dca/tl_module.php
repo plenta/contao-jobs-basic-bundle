@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021-2022, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -27,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicHeadlineTag;
+    {config_legend},plentaJobsBasicHeadlineTag,imgSize,plentaJobsBasicTemplateParts;
     {template_legend:hide},customTpl;
     {expert_legend:hide},cssID'
 ;
@@ -129,9 +129,9 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicShowSorting'] = [
     'inputType' => 'checkbox',
     'eval' => [
         'submitOnChange' => true,
-        'tl_class' => 'clr'
+        'tl_class' => 'clr',
     ],
-    'sql' => "char(1) NOT NULL default ''"
+    'sql' => "char(1) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSortingFields'] = [
@@ -142,7 +142,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSortingFields'] = [
         'multiple' => true,
     ],
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicSortingFields']['fields'],
-    'sql' => "mediumtext NULL",
+    'sql' => 'mediumtext NULL',
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSortingDefaultField'] = [
@@ -163,5 +163,14 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSortingDefaultDirectio
     'eval' => [
         'tl_class' => 'w50',
     ],
-    'sql' => "varchar(4) NOT NULL default ''"
+    'sql' => "varchar(4) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicTemplateParts'] = [
+    'exclude' => true,
+    'inputType' => 'checkboxWizard',
+    'options' => ['title', 'image', 'elements', 'description', 'employmentType', 'validThrough', 'jobLocation', 'backlink'],
+    'eval' => ['multiple' => true, 'tl_class' => 'clr'],
+    'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicReaderTemplate']['parts'],
+    'sql' => 'mediumtext null',
 ];

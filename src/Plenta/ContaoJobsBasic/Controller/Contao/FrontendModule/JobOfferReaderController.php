@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -16,12 +16,17 @@ use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
+use Contao\Date;
+use Contao\FilesModel;
+use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
+use Contao\System;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
@@ -58,8 +63,18 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         /* @var PageModel $objPage */
         global $objPage;
 
-        $template->referer = 'javascript:history.go(-1)';
-        $template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
+        $parts = StringUtil::deserialize($model->plentaJobsBasicTemplateParts);
+
+        System::loadLanguageFile('tl_plenta_jobs_basic_offer');
+
+        if (!\is_array($parts)) {
+            $parts = [];
+        }
+
+        if (\in_array('backlink', $parts, true)) {
+            $template->referer = 'javascript:history.go(-1)';
+            $template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
+        }
 
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
 
@@ -81,30 +96,39 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template->jobOffer = $jobOffer;
         $template->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
 
-        $template->content = function () use ($request, $parentId): ?string {
-            // Get all the content elements belonging to this parent ID and parent table
-            $elements = ContentModel::findPublishedByPidAndTable($parentId, 'tl_plenta_jobs_basic_offer');
+        $content = '';
 
-            if (null === $elements) {
-                return null;
-            }
+        if (\in_array('title', $parts, true)) {
+            $template->headline = StringUtil::stripInsertTags($jobOffer->getTitle());
+            $template->hl = $model->plentaJobsBasicHeadlineTag;
+            $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
+        }
 
-            // The layout section is stored in a request attribute
-            $section = $request->attributes->get('section', 'main');
+        if (\in_array('image', $parts, true)) {
+            $content .= $this->getImage($jobOffer, $model);
+        }
 
-            // Get the rendered content elements
-            $content = '';
+        if (\in_array('elements', $parts, true)) {
+            $content .= $this->getContentElements($request, $parentId);
+        }
 
-            foreach ($elements as $element) {
-                $content .= Controller::getContentElement($element->id, $section);
-            }
+        if (\in_array('description', $parts, true)) {
+            $content .= $this->getDescription($jobOffer);
+        }
 
-            return $content;
-        };
+        if (\in_array('employmentType', $parts, true)) {
+            $content .= $this->getEmploymentType($jobOffer);
+        }
 
-        $template->headline = StringUtil::stripInsertTags($jobOffer->getTitle());
-        $template->hl = $model->plentaJobsBasicHeadlineTag;
-        $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
+        if (\in_array('validThrough', $parts, true)) {
+            $content .= $this->getValidThrough($jobOffer);
+        }
+
+        if (\in_array('jobLocation', $parts, true)) {
+            $content .= $this->getJobLocation($jobOffer);
+        }
+
+        $template->content = $content;
 
         $StructuredData = $this->googleForJobs->generatestructuredData($jobOffer);
 
@@ -113,5 +137,88 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         }
 
         return $template->getResponse();
+    }
+
+    private function getContentElements($request, $parentId): ?string
+    {
+        $elements = ContentModel::findPublishedByPidAndTable($parentId, 'tl_plenta_jobs_basic_offer');
+
+        if (null === $elements) {
+            return null;
+        }
+
+        // The layout section is stored in a request attribute
+        $section = $request->attributes->get('section', 'main');
+
+        // Get the rendered content elements
+        $content = '';
+
+        foreach ($elements as $element) {
+            $content .= Controller::getContentElement($element->id, $section);
+        }
+
+        return $content;
+    }
+
+    private function getImage($jobOffer, $model): ?string
+    {
+        if ($jobOffer->isAddImage()) {
+            $template = new FrontendTemplate('plenta_jobs_basic_reader_image');
+            $template->class = 'ce_image';
+            $image = FilesModel::findByUuid(StringUtil::binToUuid(stream_get_contents($jobOffer->getSingleSRC())));
+            if ($image) {
+                Controller::addImageToTemplate($template, [
+                    'singleSRC' => $image->path,
+                    'size' => $model->imgSize,
+                ]);
+            }
+
+
+            return $template->parse();
+        }
+
+        return '';
+    }
+
+    private function getDescription($jobOffer): ?string
+    {
+        $template = new FrontendTemplate('plenta_jobs_basic_reader_description');
+        $template->text = $jobOffer->getDescription();
+        $template->class = 'ce_text';
+        return $template->parse();
+    }
+
+    private function getEmploymentType($jobOffer): ?string
+    {
+        $template = new FrontendTemplate('plenta_jobs_basic_reader_attribute');
+        $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer);
+        $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['employmentType'][0];
+        $template->value = $metaFields['employmentTypeFormatted'];
+        return $template->parse();
+    }
+
+    private function getValidThrough($jobOffer): ?string
+    {
+        if ($jobOffer->getValidThrough()) {
+            $template = new FrontendTemplate('plenta_jobs_basic_reader_attribute');
+            $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['validThrough'][0];
+            $template->value = Date::parse(Date::getNumericDatimFormat(), $jobOffer->getValidThrough());
+            return $template->parse();
+        }
+        return '';
+    }
+
+    private function getJobLocation($jobOffer): ?string
+    {
+        $template = new FrontendTemplate('plenta_jobs_basic_reader_job_location');
+
+        $locations = StringUtil::deserialize($jobOffer->getJobLocation());
+        $locationRepo = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
+
+        if (is_array($locations)) {
+            $template->locations = $locationRepo->findByMultipleIds($locations);
+        }
+
+        return $template->parse();
     }
 }

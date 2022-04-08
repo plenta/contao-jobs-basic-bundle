@@ -125,6 +125,36 @@
             <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title__DESC">
                 <target>Z-A</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.title">
+                <target>Stellentitel</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.image">
+                <target>Stellenbild</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.description">
+                <target>Stellenbeschreibung</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.employmentType">
+                <target>Stellenart</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.validThrough">
+                <target>Bewerbungsfrist</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.jobLocation">
+                <target>Arbeitsort</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.backlink">
+                <target>Zurück-Link</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.elements">
+                <target>Inhaltselemente</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicTemplateParts.0">
+                <target>Template-Teile</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicTemplateParts.1">
+                <target>Bitte wählen Sie die Template-Teile aus, die von diesem Modul angezeigt werden sollen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

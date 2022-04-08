@@ -1,0 +1,14 @@
+<?php if (is_array($this->locations)): ?>
+<p><strong><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['jobLocation'][0] ?>:</strong></p>
+<?php foreach ($this->locations as $location): ?>
+    <div class="job_location">
+        <p><?= $location->getOrganization()->getName() ?><br />
+            <?php if ($location->getStreetAddress()): ?>
+                <?= $location->getStreetAddress() ?><br />
+            <?php endif; ?>
+            <?= $location->getPostalCode() ?> <?= $location->getAddressLocality() ?>
+        </p>
+    </div>
+    <?php dump($location); ?>
+<?php endforeach; ?>
+<?php endif; ?>

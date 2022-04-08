@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -27,6 +27,16 @@ class TlPlentaJobsBasicJobLocationRepository extends ServiceEntityRepository
     public function findAll(): array
     {
         return $this->createQueryBuilder('a')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_OBJECT);
+    }
+
+    public function findByMultipleIds($ids): array
+    {
+        $qb = $this->createQueryBuilder('l');
+
+        return $qb
+            ->where($qb->expr()->in('l.id', $ids))
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
