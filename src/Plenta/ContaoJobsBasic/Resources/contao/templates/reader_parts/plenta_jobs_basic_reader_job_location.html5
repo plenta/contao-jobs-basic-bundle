@@ -9,6 +9,5 @@
             <?= $location->getPostalCode() ?> <?= $location->getAddressLocality() ?>
         </p>
     </div>
-    <?php dump($location); ?>
 <?php endforeach; ?>
 <?php endif; ?>
