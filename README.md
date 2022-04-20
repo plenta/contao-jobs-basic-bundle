@@ -3,7 +3,7 @@
 The perfect solution for your job offer site.
 
 Basic Job Manager for Contao (including Google Jobs)  
-Open source and free. 
+Open source and free. 🚀
 
 ## Installation
 
