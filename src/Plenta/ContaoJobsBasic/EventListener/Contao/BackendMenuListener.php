@@ -14,6 +14,7 @@ namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
 use Contao\CoreBundle\Event\MenuEvent;
 use Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\SettingsController;
+use Plenta\ContaoJobsBasic\Helper\PermissionsHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -39,15 +40,17 @@ class BackendMenuListener
 
         $contentNode = $tree->getChild('plenta_jobs_basic');
 
-        $node = $factory
-            ->createItem('plenta-jobs-basic-settings')
-            ->setUri($this->router->generate(SettingsController::class))
-            ->setLabel($GLOBALS['TL_LANG']['MOD']['plenta_jobs_basic_settings'][0])
-            ->setLinkAttribute('title', $GLOBALS['TL_LANG']['MOD']['plenta_jobs_basic_settings'][1])
-            ->setLinkAttribute('class', 'plenta-jobs-basic-settings')
-            ->setCurrent($this->requestStack->getCurrentRequest()->get('_controller') === SettingsController::class.'::showSettings' || SettingsController::isActive($this->requestStack))
-        ;
+        if (PermissionsHelper::canAccessBackendRoute('settings')) {
+            $node = $factory
+                ->createItem('plenta-jobs-basic-settings')
+                ->setUri($this->router->generate(SettingsController::class))
+                ->setLabel($GLOBALS['TL_LANG']['MOD']['plenta_jobs_basic_settings'][0])
+                ->setLinkAttribute('title', $GLOBALS['TL_LANG']['MOD']['plenta_jobs_basic_settings'][1])
+                ->setLinkAttribute('class', 'plenta-jobs-basic-settings')
+                ->setCurrent($this->requestStack->getCurrentRequest()->get('_controller') === SettingsController::class.'::showSettings' || SettingsController::isActive($this->requestStack))
+            ;
 
-        $contentNode->addChild($node);
+            $contentNode->addChild($node);
+        }
     }
 }

@@ -13,8 +13,10 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\Controller\Contao\BackendModule;
 
 use Contao\CoreBundle\Controller\AbstractController;
+use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\CoreBundle\Util\PackageUtil;
 use Contao\System;
+use Plenta\ContaoJobsBasic\Helper\PermissionsHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment as TwigEnvironment;
@@ -30,6 +32,10 @@ class SettingsController extends AbstractController
 
     public function showSettings(): Response
     {
+        if (!PermissionsHelper::canAccessBackendRoute('settings')) {
+            throw new AccessDeniedException('The settings module of the Plenta Jobs Basic Bundle is not allowed for user "'.\BackendUser::getInstance()->username.'".');
+        }
+
         System::loadLanguageFile('modules');
 
         $GLOBALS['TL_CSS'][] = 'bundles/plentacontaojobsbasic/dashboard.css';
