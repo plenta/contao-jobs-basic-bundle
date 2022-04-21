@@ -18,7 +18,7 @@ use Contao\UserGroupModel;
 
 class PermissionsHelper
 {
-    public static function canAccessBackendRoute($name): bool
+    public static function canAccessModule($name, $module = 'plenta_jobs_basic_settings'): bool
     {
         $user = BackendUser::getInstance();
 
@@ -28,8 +28,8 @@ class PermissionsHelper
         if (!empty($user->groups)) {
             foreach ($user->groups as $groupId) {
                 $group = UserGroupModel::findByIdOrAlias($groupId);
-                $jobsBasicSettings = StringUtil::deserialize($group->plenta_jobs_basic_settings);
-                if (\is_array($jobsBasicSettings) && \in_array($name, $jobsBasicSettings, true)) {
+                $moduleArr = StringUtil::deserialize($group->{$module});
+                if (\is_array($moduleArr) && \in_array($name, $moduleArr, true)) {
                     return true;
                 }
             }

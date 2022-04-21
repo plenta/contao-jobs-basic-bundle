@@ -32,7 +32,7 @@ class SettingsController extends AbstractController
 
     public function showSettings(): Response
     {
-        if (!PermissionsHelper::canAccessBackendRoute('settings')) {
+        if (!PermissionsHelper::canAccessModule('settings')) {
             throw new AccessDeniedException('The settings module of the Plenta Jobs Basic Bundle is not allowed for user "'.\BackendUser::getInstance()->username.'".');
         }
 
@@ -44,6 +44,9 @@ class SettingsController extends AbstractController
 
         foreach ($GLOBALS['BE_MOD']['plenta_jobs_basic'] as $key => $mod) {
             if (isset($mod['hideInNavigation']) && $mod['hideInNavigation']) {
+                if (!PermissionsHelper::canAccessModule($key, 'modules')) {
+                    continue;
+                }
                 $mod['title'] = $GLOBALS['TL_LANG']['MOD'][$key];
                 $mods[$key] = $mod;
             }

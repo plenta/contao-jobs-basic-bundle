@@ -40,7 +40,7 @@ class BackendMenuListener
 
         $contentNode = $tree->getChild('plenta_jobs_basic');
 
-        if (PermissionsHelper::canAccessBackendRoute('settings')) {
+        if (PermissionsHelper::canAccessModule('settings')) {
             $node = $factory
                 ->createItem('plenta-jobs-basic-settings')
                 ->setUri($this->router->generate(SettingsController::class))
