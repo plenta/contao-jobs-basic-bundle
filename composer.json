@@ -13,6 +13,15 @@
             "homepage": "https://plenta.io"
         }
     ],
+    "funding": [{
+        "type": "github",
+        "url": "https://github.com/sponsors/plenta"
+    }],
+    "support":{
+        "issues": "https://github.com/plenta/contao-jobs-basic-bundle/issues",
+        "source": "https://github.com/plenta/contao-jobs-basic-bundle",
+        "docs": "https://plenta.io/contao-erweiterungen/jobs-basic"
+    },
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
