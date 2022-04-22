@@ -63,7 +63,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         $options = [];
         $employmentTypes = [];
         $employmentTypeHelper = $this->employmentTypeHelper;
-        $this->getAllOffers();
+        $this->getAllOffers($model);
 
         foreach ($employmentTypeHelper->getEmploymentTypes() as $employmentType) {
             $employmentTypes[$employmentType] = $employmentTypeHelper->getEmploymentTypeName($employmentType);
@@ -103,15 +103,19 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return '';
     }
 
-    public function getAllOffers(): array
+    public function getAllOffers($model): array
     {
         if (empty($this->offers)) {
             $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
-            $jobOffers = $jobOfferRepository->findAllPublished();
+            $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
+            if (!\is_array($moduleLocations)) {
+                $moduleLocations = [];
+            }
+            $jobOffers = $jobOfferRepository->findAllPublishedByTypesAndLocation([], $moduleLocations);
 
             foreach ($jobOffers as $jobOffer) {
                 $this->collectEmploymenttypes($jobOffer->getEmploymentType());
-                $this->collectLocations(StringUtil::deserialize($jobOffer->getJobLocation()));
+                $this->collectLocations(StringUtil::deserialize($jobOffer->getJobLocation()), $model);
                 $this->offers[] = $jobOffer;
             }
         }
@@ -132,12 +136,12 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         }
     }
 
-    public function collectLocations(?array $locations) {
+    public function collectLocations(?array $locations, $model) {
         $addedLocations = [];
         if (is_array($locations)) {
             foreach ($locations as $locationId) {
                 /** @var TlPlentaJobsBasicJobLocation $location */
-                $location = $this->getAllLocations()[(int) $locationId] ?? null;
+                $location = $this->getAllLocations($model)[(int) $locationId] ?? null;
 
                 if (null === $location) {
                     continue;
@@ -159,11 +163,11 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     public function getLocations(ModuleModel $model): ?array
     {
-        $this->getAllOffers();
+        $this->getAllOffers($model);
 
         $options = [];
 
-        foreach ($this->getAllLocations() as $k) {
+        foreach ($this->getAllLocations($model) as $k) {
             if (\array_key_exists($k->getAddressLocality(), $options)) {
                 $options[$k->getAddressLocality()] = $options[$k->getAddressLocality()].'|'.$k->getId();
             } else {
@@ -180,11 +184,16 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return $options;
     }
 
-    public function getAllLocations(): array
+    public function getAllLocations($model): array
     {
         if (empty($this->locations)) {
             $locationsRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
-            $locations = $locationsRepository->findAll();
+            $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
+            if (!\is_array($moduleLocations) || empty($moduleLocations)) {
+                $locations = $locationsRepository->findAll();
+            } else {
+                $locations = $locationsRepository->findBy(['id' => $moduleLocations]);
+            }
 
             foreach ($locations as $location) {
                 $this->locations[$location->getId()] = $location;

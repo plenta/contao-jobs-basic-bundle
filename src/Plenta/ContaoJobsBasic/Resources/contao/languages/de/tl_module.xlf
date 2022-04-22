@@ -66,7 +66,7 @@
                 <target>Alle Standorte anzeigen</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowAllLocations.1">
-                <target>Alle Standorte werden im Filter anzeigen.</target>
+                <target>Alle ausgewählten Standorte werden im Filter anzeigen, auch wenn dort keine Stellenangebote verfügbar sind.</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowLocationQuantity.0">
                 <target>Anzahl der Stellenangebote pro Standort</target>
@@ -154,6 +154,12 @@
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicTemplateParts.1">
                 <target>Bitte wählen Sie die Template-Teile aus, die von diesem Modul angezeigt werden sollen.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicLocations.0">
+                <target>Standorte</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicLocations.1">
+                <target>Bitte wählen Sie die Standorte aus, die angezeigt werden sollen. Wenn kein Standort ausgewählt ist, werden alle angezeigt.</target>
             </trans-unit>
         </body>
     </file>

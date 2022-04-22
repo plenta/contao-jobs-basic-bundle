@@ -30,3 +30,7 @@ services:
         arguments:
           - '@router'
           - '@request_stack'
+
+    Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlModule:
+        public: true
+        arguments: ['@Doctrine\Persistence\ManagerRegistry']

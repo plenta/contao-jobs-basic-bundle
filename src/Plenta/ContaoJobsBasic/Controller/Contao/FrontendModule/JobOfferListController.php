@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -66,8 +66,20 @@ class JobOfferListController extends AbstractFrontendModuleController
     {
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
 
-        $types = is_array($request->get('types')) ? $request->get('types') : [];
-        $locations = is_array($request->get('location')) ? $request->get('location') : [];
+        $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
+        if (!\is_array($moduleLocations)) {
+            $moduleLocations = [];
+        }
+
+        $types = \is_array($request->get('types')) ? $request->get('types') : [];
+        $locations = \is_array($request->get('location')) ? $request->get('location') : $moduleLocations;
+
+        if (!empty($moduleLocations)) {
+            $locations = array_filter($locations, static fn ($element) => \in_array($element, $moduleLocations, true));
+            if (empty($locations)) {
+                $locations = $moduleLocations;
+            }
+        }
 
         if ($model->plentaJobsBasicShowSorting) {
             System::loadLanguageFile('tl_module');
