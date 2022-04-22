@@ -95,13 +95,13 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         // Fill the template with data from the parent record
         $template->jobOffer = $jobOffer;
         $template->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
+        $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
 
         $content = '';
 
         if (\in_array('title', $parts, true)) {
             $template->headline = StringUtil::stripInsertTags($jobOffer->getTitle());
             $template->hl = $model->plentaJobsBasicHeadlineTag;
-            $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
         }
 
         if (\in_array('image', $parts, true)) {
