@@ -65,7 +65,7 @@ class SettingsController extends AbstractController
     public static function isActive(RequestStack $requestStack)
     {
         $do = $requestStack->getCurrentRequest()->get('do');
-        if (isset($GLOBALS['BE_MOD']['plenta_jobs_basic'][$do]) && $GLOBALS['BE_MOD']['plenta_jobs_basic'][$do]['hideInNavigation']) {
+        if (isset($GLOBALS['BE_MOD']['plenta_jobs_basic'][$do], $GLOBALS['BE_MOD']['plenta_jobs_basic'][$do]['hideInNavigation']) && $GLOBALS['BE_MOD']['plenta_jobs_basic'][$do]['hideInNavigation']) {
             return true;
         }
 
