@@ -90,13 +90,16 @@
                 <target>Ein Bild hinzufügen</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.addImage.1">
-                <target>Dem Stellenangebot ein Bild hinzufügen.</target>
+                <target>Dem Stellenangebot ein Bild hinzufügen. (Frontend)</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.singleSRC.0">
                 <target>Quelldatei</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.singleSRC.1">
                 <target>Bitte wählen Sie eine Datei aus der Dateiübersicht.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.image_legend">
+                <target>Bild</target>
             </trans-unit>
         </body>
     </file>
