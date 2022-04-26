@@ -165,7 +165,7 @@
                 <target>Unternehmens-Logo anzeigen</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowLogo.1">
-                <target>Bitte wählen Sie diese Option aus, wenn das Logo des Unternehmens im Standort-Teil der Jobdetailansicht angezeigt werden soll.</target>
+                <target>Bitte wählen Sie diese Option nur aus, wenn das Unternehmens-Logo im Arbeitsort-Teil der Jobdetailansicht angezeigt werden soll.</target>
             </trans-unit>
         </body>
     </file>
