@@ -64,7 +64,7 @@ class GoogleForJobs
             $arrStructuredData['validThrough'] = date('Y-m-d\TH:i:sP', (int) $jobOffer->getValidThrough());
         }
 
-        if ($description = null !== $this->sanitizeDescription($jobOffer->getDescription())) {
+        if (null !== ($description = $this->sanitizeDescription($jobOffer->getDescription()))) {
             $arrStructuredData['description'] = $description;
         }
 

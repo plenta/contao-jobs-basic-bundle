@@ -84,7 +84,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     // Palettes
     'palettes' => [
         '__selector__' => ['addImage'],
-        'default' => '{title_legend},title,alias,description,addImage;{settings_legend},jobLocation,employmentType,validThrough;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        'default' => '{title_legend},title,alias,description;{settings_legend},jobLocation,employmentType,validThrough;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC',
@@ -99,7 +99,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'title' => [
             'inputType' => 'text',
             'exclude' => true,
-            'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
+            'eval' => [
+                'mandatory' => true,
+                'maxlength' => 255,
+                'tl_class' => 'w50'
+            ],
         ],
         'alias' => [
             'inputType' => 'text',
@@ -115,6 +119,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'search' => true,
             'inputType' => 'textarea',
             'eval' => [
+                'mandatory' => true,
                 'rte' => 'tinyMCE',
                 'tl_class' => 'clr',
             ],
@@ -130,7 +135,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'eval' => [
                 'includeBlankOption' => true,
                 'tl_class' => 'w50',
-                'mandatory' => false,
+                'mandatory' => true,
                 'multiple' => true,
                 'chosen' => true,
             ],
