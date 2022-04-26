@@ -2,10 +2,10 @@
 <p><strong><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['jobLocation'][0] ?>:</strong></p>
 <?php foreach ($this->locations as $key => $locations): ?>
     <div class="job_organization_info">
-        <?= $this->organizations[$key]->getName() ?>
             <?php if (array_key_exists($key, $this->imgs)): ?>
                 <?= $this->imgs[$key] ?>
             <?php endif; ?>
+        <strong><?= $this->organizations[$key]->getName() ?></strong>
     </div>
     <?php foreach ($locations as $location): ?>
         <div class="job_location">
