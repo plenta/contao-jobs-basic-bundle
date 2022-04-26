@@ -33,7 +33,7 @@
                 <target>Einstellungen verwalten</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_settings_employment_type.0">
-                <target>Zusätzliche Stellenarten anlegen</target>
+                <target>Zusätzliche Stellenarten verwalten</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_settings_employment_type.1">
                 <target>Hier können Sie weitere Stellenarten konfigurieren.</target>
