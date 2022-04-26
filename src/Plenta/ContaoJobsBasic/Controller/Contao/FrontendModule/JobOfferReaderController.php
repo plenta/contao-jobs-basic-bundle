@@ -125,7 +125,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         }
 
         if (\in_array('jobLocation', $parts, true)) {
-            $content .= $this->getJobLocation($jobOffer);
+            $content .= $this->getJobLocation($jobOffer, $model);
         }
 
         $template->content = $content;
@@ -208,7 +208,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         return '';
     }
 
-    private function getJobLocation($jobOffer): ?string
+    private function getJobLocation($jobOffer, $model): ?string
     {
         $template = new FrontendTemplate('plenta_jobs_basic_reader_job_location');
 
@@ -224,7 +224,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             foreach ($locations as $location) {
                 $organization = $location->getOrganization();
                 if (!\array_key_exists($organization->getId(), $organizations)) {
-                    if ($organization->getLogo()) {
+                    if ($model->plentaJobsBasicShowLogo && $organization->getLogo()) {
                         $imgTpl = new FrontendTemplate('ce_image');
                         $image = FilesModel::findByUuid(StringUtil::binToUuid($organization->getLogo()));
                         Controller::addImageToTemplate($imgTpl, [
