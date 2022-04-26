@@ -56,7 +56,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
         return $this->metaFields;
     }
 
-    public function getJobOffer(): TlPlentaJobsBasicOffer
+    public function getJobOffer(): ?TlPlentaJobsBasicOffer
     {
         if (null !== $this->jobOffer) {
             return $this->jobOffer;
@@ -65,6 +65,10 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
 
         $alias = Input::get('auto_item');
+
+        if (null === $alias) {
+            return null;
+        }
 
         if (!preg_match('/^[1-9]\d*$/', $alias)) {
             $this->jobOffer = $jobOfferRepository->findOneBy(['alias' => $alias]);
@@ -87,6 +91,9 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
     protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {
         if ('FE' === TL_MODE) {
+            if (null === $this->getJobOffer()) {
+                return new Response('');
+            }
             $metaFields = $this->getMetaFields();
             if (!empty($model->plenta_jobs_basic_job_offer_details)) {
                 $detailsSelected = StringUtil::deserialize($model->plenta_jobs_basic_job_offer_details);
