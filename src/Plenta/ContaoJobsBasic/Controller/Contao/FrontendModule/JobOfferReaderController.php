@@ -212,12 +212,37 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         $template = new FrontendTemplate('plenta_jobs_basic_reader_job_location');
 
-        $locations = StringUtil::deserialize($jobOffer->getJobLocation());
+        $locationsArr = StringUtil::deserialize($jobOffer->getJobLocation());
         $locationRepo = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
 
-        if (is_array($locations)) {
-            $template->locations = $locationRepo->findByMultipleIds($locations);
+        $organizations = [];
+        $locationsTpl = [];
+        $imgs = [];
+
+        if (\is_array($locationsArr)) {
+            $locations = $locationRepo->findByMultipleIds($locationsArr);
+            foreach ($locations as $location) {
+                $organization = $location->getOrganization();
+                if (!\array_key_exists($organization->getId(), $organizations)) {
+                    if ($organization->getLogo()) {
+                        $imgTpl = new FrontendTemplate('ce_image');
+                        $image = FilesModel::findByUuid(StringUtil::binToUuid($organization->getLogo()));
+                        Controller::addImageToTemplate($imgTpl, [
+                            'singleSRC' => $image->path,
+                            'size' => [200, 200, 'proportional'],
+                        ]);
+                        $imgs[$organization->getId()] = $imgTpl->parse();
+                    }
+                    $organizations[$organization->getId()] = $location->getOrganization();
+                    $locationsTpl[$organization->getId()] = [];
+                }
+                $locationsTpl[$organization->getId()][] = $location;
+            }
         }
+
+        $template->organizations = $organizations;
+        $template->locations = $locationsTpl;
+        $template->imgs = $imgs;
 
         return $template->parse();
     }

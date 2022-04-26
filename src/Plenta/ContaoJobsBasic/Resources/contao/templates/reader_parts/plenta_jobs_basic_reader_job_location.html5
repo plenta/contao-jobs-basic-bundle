@@ -1,13 +1,19 @@
 <?php if (is_array($this->locations)): ?>
 <p><strong><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['jobLocation'][0] ?>:</strong></p>
-<?php foreach ($this->locations as $location): ?>
-    <div class="job_location">
-        <p><?= $location->getOrganization()->getName() ?><br />
+<?php foreach ($this->locations as $key => $locations): ?>
+    <div class="job_organization_info">
+        <?= $this->organizations[$key]->getName() ?>
+            <?php if (array_key_exists($key, $this->imgs)): ?>
+                <?= $this->imgs[$key] ?>
+            <?php endif; ?>
+    </div>
+    <?php foreach ($locations as $location): ?>
+        <div class="job_location">
             <?php if ($location->getStreetAddress()): ?>
                 <?= $location->getStreetAddress() ?><br />
             <?php endif; ?>
             <?= $location->getPostalCode() ?> <?= $location->getAddressLocality() ?>
-        </p>
-    </div>
+        </div>
+        <?php endforeach; ?>
 <?php endforeach; ?>
 <?php endif; ?>
