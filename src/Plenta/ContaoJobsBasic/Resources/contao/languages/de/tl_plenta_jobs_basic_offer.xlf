@@ -99,7 +99,7 @@
                 <target>Bitte wählen Sie eine Datei aus der Dateiübersicht.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.image_legend">
-                <target>Bild</target>
+                <target>Bildeinstellungen</target>
             </trans-unit>
         </body>
     </file>
