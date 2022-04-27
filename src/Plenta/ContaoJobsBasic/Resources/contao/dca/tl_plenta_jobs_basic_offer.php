@@ -83,11 +83,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     // Palettes
     'palettes' => [
-        '__selector__' => ['addImage'],
-        'default' => '{title_legend},title,alias,description;{settings_legend},jobLocation,employmentType,validThrough;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        '__selector__' => ['addImage', 'isRemote', 'hasLocationRequirements'],
+        'default' => '{title_legend},title,alias,description;{settings_legend},employmentType,validThrough;{location_legend},jobLocation,isRemote;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC',
+        'isRemote' => 'isOnlyRemote,hasLocationRequirements',
+        'hasLocationRequirements' => 'applicantLocationRequirements',
     ],
 
     // Fields
@@ -169,7 +171,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'validThrough' => [
             'exclude' => true,
             'inputType' => 'text',
-            'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'clr w50 wizard'],
+            'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
         ],
 
         'url' => [
@@ -228,6 +230,43 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'inputType' => 'fileTree',
             'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'mandatory' => true, 'tl_class' => 'clr'],
+        ],
+        'isRemote' => [
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50', 'isBoolean' => true],
+            'sql' => ['type' => 'boolean', 'default' => false],
+        ],
+        'isOnlyRemote' => [
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['tl_class' => 'clr w50'],
+            'sql' => ['type' => 'boolean', 'default' => false],
+        ],
+        'hasLocationRequirements' => [
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50'],
+            'sql' => ['type' => 'boolean', 'default' => false],
+        ],
+        'applicantLocationRequirements' => [
+            'exclude' => true,
+            'inputType' => 'group',
+            'palette' => ['key', 'value'],
+            'eval' => ['tl_class' => 'clr'],
+            'fields' => [
+                'key' => [
+                    'inputType' => 'select',
+                    'options' => ['Country', 'State', 'City', 'SchoolDistrict'],
+                    'eval' => ['tl_class' => 'w50', 'mandatory' => true],
+                    'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['administrativeAreas'],
+                ],
+                'value' => [
+                    'inputType' => 'text',
+                    'eval' => ['mandatory' => true, 'tl_class' => 'w50'],
+                ],
+            ],
+            'order' => false,
         ],
     ],
 ];

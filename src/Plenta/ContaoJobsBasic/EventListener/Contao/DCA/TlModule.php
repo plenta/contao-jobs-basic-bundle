@@ -38,7 +38,7 @@ class TlModule
 
         $jobLocations = $jobLocationRepository->findAll();
 
-        $return = [];
+        $return = ['remote' => $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote']];
         foreach ($jobLocations as $jobLocation) {
             $return[$jobLocation->getId()] = $jobLocation->getOrganization()->getName().': '.$jobLocation->getStreetAddress();
 

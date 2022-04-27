@@ -104,6 +104,57 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.basesalary_legend">
                 <target>Gehalt</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.isRemote.0">
+                <target>Home Office ist möglich</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.isRemote.1">
+                <target>Die Stelle kann auch im Home Office ausgeübt werden.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.isOnlyRemote.0">
+                <target>Nur Home Office ist möglich</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.isOnlyRemote.1">
+                <target>Die Stelle kann nur im Home Office ausgeübt werden.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.hasLocationRequirements.0">
+                <target>Der Ort des Home Office ist eingeschränkt</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.hasLocationRequirements.1">
+                <target>Die Stelle kann nur von bestimmten Orten aus im Home Office ausgeübt werden.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.applicantLocationRequirements.0">
+                <target>Ortsbeschränkungen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.applicantLocationRequirements.1">
+                <target>Legen Sie für jeden möglichen Ort einen Eintrag an.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.key.0">
+                <target>Verwaltungseinheit</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.key.1">
+                <target>Bitte wählen Sie die Art der Verwaltungseinheit aus der Liste aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.value.0">
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.value.1">
+                <target>Bitte geben Sie den Namen der Verwaltungseinheit an (z.B. Deutschland, Bayern oder Hannover).</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.location_legend">
+                <target>Arbeitsort</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.administrativeAreas.Country">
+                <target>Land</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.administrativeAreas.State">
+                <target>Bundesland/Kanton</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.administrativeAreas.City">
+                <target>Stadt</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.administrativeAreas.SchoolDistrict">
+                <target>Schulbezirk</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

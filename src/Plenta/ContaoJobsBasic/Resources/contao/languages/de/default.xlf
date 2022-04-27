@@ -47,6 +47,9 @@
             <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.sponsor">
                 <target>Sponsor werden</target>
             </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.remote">
+                <target>Remote</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

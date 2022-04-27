@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -86,6 +86,26 @@ class TlPlentaJobsBasicOffer extends DCADefault
      * @ORM\Column (type="binary", nullable=true)
      */
     protected $singleSRC;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default": false})
+     */
+    protected bool $isRemote;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default": false})
+     */
+    protected bool $isOnlyRemote;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default": false})
+     */
+    protected bool $hasLocationRequirements;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected string $applicantLocationRequirements;
 
     /**
      * @return string|null
@@ -329,5 +349,85 @@ class TlPlentaJobsBasicOffer extends DCADefault
     public function setSingleSRC($singleSRC): void
     {
         $this->singleSRC = $singleSRC;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRemote(): bool
+    {
+        return $this->isRemote;
+    }
+
+    /**
+     * @param bool $isRemote
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setIsRemote(bool $isRemote): self
+    {
+        $this->isRemote = $isRemote;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnlyRemote(): bool
+    {
+        return $this->isOnlyRemote;
+    }
+
+    /**
+     * @param bool $isOnlyRemote
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setIsOnlyRemote(bool $isOnlyRemote): self
+    {
+        $this->isOnlyRemote = $isOnlyRemote;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHasLocationRequirements(): bool
+    {
+        return $this->hasLocationRequirements;
+    }
+
+    /**
+     * @param bool $hasLocationRequirements
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setHasLocationRequirements(bool $hasLocationRequirements): self
+    {
+        $this->hasLocationRequirements = $hasLocationRequirements;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicantLocationRequirements(): string
+    {
+        return $this->applicantLocationRequirements;
+    }
+
+    /**
+     * @param string $applicantLocationRequirements
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setApplicantLocationRequirements(string $applicantLocationRequirements): self
+    {
+        $this->applicantLocationRequirements = $applicantLocationRequirements;
+
+        return $this;
     }
 }

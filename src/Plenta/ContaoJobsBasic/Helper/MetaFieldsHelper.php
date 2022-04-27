@@ -15,6 +15,7 @@ namespace Plenta\ContaoJobsBasic\Helper;
 use Contao\Controller;
 use Contao\Date;
 use Contao\StringUtil;
+use Contao\System;
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
@@ -54,14 +55,21 @@ class MetaFieldsHelper
 
     public function formatAddressLocality(TlPlentaJobsBasicOffer $jobOffer): string
     {
-        $locations = StringUtil::deserialize($jobOffer->getJobLocation());
-        $locationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
-
         $locationsTemp = [];
 
-        foreach ($locations as $location) {
-            $locationEntity = $locationRepository->find($location);
-            $locationsTemp[] = $locationEntity->getAddressLocality();
+        if ($jobOffer->isRemote()) {
+            $locationsTemp[] = $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
+        }
+
+        if (!$jobOffer->isRemote() || !$jobOffer->isOnlyRemote()) {
+            $locations = StringUtil::deserialize($jobOffer->getJobLocation());
+            $locationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
+
+
+            foreach ($locations as $location) {
+                $locationEntity = $locationRepository->find($location);
+                $locationsTemp[] = $locationEntity->getAddressLocality();
+            }
         }
 
         return implode(', ', $locationsTemp);

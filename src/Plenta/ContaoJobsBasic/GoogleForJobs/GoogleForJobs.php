@@ -166,7 +166,7 @@ class GoogleForJobs
 
         $structuredDataTemp = [];
 
-        if (null !== $jobLocationIds) {
+        if (null !== $jobLocationIds && (!$jobOffer->isRemote() || !$jobOffer->isOnlyRemote())) {
             $jobLocations = StringUtil::deserialize($jobLocationIds);
 
             foreach ($jobLocations as $jobLocationId) {
@@ -205,6 +205,28 @@ class GoogleForJobs
             $structuredData['jobLocation'] = $structuredDataTemp[0];
         } elseif (1 < \count($structuredDataTemp)) {
             $structuredData['jobLocation'] = $structuredDataTemp;
+        }
+
+        if ($jobOffer->isRemote()) {
+            $structuredData['jobLocationType'] = 'TELECOMMUTE';
+
+            if ($jobOffer->isHasLocationRequirements()) {
+                $requirements = StringUtil::deserialize($jobOffer->getApplicantLocationRequirements());
+                $structuredDataTemp = [];
+
+                if (\is_array($requirements)) {
+                    foreach ($requirements as $requirement) {
+                        $structuredDataTemp[] = [
+                            '@type' => $requirement['key'],
+                            'name' => $requirement['value'],
+                        ];
+                    }
+                }
+
+                if (!empty($structuredDataTemp)) {
+                    $structuredData['applicantLocationRequirements'] = $structuredDataTemp;
+                }
+            }
         }
 
         return $structuredData;

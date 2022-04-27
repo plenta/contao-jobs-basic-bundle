@@ -83,14 +83,23 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
         }
 
         $criterionLocation = [];
+        $remoteJobs = false;
 
         foreach ($locations as $location) {
             foreach (explode('|', $location) as $l) {
-                $criterionLocation[] = "a.jobLocation LIKE '%\"".$l."\"%'";
+                if ('remote' === $l) {
+                    $remoteJobs = true;
+                    $criterionLocation[] = 'a.isRemote = 1';
+                } else {
+                    $criterionLocation[] = "a.jobLocation LIKE '%\"".$l."\"%'";
+                }
             }
         }
 
         if (\count($criterionLocation)) {
+            if (!$remoteJobs) {
+                $qb->andWhere('a.isRemote = 0 OR a.isOnlyRemote = 0');
+            }
             $qb->andWhere(implode(' OR ', $criterionLocation));
         }
 
