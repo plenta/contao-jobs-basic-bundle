@@ -101,6 +101,9 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.image_legend">
                 <target>Bildeinstellungen</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.basesalary_legend">
+                <target>Gehalt</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
