@@ -42,22 +42,22 @@
                 <target>Jobs (Basic)</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_offer_list.0">
-                <target>Stellenangebotsliste</target>
+                <target>Stellenangebote Liste</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_offer_list.1">
-                <target>Stellenangebotsliste</target>
+                <target>Stellenangebote Liste</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_offer_reader.0">
-                <target>Stellenangebotsleser</target>
+                <target>Stellenangebote Detailansicht</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_offer_reader.1">
-                <target>Stellenangebotsleser</target>
+                <target>Stellenangebote Detailansicht</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_filter.0">
-                <target>Stellenangebotsfilter</target>
+                <target>Stellenangebote Filter</target>
             </trans-unit>
             <trans-unit id="FMD.plenta_jobs_basic_filter.1">
-                <target>Stellenangebotsfilter</target>
+                <target>Stellenangebot Filter</target>
             </trans-unit>
             <trans-unit id="MOD.plenta_jobs_basic_settings.0">
                 <target>Einstellungen</target>
