@@ -203,6 +203,9 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.YEAR">
                 <target>Jahr</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.remoteIsPossible">
+                <target>Diese Stelle kann im Home Office ausgeübt werden.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

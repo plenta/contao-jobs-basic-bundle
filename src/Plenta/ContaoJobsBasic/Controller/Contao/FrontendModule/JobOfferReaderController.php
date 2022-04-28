@@ -253,6 +253,8 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template->organizations = $organizations;
         $template->locations = $locationsTpl;
         $template->imgs = $imgs;
+        $template->isRemote = $jobOffer->isRemote();
+        $template->isOnlyRemote = $jobOffer->isOnlyRemote();
 
         return $template->parse();
     }
