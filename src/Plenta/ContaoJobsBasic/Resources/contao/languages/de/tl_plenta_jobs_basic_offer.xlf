@@ -120,7 +120,7 @@
                 <target>Der Ort des Home-Office ist eingeschränkt</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.hasLocationRequirements.1">
-                <target>Die Stelle kann nur von bestimmten Orten aus im Home-Office ausgeübt werden.</target>
+                <target>Die Stelle darf nur von bestimmten Orten aus im Home-Office ausgeübt werden.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.applicantLocationRequirements.0">
                 <target>Ortsbeschränkungen</target>
@@ -204,7 +204,7 @@
                 <target>Jahr</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.remoteIsPossible">
-                <target>Diese Stelle kann im Home Office ausgeübt werden.</target>
+                <target>Diese Stelle kann im Home-Office ausgeübt werden.</target>
             </trans-unit>
         </body>
     </file>
