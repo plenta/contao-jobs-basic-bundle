@@ -108,6 +108,31 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected string $applicantLocationRequirements;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default": false})
+     */
+    protected bool $addSalary;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=false, options={"default": "EUR"})
+     */
+    protected string $salaryCurrency;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, options={"default": 0})
+     */
+    protected int $salaryValue;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, options={"default": 0})
+     */
+    protected int $salaryMaxValue;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=false, options={"default": ""})
+     */
+    protected string $salaryUnit;
+
+    /**
      * @return string|null
      */
     public function getDescription(): ?string
@@ -427,6 +452,106 @@ class TlPlentaJobsBasicOffer extends DCADefault
     public function setApplicantLocationRequirements(string $applicantLocationRequirements): self
     {
         $this->applicantLocationRequirements = $applicantLocationRequirements;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAddSalary(): bool
+    {
+        return $this->addSalary;
+    }
+
+    /**
+     * @param bool $addSalary
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setAddSalary(bool $addSalary): self
+    {
+        $this->addSalary = $addSalary;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalaryCurrency(): string
+    {
+        return $this->salaryCurrency;
+    }
+
+    /**
+     * @param string $salaryCurrency
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setSalaryCurrency(string $salaryCurrency): self
+    {
+        $this->salaryCurrency = $salaryCurrency;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSalaryValue(): int
+    {
+        return $this->salaryValue;
+    }
+
+    /**
+     * @param int $salaryValue
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setSalaryValue(int $salaryValue): self
+    {
+        $this->salaryValue = $salaryValue;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSalaryMaxValue(): int
+    {
+        return $this->salaryMaxValue;
+    }
+
+    /**
+     * @param int $salaryMaxValue
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setSalaryMaxValue(int $salaryMaxValue): self
+    {
+        $this->salaryMaxValue = $salaryMaxValue;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalaryUnit(): string
+    {
+        return $this->salaryUnit;
+    }
+
+    /**
+     * @param string $salaryUnit
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setSalaryUnit(string $salaryUnit): self
+    {
+        $this->salaryUnit = $salaryUnit;
 
         return $this;
     }

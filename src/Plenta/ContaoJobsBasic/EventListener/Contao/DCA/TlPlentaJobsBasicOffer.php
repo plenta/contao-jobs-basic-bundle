@@ -21,6 +21,9 @@ use Exception;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer as TlPlentaJobsBasicOfferEntity;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
+use Plenta\ContaoJobsBasic\Helper\NumberHelper;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\VarDumper\Cloner\Data;
 
 class TlPlentaJobsBasicOffer
 {
@@ -30,14 +33,18 @@ class TlPlentaJobsBasicOffer
 
     protected Slug $slugGenerator;
 
+    protected RequestStack $requestStack;
+
     public function __construct(
         EmploymentType $employmentTypeHelper,
         ManagerRegistry $registry,
-        Slug $slugGenerator
+        Slug $slugGenerator,
+        RequestStack $requestStack
     ) {
         $this->employmentTypeHelper = $employmentTypeHelper;
         $this->registry = $registry;
         $this->slugGenerator = $slugGenerator;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -130,5 +137,18 @@ class TlPlentaJobsBasicOffer
             $this->registry->getManager()->persist($offer);
             $this->registry->getManager()->flush();
         }
+    }
+
+    public function salaryOnLoad($value, DataContainer $dc): string
+    {
+        $numberHelper = new NumberHelper($dc->activeRecord->salaryCurrency, $this->requestStack->getCurrentRequest()->getLocale());
+        $value = $numberHelper->formatNumberFromDbForDCAField($value);
+        return $value;
+    }
+
+    public function salaryOnSave($value, DataContainer $dc): int
+    {
+        $numberHelper = new NumberHelper($dc->activeRecord->salaryCurrency, $this->requestStack->getCurrentRequest()->getLocale());
+        return $numberHelper->reformatDecimalForDb($value);
     }
 }

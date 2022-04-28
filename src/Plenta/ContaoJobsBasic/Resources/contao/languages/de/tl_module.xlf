@@ -149,6 +149,9 @@
             <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.elements">
                 <target>Inhaltselemente</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.salary">
+                <target>Gehalt</target>
+            </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicTemplateParts.0">
                 <target>Template-Teile</target>
             </trans-unit>

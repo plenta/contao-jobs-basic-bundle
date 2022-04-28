@@ -30,7 +30,9 @@ use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
+use Plenta\ContaoJobsBasic\Helper\NumberHelper;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -48,14 +50,18 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     protected GoogleForJobs $googleForJobs;
 
+    protected RequestStack $requestStack;
+
     public function __construct(
         ManagerRegistry $registry,
         MetaFieldsHelper $metaFieldsHelper,
-        GoogleForJobs $googleForJobs
+        GoogleForJobs $googleForJobs,
+        RequestStack $requestStack
     ) {
         $this->registry = $registry;
         $this->metaFieldsHelper = $metaFieldsHelper;
         $this->googleForJobs = $googleForJobs;
+        $this->requestStack = $requestStack;
     }
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
@@ -122,6 +128,10 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
         if (\in_array('validThrough', $parts, true)) {
             $content .= $this->getValidThrough($jobOffer);
+        }
+
+        if (\in_array('salary', $parts, true)) {
+            $content .= $this->getSalary($jobOffer);
         }
 
         if (\in_array('jobLocation', $parts, true)) {
@@ -245,5 +255,33 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template->imgs = $imgs;
 
         return $template->parse();
+    }
+
+    private function getSalary(TlPlentaJobsBasicOffer $jobOffer)
+    {
+        if ($jobOffer->isAddSalary()) {
+            $numberHelper = new NumberHelper($jobOffer->getSalaryCurrency(), $this->requestStack->getCurrentRequest()->getLocale());
+            $template = new FrontendTemplate('plenta_jobs_basic_reader_salary');
+            $salary = [];
+
+            if ($jobOffer->getSalaryValue() > 0) {
+                $salary[] = $numberHelper->formatCurrency($jobOffer->getSalaryValue());
+            }
+
+            if ($jobOffer->getSalaryMaxValue() > 0) {
+                $salary[] = $numberHelper->formatCurrency($jobOffer->getSalaryMaxValue());
+            }
+
+            if (empty($salary)) {
+                return '';
+            }
+
+            $template->salary = implode(' - ', $salary);
+            $template->unit = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryUnits'][$jobOffer->getSalaryUnit()];
+
+            return $template->parse();
+        }
+
+        return '';
     }
 }

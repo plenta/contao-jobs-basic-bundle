@@ -25,6 +25,8 @@ use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
+use Plenta\ContaoJobsBasic\Helper\NumberHelper;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class GoogleForJobs
 {
@@ -80,6 +82,7 @@ class GoogleForJobs
 
         $arrStructuredData = $this->generateJobLocation($jobOffer, $arrStructuredData);
         $arrStructuredData = $this->generateHiringOrganization($jobOffer, $arrStructuredData);
+        $arrStructuredData = $this->generateSalary($jobOffer, $arrStructuredData);
 
         $json = json_encode($arrStructuredData);
 
@@ -252,5 +255,32 @@ class GoogleForJobs
         $description = StringUtil::restoreBasicEntities($description);
 
         return $description;
+    }
+
+    public function generateSalary(TlPlentaJobsBasicOffer $jobOffer, array $structuredData)
+    {
+        $numberHelper = new NumberHelper($jobOffer->getSalaryCurrency(), 'en');
+
+        if ($jobOffer->isAddSalary()) {
+            $structuredDataTemp = [
+                '@type' => 'MonetaryAmount',
+                'currency' => $jobOffer->getSalaryCurrency(),
+                'value' => [
+                    '@type' => 'QuantitativeValue',
+                    'unitText' => $jobOffer->getSalaryUnit(),
+                ],
+            ];
+
+            if ($jobOffer->getSalaryMaxValue() > 0 && $jobOffer->getSalaryValue() > 0) {
+                $structuredDataTemp['value']['minValue'] = $numberHelper->formatNumberFromDbForDCAField((string) $jobOffer->getSalaryValue());
+                $structuredDataTemp['value']['maxValue'] = $numberHelper->formatNumberFromDbForDCAField((string) $jobOffer->getSalaryMaxValue());
+            } else {
+                $structuredDataTemp['value']['value'] = $numberHelper->formatNumberFromDbForDCAField((string) max($jobOffer->getSalaryMaxValue(), $jobOffer->getSalaryValue()));
+            }
+
+            $structuredData['baseSalary'] = $structuredDataTemp;
+        }
+
+        return $structuredData;
     }
 }

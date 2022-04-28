@@ -170,7 +170,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSortingDefaultDirectio
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicTemplateParts'] = [
     'exclude' => true,
     'inputType' => 'checkboxWizard',
-    'options' => ['title', 'image', 'elements', 'description', 'employmentType', 'validThrough', 'jobLocation', 'backlink'],
+    'options' => ['title', 'image', 'elements', 'description', 'employmentType', 'validThrough', 'salary', 'jobLocation', 'backlink'],
     'eval' => ['multiple' => true, 'tl_class' => 'clr'],
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicReaderTemplate']['parts'],
     'sql' => 'mediumtext null',

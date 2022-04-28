@@ -1,0 +1,1 @@
+<p><strong><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryValue'][0] ?>:</strong> <?= $this->salary ?>/<?= $this->unit ?></p>

@@ -5,6 +5,7 @@ services:
             - '@Plenta\ContaoJobsBasic\Helper\EmploymentType'
             - '@Doctrine\Persistence\ManagerRegistry'
             - '@contao.slug'
+            - '@request_stack'
 
     Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicJobLocation:
         public: true

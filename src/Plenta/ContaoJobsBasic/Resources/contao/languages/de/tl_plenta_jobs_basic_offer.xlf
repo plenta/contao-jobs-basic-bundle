@@ -155,6 +155,54 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.administrativeAreas.SchoolDistrict">
                 <target>Schulbezirk</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salary_legend">
+                <target>Gehalt</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.addSalary.0">
+                <target>Gehalt hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.addSalary.1">
+                <target>Der Stelle ein Gehalt hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryCurrency.0">
+                <target>Währung</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryCurrency.1">
+                <target>Bitte wählen Sie eine Währung aus der Liste aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryValue.0">
+                <target>Gehalt</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryValue.1">
+                <target>Bitte geben Sie das Gehalt ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryMaxValue.0">
+                <target>Gehaltsspanne - Maximalgehalt</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryMaxValue.1">
+                <target>Wenn Sie statt einem festen Gehalt eine Gehaltsspanne angeben möchten, geben Sie hier das maximale Gehalt ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnit.0">
+                <target>Zeiteinheit für das Gehalt</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnit.1">
+                <target>Bitte wählen Sie aus, für welche Zeiteinheit das Gehalt gelten soll.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.HOUR">
+                <target>Stunde</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.DAY">
+                <target>Tag</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.WEEK">
+                <target>Woche</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.MONTH">
+                <target>Monat</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.YEAR">
+                <target>Jahr</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

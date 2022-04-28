@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer;
+use Symfony\Component\Intl\Currencies;
 
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     // Config
@@ -83,13 +84,14 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     // Palettes
     'palettes' => [
-        '__selector__' => ['addImage', 'isRemote', 'hasLocationRequirements'],
-        'default' => '{title_legend},title,alias,description;{settings_legend},employmentType,validThrough;{location_legend},jobLocation,isRemote;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        '__selector__' => ['addImage', 'isRemote', 'hasLocationRequirements', 'addSalary'],
+        'default' => '{title_legend},title,alias,description;{settings_legend},employmentType,validThrough;{location_legend},jobLocation,isRemote;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC',
         'isRemote' => 'isOnlyRemote,hasLocationRequirements',
         'hasLocationRequirements' => 'applicantLocationRequirements',
+        'addSalary' => 'salaryCurrency,salaryUnit,salaryValue,salaryMaxValue',
     ],
 
     // Fields
@@ -267,6 +269,59 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 ],
             ],
             'order' => false,
+        ],
+        'addSalary' => [
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50'],
+            'sql' => ['type' => 'boolean', 'default' => false],
+        ],
+        'salaryCurrency' => [
+            'exclude' => true,
+            'inputType' => 'select',
+            'default' => 'EUR',
+            'options' => Currencies::getNames(),
+            'eval' => [
+                'chosen' => true,
+                'tl_class' => 'w50',
+            ],
+        ],
+        'salaryValue' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => [
+                'rgxp' => 'digit',
+                'tl_class' => 'w50',
+            ],
+            'load_callback' => [
+                [TlPlentaJobsBasicOffer::class, 'salaryOnLoad'],
+            ],
+            'save_callback' => [
+                [TlPlentaJobsBasicOffer::class, 'salaryOnSave'],
+            ],
+        ],
+        'salaryMaxValue' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => [
+                'rgxp' => 'digit',
+                'tl_class' => 'w50',
+            ],
+            'load_callback' => [
+                [TlPlentaJobsBasicOffer::class, 'salaryOnLoad'],
+            ],
+            'save_callback' => [
+                [TlPlentaJobsBasicOffer::class, 'salaryOnSave'],
+            ],
+        ],
+        'salaryUnit' => [
+            'exclude' => true,
+            'inputType' => 'select',
+            'options' => ['HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR'],
+            'eval' => [
+                'tl_class' => 'w50',
+            ],
+            'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryUnits'],
         ],
     ],
 ];
