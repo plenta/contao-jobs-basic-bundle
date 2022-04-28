@@ -236,7 +236,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'isRemote' => [
             'exclude' => true,
             'inputType' => 'checkbox',
-            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50', 'isBoolean' => true],
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50 m12', 'isBoolean' => true],
             'sql' => ['type' => 'boolean', 'default' => false],
         ],
         'isOnlyRemote' => [
@@ -283,6 +283,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'options' => Currencies::getNames(),
             'eval' => [
                 'chosen' => true,
+                'mandatory' => true,
                 'tl_class' => 'w50',
             ],
         ],
@@ -290,6 +291,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => [
+                'mandatory' => true,
                 'rgxp' => 'digit',
                 'tl_class' => 'w50',
             ],
@@ -317,8 +319,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'salaryUnit' => [
             'exclude' => true,
             'inputType' => 'select',
+            'default' => 'MONTH',
             'options' => ['HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR'],
             'eval' => [
+                'mandatory' => true,
                 'tl_class' => 'w50',
             ],
             'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryUnits'],

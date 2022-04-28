@@ -72,7 +72,7 @@
                 <target>Arbeitsort</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.jobLocation.1">
-                <target>Bitte wählen Sie einen Arbeitsort aus.</target>
+                <target>Bitte wählen Sie den Arbeitsort aus.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.validThrough.0">
                 <target>Bewerbungsfrist</target>
@@ -105,22 +105,22 @@
                 <target>Gehalt</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.isRemote.0">
-                <target>Home Office ist möglich</target>
+                <target>Home-Office ist möglich</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.isRemote.1">
-                <target>Die Stelle kann auch im Home Office ausgeübt werden.</target>
+                <target>Das Stellenangebot kann auch im Home-Office ausgeübt werden.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.isOnlyRemote.0">
-                <target>Nur Home Office ist möglich</target>
+                <target>Nur Home-Office möglich</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.isOnlyRemote.1">
-                <target>Die Stelle kann nur im Home Office ausgeübt werden.</target>
+                <target>Die Stelle kann nur im Home-Office ausgeübt werden.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.hasLocationRequirements.0">
-                <target>Der Ort des Home Office ist eingeschränkt</target>
+                <target>Der Ort des Home-Office ist eingeschränkt</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.hasLocationRequirements.1">
-                <target>Die Stelle kann nur von bestimmten Orten aus im Home Office ausgeübt werden.</target>
+                <target>Die Stelle kann nur von bestimmten Orten aus im Home-Office ausgeübt werden.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.applicantLocationRequirements.0">
                 <target>Ortsbeschränkungen</target>
@@ -162,7 +162,7 @@
                 <target>Gehalt hinzufügen</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.addSalary.1">
-                <target>Der Stelle ein Gehalt hinzufügen</target>
+                <target>Dem Stellenangebot ein Gehalt hinzufügen</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.salaryCurrency.0">
                 <target>Währung</target>
@@ -177,13 +177,13 @@
                 <target>Bitte geben Sie das Gehalt ein.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.salaryMaxValue.0">
-                <target>Gehaltsspanne - Maximalgehalt</target>
+                <target>Maximalgehalt (Gehaltsspanne)</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.salaryMaxValue.1">
-                <target>Wenn Sie statt einem festen Gehalt eine Gehaltsspanne angeben möchten, geben Sie hier das maximale Gehalt ein.</target>
+                <target>Wenn Sie statt einem festen Gehalt eine Gehaltsspanne angeben möchten, geben Sie hier bitte das maximale Gehalt ein.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnit.0">
-                <target>Zeiteinheit für das Gehalt</target>
+                <target>Zeiteinheit</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnit.1">
                 <target>Bitte wählen Sie aus, für welche Zeiteinheit das Gehalt gelten soll.</target>
