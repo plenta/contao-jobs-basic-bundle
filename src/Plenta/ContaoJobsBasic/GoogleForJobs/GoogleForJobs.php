@@ -119,7 +119,7 @@ class GoogleForJobs
                 $structuredData['hiringOrganization']['sameAs'] = $sameAs;
             }
 
-            //$structuredData = $this->generateLogo($hiringOrganization, $structuredData);
+            $structuredData = $this->generateLogo($hiringOrganization, $structuredData);
         }
 
         return $structuredData;
@@ -143,10 +143,6 @@ class GoogleForJobs
             $resizeConfig->setZoomLevel(100);
             $resizeConfig->setMode(ResizeConfiguration::MODE_PROPORTIONAL);
             $pictureConfiguration->setSize($imageConfigItem->setResizeConfig($resizeConfig));
-
-            $pictureConfiguration->setFormats([
-                'svg' => ['png'],
-            ]);
 
             // Create Contao picture factory object
             $picture = $this->pictureFactory->create(
