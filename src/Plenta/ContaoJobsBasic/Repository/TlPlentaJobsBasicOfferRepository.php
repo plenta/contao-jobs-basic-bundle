@@ -17,6 +17,7 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Doctrine\ORM\NoResultException;
 
 class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
 {
@@ -108,5 +109,39 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult(AbstractQuery::HYDRATE_OBJECT);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
+    public function findPublishedByIdOrAlias(string $alias): ?TlPlentaJobsBasicOffer
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        if (!preg_match('/^[1-9]\d*$/', $alias)) {
+            $qb
+                ->where('a.alias=:alias')
+                ->setParameter('alias', $alias);
+        } else {
+            $qb
+                ->where('a.id=:id')
+                ->setParameter('id', $alias);
+        }
+
+        $qb
+            ->andwhere('a.published=:published')
+            ->andWhere('a.start<=:time OR a.start=:empty')
+            ->andWhere('a.stop>:time OR a.stop=:empty')
+            ->setParameter('published', '1')
+            ->setParameter('time', time())
+            ->setParameter('empty', '')
+        ;
+
+        try {
+            return $qb->getQuery()->getSingleResult(AbstractQuery::HYDRATE_OBJECT);
+        } catch (NoResultException $ex) {
+            return null;
+        }
     }
 }
