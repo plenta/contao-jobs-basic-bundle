@@ -129,7 +129,7 @@ class GoogleForJobs
     {
         $uuid = $hiringOrganization->getLogo();
 
-        if (null !== $uuid) {
+        if (null !== $uuid && '' !== $uuid) {
             $image = FilesModel::findByUuid($uuid);
             $staticUrl = $this->contaoFileContext->getStaticUrl();
 
