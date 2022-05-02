@@ -15,8 +15,10 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\Date;
+use Contao\Environment;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
 use Contao\Input;
@@ -86,14 +88,10 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
         $alias = Input::get('auto_item');
 
-        if (!preg_match('/^[1-9]\d*$/', $alias)) {
-            $jobOffer = $jobOfferRepository->findOneBy(['alias' => $alias]);
-        } else {
-            $jobOffer = $jobOfferRepository->find($alias);
-        }
+        $jobOffer = $jobOfferRepository->findPublishedByIdOrAlias($alias);
 
         if (null === $jobOffer) {
-            return new Response();
+            throw new PageNotFoundException('Page not found: ' . Environment::get('uri'));
         }
 
         $parentId = $jobOffer->getId();
