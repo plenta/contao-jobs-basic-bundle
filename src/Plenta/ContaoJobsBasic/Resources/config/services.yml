@@ -21,6 +21,7 @@ services:
             - '@contao.framework'
 
     Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs:
+        public: true
         class: Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs
         arguments:
             - '@Doctrine\Persistence\ManagerRegistry'
