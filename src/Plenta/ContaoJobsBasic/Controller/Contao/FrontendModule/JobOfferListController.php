@@ -108,6 +108,9 @@ class JobOfferListController extends AbstractFrontendModuleController
             $template->sortingForm = $form->generate();
             $template->showSorting = true;
             $template->formId = $formId;
+        } else {
+            $sortBy = null;
+            $order = null;
         }
 
         $jobOffers = $jobOfferRepository->findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order);
