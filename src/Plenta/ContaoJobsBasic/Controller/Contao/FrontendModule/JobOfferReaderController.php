@@ -192,7 +192,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         $template = new FrontendTemplate('plenta_jobs_basic_reader_description');
         $template->text = $jobOffer->getDescription();
-        $template->class = 'ce_text';
+        $template->class = 'ce_text job_description';
         return $template->parse();
     }
 
@@ -202,6 +202,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer);
         $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['employmentType'][0];
         $template->value = $metaFields['employmentTypeFormatted'];
+        $template->class = 'job_employment_type';
         return $template->parse();
     }
 
@@ -211,6 +212,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $template = new FrontendTemplate('plenta_jobs_basic_reader_attribute');
             $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['validThrough'][0];
             $template->value = Date::parse(Date::getNumericDatimFormat(), $jobOffer->getValidThrough());
+            $template->class = 'job_valid_through';
             return $template->parse();
         }
         return '';

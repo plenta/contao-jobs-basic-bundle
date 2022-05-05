@@ -1,5 +1,5 @@
 <?php if (is_array($this->locations)): ?>
-<p><strong><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['jobLocation'][0] ?>:</strong></p>
+<p class="job_location_label"><strong><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['jobLocation'][0] ?>:</strong></p>
 <?php foreach ($this->locations as $key => $locations): ?>
     <div class="job_organization_info">
             <?php if (array_key_exists($key, $this->imgs)): ?>
@@ -9,7 +9,7 @@
     </div>
 
 <?php if ($this->isRemote): ?>
-        <p><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['remoteIsPossible'] ?></p>
+        <p class="job_remote"><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['remoteIsPossible'] ?></p>
 <?php endif; ?>
 <?php if (!$this->isRemote || !$this->isOnlyRemote): ?>
     <?php foreach ($locations as $location): ?>
