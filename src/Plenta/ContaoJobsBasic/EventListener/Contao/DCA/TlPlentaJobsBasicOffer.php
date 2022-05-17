@@ -23,7 +23,6 @@ use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer as TlPlentaJobsBasicOff
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\NumberHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\VarDumper\Cloner\Data;
 
 class TlPlentaJobsBasicOffer
 {
@@ -142,7 +141,8 @@ class TlPlentaJobsBasicOffer
     public function salaryOnLoad($value, DataContainer $dc): string
     {
         $numberHelper = new NumberHelper($dc->activeRecord->salaryCurrency, $this->requestStack->getCurrentRequest()->getLocale());
-        $value = $numberHelper->formatNumberFromDbForDCAField($value);
+        $value = $numberHelper->formatNumberFromDbForDCAField((string) $value);
+
         return $value;
     }
 
