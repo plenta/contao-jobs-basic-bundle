@@ -133,6 +133,16 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected string $salaryUnit;
 
     /**
+     * @ORM\Column(type="string", length=255, options={"default": ""})
+     */
+    protected string $metaTitle = '';
+
+    /**
+     * @ORM\Column(type="text", nullable=true, options={"default": NULL})
+     */
+    protected ?string $metaDescription;
+
+    /**
      * @return string|null
      */
     public function getDescription(): ?string
@@ -552,6 +562,46 @@ class TlPlentaJobsBasicOffer extends DCADefault
     public function setSalaryUnit(string $salaryUnit): self
     {
         $this->salaryUnit = $salaryUnit;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaTitle(): string
+    {
+        return $this->metaTitle;
+    }
+
+    /**
+     * @param string $metaTitle
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setMetaTitle(string $metaTitle): self
+    {
+        $this->metaTitle = $metaTitle;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMetaDescription(): ?string
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * @param string|null $metaDescription
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setMetaDescription(?string $metaDescription): self
+    {
+        $this->metaDescription = $metaDescription;
 
         return $this;
     }

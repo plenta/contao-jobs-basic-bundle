@@ -85,7 +85,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     // Palettes
     'palettes' => [
         '__selector__' => ['addImage', 'isRemote', 'hasLocationRequirements', 'addSalary'],
-        'default' => '{title_legend},title,alias,description;{settings_legend},employmentType,validThrough;{location_legend},jobLocation,isRemote;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        'default' => '{title_legend},title,alias,description;{meta_legend},metaTitle,metaDescription,serpPreview;{settings_legend},employmentType,validThrough;{location_legend},jobLocation,isRemote;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC',
@@ -128,6 +128,29 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'tl_class' => 'clr',
             ],
         ],
+        'metaTitle' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
+        ],
+        'metaDescription' => [
+            'exclude' => true,
+            'inputType' => 'textarea',
+            'eval' => ['style' => 'height:60px', 'decodeEntities' => true, 'tl_class' => 'clr'],
+            'sql' => "text NULL",
+        ],
+        'serpPreview' => [
+            'exclude' => true,
+            'inputType' => 'serpPreview',
+            'eval' => [
+                'url_callback' => ['tl_plenta_jobs_basic_offer', 'getSerpUrl'],
+                'title_tag_callback' => ['tl_plenta_jobs_basic_offer', 'getTitleTag'],
+                'titleFields' => ['metaTitle', 'title'],
+                'descriptionFields' => ['metaDescription', 'description']
+            ],
+            'sql' => null
+        ],
+
         'jobLocation' => [
             'inputType' => 'select',
             'exclude' => true,
@@ -466,5 +489,15 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
         if ($dc) {
             $dc->invalidateCacheTags();
         }
+    }
+
+    public function getSerpUrl(Contao\Model $model): string
+    {
+        return 'URL';
+    }
+
+    public function getTitleTag(Contao\Model $model): string
+    {
+        return 'TITLE';
     }
 }

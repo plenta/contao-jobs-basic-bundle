@@ -29,3 +29,5 @@ array_insert($GLOBALS['BE_MOD'], 1, [
 if (defined('TL_MODE') && TL_MODE == 'BE') {
     $GLOBALS['TL_CSS'][] = 'bundles/plentacontaojobsbasic/backend.css|static';
 }
+
+$GLOBALS['TL_MODELS'][Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel::getTable()] = Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel::class;
