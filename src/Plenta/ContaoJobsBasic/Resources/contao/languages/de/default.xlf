@@ -45,7 +45,7 @@
                 <target>Fehler melden</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.sponsor">
-                <target>Sponsor werden</target>
+                <target>Supporter werden</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.remote">
                 <target>Remote</target>
