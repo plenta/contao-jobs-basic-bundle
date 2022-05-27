@@ -78,7 +78,7 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected string $stop;
 
     /**
-     * @ORM\Column (type="boolean", nullable=false, options={"default": false})
+     * @ORM\Column(type="string", length=1, nullable=false, options={"fixed"=true, "default"=""})
      */
     protected bool $addImage;
 
@@ -88,7 +88,7 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected $singleSRC;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default": false})
+     * @ORM\Column(type="string", length=1, nullable=false, options={"fixed"=true, "default"=""})
      */
     protected bool $isRemote;
 
@@ -98,7 +98,7 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected bool $isOnlyRemote;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default": false})
+     * @ORM\Column(type="string", length=1, nullable=false, options={"fixed"=true, "default"=""})
      */
     protected bool $hasLocationRequirements;
 
@@ -108,7 +108,7 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected string $applicantLocationRequirements;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false, options={"default": false})
+     * @ORM\Column(type="string", length=1, nullable=false, options={"fixed"=true, "default"=""})
      */
     protected bool $addSalary;
 
