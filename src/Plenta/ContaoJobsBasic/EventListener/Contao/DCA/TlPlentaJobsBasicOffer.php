@@ -13,16 +13,19 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
 use Contao\CoreBundle\Slug\Slug;
+use Contao\CoreBundle\Util\PackageUtil;
 use Contao\DataContainer;
 use Contao\Input;
 use Contao\StringUtil;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
+use Contao\Message;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer as TlPlentaJobsBasicOfferEntity;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\NumberHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Twig\Environment as TwigEnvironment;
 
 class TlPlentaJobsBasicOffer
 {
@@ -34,16 +37,20 @@ class TlPlentaJobsBasicOffer
 
     protected RequestStack $requestStack;
 
+    protected TwigEnvironment $twig;
+
     public function __construct(
         EmploymentType $employmentTypeHelper,
         ManagerRegistry $registry,
         Slug $slugGenerator,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        TwigEnvironment $twig
     ) {
         $this->employmentTypeHelper = $employmentTypeHelper;
         $this->registry = $registry;
         $this->slugGenerator = $slugGenerator;
         $this->requestStack = $requestStack;
+        $this->twig = $twig;
     }
 
     /**
@@ -150,5 +157,16 @@ class TlPlentaJobsBasicOffer
     {
         $numberHelper = new NumberHelper($dc->activeRecord->salaryCurrency, $this->requestStack->getCurrentRequest()->getLocale());
         return $numberHelper->reformatDecimalForDb($value);
+    }
+
+    public function onShowInfoCallback(DataContainer $dc = null): void
+    {
+        $GLOBALS['TL_CSS'][] = 'bundles/plentacontaojobsbasic/dashboard.css';
+        $info = $this->twig->render('@PlentaContaoJobsBasic/be_plenta_info.html.twig', [
+            'version' => PackageUtil::getVersion('plenta/contao-jobs-basic-bundle'),
+
+        ]);
+
+        Message::addRaw($info);
     }
 }

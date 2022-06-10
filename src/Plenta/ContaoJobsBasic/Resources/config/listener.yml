@@ -6,6 +6,7 @@ services:
             - '@Doctrine\Persistence\ManagerRegistry'
             - '@contao.slug'
             - '@request_stack'
+            - '@twig'
 
     Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicJobLocation:
         public: true
