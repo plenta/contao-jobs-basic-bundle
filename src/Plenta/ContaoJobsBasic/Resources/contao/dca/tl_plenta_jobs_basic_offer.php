@@ -205,7 +205,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'flag' => 1,
             'inputType' => 'checkbox',
             'eval' => [
-                'doNotCopy' => true,
                 'isBoolean' => true,
             ],
             'sql' => [
