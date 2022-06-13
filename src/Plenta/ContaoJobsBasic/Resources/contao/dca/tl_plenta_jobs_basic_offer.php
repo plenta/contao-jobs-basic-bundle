@@ -210,6 +210,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             ],
             'sql' => [
                 'type' => 'boolean',
+                'default' => false,
             ],
         ],
         'start' => [
