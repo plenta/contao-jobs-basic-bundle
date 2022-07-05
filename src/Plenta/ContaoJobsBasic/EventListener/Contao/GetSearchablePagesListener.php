@@ -12,27 +12,27 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
-use Contao\Database;
 use Contao\Config;
-use Contao\PageModel;
+use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\Database;
 use Contao\Environment;
 use Contao\ModuleModel;
+use Contao\PageModel;
+use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
-use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 
 /**
- * @Hook("getSearchablePagesXX")
+ * @Hook("getSearchablePages")
  */
 class GetSearchablePagesListener
 {
-    private Connection $connection;
-
     /**
      * @var EntityManagerInterface
      */
     protected $registry;
+    private Connection $connection;
 
     public function __construct(Connection $connection, EntityManagerInterface $registry)
     {
@@ -51,22 +51,22 @@ class GetSearchablePagesListener
             $rootPages = $database->getChildRecords([$rootId], 'tl_page');
         }
 
-        // Alle Listingmodule
-        // Module >  plenta_jobs_basic_offer_list
-
-
         $jobOfferRepo = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
 
-        $jobs = $jobOfferRepo->findAllPublished();
-
-        if (!is_countable($jobs)) {
-            return $pages;
-        }
-
-        foreach ($jobs as $job) {
-            //$pages[] = $job->getAlias();
-            $params = (Config::get('useAutoItem') ? '/' : '/items/').($job->getAlias() ?: $job->getId());
-            $pages[] = $params; //ampersand($objPage->getFrontendUrl($params));
+        // Alle Listingmodule
+        // Module >  plenta_jobs_basic_offer_list
+        $modules = ModuleModel::findByType('plenta_jobs_basic_offer_list');
+        if ($modules) {
+            foreach ($modules as $module) {
+                $locations = StringUtil::deserialize($module->plentaJobsBasicLocations);
+                $jobs = $jobOfferRepo->findAllPublishedByTypesAndLocation([], $locations);
+                foreach ($jobs as $job) {
+                    if (!\in_array($job->getId(), $processed, true)) {
+                        $pages[] = $this->generateJobOfferUrl($job, $module);
+                        $processed[] = $job->getId();
+                    }
+                }
+            }
         }
 
         return $pages;
@@ -81,7 +81,7 @@ class GetSearchablePagesListener
         } else {
             $params = (Config::get('useAutoItem') ? '/' : '/items/').($jobOffer->getAlias() ?: $jobOffer->getId());
 
-            $url = ampersand($objPage->getFrontendUrl($params));
+            $url = ampersand($objPage->getAbsoluteUrl($params));
         }
 
         return $url;
