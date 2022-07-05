@@ -13,13 +13,12 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
 use Contao\Config;
-use Contao\CoreBundle\ServiceAnnotation\Hook;
-use Contao\Database;
-use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
+use Contao\ModuleModel;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 
 /**
@@ -45,8 +44,6 @@ class GetSearchablePagesListener
 
         $jobOfferRepo = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
 
-        // Alle Listingmodule
-        // Module >  plenta_jobs_basic_offer_list
         $modules = ModuleModel::findByType('plenta_jobs_basic_offer_list');
         if ($modules) {
             foreach ($modules as $module) {
