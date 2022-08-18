@@ -14,7 +14,6 @@ namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
 use Contao\Config;
 use Contao\PageModel;
-use Contao\StringUtil;
 use Contao\ModuleModel;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +29,10 @@ class GetSearchablePagesListener
      * @var EntityManagerInterface
      */
     protected $registry;
+
+    /**
+     * @var Connection
+     */
     private Connection $connection;
 
     public function __construct(Connection $connection, EntityManagerInterface $registry)
@@ -47,8 +50,7 @@ class GetSearchablePagesListener
         $modules = ModuleModel::findByType('plenta_jobs_basic_offer_list');
         if ($modules) {
             foreach ($modules as $module) {
-                $locations = StringUtil::deserialize($module->plentaJobsBasicLocations);
-                $jobs = $jobOfferRepo->findAllPublishedByTypesAndLocation([], $locations);
+                $jobs = $jobOfferRepo->findAllPublished();
                 foreach ($jobs as $job) {
                     if (!\in_array($job->getId(), $processed, true)) {
                         if ($page = $this->generateJobOfferUrl($job, $module)) {
