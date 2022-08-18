@@ -41,7 +41,7 @@ class GetSearchablePagesListener
         $this->registry = $registry;
     }
 
-    public function __invoke(array $pages, int $rootId = null, bool $isSitemap = false, string $language = null): array
+    public function __invoke(array $pages, $rootId = null, bool $isSitemap = false, string $language = null): array
     {
         $processed = [];
 
