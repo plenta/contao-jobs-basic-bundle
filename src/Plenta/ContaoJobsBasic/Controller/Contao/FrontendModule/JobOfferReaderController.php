@@ -91,7 +91,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $jobOffer = $jobOfferRepository->findPublishedByIdOrAlias($alias);
 
         if (null === $jobOffer) {
-            throw new PageNotFoundException('Page not found: ' . Environment::get('uri'));
+            throw new PageNotFoundException('Page not found: '.Environment::get('uri'));
         }
 
         $parentId = $jobOffer->getId();
@@ -144,6 +144,10 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $GLOBALS['TL_BODY'][] = $StructuredData;
         }
 
+        if ($jobOffer->getCssClass()) {
+            $template->class .= ('' != $template->class ? ' ' : '').$jobOffer->getCssClass();
+        }
+
         return $template->getResponse();
     }
 
@@ -181,7 +185,6 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                 ]);
             }
 
-
             return $template->parse();
         }
 
@@ -193,6 +196,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template = new FrontendTemplate('plenta_jobs_basic_reader_description');
         $template->text = $jobOffer->getDescription();
         $template->class = 'ce_text job_description';
+
         return $template->parse();
     }
 
@@ -203,6 +207,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['employmentType'][0];
         $template->value = $metaFields['employmentTypeFormatted'];
         $template->class = 'job_employment_type';
+
         return $template->parse();
     }
 
@@ -213,8 +218,10 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['validThrough'][0];
             $template->value = Date::parse(Date::getNumericDatimFormat(), $jobOffer->getValidThrough());
             $template->class = 'job_valid_through';
+
             return $template->parse();
         }
+
         return '';
     }
 
