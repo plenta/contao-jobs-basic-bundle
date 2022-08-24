@@ -98,7 +98,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
         // Fill the template with data from the parent record
         $template->jobOffer = $jobOffer;
-        $template->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
+        $template->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
         $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
 
         $content = '';
@@ -173,7 +173,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         if ($jobOffer->isAddImage()) {
             $template = new FrontendTemplate('plenta_jobs_basic_reader_image');
             $template->class = 'ce_image';
-            $image = FilesModel::findByUuid(StringUtil::binToUuid(stream_get_contents($jobOffer->getSingleSRC())));
+            $image = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->getSingleSRC()));
             if ($image) {
                 Controller::addImageToTemplate($template, [
                     'singleSRC' => $image->path,

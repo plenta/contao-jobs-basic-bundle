@@ -16,6 +16,7 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\Input;
+use Contao\ModuleModel;
 use Contao\StringUtil;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
@@ -45,13 +46,13 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
         $this->metaFieldsHelper = $metaFieldsHelper;
     }
 
-    public function getMetaFields(): array
+    public function getMetaFields(ContentModel $model): array
     {
         if (null !== $this->metaFields) {
             return $this->metaFields;
         }
 
-        $this->metaFields = $this->metaFieldsHelper->getMetaFields($this->getJobOffer());
+        $this->metaFields = $this->metaFieldsHelper->getMetaFields($this->getJobOffer(), $model->size);
 
         return $this->metaFields;
     }
@@ -94,7 +95,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
             if (null === $this->getJobOffer()) {
                 return new Response('');
             }
-            $metaFields = $this->getMetaFields();
+            $metaFields = $this->getMetaFields($model);
             if (!empty($model->plenta_jobs_basic_job_offer_details)) {
                 $detailsSelected = StringUtil::deserialize($model->plenta_jobs_basic_job_offer_details);
 
@@ -109,7 +110,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
                 }
             }
 
-            $template->jobOfferMeta = $this->getMetaFields();
+            $template->jobOfferMeta = $this->getMetaFields($model);
             $template->jobOffer = $this->getJobOffer();
         }
 

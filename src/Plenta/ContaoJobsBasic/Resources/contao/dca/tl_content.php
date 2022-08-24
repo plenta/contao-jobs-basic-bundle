@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
-$GLOBALS['TL_DCA']['tl_content']['palettes']['plenta_jobs_basic_job_offer_details'] = '{type_legend},type,plenta_jobs_basic_job_offer_details;{expert_legend},guests,cssID;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['plenta_jobs_basic_job_offer_details'] = '{type_legend},type,plenta_jobs_basic_job_offer_details;{image_legend},size;{expert_legend},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['plenta_jobs_basic_job_offer_details'] = [
     'exclude' => true,
@@ -21,6 +21,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['plenta_jobs_basic_job_offer_details'
         'publicationDateFormatted' => 'Veröffentlichungsdatum',
         'title' => 'Titel',
         'addressLocalityFormatted' => 'Arbeitsort',
+        'image' => 'Bild',
     ],
     'eval' => ['multiple' => true, 'tl_class' => 'clr'],
     'sql' => 'blob NULL',

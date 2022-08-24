@@ -83,7 +83,7 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected bool $addImage;
 
     /**
-     * @ORM\Column (type="binary", nullable=true)
+     * @ORM\Column (type="binary_string", nullable=true)
      */
     protected $singleSRC;
 

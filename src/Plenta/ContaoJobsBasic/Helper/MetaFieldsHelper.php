@@ -13,7 +13,10 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\Helper;
 
 use Contao\Controller;
+use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\Date;
+use Contao\FilesModel;
+use Contao\FrontendTemplate;
 use Contao\StringUtil;
 use Contao\System;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,7 +37,7 @@ class MetaFieldsHelper
         $this->registry = $registry;
     }
 
-    public function getMetaFields(TlPlentaJobsBasicOffer $jobOffer): array
+    public function getMetaFields(TlPlentaJobsBasicOffer $jobOffer, $imageSize = null): array
     {
         $metaFields = [];
 
@@ -44,6 +47,25 @@ class MetaFieldsHelper
         $metaFields['addressLocalityFormatted'] = $this->formatAddressLocality($jobOffer);
         $metaFields['title'] = Controller::replaceInsertTags($jobOffer->getTitle());
         $metaFields['description'] = Controller::replaceInsertTags($jobOffer->getDescription());
+        if ($imageSize && $jobOffer->isAddImage()) {
+            $file = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->getSingleSRC()));
+            if ($file) {
+                $tpl = new FrontendTemplate('ce_image');
+                if (version_compare(VERSION, '4.11', '>=')) {
+                    /** @var Studio $studio */
+                    $studio = System::getContainer()->get('contao.image.studio');
+                    $figure = $studio->createFigureBuilder()->fromUuid($jobOffer->getSingleSRC())->setSize($imageSize)->build();
+                    $figure->applyLegacyTemplateData($tpl);
+                } else {
+                    Controller::addImageToTemplate($tpl, ['singleSRC' => $file->path, 'size' => $imageSize]);
+                }
+                $metaFields['image'] = $tpl->parse();
+            }
+        }
+
+        if (!isset($metaFields['image'])) {
+            $metaFields['image'] = '';
+        }
 
         return $metaFields;
     }
