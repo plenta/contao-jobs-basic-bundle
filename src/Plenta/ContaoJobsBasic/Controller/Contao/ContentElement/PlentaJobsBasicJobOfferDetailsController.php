@@ -21,6 +21,7 @@ use Contao\StringUtil;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOfferTranslation;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,13 +58,14 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
         return $this->metaFields;
     }
 
-    public function getJobOffer(): ?TlPlentaJobsBasicOffer
+    public function getJobOffer($language = null): ?TlPlentaJobsBasicOffer
     {
         if (null !== $this->jobOffer) {
             return $this->jobOffer;
         }
 
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
+        $jobOfferTransRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferTranslation::class);
 
         $alias = Input::get('auto_item');
 
@@ -75,6 +77,13 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
             $this->jobOffer = $jobOfferRepository->findOneBy(['alias' => $alias]);
         } else {
             $this->jobOffer = $jobOfferRepository->find($alias);
+        }
+
+        if (!$this->jobOffer && $language) {
+            $translation = $jobOfferTransRepository->findByAliasAndLanguage($alias, $language);
+            if ($translation) {
+                $this->jobOffer = $translation->getOffer();
+            }
         }
 
         return $this->jobOffer;
@@ -92,7 +101,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
     protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {
         if ('FE' === TL_MODE) {
-            if (null === $this->getJobOffer()) {
+            if (null === $this->getJobOffer($request->getLocale())) {
                 return new Response('');
             }
             $metaFields = $this->getMetaFields($model);

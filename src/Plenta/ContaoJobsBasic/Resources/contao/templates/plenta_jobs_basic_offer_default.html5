@@ -1,7 +1,7 @@
 <div class="layout_default block<?php if ($this->jobOffer->getCssClass()): ?> <?= $this->jobOffer->getCssClass() ?><?php endif; ?>">
     <div class="first-column">
         <<?= $this->headlineUnit; ?> class="title">
-            <a href="<?= $this->link; ?>"><?= $this->jobOffer->getTitle(); ?></a>
+            <a href="<?= $this->link; ?>"><?= $this->jobOfferMeta['title']; ?></a>
         </<?= $this->headlineUnit; ?>>
         <div class="job-location">
             <?= $this->jobOfferMeta['addressLocalityFormatted']; ?>

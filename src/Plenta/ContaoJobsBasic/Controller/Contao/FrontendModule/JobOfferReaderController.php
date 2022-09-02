@@ -30,6 +30,7 @@ use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOfferTranslation;
 use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Plenta\ContaoJobsBasic\Helper\NumberHelper;
@@ -85,10 +86,18 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         }
 
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
+        $jobOfferTranslationRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferTranslation::class);
 
         $alias = Input::get('auto_item');
 
         $jobOffer = $jobOfferRepository->findPublishedByIdOrAlias($alias);
+
+        if (null === $jobOffer) {
+            $translation = $jobOfferTranslationRepository->findByAliasAndLanguage($alias, $request->getLocale());
+            if ($translation) {
+                $jobOffer = $translation->getOffer();
+            }
+        }
 
         if (null === $jobOffer) {
             throw new PageNotFoundException('Page not found: '.Environment::get('uri'));
@@ -98,13 +107,13 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
         // Fill the template with data from the parent record
         $template->jobOffer = $jobOffer;
-        $template->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
-        $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($jobOffer->getTitle()));
+        $template->jobOfferMeta = $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
+        $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($metaFields['title']));
 
         $content = '';
 
         if (\in_array('title', $parts, true)) {
-            $template->headline = StringUtil::stripInsertTags($jobOffer->getTitle());
+            $template->headline = StringUtil::stripInsertTags($metaFields['title']);
             $template->hl = $model->plentaJobsBasicHeadlineTag;
         }
 
@@ -194,7 +203,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     private function getDescription($jobOffer): ?string
     {
         $template = new FrontendTemplate('plenta_jobs_basic_reader_description');
-        $template->text = $jobOffer->getDescription();
+        $template->text = $this->metaFieldsHelper->getMetaFields($jobOffer)['description'];
         $template->class = 'ce_text job_description';
 
         return $template->parse();

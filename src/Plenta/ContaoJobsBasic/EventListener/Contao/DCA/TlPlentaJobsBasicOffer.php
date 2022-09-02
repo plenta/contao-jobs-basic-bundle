@@ -12,16 +12,19 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
+use Composer\InstalledVersions;
 use Contao\CoreBundle\Slug\Slug;
 use Contao\CoreBundle\Util\PackageUtil;
 use Contao\DataContainer;
 use Contao\Input;
+use Contao\Message;
 use Contao\StringUtil;
+use Contao\System;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
-use Contao\Message;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer as TlPlentaJobsBasicOfferEntity;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOfferTranslation;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\NumberHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -61,12 +64,20 @@ class TlPlentaJobsBasicOffer
     public function aliasSaveCallback($varValue, DataContainer $dc): string
     {
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferEntity::class);
-
-        $aliasExists = fn (string $alias): bool => $jobOfferRepository->doesAliasExist($alias, (int) $dc->activeRecord->id);
+        $jobOfferTranslationRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferTranslation::class);
+        if ($dc->inputName === 'alias') {
+            $title = $dc->activeRecord->title;
+            $aliasExists = fn (string $alias): bool => $jobOfferRepository->doesAliasExist($alias, (int) $dc->activeRecord->id);
+        } else {
+            $index = str_replace('translations__alias__', '', $dc->inputName);
+            $title = Input::post('translations__title__'.$index);
+            $lang = Input::post('translations__language__'.$index);
+            $aliasExists = fn (string $alias): bool => $jobOfferRepository->doesAliasExist($alias) || $jobOfferTranslationRepository->doesAliasExist($alias, (int) $dc->activeRecord->id, $lang);
+        }
 
         if (empty($varValue)) {
             $varValue = $this->slugGenerator->generate(
-                $dc->activeRecord->title,
+                $title,
                 [],
                 $aliasExists
             );
@@ -156,6 +167,7 @@ class TlPlentaJobsBasicOffer
     public function salaryOnSave($value, DataContainer $dc): int
     {
         $numberHelper = new NumberHelper($dc->activeRecord->salaryCurrency, $this->requestStack->getCurrentRequest()->getLocale());
+
         return $numberHelper->reformatDecimalForDb($value);
     }
 
@@ -164,9 +176,17 @@ class TlPlentaJobsBasicOffer
         $GLOBALS['TL_CSS'][] = 'bundles/plentacontaojobsbasic/dashboard.css';
         $info = $this->twig->render('@PlentaContaoJobsBasic/be_plenta_info.html.twig', [
             'version' => PackageUtil::getVersion('plenta/contao-jobs-basic-bundle'),
-
         ]);
 
         Message::addRaw($info);
+    }
+
+    public function getLanguages(): array
+    {
+        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
+            return System::getContainer()->get('contao.intl.locales')->getLanguages();
+        }
+
+        return System::getLanguages();
     }
 }

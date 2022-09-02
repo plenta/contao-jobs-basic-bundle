@@ -3,37 +3,37 @@
     <file>
         <body>
             <trans-unit id="MSC.PLENTA_JOBS.FULL_TIME">
-                <source>Full time</source>
+                <target>Full time</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.PART_TIME">
-                <source>Part time</source>
+                <target>Part time</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.CONTRACTOR">
-                <source>Contractor</source>
+                <target>Contractor</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.TEMPORARY">
-                <source>Temporary</source>
+                <target>Temporary</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.INTERN">
-                <source>Intern</source>
+                <target>Intern</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.VOLUNTEER">
-                <source>Volunteer</source>
+                <target>Volunteer</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.PER_DIEM">
-                <source>Per diem</source>
+                <target>Per diem</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.OTHER">
-                <source>Other</source>
+                <target>Other</target>
             </trans-unit>
             <trans-unit id="CTE.plentaJobsBasic">
-                <source>Jobs (Basic)</source>
+                <target>Jobs (Basic)</target>
             </trans-unit>
             <trans-unit id="CTE.plenta_jobs_basic_job_offer_details.0">
-                <source>Job offer details</source>
+                <target>Job offer details</target>
             </trans-unit>
             <trans-unit id="CTE.plenta_jobs_basic_job_offer_details.1">
-                <source>Job offer details</source>
+                <target>Job offer details</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.emptyList">
                 <target>There are no jobs available at the moment.</target>
@@ -46,6 +46,9 @@
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.sponsor">
                 <target>Become a sponsor</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.remote">
+                <target>Remote</target>
             </trans-unit>
         </body>
     </file>

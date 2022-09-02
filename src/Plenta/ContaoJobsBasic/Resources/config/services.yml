@@ -35,3 +35,6 @@ services:
         public: true
         tags:
             - { name: contao.migration, priority: 0 }
+
+    Plenta\ContaoJobsBasic\EventListener\Contao\Hooks\ChangelanguageNavigationListener:
+        public: true

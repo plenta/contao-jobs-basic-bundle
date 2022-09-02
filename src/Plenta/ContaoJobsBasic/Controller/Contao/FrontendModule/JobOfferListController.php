@@ -144,7 +144,7 @@ class JobOfferListController extends AbstractFrontendModuleController
         if (!$objPage instanceof PageModel) {
             $url = ampersand(Environment::get('request'));
         } else {
-            $params = (Config::get('useAutoItem') ? '/' : '/items/').($jobOffer->getAlias() ?: $jobOffer->getId());
+            $params = (Config::get('useAutoItem') ? '/' : '/items/').($this->metaFieldsHelper->getMetaFields($jobOffer)['alias'] ?: $jobOffer->getId());
 
             $url = ampersand($objPage->getFrontendUrl($params));
         }

@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
+use Composer\InstalledVersions;
+
 array_insert($GLOBALS['BE_MOD'], 1, [
     'plenta_jobs_basic' => [
         'plenta_jobs_basic_offers' => [
@@ -31,3 +33,7 @@ if (defined('TL_MODE') && TL_MODE == 'BE') {
 }
 
 $GLOBALS['TL_MODELS'][Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel::getTable()] = Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel::class;
+
+if (InstalledVersions::isInstalled('terminal42/contao-changelanguage')) {
+    $GLOBALS['TL_HOOKS']['changelanguageNavigation'][] = [\Plenta\ContaoJobsBasic\EventListener\Contao\Hooks\ChangelanguageNavigationListener::class, 'onChangelanguageNavigation'];
+}

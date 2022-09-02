@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     'palettes' => [
         '__selector__' => ['addImage', 'isRemote', 'hasLocationRequirements', 'addSalary'],
-        'default' => '{title_legend},title,alias,description;{settings_legend},employmentType,validThrough;{location_legend},jobLocation,isRemote;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        'default' => '{title_legend},title,alias,description,translations;{settings_legend},employmentType,validThrough;{location_legend},jobLocation,isRemote;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC',
@@ -107,7 +107,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'eval' => [
                 'mandatory' => true,
                 'maxlength' => 255,
-                'tl_class' => 'w50'
+                'tl_class' => 'w50',
             ],
         ],
         'alias' => [
@@ -326,6 +326,22 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'tl_class' => 'w50',
             ],
             'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryUnits'],
+        ],
+
+        'translations' => [
+            'inputType' => 'group',
+            'storage' => 'entity',
+            'palette' => ['language', 'title', 'alias', 'description'],
+            'fields' => [
+                'language' => [
+                    'inputType' => 'select',
+                    'options_callback' => [TlPlentaJobsBasicOffer::class, 'getLanguages'],
+                    'eval' => [
+                        'chosen' => true,
+                        'mandatory' => true,
+                    ],
+                ],
+            ],
         ],
     ],
 ];

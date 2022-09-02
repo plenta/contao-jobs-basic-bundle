@@ -42,14 +42,18 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function doesAliasExist(string $alias, int $id): bool
+    public function doesAliasExist(string $alias, int $id = null): bool
     {
-        $jobOffer = $this->createQueryBuilder('a')
+        $qb = $this->createQueryBuilder('a')
             ->select('COUNT(a.id)')
-            ->where('a.alias=:alias')
-            ->andWhere('a.id!=:id')
-            ->setParameter('alias', $alias)
-            ->setParameter('id', $id)
+            ->where('a.alias=:alias');
+
+        if ($id) {
+            $qb->andWhere('a.id!=:id')
+                ->setParameter('id', $id);
+        }
+
+        $jobOffer = $qb->setParameter('alias', $alias)
             ->getQuery()
             ->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR);
 

@@ -143,6 +143,11 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected ?string $metaDescription;
 
     /**
+     * @ORM\OneToMany(targetEntity=TlPlentaJobsBasicOfferTranslation::class, mappedBy="offer", orphanRemoval=true)
+     */
+    private $translations;
+
+    /**
      * @return string|null
      */
     public function getDescription(): ?string
@@ -604,5 +609,46 @@ class TlPlentaJobsBasicOffer extends DCADefault
         $this->metaDescription = $metaDescription;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    public function addTranslation(TlPlentaJobsBasicOfferTranslation $translation): self
+    {
+        if (!$this->translations->contains($translation)) {
+            $this->translations[] = $translation;
+            $translation->setOffer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTranslation(TlPlentaJobsBasicOfferTranslation $translation): self
+    {
+        if ($this->translations->removeElement($translation)) {
+            // set the owning side to null (unless already changed)
+            if ($translation->getOffer() === $this) {
+                $translation->setOffer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTranslation($locale): ?TlPlentaJobsBasicOfferTranslation
+    {
+        foreach ($this->translations as $translation) {
+            if ($translation->getLanguage() === $locale) {
+                return $translation;
+            }
+        }
+
+        return null;
     }
 }
