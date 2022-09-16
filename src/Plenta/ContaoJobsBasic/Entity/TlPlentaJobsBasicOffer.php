@@ -148,6 +148,11 @@ class TlPlentaJobsBasicOffer extends DCADefault
     private $translations;
 
     /**
+     * @ORM\Column(type="string", length=1, nullable=false, options={"fixed"=true, "default"="1"})
+     */
+    protected bool $directApply;
+
+    /**
      * @return string|null
      */
     public function getDescription(): ?string
@@ -650,5 +655,25 @@ class TlPlentaJobsBasicOffer extends DCADefault
         }
 
         return null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDirectApply(): bool
+    {
+        return $this->directApply;
+    }
+
+    /**
+     * @param bool $directApply
+     *
+     * @return TlPlentaJobsBasicOffer
+     */
+    public function setDirectApply(bool $directApply): self
+    {
+        $this->directApply = $directApply;
+
+        return $this;
     }
 }

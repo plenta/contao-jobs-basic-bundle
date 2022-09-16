@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     'palettes' => [
         '__selector__' => ['addImage', 'isRemote', 'hasLocationRequirements', 'addSalary'],
-        'default' => '{title_legend},title,alias,description,translations;{settings_legend},employmentType,validThrough;{location_legend},jobLocation,isRemote;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        'default' => '{title_legend},title,alias,description,translations;{settings_legend},employmentType,validThrough,directApply;{location_legend},jobLocation,isRemote;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC',
@@ -170,13 +170,17 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'chosen' => true,
             ],
         ],
-
         'validThrough' => [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
         ],
-
+        'directApply' => [
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['tl_class' => 'w50 m12', 'isBoolean' => true],
+            'sql' => ['type' => 'boolean', 'default' => true],
+        ],
         'url' => [
             'label' => &$GLOBALS['TL_LANG']['MSC']['url'],
             'exclude' => true,
@@ -192,7 +196,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             ],
             'sql' => "varchar(255) NOT NULL default ''",
         ],
-
         'cssClass' => [
             'exclude' => true,
             'inputType' => 'text',

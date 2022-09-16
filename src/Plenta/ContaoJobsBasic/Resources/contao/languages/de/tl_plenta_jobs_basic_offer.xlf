@@ -222,6 +222,12 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.language.1">
                 <target>Bitte wählen Sie eine Sprache aus der Liste aus.</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.directApply.0">
+                <target>Direkte Bewerbung </target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.directApply.1">
+                <target>Gibt an, ob die direkte Bewerbung für die Stellenanzeige möglich ist. Laut Google muss ein kurzer und unkomplizierter Bewerbungsvorgang ohne unnötige Zwischenschritte angeboten sein.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
