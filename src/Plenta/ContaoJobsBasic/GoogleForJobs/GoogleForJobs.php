@@ -80,7 +80,7 @@ class GoogleForJobs
             }
         }
 
-        $arrStructuredData['employmentType'] = $jobOffer->getDirectApply();
+        $arrStructuredData['directApply'] = $jobOffer->getDirectApply();
 
         $arrStructuredData = $this->generateJobLocation($jobOffer, $arrStructuredData);
         $arrStructuredData = $this->generateHiringOrganization($jobOffer, $arrStructuredData);
