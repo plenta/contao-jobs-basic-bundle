@@ -48,9 +48,9 @@ class MetaFieldsHelper
         $metaFields = [];
 
         if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
-            $mainRequest = $this->requestStack->getMasterRequest();
-        } else {
             $mainRequest = $this->requestStack->getMainRequest();
+        } else {
+            $mainRequest = $this->requestStack->getMasterRequest();
         }
 
         $translation = $jobOffer->getTranslation($mainRequest->getLocale());
