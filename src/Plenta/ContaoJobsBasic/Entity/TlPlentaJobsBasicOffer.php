@@ -148,7 +148,7 @@ class TlPlentaJobsBasicOffer extends DCADefault
     private $translations;
 
     /**
-     * @ORM\Column(type="string", length=1, nullable=false, options={"fixed"=true, "default"="1"})
+     * @ORM\Column(type="string", length=1, nullable=false, options={"fixed"=true, "default"=""})
      */
     protected bool $directApply;
 
