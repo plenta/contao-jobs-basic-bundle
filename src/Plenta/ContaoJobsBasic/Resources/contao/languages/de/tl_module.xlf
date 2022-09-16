@@ -45,10 +45,10 @@
                 <target>Alle Stellenarten werden im Filter anzeigen.</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowQuantity.0">
-                <target>Anzahl der Stellenangebote pro Stellenarten</target>
+                <target>Anzahl der Stellenanzeigen pro Stellenarten</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowQuantity.1">
-                <target>Die Anzahl der Stellenangebote pro Stellenart werden angezeigt.</target>
+                <target>Die Anzahl der Stellenanzeigen pro Stellenart werden angezeigt.</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowLocations.0">
                 <target>Standorte-Filter hinzufügen</target>
@@ -66,13 +66,13 @@
                 <target>Alle Standorte anzeigen</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowAllLocations.1">
-                <target>Alle ausgewählten Standorte werden im Filter anzeigen, auch wenn dort keine Stellenangebote verfügbar sind.</target>
+                <target>Alle ausgewählten Standorte werden im Filter anzeigen, auch wenn dort keine Stellenanzeigen verfügbar sind.</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowLocationQuantity.0">
-                <target>Anzahl der Stellenangebote pro Standort</target>
+                <target>Anzahl der Stellenanzeigen pro Standort</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowLocationQuantity.1">
-                <target>Die Anzahl der Stellenangebote pro Standort werden angezeigt.</target>
+                <target>Die Anzahl der Stellenanzeigen pro Standort werden angezeigt.</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowSorting.0">
                 <target>Sortierung anzeigen</target>
