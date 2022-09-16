@@ -3,7 +3,7 @@ plenta_jobs_basic.offer_filter:
     defaults:
         _scope: frontend
         _token_check: false
-        _controller: "PlentaContaoJobsBasicBundle:JobsOfferFilterRequest:filterOffers"
+        _controller: Plenta\ContaoJobsBasic\Controller\JobsOfferFilterRequestController::filterOffersAction
 
 Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\SettingsController:
     path: /contao/plentajobsbasic/settings
