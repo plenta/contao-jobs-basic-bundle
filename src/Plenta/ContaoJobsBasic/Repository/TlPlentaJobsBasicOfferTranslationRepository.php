@@ -25,7 +25,6 @@ class TlPlentaJobsBasicOfferTranslationRepository extends ServiceEntityRepositor
         parent::__construct($registry, TlPlentaJobsBasicOfferTranslation::class);
     }
 
-
     /**
      * @throws NonUniqueResultException
      */
