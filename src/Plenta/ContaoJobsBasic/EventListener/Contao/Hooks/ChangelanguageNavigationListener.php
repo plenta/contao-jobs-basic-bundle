@@ -35,7 +35,6 @@ class ChangelanguageNavigationListener
     {
         $targetRoot = $event->getNavigationItem()->getRootPage();
         $language = $targetRoot->language;
-
         $alias = Input::get('auto_item');
 
         if ($alias) {
@@ -46,30 +45,31 @@ class ChangelanguageNavigationListener
             }
 
             $offerRepo = $this->entityManager->getRepository(TlPlentaJobsBasicOffer::class);
-            $offerTransRepo = $this->entityManager->getRepository(TlPlentaJobsBasicOfferTranslation::class);
-
             $jobOffer = $offerRepo->findPublishedByIdOrAlias($alias);
 
             if (null === $jobOffer) {
+                $offerTransRepo = $this->entityManager->getRepository(TlPlentaJobsBasicOfferTranslation::class);
                 $jobOfferTrans = $offerTransRepo->findByAliasAndLanguage($alias, $mainRequest->getLocale());
                 if ($jobOfferTrans) {
                     $jobOffer = $jobOfferTrans->getOffer();
                 }
             }
 
-            if ($targetRoot->rootIsFallback) {
-                $newAlias = $jobOffer->getAlias();
-            } else {
-                $translation = $jobOffer->getTranslation($language);
-                if (!$translation) {
-                    $event->skipInNavigation();
+            if (null !== $jobOffer) {
+                if ($targetRoot->rootIsFallback) {
+                    $newAlias = $jobOffer->getAlias();
+                } else {
+                    $translation = $jobOffer->getTranslation($language);
+                    if (!$translation) {
+                        $event->skipInNavigation();
 
-                    return;
+                        return;
+                    }
+                    $newAlias = $translation->getAlias();
                 }
-                $newAlias = $translation->getAlias();
-            }
 
-            $event->getUrlParameterBag()->setUrlAttribute('items', $newAlias);
+                $event->getUrlParameterBag()->setUrlAttribute('items', $newAlias);
+            }
         }
     }
 }
