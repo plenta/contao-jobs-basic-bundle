@@ -30,4 +30,4 @@ composer require plenta/contao-jobs-basic-bundle
 
 ## Screenshot
 
-![Jobs-Backend-View](docs/jobs-basic-bundle-backend.png)
+![Jobs-Backend-View](docs/contao-jobs-basic-backend-offer.png)
