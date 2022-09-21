@@ -28,6 +28,12 @@ composer require plenta/contao-jobs-basic-bundle
 - mvo/contao-group-widget `^1.4`
 
 
-## Screenshot
+## Screenshots
+
+### Detail view
 
 ![Jobs-Backend-View](docs/contao-jobs-basic-backend-offer.png)
+
+### Listing
+
+![Jobs-Backend-View](docs/contao-jobs-basic-backend-listing.png)
