@@ -97,9 +97,10 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     public function addLocationCounter(ModuleModel $model, string $key): string
     {
-        if (true === (bool) $model->plentaJobsBasicShowLocationQuantity && array_key_exists($key, $this->counterLocation)) {
+        if (true === (bool) $model->plentaJobsBasicShowLocationQuantity && \array_key_exists($key, $this->counterLocation)) {
             return '<span class="item-counter">['.$this->counterLocation[$key].']</span>';
         }
+
         return '';
     }
 
@@ -136,11 +137,11 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         }
     }
 
-    public function collectLocations(?TlPlentaJobsBasicOffer $jobOffer, $model)
+    public function collectLocations(?TlPlentaJobsBasicOffer $jobOffer, $model): void
     {
         $locations = StringUtil::deserialize($jobOffer->getJobLocation());
         $addedLocations = [];
-        if (is_array($locations) && (!$jobOffer->isRemote() || !$jobOffer->isOnlyRemote())) {
+        if (\is_array($locations) && (!$jobOffer->isRemote() || !$jobOffer->isOnlyRemote())) {
             foreach ($locations as $locationId) {
                 /** @var TlPlentaJobsBasicJobLocation $location */
                 $location = $this->getAllLocations($model)[(int) $locationId] ?? null;
@@ -149,12 +150,12 @@ class JobOfferFilterController extends AbstractFrontendModuleController
                     continue;
                 }
 
-                if (in_array($location->getAddressLocality(), $addedLocations)) {
+                if (\in_array($location->getAddressLocality(), $addedLocations, true)) {
                     continue;
                 }
 
-                if (array_key_exists($location->getAddressLocality(), $this->counterLocation)) {
-                    $this->counterLocation[$location->getAddressLocality()] += 1;
+                if (\array_key_exists($location->getAddressLocality(), $this->counterLocation)) {
+                    ++$this->counterLocation[$location->getAddressLocality()];
                 } else {
                     $this->counterLocation[$location->getAddressLocality()] = 1;
                 }
@@ -164,8 +165,8 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         }
 
         if ($jobOffer->isRemote()) {
-            if (array_key_exists($GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'], $this->counterLocation)) {
-                $this->counterLocation[$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote']] += 1;
+            if (\array_key_exists($GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'], $this->counterLocation)) {
+                ++$this->counterLocation[$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote']];
             } else {
                 $this->counterLocation[$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote']] = 1;
             }
@@ -179,6 +180,9 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         $options = [];
 
         foreach ($this->getAllLocations($model) as $k) {
+            if (!$model->plentaJobsBasicShowAllLocations && !\array_key_exists('remote' === $k ? $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'] : $k->getAddressLocality(), $this->counterLocation)) {
+                continue;
+            }
             if ('remote' === $k) {
                 $options[$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote']] = $k;
             } elseif (\array_key_exists($k->getAddressLocality(), $options)) {
