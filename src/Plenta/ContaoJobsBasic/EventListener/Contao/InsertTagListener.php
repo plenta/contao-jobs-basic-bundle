@@ -17,6 +17,7 @@ use Contao\Config;
 use Doctrine\ORM\EntityManagerInterface;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOfferTranslation;
 
 /**
  * @Hook("replaceInsertTags")
@@ -60,16 +61,30 @@ class InsertTagListener
             ['alias' => $this->autoItem]
         );
 
-        if ('id' === $chunks[1]) {
-            return (string) $jobOfferData->getId();
+        $isTranslation = false;
+        if (null === $jobOfferData) {
+            $jobOfferTransRepo = $this->registry->getRepository(TlPlentaJobsBasicOfferTranslation::class);
+            $jobOfferData = $jobOfferTransRepo->findOneBy(
+                ['alias' => $this->autoItem]
+            );
+            $isTranslation = true;
         }
 
-        if ('title' === $chunks[1]) {
-            return (string) $jobOfferData->getTitle();
-        }
+        if (null !== $jobOfferData) {
+            if ('id' === $chunks[1]) {
+                if (true === $isTranslation) {
+                    return (string) $jobOfferData->getOffer()->getId();
+                }
+                return (string)$jobOfferData->getId();
+            }
 
-        if ('alias' === $chunks[1]) {
-            return (string) $jobOfferData->getAlias();
+            if ('title' === $chunks[1]) {
+                return (string)$jobOfferData->getTitle();
+            }
+
+            if ('alias' === $chunks[1]) {
+                return (string)$jobOfferData->getAlias();
+            }
         }
 
         return false;

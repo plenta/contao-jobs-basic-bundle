@@ -26,7 +26,7 @@
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
         "contao/conflicts": "@dev",
-        "contao/core-bundle": "^4.9.1",
+        "contao/core-bundle": "^4.9",
         "codefog/contao-haste": "^4.25",
         "doctrine/orm": "^2.6.4",
         "doctrine/data-fixtures": "^1.4.2",

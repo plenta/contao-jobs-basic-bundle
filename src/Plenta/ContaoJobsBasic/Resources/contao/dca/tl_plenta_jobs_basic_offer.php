@@ -32,10 +32,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 1,
+            'mode' => 2,
             'fields' => ['title'],
             'flag' => 1,
-            'panelLayout' => 'filter;search,sort,limit',
+            'panelLayout' => 'filter;sort,search,limit',
         ],
         'label' => [
             'fields' => ['title'],
@@ -100,10 +100,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'id' => [
         ],
         'tstamp' => [
+            'sorting' => true,
+            'flag' => 6,
         ],
         'title' => [
             'inputType' => 'text',
             'exclude' => true,
+            'sorting' => true,
             'eval' => [
                 'mandatory' => true,
                 'maxlength' => 255,
@@ -148,8 +151,8 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'employmentType' => [
             'inputType' => 'select',
             'exclude' => true,
-            'sorting' => true,
             'filter' => true,
+            'reference' => &$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS'],
             'options_callback' => [
                 TlPlentaJobsBasicOffer::class,
                 'employmentTypeOptionsCallback',

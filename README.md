@@ -1,9 +1,12 @@
 # Contao Jobs Basic Bundle
 
-The perfect solution for your job offer site.
+The perfect solution for your job offer site.  
+Ideal for job offers in multiple languages.
 
 Basic Job Manager for Contao (including Google Jobs)  
-Open source and free. 🚀
+Open source and free. 🚀  
+
+👉 [Full documentation](https://plenta.io/contao-erweiterungen/jobs-basic)
 
 ## Installation
 
@@ -20,10 +23,17 @@ composer require plenta/contao-jobs-basic-bundle
 
 ## System requirements
 
-- PHP: `7.4 || 8.0` (or higher)
-- Contao: `^4.9` (or later)
+- PHP: `^7.4 || ^8.0`
+- Contao: `^4.9` (and later)
+- mvo/contao-group-widget `^1.4`
 
 
-## Screenshot
+## Screenshots
 
-![Jobs-Backend-View](docs/jobs-basic-bundle-backend.png)
+### Detail view
+
+![Jobs-Backend-View](docs/contao-jobs-basic-backend-offer.png)
+
+### Listing
+
+![Jobs-Backend-View](docs/contao-jobs-basic-backend-listing.png)

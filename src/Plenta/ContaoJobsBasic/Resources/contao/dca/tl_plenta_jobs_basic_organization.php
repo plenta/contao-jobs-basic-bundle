@@ -72,7 +72,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
             'default' => '',
             'eval' => [
                 'maxlength' => 255,
-                'tl_class' => 'w50 clr',
+                'tl_class' => 'w50',
                 'mandatory' => true,
             ],
         ],
@@ -83,7 +83,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
             'default' => '',
             'eval' => [
                 'maxlength' => 255,
-                'tl_class' => 'w50 clr',
+                'tl_class' => 'w50',
                 'rgxp' => 'url',
             ],
         ],
