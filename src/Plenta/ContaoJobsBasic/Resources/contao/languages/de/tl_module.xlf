@@ -107,6 +107,9 @@
             <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title">
                 <target>Anzeigentitel</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.jobLocation">
+                <target>Standort</target>
+            </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.tstamp__ASC">
                 <target>Aktualisierungsdatum (aufsteigend)</target>
             </trans-unit>
@@ -124,6 +127,12 @@
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title__DESC">
                 <target>Z-A</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.jobLocation__ASC">
+                <target>Standort (aufsteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.jobLocation__DESC">
+                <target>Standort (absteigend)</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.title">
                 <target>Stellentitel</target>

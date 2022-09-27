@@ -55,6 +55,21 @@ class JobOfferListController extends AbstractFrontendModuleController
         $this->translator = $translator;
     }
 
+    public function generateJobOfferUrl(TlPlentaJobsBasicOffer $jobOffer, ModuleModel $model): string
+    {
+        $objPage = $model->getRelated('jumpTo');
+
+        if (!$objPage instanceof PageModel) {
+            $url = ampersand(Environment::get('request'));
+        } else {
+            $params = (Config::get('useAutoItem') ? '/' : '/items/').($this->metaFieldsHelper->getMetaFields($jobOffer)['alias'] ?: $jobOffer->getId());
+
+            $url = ampersand($objPage->getFrontendUrl($params));
+        }
+
+        return $url;
+    }
+
     /**
      * @param Template    $template
      * @param ModuleModel $model
@@ -80,6 +95,8 @@ class JobOfferListController extends AbstractFrontendModuleController
                 $locations = $moduleLocations;
             }
         }
+
+        $sortByLocation = null;
 
         if ($model->plentaJobsBasicShowSorting) {
             System::loadLanguageFile('tl_module');
@@ -108,12 +125,26 @@ class JobOfferListController extends AbstractFrontendModuleController
             $template->sortingForm = $form->generate();
             $template->showSorting = true;
             $template->formId = $formId;
+
+            if ('jobLocation' === $sortBy) {
+                $sortByLocation = $order;
+                $sortBy = null;
+                $order = null;
+            }
         } else {
             $sortBy = null;
             $order = null;
         }
 
         $jobOffers = $jobOfferRepository->findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order);
+
+        if (null !== $sortByLocation) {
+            $itemParts = [];
+            $locationArr = 'DESC' === $sortByLocation ? array_reverse($locations) : $locations;
+            foreach ($locationArr as $location) {
+                $itemParts[$location] = [];
+            }
+        }
 
         $items = [];
 
@@ -125,7 +156,24 @@ class JobOfferListController extends AbstractFrontendModuleController
 
             $itemTemplate->link = $this->generateJobOfferUrl($jobOffer, $model);
 
-            $items[] = $itemTemplate->parse();
+            if (null !== $sortByLocation) {
+                $jobLocations = StringUtil::deserialize($jobOffer->getJobLocation());
+
+                foreach ($locationArr as $location) {
+                    if (('remote' === $location && $jobOffer->isRemote()) || \in_array($location, $jobLocations, true)) {
+                        $itemParts[$location][] = $itemTemplate->parse();
+                        break;
+                    }
+                }
+            } else {
+                $items[] = $itemTemplate->parse();
+            }
+        }
+
+        if (null !== $sortByLocation) {
+            foreach ($itemParts as $part) {
+                $items = array_merge($items, $part);
+            }
         }
 
         $template->attributes = 'data-id="'.$model->id.'"';
@@ -135,20 +183,5 @@ class JobOfferListController extends AbstractFrontendModuleController
         $template->items = $items;
 
         return $template->getResponse();
-    }
-
-    public function generateJobOfferUrl(TlPlentaJobsBasicOffer $jobOffer, ModuleModel $model): string
-    {
-        $objPage = $model->getRelated('jumpTo');
-
-        if (!$objPage instanceof PageModel) {
-            $url = ampersand(Environment::get('request'));
-        } else {
-            $params = (Config::get('useAutoItem') ? '/' : '/items/').($this->metaFieldsHelper->getMetaFields($jobOffer)['alias'] ?: $jobOffer->getId());
-
-            $url = ampersand($objPage->getFrontendUrl($params));
-        }
-
-        return $url;
     }
 }

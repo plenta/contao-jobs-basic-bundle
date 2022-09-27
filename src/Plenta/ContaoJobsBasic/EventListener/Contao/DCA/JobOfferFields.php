@@ -16,6 +16,6 @@ class JobOfferFields
 {
     public static function getFields()
     {
-        return ['title', 'tstamp', 'datePosted'];
+        return ['title', 'tstamp', 'datePosted', 'jobLocation'];
     }
 }
