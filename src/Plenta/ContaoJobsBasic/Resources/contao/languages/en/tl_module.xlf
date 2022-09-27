@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file>
+        <body>
+            <trans-unit id="tl_module.plentaJobsBasicHeadlineTag.0">
+                <target>Überschriftentyp</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicHeadlineTag.1">
+                <target>Bitte wählen Sie ein Überschriftentyp aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSubmit.0">
+                <target>Bezeichnung der Absende-Schaltfläche</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSubmit.1">
+                <target>Bitte geben Sie die Bezeichnung der Absende-Schaltfläche ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicListModule.0">
+                <target>Listenmodul</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicListModule.1">
+                <target>Bitte wählen Sie das zugehörige Listenmodul.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowButton.0">
+                <target>Absende-Button hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowButton.1">
+                <target>Soll ein Absende-Button dem Filter hinzufügt werden?</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowTypes.0">
+                <target>Stellenarten-Filter hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowTypes.1">
+                <target>Sollen die Stellenarten filterbar werden?</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicTypesHeadline.0">
+                <target>Stellenarten-Überschrift</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicTypesHeadline.1">
+                <target>Hier können Sie den Stellenarten eine Überschrift hinzufügen.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowAllTypes.0">
+                <target>Alle Stellenarten anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowAllTypes.1">
+                <target>Alle Stellenarten werden im Filter anzeigen.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowQuantity.0">
+                <target>Anzahl der Stellenanzeigen pro Stellenarten</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowQuantity.1">
+                <target>Die Anzahl der Stellenanzeigen pro Stellenart werden angezeigt.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowLocations.0">
+                <target>Standorte-Filter hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowLocations.1">
+                <target>Sollen die Standorte filterbar werden?</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicLocationsHeadline.0">
+                <target>Standorte-Überschrift</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicLocationsHeadline.1">
+                <target>Hier können Sie den Standorten eine Überschrift hinzufügen.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowAllLocations.0">
+                <target>Alle Standorte anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowAllLocations.1">
+                <target>Alle ausgewählten Standorte werden im Filter anzeigen, auch wenn dort keine Stellenanzeigen verfügbar sind.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowLocationQuantity.0">
+                <target>Anzahl der Stellenanzeigen pro Standort</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowLocationQuantity.1">
+                <target>Die Anzahl der Stellenanzeigen pro Standort werden angezeigt.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowSorting.0">
+                <target>Sortierung anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowSorting.1">
+                <target>Im Frontend wird eine Sortier-Funktion angezeigt.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.0">
+                <target>Sortierungs-Felder</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.1">
+                <target>Bitte wählen Sie die Felder aus, die dem Nutzer zur Sortierung angezeigt werden sollen.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingDefaultField.0">
+                <target>Standard-Feld</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingDefaultField.1">
+                <target>Bitte wählen Sie das Feld aus, nach dem standardmäßig sortiert werden soll.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingDefaultDirection.0">
+                <target>Standard-Richtung</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingDefaultDirection.1">
+                <target>Bitte wählen Sie die Richtung aus, nach der standardmäßig sortiert werden soll.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.tstamp">
+                <target>Aktualisierungsdatum</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.datePosted">
+                <target>Veröffentlichungsdatum</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title">
+                <target>Anzeigentitel</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.jobLocation">
+                <target>Standort</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.tstamp__ASC">
+                <target>Aktualisierungsdatum (aufsteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.datePosted__ASC">
+                <target>Veröffentlichungsdatum (aufsteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title__ASC">
+                <target>A-Z</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.tstamp__DESC">
+                <target>Aktualisierungsdatum (absteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.datePosted__DESC">
+                <target>Veröffentlichungsdatum (absteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title__DESC">
+                <target>Z-A</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.jobLocation__ASC">
+                <target>Standort (aufsteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.jobLocation__DESC">
+                <target>Standort (absteigend)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.title">
+                <target>Stellentitel</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.image">
+                <target>Stellenbild</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.description">
+                <target>Stellenbeschreibung</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.employmentType">
+                <target>Stellenart</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.validThrough">
+                <target>Bewerbungsfrist</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.jobLocation">
+                <target>Arbeitsort</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.backlink">
+                <target>Zurück-Link</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.elements">
+                <target>Inhaltselemente</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.salary">
+                <target>Gehalt</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicTemplateParts.0">
+                <target>Template-Teile</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicTemplateParts.1">
+                <target>Bitte wählen Sie die Template-Teile aus, die von diesem Modul angezeigt werden sollen.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicLocations.0">
+                <target>Standorte</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicLocations.1">
+                <target>Bitte wählen Sie die Standorte aus, die angezeigt werden sollen. Wenn kein Standort ausgewählt ist, werden alle angezeigt.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowLogo.0">
+                <target>Unternehmens-Logo anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowLogo.1">
+                <target>Bitte wählen Sie diese Option nur aus, wenn das Unternehmens-Logo im Arbeitsort-Teil der Jobdetailansicht angezeigt werden soll.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
