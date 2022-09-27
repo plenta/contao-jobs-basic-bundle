@@ -101,7 +101,7 @@ class TlPlentaJobsBasicOffer
             $return[$jobLocation->getId()] = $jobLocation->getOrganization()->getName().': '.$jobLocation->getStreetAddress();
 
             if ('' !== $jobLocation->getAddressLocality()) {
-                $return[$jobLocation->getId()] .= ', '.$jobLocation->getAddressLocality();
+                $return[$jobLocation->getId()] .= ($jobLocation->getStreetAddress() ? ', ' : '').$jobLocation->getAddressLocality();
             }
         }
 
@@ -188,5 +188,31 @@ class TlPlentaJobsBasicOffer
         }
 
         return System::getLanguages();
+    }
+
+    public function labelCallback(array $row, string $label, DataContainer $dc, array $labels): string
+    {
+        $jobLocations = [];
+        $locations = $this->jobLocationOptionsCallback();
+        if ($row['isRemote']) {
+            $jobLocations[] = $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
+        }
+        $locationsArr = StringUtil::deserialize($row['jobLocation']);
+        foreach ($locationsArr as $location) {
+            $jobLocations[] = $locations[$location];
+        }
+
+        $jobEmploymentTypes = [];
+        $employmentTypes = $this->employmentTypeOptionsCallback();
+        $typesArr = StringUtil::deserialize($this->employmentTypeLoadCallback($row['employmentType'], $dc));
+        foreach ($typesArr as $type) {
+            $jobEmploymentTypes[] = $employmentTypes[$type];
+        }
+
+        $label = '<h2>'.$row['title'].'</h2>';
+        $label .= implode(' | ', $jobLocations);
+        $label .= ' | '.implode(', ', $jobEmploymentTypes);
+
+        return $label;
     }
 }
