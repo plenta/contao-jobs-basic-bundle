@@ -179,6 +179,12 @@
             <trans-unit id="tl_module.plentaJobsBasicShowLogo.1">
                 <target>Bitte wählen Sie diese Option nur aus, wenn das Unternehmens-Logo im Arbeitsort-Teil der Jobdetailansicht angezeigt werden soll.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicNoFilter.0">
+                <target>Filter nicht auf diese Liste anwenden</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicNoFilter.1">
+                <target>Filter auf der gleichen Seite werden nicht auf diese Liste angewendet.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
