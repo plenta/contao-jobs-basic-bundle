@@ -8,9 +8,6 @@
         <strong><?= $this->organizations[$key]->getName() ?></strong>
     </div>
 
-<?php if ($this->isRemote): ?>
-        <p class="job_remote"><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['remoteIsPossible'] ?></p>
-<?php endif; ?>
 <?php if (!$this->isRemote || !$this->isOnlyRemote): ?>
     <?php foreach ($locations as $location): ?>
         <div class="job_location">
@@ -22,4 +19,8 @@
         <?php endforeach; ?>
         <?php endif; ?>
     <?php endforeach; ?>
+<?php endif; ?>
+
+<?php if ($this->isRemote): ?>
+    <p class="job_remote"><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['remoteIsPossible'] ?></p>
 <?php endif; ?>
