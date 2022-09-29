@@ -38,12 +38,8 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'panelLayout' => 'filter;sort,search,limit',
         ],
         'label' => [
-            'fields' => ['title', 'jobLocation', 'employmentType'],
+            'fields' => ['title'],
             'showColumns' => false,
-            'label_callback' => [
-                TlPlentaJobsBasicOffer::class,
-                'labelCallback',
-            ],
         ],
         'operations' => [
             'edit' => [
