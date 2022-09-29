@@ -117,32 +117,30 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $template->hl = $model->plentaJobsBasicHeadlineTag;
         }
 
-        if (\in_array('image', $parts, true)) {
-            $content .= $this->getImage($jobOffer, $model);
-        }
-
-        if (\in_array('elements', $parts, true)) {
-            $content .= $this->getContentElements($request, $parentId);
-        }
-
-        if (\in_array('description', $parts, true)) {
-            $content .= $this->getDescription($jobOffer);
-        }
-
-        if (\in_array('employmentType', $parts, true)) {
-            $content .= $this->getEmploymentType($jobOffer);
-        }
-
-        if (\in_array('validThrough', $parts, true)) {
-            $content .= $this->getValidThrough($jobOffer);
-        }
-
-        if (\in_array('salary', $parts, true)) {
-            $content .= $this->getSalary($jobOffer);
-        }
-
-        if (\in_array('jobLocation', $parts, true)) {
-            $content .= $this->getJobLocation($jobOffer, $model);
+        foreach ($parts as $part) {
+            switch ($part) {
+                case 'image':
+                    $content .= $this->getImage($jobOffer, $model);
+                    break;
+                case 'elements':
+                    $content .= $this->getContentElements($request, $parentId);
+                    break;
+                case 'description':
+                    $content .= $this->getDescription($jobOffer);
+                    break;
+                case 'employmentType':
+                    $content .= $this->getEmploymentType($jobOffer);
+                    break;
+                case 'validThrough':
+                    $content .= $this->getValidThrough($jobOffer);
+                    break;
+                case 'salary':
+                    $content .= $this->getSalary($jobOffer);
+                    break;
+                case 'jobLocation':
+                    $content .= $this->getJobLocation($jobOffer, $model);
+                    break;
+            }
         }
 
         $template->content = $content;
