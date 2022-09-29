@@ -99,11 +99,11 @@ class JobOfferListController extends AbstractFrontendModuleController
         }
 
         $sortByLocation = null;
+        $sortBy = $request->get('sortBy') ?? $model->plentaJobsBasicSortingDefaultField;
+        $order = $request->get('order') ?? $model->plentaJobsBasicSortingDefaultDirection;
 
         if ($model->plentaJobsBasicShowSorting) {
             System::loadLanguageFile('tl_module');
-            $sortBy = $request->get('sortBy') ?? $model->plentaJobsBasicSortingDefaultField;
-            $order = $request->get('order') ?? $model->plentaJobsBasicSortingDefaultDirection;
 
             $formId = 'plenta_jobs_basic_sorting_'.$model->id;
             $default = $sortBy.'__'.$order;

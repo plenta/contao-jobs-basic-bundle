@@ -87,13 +87,13 @@
                 <target>Bitte wählen Sie die Felder aus, die dem Nutzer zur Sortierung angezeigt werden sollen.</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicSortingDefaultField.0">
-                <target>Standard-Feld</target>
+                <target>Sortierung: Standard-Feld</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicSortingDefaultField.1">
                 <target>Bitte wählen Sie das Feld aus, nach dem standardmäßig sortiert werden soll.</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicSortingDefaultDirection.0">
-                <target>Standard-Richtung</target>
+                <target>Sortierung: Standard-Richtung</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicSortingDefaultDirection.1">
                 <target>Bitte wählen Sie die Richtung aus, nach der standardmäßig sortiert werden soll.</target>
