@@ -133,9 +133,6 @@ class JobOfferListController extends AbstractFrontendModuleController
                 $sortBy = null;
                 $order = null;
             }
-        } else {
-            $sortBy = null;
-            $order = null;
         }
 
         $jobOffers = $jobOfferRepository->findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order);
