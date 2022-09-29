@@ -150,7 +150,10 @@ class JobOfferListController extends AbstractFrontendModuleController
             }
             $locationArr = 'DESC' === $sortByLocation ? array_reverse($locations) : $locations;
             foreach ($locationArr as $location) {
-                $itemParts[$location] = [];
+                $joinedLocations = explode('|', $location);
+                foreach ($joinedLocations as $joinedLocation) {
+                    $itemParts[(string) $joinedLocation] = [];
+                }
             }
         }
 
@@ -168,9 +171,12 @@ class JobOfferListController extends AbstractFrontendModuleController
                 $jobLocations = StringUtil::deserialize($jobOffer->getJobLocation());
 
                 foreach ($locationArr as $location) {
-                    if (('remote' === $location && $jobOffer->isRemote()) || \in_array($location, $jobLocations, true)) {
-                        $itemParts[$location][] = $itemTemplate->parse();
-                        break;
+                    $joinedLocations = explode('|', $location);
+                    foreach ($joinedLocations as $joinedLocation) {
+                        if (('remote' === $joinedLocation && $jobOffer->isRemote()) || \in_array((string) $joinedLocation, $jobLocations, true)) {
+                            $itemParts[$location][] = $itemTemplate->parse();
+                            break 2;
+                        }
                     }
                 }
             } else {
