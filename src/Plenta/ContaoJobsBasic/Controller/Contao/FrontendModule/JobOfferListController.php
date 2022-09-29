@@ -24,6 +24,7 @@ use Contao\System;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
 use Haste\Form\Form;
+use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,6 +81,7 @@ class JobOfferListController extends AbstractFrontendModuleController
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
+        $jobLocationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
 
         $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
         if (!\is_array($moduleLocations)) {
@@ -140,6 +142,12 @@ class JobOfferListController extends AbstractFrontendModuleController
 
         if (null !== $sortByLocation) {
             $itemParts = [];
+            if (empty($locations)) {
+                $locations[] = 'remote';
+                foreach ($jobLocationRepository->findAll() as $location) {
+                    $locations[] = (string) $location->getId();
+                }
+            }
             $locationArr = 'DESC' === $sortByLocation ? array_reverse($locations) : $locations;
             foreach ($locationArr as $location) {
                 $itemParts[$location] = [];
