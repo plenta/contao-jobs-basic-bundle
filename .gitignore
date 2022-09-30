@@ -33,3 +33,4 @@ gulp.config.js
 
 # Custom
 /packages
+composer.json
