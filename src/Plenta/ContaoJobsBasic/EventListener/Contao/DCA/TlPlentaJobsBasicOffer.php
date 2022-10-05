@@ -215,17 +215,4 @@ class TlPlentaJobsBasicOffer
 
         return $label;
     }
-
-    public function onLoadCallback(?DataContainer $dc = null): void
-    {
-        if (null === $dc || !$dc->id || 'edit' !== $this->requestStack->getCurrentRequest()->query->get('act')) {
-            return;
-        }
-
-        $job = $this->registry->getRepository(TlPlentaJobsBasicOfferEntity::class)->find($dc->id);
-
-        if ($job->isOnlyRemote()) {
-            $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields']['jobLocation']['eval']['mandatory'] = false;
-        }
-    }
 }
