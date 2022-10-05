@@ -20,10 +20,16 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'switchToEdit' => true,
         'markAsCopy' => 'title',
         'enableVersioning' => true,
-        'onload_callback' => [[
-            TlPlentaJobsBasicOffer::class,
-            'onShowInfoCallback',
-        ]],
+        'onload_callback' => [
+            [
+                TlPlentaJobsBasicOffer::class,
+                'onShowInfoCallback',
+            ],
+            [
+                TlPlentaJobsBasicOffer::class,
+                'onLoadCallback',
+            ],
+        ],
         'onsubmit_callback' => [[
             TlPlentaJobsBasicOffer::class,
             'saveCallbackGlobal',
@@ -248,7 +254,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'isOnlyRemote' => [
             'exclude' => true,
             'inputType' => 'checkbox',
-            'eval' => ['tl_class' => 'clr w50'],
+            'eval' => ['tl_class' => 'clr w50', 'submitOnChange' => true],
             'sql' => ['type' => 'boolean', 'default' => false],
         ],
         'hasLocationRequirements' => [
