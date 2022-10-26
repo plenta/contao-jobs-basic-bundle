@@ -7,20 +7,22 @@
             <?php endif; ?>
         <strong><?= $this->organizations[$key]->getName() ?></strong>
     </div>
-
-<?php if (!$this->isRemote || !$this->isOnlyRemote): ?>
-    <?php foreach ($locations as $location): ?>
-        <div class="job_location">
-            <?php if ($location->getStreetAddress()): ?>
+    <?php $remote = []; foreach ($locations as $location): ?>
+        <?php if ($location->getJobTypeLocation() === 'onPremise'): ?>
+            <div class="job_location">
+                <?php if ($location->getStreetAddress()): ?>
                 <?= $location->getStreetAddress() ?><br />
+                <?php endif; ?>
+                <?= $location->getPostalCode() ?> <?= $location->getAddressLocality() ?>
+            </div>
+            <?php else: ?>
+                <?php $remote[] = $location->getRequirementValue(); ?>
             <?php endif; ?>
-            <?= $location->getPostalCode() ?> <?= $location->getAddressLocality() ?>
-        </div>
         <?php endforeach; ?>
-        <?php endif; ?>
+    <?php if (!empty($remote)): ?>
+        <div class="job_location">
+            <?= sprintf($this->trans('tl_plenta_jobs_basic_offer.remoteIsPossible'.(!$this->plentaJobsBasicHideRemoteRequirements ? 'WithRequirements' : '')), implode(', ', $remote)); ?>
+        </div>
+    <?php endif; ?>
     <?php endforeach; ?>
-<?php endif; ?>
-
-<?php if ($this->isRemote): ?>
-    <p class="job_remote"><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['remoteIsPossible'] ?></p>
 <?php endif; ?>

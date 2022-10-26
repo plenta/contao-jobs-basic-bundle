@@ -44,6 +44,54 @@
             <trans-unit id="tl_plenta_jobs_basic_job_location.new.1">
                 <target>Einen neuen Standorte anlegen</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.applicantLocationRequirements.0">
+                <target>Ortsbeschränkungen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.applicantLocationRequirements.1">
+                <target>Legen Sie für jeden möglichen Ort einen Eintrag an.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.requirementType.0">
+                <target>Verwaltungseinheit</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.requirementType.1">
+                <target>Bitte wählen Sie die Art der Verwaltungseinheit aus der Liste aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.requirementValue.0">
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.requirementValue.1">
+                <target>Bitte geben Sie den Namen der Verwaltungseinheit an (z.B. Deutschland, Bayern oder Hannover).</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.administrativeAreas.Country">
+                <target>Land</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.administrativeAreas.State">
+                <target>Bundesland/Kanton</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.administrativeAreas.City">
+                <target>Stadt</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.administrativeAreas.SchoolDistrict">
+                <target>Schulbezirk</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.jobTypeLocation.0">
+                <target>Standort-Art</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.jobTypeLocation.1">
+                <target>Bitte wählen Sie eine Art aus der Liste aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.jobTypeLocationOptions.onPremise">
+                <target>Vor Ort</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.jobTypeLocationOptions.Telecommute">
+                <target>Remote</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.type_legend">
+                <target>Typen-Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.location_legend">
+                <target>Standort-Einstellungen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

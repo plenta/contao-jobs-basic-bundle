@@ -185,6 +185,12 @@
             <trans-unit id="tl_module.plentaJobsBasicNoFilter.1">
                 <target>Filter auf der gleichen Seite werden nicht auf diese Liste angewendet.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicHideRemoteRequirements.0">
+                <target>Ortseinschränkungen ausblenden</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicHideRemoteRequirements.1">
+                <target>Die Ortseinschränkungen für Home-Office werden nicht angezeigt.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -92,12 +92,7 @@ class TlPlentaJobsBasicOfferRepository extends ServiceEntityRepository
 
         foreach ($locations as $location) {
             foreach (explode('|', $location) as $l) {
-                if ('remote' === $l) {
-                    $remoteJobs = true;
-                    $criterionLocation[] = 'a.isRemote = 1';
-                } else {
-                    $criterionLocation[] = "a.jobLocation LIKE '%\"".$l."\"%'";
-                }
+                $criterionLocation[] = "a.jobLocation LIKE '%\"".$l."\"%'";
             }
         }
 

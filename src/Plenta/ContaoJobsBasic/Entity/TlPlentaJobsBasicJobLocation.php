@@ -59,6 +59,16 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     protected string $jobTypeLocation = 'onPremise';
 
     /**
+     * @ORM\Column(type="string", length=32, options={"default": ""})
+     */
+    protected string $requirementType;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"default": ""})
+     */
+    protected string $requirementValue;
+
+    /**
      * @return TlPlentaJobsBasicOrganization
      */
     public function getOrganization(): TlPlentaJobsBasicOrganization
@@ -194,6 +204,46 @@ class TlPlentaJobsBasicJobLocation extends DCADefault
     public function setJobTypeLocation(string $jobTypeLocation): self
     {
         $this->jobTypeLocation = $jobTypeLocation;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequirementType(): string
+    {
+        return $this->requirementType;
+    }
+
+    /**
+     * @param string $requirementType
+     *
+     * @return TlPlentaJobsBasicJobLocation
+     */
+    public function setRequirementType(string $requirementType): self
+    {
+        $this->requirementType = $requirementType;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequirementValue(): string
+    {
+        return $this->requirementValue;
+    }
+
+    /**
+     * @param string $requirementValue
+     *
+     * @return TlPlentaJobsBasicJobLocation
+     */
+    public function setRequirementValue(string $requirementValue): self
+    {
+        $this->requirementValue = $requirementValue;
 
         return $this;
     }

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Contao\System;
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicJobLocation;
+use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
 
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
     // Config
@@ -68,7 +69,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{address_legend},organization,streetAddress,postalCode,addressLocality,addressRegion,addressCountry',
+        '__selector__' => ['jobTypeLocation'],
+        'default' => '{type_legend},jobTypeLocation',
+        'onPremise' => '{type_legend},jobTypeLocation;{address_legend},streetAddress,postalCode,addressLocality,addressRegion,addressCountry',
+        'Telecommute' => '{type_legend},jobTypeLocation;{location_legend},requirementType,requirementValue',
     ],
 
     // Fields
@@ -137,6 +141,27 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
                 'chosen' => true,
                 'tl_class' => 'w50',
             ],
+        ],
+        'jobTypeLocation' => [
+            'exclude' => true,
+            'inputType' => 'select',
+            'options' => ['onPremise', 'Telecommute'],
+            'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_job_location']['jobTypeLocationOptions'],
+            'eval' => [
+                'submitOnChange' => true,
+            ],
+        ],
+        'requirementType' => [
+            'exclude' => true,
+            'inputType' => 'select',
+            'options' => GoogleForJobs::ALLOWED_TYPES,
+            'eval' => ['tl_class' => 'w50', 'mandatory' => true],
+            'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_job_location']['administrativeAreas'],
+        ],
+        'requirementValue' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['mandatory' => true, 'tl_class' => 'w50'],
         ],
     ],
 ];

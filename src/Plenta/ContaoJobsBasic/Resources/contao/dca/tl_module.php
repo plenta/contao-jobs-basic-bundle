@@ -28,7 +28,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicHeadlineTag,imgSize,plentaJobsBasicTemplateParts,plentaJobsBasicShowLogo;
+    {config_legend},plentaJobsBasicHeadlineTag,imgSize,plentaJobsBasicTemplateParts,plentaJobsBasicShowLogo,plentaJobsBasicHideRemoteRequirements;
     {template_legend:hide},customTpl;
     {expert_legend:hide},cssID'
 ;
@@ -191,6 +191,12 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicShowLogo'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicNoFilter'] = [
+    'exclude' => true,
+    'inputType' => 'checkbox',
+    'sql' => "char(1) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicHideRemoteRequirements'] = [
     'exclude' => true,
     'inputType' => 'checkbox',
     'sql' => "char(1) NOT NULL default ''",

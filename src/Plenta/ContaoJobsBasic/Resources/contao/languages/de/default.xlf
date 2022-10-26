@@ -50,6 +50,9 @@
             <trans-unit id="MSC.PLENTA_JOBS.remote">
                 <target>Remote</target>
             </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.remote_in">
+                <target>Remote in</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

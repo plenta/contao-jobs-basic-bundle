@@ -92,7 +92,15 @@ class JobOfferListController extends AbstractFrontendModuleController
         $locations = \is_array($request->get('location')) && !$model->plentaJobsBasicNoFilter ? $request->get('location') : $moduleLocations;
 
         if (!empty($moduleLocations)) {
-            $locations = array_filter($locations, static fn ($element) => \in_array($element, $moduleLocations, true));
+            $locations = array_filter($locations, function ($element) use ($moduleLocations) {
+                $els = explode('|', $element);
+                foreach ($els as $el) {
+                    if (\in_array($el, $moduleLocations, true)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
             if (empty($locations)) {
                 $locations = $moduleLocations;
             }
@@ -170,7 +178,7 @@ class JobOfferListController extends AbstractFrontendModuleController
                 foreach ($locationArr as $location) {
                     $joinedLocations = explode('|', $location);
                     foreach ($joinedLocations as $joinedLocation) {
-                        if (('remote' === $joinedLocation && $jobOffer->isRemote()) || \in_array((string) $joinedLocation, $jobLocations, true)) {
+                        if (\in_array((string) $joinedLocation, $jobLocations, true)) {
                             $itemParts[$location][] = $itemTemplate->parse();
                             break 2;
                         }

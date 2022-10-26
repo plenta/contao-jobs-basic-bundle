@@ -16,6 +16,7 @@ use Contao\CoreBundle\Slug\Slug;
 use Contao\DataContainer;
 use Contao\Input;
 use Contao\StringUtil;
+use Contao\System;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
@@ -38,12 +39,17 @@ class TlModule
 
         $jobLocations = $jobLocationRepository->findAll();
 
-        $return = ['remote' => $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote']];
+        $return = [];
         foreach ($jobLocations as $jobLocation) {
-            $return[$jobLocation->getId()] = $jobLocation->getOrganization()->getName().': '.$jobLocation->getStreetAddress();
+            $return[$jobLocation->getId()] = $jobLocation->getOrganization()->getName().': ';
+            if ($jobLocation->getJobTypeLocation() === 'onPremise') {
+                $return[$jobLocation->getId()] .= $jobLocation->getStreetAddress();
 
-            if ('' !== $jobLocation->getAddressLocality()) {
-                $return[$jobLocation->getId()] .= ', '.$jobLocation->getAddressLocality();
+                if ('' !== $jobLocation->getAddressLocality()) {
+                    $return[$jobLocation->getId()] .= ', '.$jobLocation->getAddressLocality();
+                }
+            } else {
+                $return[$jobLocation->getId()] .= $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'].' ['.$jobLocation->getRequirementValue().']';
             }
         }
 

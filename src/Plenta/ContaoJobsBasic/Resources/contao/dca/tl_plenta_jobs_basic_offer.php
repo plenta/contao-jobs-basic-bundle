@@ -86,13 +86,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     ],
 
     'palettes' => [
-        '__selector__' => ['addImage', 'isRemote', 'hasLocationRequirements', 'addSalary'],
-        'default' => '{title_legend},title,alias,description,translations;{settings_legend},employmentType,validThrough,directApply;{location_legend},jobLocation,isRemote;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        '__selector__' => ['addImage', 'addSalary'],
+        'default' => '{title_legend},title,alias,description,translations;{settings_legend},employmentType,validThrough,directApply;{location_legend},jobLocation;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC',
-        'isRemote' => 'isOnlyRemote,hasLocationRequirements',
-        'hasLocationRequirements' => 'applicantLocationRequirements',
         'addSalary' => 'salaryCurrency,salaryUnit,salaryValue,salaryMaxValue',
     ],
 
@@ -256,25 +254,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'inputType' => 'checkbox',
             'eval' => ['submitOnChange' => true, 'tl_class' => 'w50'],
             'sql' => ['type' => 'boolean', 'default' => false],
-        ],
-        'applicantLocationRequirements' => [
-            'exclude' => true,
-            'inputType' => 'group',
-            'palette' => ['key', 'value'],
-            'eval' => ['tl_class' => 'clr'],
-            'fields' => [
-                'key' => [
-                    'inputType' => 'select',
-                    'options' => ['Country', 'State', 'City', 'SchoolDistrict'],
-                    'eval' => ['tl_class' => 'w50', 'mandatory' => true],
-                    'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['administrativeAreas'],
-                ],
-                'value' => [
-                    'inputType' => 'text',
-                    'eval' => ['mandatory' => true, 'tl_class' => 'w50'],
-                ],
-            ],
-            'order' => false,
         ],
         'addSalary' => [
             'exclude' => true,

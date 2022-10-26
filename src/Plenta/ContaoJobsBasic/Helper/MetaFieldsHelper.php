@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -94,18 +94,14 @@ class MetaFieldsHelper
     {
         $locationsTemp = [];
 
-        if ($jobOffer->isRemote()) {
-            $locationsTemp[] = $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
-        }
+        $locations = StringUtil::deserialize($jobOffer->getJobLocation());
+        $locationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
 
-        if (!$jobOffer->isRemote() || !$jobOffer->isOnlyRemote()) {
-            $locations = StringUtil::deserialize($jobOffer->getJobLocation());
-            $locationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
-
-
-            foreach ($locations as $location) {
-                $locationEntity = $locationRepository->find($location);
-                $locationsTemp[] = $locationEntity->getAddressLocality();
+        foreach ($locations as $location) {
+            $locationEntity = $locationRepository->find($location);
+            $name = 'onPremise' === $locationEntity->getJobTypeLocation() ? $locationEntity->getAddressLocality() : $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
+            if (!\in_array($name, $locationsTemp, true)) {
+                $locationsTemp[] = $name;
             }
         }
 

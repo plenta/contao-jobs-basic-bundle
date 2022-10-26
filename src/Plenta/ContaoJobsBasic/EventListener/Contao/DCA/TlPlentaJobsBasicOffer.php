@@ -65,7 +65,7 @@ class TlPlentaJobsBasicOffer
     {
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferEntity::class);
         $jobOfferTranslationRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferTranslation::class);
-        if ($dc->inputName === 'alias') {
+        if ('alias' === $dc->inputName) {
             $title = $dc->activeRecord->title;
             $aliasExists = fn (string $alias): bool => $jobOfferRepository->doesAliasExist($alias, (int) $dc->activeRecord->id);
         } else {
@@ -98,10 +98,15 @@ class TlPlentaJobsBasicOffer
 
         $return = [];
         foreach ($jobLocations as $jobLocation) {
-            $return[$jobLocation->getId()] = $jobLocation->getOrganization()->getName().': '.$jobLocation->getStreetAddress();
+            $return[$jobLocation->getId()] = $jobLocation->getOrganization()->getName().': ';
+            if ('onPremise' === $jobLocation->getJobTypeLocation()) {
+                $return[$jobLocation->getId()] .= $jobLocation->getStreetAddress();
 
-            if ('' !== $jobLocation->getAddressLocality()) {
-                $return[$jobLocation->getId()] .= ($jobLocation->getStreetAddress() ? ', ' : '').$jobLocation->getAddressLocality();
+                if ('' !== $jobLocation->getAddressLocality()) {
+                    $return[$jobLocation->getId()] .= ($jobLocation->getStreetAddress() ? ', ' : '').$jobLocation->getAddressLocality();
+                }
+            } else {
+                $return[$jobLocation->getId()] .= $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'].' ['.$jobLocation->getRequirementValue().']';
             }
         }
 

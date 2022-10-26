@@ -26,10 +26,11 @@ use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\NumberHelper;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class GoogleForJobs
 {
+    public const ALLOWED_TYPES = ['Country'/*, 'State', 'City', 'SchoolDistrict'*/]; // Google Search Console Validator allows only Country atm
+
     protected ManagerRegistry $registry;
     protected PictureFactory $pictureFactory;
     protected ContaoContext $contaoFileContext;
@@ -172,33 +173,46 @@ class GoogleForJobs
 
             foreach ($jobLocations as $jobLocationId) {
                 $jobLocation = $jobLocationRepository->find($jobLocationId);
+                if ($jobLocation->getJobTypeLocation() === 'onPremise') {
+                    $jobLocationTemp = [];
+                    $jobLocationTemp['@type'] = 'Place';
+                    $jobLocationTemp['address'] = [];
+                    $jobLocationTemp['address']['@type'] = 'PostalAddress';
 
-                $jobLocationTemp = [];
-                $jobLocationTemp['@type'] = 'Place';
-                $jobLocationTemp['address'] = [];
-                $jobLocationTemp['address']['@type'] = 'PostalAddress';
+                    if ('' !== $jobLocation->getStreetAddress()) {
+                        $jobLocationTemp['address']['streetAddress'] = $jobLocation->getStreetAddress();
+                    }
 
-                if ('' !== $jobLocation->getStreetAddress()) {
-                    $jobLocationTemp['address']['streetAddress'] = $jobLocation->getStreetAddress();
+                    if ('' !== $jobLocation->getAddressLocality()) {
+                        $jobLocationTemp['address']['addressLocality'] = $jobLocation->getAddressLocality();
+                    }
+
+                    if ('' !== $jobLocation->getPostalCode()) {
+                        $jobLocationTemp['address']['postalCode'] = $jobLocation->getPostalCode();
+                    }
+
+                    if ('' !== $jobLocation->getAddressRegion()) {
+                        $jobLocationTemp['address']['addressRegion'] = $jobLocation->getAddressRegion();
+                    }
+
+                    if ('' !== $jobLocation->getAddressCountry()) {
+                        $jobLocationTemp['address']['addressCountry'] = $jobLocation->getAddressCountry();
+                    }
+
+                    $structuredDataTemp[] = $jobLocationTemp;
+                } else {
+                    $structuredData['jobLocationType'] = 'TELECOMMUTE';
+
+                    $structuredDataTempRequirements = $structuredData['applicantLocationRequirements'] ?? [];
+
+                    $structuredDataTempRequirements[] = [
+                        '@type' => $jobLocation->getRequirementType(),
+                        'name' => $jobLocation->getRequirementValue(),
+                    ];
+
+                    $structuredData['applicantLocationRequirements'] = $structuredDataTempRequirements;
                 }
 
-                if ('' !== $jobLocation->getAddressLocality()) {
-                    $jobLocationTemp['address']['addressLocality'] = $jobLocation->getAddressLocality();
-                }
-
-                if ('' !== $jobLocation->getPostalCode()) {
-                    $jobLocationTemp['address']['postalCode'] = $jobLocation->getPostalCode();
-                }
-
-                if ('' !== $jobLocation->getAddressRegion()) {
-                    $jobLocationTemp['address']['addressRegion'] = $jobLocation->getAddressRegion();
-                }
-
-                if ('' !== $jobLocation->getAddressCountry()) {
-                    $jobLocationTemp['address']['addressCountry'] = $jobLocation->getAddressCountry();
-                }
-
-                $structuredDataTemp[] = $jobLocationTemp;
             }
         }
 
@@ -206,28 +220,6 @@ class GoogleForJobs
             $structuredData['jobLocation'] = $structuredDataTemp[0];
         } elseif (1 < \count($structuredDataTemp)) {
             $structuredData['jobLocation'] = $structuredDataTemp;
-        }
-
-        if ($jobOffer->isRemote()) {
-            $structuredData['jobLocationType'] = 'TELECOMMUTE';
-
-            if ($jobOffer->isHasLocationRequirements()) {
-                $requirements = StringUtil::deserialize($jobOffer->getApplicantLocationRequirements());
-                $structuredDataTemp = [];
-
-                if (\is_array($requirements)) {
-                    foreach ($requirements as $requirement) {
-                        $structuredDataTemp[] = [
-                            '@type' => $requirement['key'],
-                            'name' => $requirement['value'],
-                        ];
-                    }
-                }
-
-                if (!empty($structuredDataTemp)) {
-                    $structuredData['applicantLocationRequirements'] = $structuredDataTemp;
-                }
-            }
         }
 
         return $structuredData;
