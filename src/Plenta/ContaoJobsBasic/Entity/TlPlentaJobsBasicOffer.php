@@ -88,7 +88,7 @@ class TlPlentaJobsBasicOffer extends DCADefault
     protected $singleSRC;
 
     /**
-     * @ORM\Column(type="string", length=1, nullable=false, options={"fixed"=true, "default"=""})
+     * @ORM\Column(type="boolean", nullable=false, options={"default"=false})
      */
     protected bool $addSalary;
 
