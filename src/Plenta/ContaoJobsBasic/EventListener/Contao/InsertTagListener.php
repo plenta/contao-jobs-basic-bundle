@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
-use Contao\Input;
+use Composer\InstalledVersions;
 use Contao\Config;
-use Doctrine\ORM\EntityManagerInterface;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOfferTranslation;
+use Contao\Input;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @Hook("replaceInsertTags")
@@ -26,19 +26,16 @@ class InsertTagListener
 {
     public const TAG = 'job';
 
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $registry;
+    protected RequestStack $requestStack;
 
     /**
-    * @var string|null
+     * @var string|null
      */
-    protected $autoItem;
+    protected ?string $autoItem;
 
-    public function __construct(EntityManagerInterface $registry)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->registry = $registry;
+        $this->requestStack = $requestStack;
     }
 
     public function __invoke(string $tag)
@@ -49,48 +46,38 @@ class InsertTagListener
             return false;
         }
 
-        $this->handelAutoItem();
+        $this->handleAutoItem();
 
         if (!$this->autoItem) {
             return false;
         }
 
-        $jobOfferRepo = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
-
-        $jobOfferData = $jobOfferRepo->findOneBy(
-            ['alias' => $this->autoItem]
-        );
-
-        $isTranslation = false;
-        if (null === $jobOfferData) {
-            $jobOfferTransRepo = $this->registry->getRepository(TlPlentaJobsBasicOfferTranslation::class);
-            $jobOfferData = $jobOfferTransRepo->findOneBy(
-                ['alias' => $this->autoItem]
-            );
-            $isTranslation = true;
+        $jobOfferData = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($this->autoItem);
+        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
+            $language = $this->requestStack->getMainRequest()->getLocale();
+        } else {
+            $language = $this->requestStack->getMasterRequest()->getLocale();
         }
 
         if (null !== $jobOfferData) {
+            $translation = $jobOfferData->getTranslation($language);
             if ('id' === $chunks[1]) {
-                if (true === $isTranslation) {
-                    return (string) $jobOfferData->getOffer()->getId();
-                }
-                return (string)$jobOfferData->getId();
+                return (string) $jobOfferData->id;
             }
 
             if ('title' === $chunks[1]) {
-                return (string)$jobOfferData->getTitle();
+                return $translation['title'] ?? (string) $jobOfferData->title;
             }
 
             if ('alias' === $chunks[1]) {
-                return (string)$jobOfferData->getAlias();
+                return $translation['alias'] ?? (string) $jobOfferData->alias;
             }
         }
 
         return false;
     }
 
-    public function handelAutoItem(): void
+    public function handleAutoItem(): void
     {
         if (null === $this->autoItem) {
             if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {

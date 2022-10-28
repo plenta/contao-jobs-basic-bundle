@@ -12,22 +12,17 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\Hooks;
 
-use Composer\InstalledVersions;
 use Contao\Input;
-use Doctrine\ORM\EntityManagerInterface;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOfferTranslation;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Terminal42\ChangeLanguage\Event\ChangelanguageNavigationEvent;
 
 class ChangelanguageNavigationListener
 {
-    protected EntityManagerInterface $entityManager;
     protected RequestStack $requestStack;
 
-    public function __construct(EntityManagerInterface $entityManager, RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->entityManager = $entityManager;
         $this->requestStack = $requestStack;
     }
 
@@ -38,26 +33,11 @@ class ChangelanguageNavigationListener
         $alias = Input::get('auto_item');
 
         if ($alias) {
-            if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
-                $mainRequest = $this->requestStack->getMainRequest();
-            } else {
-                $mainRequest = $this->requestStack->getMasterRequest();
-            }
-
-            $offerRepo = $this->entityManager->getRepository(TlPlentaJobsBasicOffer::class);
-            $jobOffer = $offerRepo->findPublishedByIdOrAlias($alias);
-
-            if (null === $jobOffer) {
-                $offerTransRepo = $this->entityManager->getRepository(TlPlentaJobsBasicOfferTranslation::class);
-                $jobOfferTrans = $offerTransRepo->findByAliasAndLanguage($alias, $mainRequest->getLocale());
-                if ($jobOfferTrans) {
-                    $jobOffer = $jobOfferTrans->getOffer();
-                }
-            }
+            $jobOffer = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($alias);
 
             if (null !== $jobOffer) {
                 if ($targetRoot->rootIsFallback) {
-                    $newAlias = $jobOffer->getAlias();
+                    $newAlias = $jobOffer->alias;
                 } else {
                     $translation = $jobOffer->getTranslation($language);
                     if (!$translation) {
@@ -65,7 +45,7 @@ class ChangelanguageNavigationListener
 
                         return;
                     }
-                    $newAlias = $translation->getAlias();
+                    $newAlias = $translation['alias'];
                 }
 
                 $event->getUrlParameterBag()->setUrlAttribute('items', $newAlias);

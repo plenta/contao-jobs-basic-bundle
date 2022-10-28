@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -17,10 +17,15 @@ use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
     // Config
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => \Contao\DC_Table::class,
         'ptable' => 'tl_plenta_jobs_basic_organization',
         'switchToEdit' => true,
         'enableVersioning' => true,
+        'sql' => [
+            'keys' => [
+                'id' => 'primary',
+            ],
+        ],
     ],
 
     'list' => [
@@ -79,6 +84,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
     'fields' => [
         'id' => [
             'search' => true,
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'autoincrement' => true,
+            ],
         ],
         'pid' => [
             'foreignKey' => 'tl_plenta_jobs_basic_organization.name',
@@ -86,10 +96,20 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
                 'type' => 'belongsTo',
                 'load' => 'lazy',
             ],
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'notnull' => false,
+            ],
         ],
         'tstamp' => [
             'sorting' => true,
             'flag' => 6,
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'default' => 0,
+            ],
         ],
         'streetAddress' => [
             'exclude' => true,
@@ -99,6 +119,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
                 'maxlength' => 255,
                 'tl_class' => 'w50',
             ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
+            ],
         ],
         'postalCode' => [
             'exclude' => true,
@@ -106,8 +131,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'default' => '',
             'eval' => [
                 'mandatory' => true,
-                'maxlength' => 255,
+                'maxlength' => 32,
                 'tl_class' => 'w50 clr',
+            ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 32,
+                'default' => '',
             ],
         ],
         'addressLocality' => [
@@ -121,6 +151,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
                 'maxlength' => 255,
                 'tl_class' => 'w50',
             ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
+            ],
         ],
         'addressRegion' => [
             'exclude' => true,
@@ -129,6 +164,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'eval' => [
                 'maxlength' => 255,
                 'tl_class' => 'w50 clr',
+            ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
             ],
         ],
         'addressCountry' => [
@@ -141,6 +181,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
                 'chosen' => true,
                 'tl_class' => 'w50',
             ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 2,
+                'default' => '',
+            ],
         ],
         'jobTypeLocation' => [
             'exclude' => true,
@@ -150,6 +195,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'eval' => [
                 'submitOnChange' => true,
             ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 32,
+                'default' => 'onPremise',
+            ],
         ],
         'requirementType' => [
             'exclude' => true,
@@ -157,11 +207,21 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'options' => GoogleForJobs::ALLOWED_TYPES,
             'eval' => ['tl_class' => 'w50', 'mandatory' => true],
             'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_job_location']['administrativeAreas'],
+            'sql' => [
+                'type' => 'string',
+                'length' => 32,
+                'default' => '',
+            ],
         ],
         'requirementValue' => [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['mandatory' => true, 'tl_class' => 'w50'],
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
+            ],
         ],
     ],
 ];

@@ -12,7 +12,6 @@ services:
         class: Plenta\ContaoJobsBasic\Helper\EmploymentType
         arguments:
             - '@translator'
-            - '@Doctrine\Persistence\ManagerRegistry'
             - '@request_stack'
 
     Plenta\ContaoJobsBasic\Helper\DataTypeMapper:
@@ -24,7 +23,6 @@ services:
         public: true
         class: Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs
         arguments:
-            - '@Doctrine\Persistence\ManagerRegistry'
             - '@contao.image.picture_factory'
             - '@contao.assets.files_context'
             - '@Plenta\ContaoJobsBasic\Helper\EmploymentType'

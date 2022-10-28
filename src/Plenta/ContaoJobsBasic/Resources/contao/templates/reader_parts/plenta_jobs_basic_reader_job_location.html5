@@ -5,18 +5,18 @@
             <?php if (array_key_exists($key, $this->imgs)): ?>
                 <?= $this->imgs[$key] ?>
             <?php endif; ?>
-        <strong><?= $this->organizations[$key]->getName() ?></strong>
+        <strong><?= $this->organizations[$key]->name ?></strong>
     </div>
     <?php $remote = []; foreach ($locations as $location): ?>
-        <?php if ($location->getJobTypeLocation() === 'onPremise'): ?>
+        <?php if ($location->jobTypeLocation === 'onPremise'): ?>
             <div class="job_location">
-                <?php if ($location->getStreetAddress()): ?>
-                <?= $location->getStreetAddress() ?><br />
+                <?php if ($location->streetAddress): ?>
+                <?= $location->streetAddress ?><br />
                 <?php endif; ?>
-                <?= $location->getPostalCode() ?> <?= $location->getAddressLocality() ?>
+                <?= $location->postalCode ?> <?= $location->addressLocality ?>
             </div>
             <?php else: ?>
-                <?php $remote[] = $location->getRequirementValue(); ?>
+                <?php $remote[] = $location->requirementValue; ?>
             <?php endif; ?>
         <?php endforeach; ?>
     <?php if (!empty($remote)): ?>

@@ -12,26 +12,23 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Helper;
 
-use Doctrine\Persistence\ManagerRegistry;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicSettingsEmploymentType;
+use Composer\InstalledVersions;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicSettingsEmploymentTypeModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 
 class EmploymentType
 {
     protected LocaleAwareInterface $translator;
-    protected ManagerRegistry $registry;
     protected RequestStack $requestStack;
     protected string $customEmploymentTypePrefix = 'CUSTOM_';
     private ?array $customEmploymentTypes = null;
 
     public function __construct(
         LocaleAwareInterface $translator,
-        ManagerRegistry $registry,
         RequestStack $requestStack
     ) {
         $this->translator = $translator;
-        $this->registry = $registry;
         $this->requestStack = $requestStack;
     }
 
@@ -59,21 +56,23 @@ class EmploymentType
         }
 
         foreach ($customEmploymentTypes as $customEmploymentType) {
-            $return[] = $this->customEmploymentTypePrefix.$customEmploymentType->getId();
+            $return[] = $this->customEmploymentTypePrefix.$customEmploymentType->id;
         }
 
         return $return;
     }
 
     /**
-     * @return TlPlentaJobsBasicSettingsEmploymentType[]
+     * @return PlentaJobsBasicSettingsEmploymentTypeModel[]
      */
-    public function getAndSetCustomEmploymentTypes(): array
+    public function getAndSetCustomEmploymentTypes()
     {
         if (null === $this->customEmploymentTypes) {
-            $employmentTypeRepository = $this->registry->getRepository(TlPlentaJobsBasicSettingsEmploymentType::class);
-
-            $this->customEmploymentTypes = $employmentTypeRepository->findAllIndexed();
+            $employmentTypes = [];
+            foreach (PlentaJobsBasicSettingsEmploymentTypeModel::findAll() as $employmentType) {
+                $employmentTypes[$employmentType->id] = $employmentType;
+            }
+            $this->customEmploymentTypes = $employmentTypes;
         }
 
         return $this->customEmploymentTypes;
@@ -103,7 +102,7 @@ class EmploymentType
 
     public function getEmploymentTypeNameFromDatabase(string $identifier): ?string
     {
-        /** @var TlPlentaJobsBasicSettingsEmploymentType[] $employmentTypes */
+        /** @var PlentaJobsBasicSettingsEmploymentTypeModel[] $employmentTypes */
         $employmentTypes = $this->getAndSetCustomEmploymentTypes();
 
         if (empty($employmentTypes)) {
@@ -116,16 +115,22 @@ class EmploymentType
             return null;
         }
 
+        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
+            $mainRequest = $this->requestStack->getMainRequest();
+        } else {
+            $mainRequest = $this->requestStack->getMasterRequest();
+        }
+
         $language = substr(
-            $this->requestStack->getMasterRequest()->getLocale(),
+            $mainRequest->getLocale(),
             0,
             2
         );
 
-        if (false === empty($employmentTypes[$employmentTypeId]->getTranslation()[$language]['title'])) {
-            $translation = $employmentTypes[$employmentTypeId]->getTranslation()[$language]['title'];
+        if (false === empty($translatedTitle = json_decode($employmentTypes[$employmentTypeId]->translation, true)[$language]['title'])) {
+            $translation = $translatedTitle;
         } else {
-            $translation = $employmentTypes[$employmentTypeId]->getTitle();
+            $translation = $employmentTypes[$employmentTypeId]->title;
         }
 
         return $translation;
@@ -179,7 +184,7 @@ class EmploymentType
                     continue;
                 }
 
-                $return[] = $employmentTypes[$employmentTypeId]->getGoogleForJobsMapping();
+                $return[] = $employmentTypes[$employmentTypeId]->googleForJobsMapping;
             } else {
                 $return[] = $employmentTypeUnmapped;
             }

@@ -22,11 +22,12 @@ use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Template;
-use Doctrine\Persistence\ManagerRegistry;
 use Haste\Form\Form;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Plenta\ContaoJobsBasic\Events\JobOfferListBeforeParseTemplateEvent;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -40,30 +41,30 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class JobOfferListController extends AbstractFrontendModuleController
 {
-    protected ManagerRegistry $registry;
-
     protected MetaFieldsHelper $metaFieldsHelper;
 
     protected TranslatorInterface $translator;
 
+    protected EventDispatcherInterface $eventDispatcher;
+
     public function __construct(
-        ManagerRegistry $registry,
         MetaFieldsHelper $metaFieldsHelper,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        EventDispatcherInterface $eventDispatcher
     ) {
-        $this->registry = $registry;
         $this->metaFieldsHelper = $metaFieldsHelper;
         $this->translator = $translator;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function generateJobOfferUrl(TlPlentaJobsBasicOffer $jobOffer, ModuleModel $model): string
+    public function generateJobOfferUrl(PlentaJobsBasicOfferModel $jobOffer, ModuleModel $model): string
     {
         $objPage = $model->getRelated('jumpTo');
 
         if (!$objPage instanceof PageModel) {
             $url = ampersand(Environment::get('request'));
         } else {
-            $params = (Config::get('useAutoItem') ? '/' : '/items/').($this->metaFieldsHelper->getMetaFields($jobOffer)['alias'] ?: $jobOffer->getId());
+            $params = (Config::get('useAutoItem') ? '/' : '/items/').($this->metaFieldsHelper->getMetaFields($jobOffer)['alias'] ?: $jobOffer->id);
 
             $url = ampersand($objPage->getFrontendUrl($params));
         }
@@ -80,9 +81,6 @@ class JobOfferListController extends AbstractFrontendModuleController
      */
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-        $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
-        $jobLocationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
-
         $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
         if (!\is_array($moduleLocations)) {
             $moduleLocations = [];
@@ -99,6 +97,7 @@ class JobOfferListController extends AbstractFrontendModuleController
                         return true;
                     }
                 }
+
                 return false;
             });
             if (empty($locations)) {
@@ -143,14 +142,14 @@ class JobOfferListController extends AbstractFrontendModuleController
             }
         }
 
-        $jobOffers = $jobOfferRepository->findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order);
+        $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order);
 
         if (null !== $sortByLocation) {
             $itemParts = [];
             if (empty($locations)) {
                 $locations[] = 'remote';
-                foreach ($jobLocationRepository->findAll() as $location) {
-                    $locations[] = (string) $location->getId();
+                foreach (PlentaJobsBasicJobLocationModel::findAll() as $location) {
+                    $locations[] = (string) $location->id;
                 }
             }
             $locationArr = 'DESC' === $sortByLocation ? array_reverse($locations) : $locations;
@@ -164,28 +163,30 @@ class JobOfferListController extends AbstractFrontendModuleController
 
         $items = [];
 
-        foreach ($jobOffers as $jobOffer) {
-            $itemTemplate = new FrontendTemplate('plenta_jobs_basic_offer_default');
-            $itemTemplate->jobOffer = $jobOffer;
-            $itemTemplate->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
-            $itemTemplate->headlineUnit = $model->plentaJobsBasicHeadlineTag;
+        if ($jobOffers) {
+            foreach ($jobOffers as $jobOffer) {
+                $itemTemplate = new FrontendTemplate('plenta_jobs_basic_offer_default');
+                $itemTemplate->jobOffer = $jobOffer;
+                $itemTemplate->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
+                $itemTemplate->headlineUnit = $model->plentaJobsBasicHeadlineTag;
 
-            $itemTemplate->link = $this->generateJobOfferUrl($jobOffer, $model);
+                $itemTemplate->link = $this->generateJobOfferUrl($jobOffer, $model);
 
-            if (null !== $sortByLocation) {
-                $jobLocations = StringUtil::deserialize($jobOffer->getJobLocation());
+                if (null !== $sortByLocation) {
+                    $jobLocations = StringUtil::deserialize($jobOffer->jobLocation);
 
-                foreach ($locationArr as $location) {
-                    $joinedLocations = explode('|', $location);
-                    foreach ($joinedLocations as $joinedLocation) {
-                        if (\in_array((string) $joinedLocation, $jobLocations, true)) {
-                            $itemParts[$location][] = $itemTemplate->parse();
-                            break 2;
+                    foreach ($locationArr as $location) {
+                        $joinedLocations = explode('|', $location);
+                        foreach ($joinedLocations as $joinedLocation) {
+                            if (\in_array((string) $joinedLocation, $jobLocations, true)) {
+                                $itemParts[$location][] = $itemTemplate->parse();
+                                break 2;
+                            }
                         }
                     }
+                } else {
+                    $items[] = $itemTemplate->parse();
                 }
-            } else {
-                $items[] = $itemTemplate->parse();
             }
         }
 
@@ -200,6 +201,13 @@ class JobOfferListController extends AbstractFrontendModuleController
         $template->empty = $this->translator->trans('MSC.PLENTA_JOBS.emptyList', [], 'contao_default');
 
         $template->items = $items;
+
+        $event = new JobOfferListBeforeParseTemplateEvent($jobOffers, $template, $model, $this);
+
+        $this->eventDispatcher->dispatch($event, $event::NAME);
+
+        $template = $event->getTemplate();
+        $model = $event->getModel();
 
         return $template->getResponse();
     }

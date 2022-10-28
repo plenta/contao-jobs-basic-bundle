@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -16,12 +16,10 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\Input;
-use Contao\ModuleModel;
 use Contao\StringUtil;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOfferTranslation;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +33,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
 
     protected MetaFieldsHelper $metaFieldsHelper;
 
-    protected ?TlPlentaJobsBasicOffer $jobOffer = null;
+    protected ?PlentaJobsBasicOfferModel $jobOffer = null;
 
     protected ?array $metaFields = null;
 
@@ -58,14 +56,11 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
         return $this->metaFields;
     }
 
-    public function getJobOffer($language = null): ?TlPlentaJobsBasicOffer
+    public function getJobOffer($language = null): ?PlentaJobsBasicOfferModel
     {
         if (null !== $this->jobOffer) {
             return $this->jobOffer;
         }
-
-        $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
-        $jobOfferTransRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferTranslation::class);
 
         $alias = Input::get('auto_item');
 
@@ -73,18 +68,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
             return null;
         }
 
-        if (!preg_match('/^[1-9]\d*$/', $alias)) {
-            $this->jobOffer = $jobOfferRepository->findOneBy(['alias' => $alias]);
-        } else {
-            $this->jobOffer = $jobOfferRepository->find($alias);
-        }
-
-        if (!$this->jobOffer && $language) {
-            $translation = $jobOfferTransRepository->findByAliasAndLanguage($alias, $language);
-            if ($translation) {
-                $this->jobOffer = $translation->getOffer();
-            }
-        }
+        $this->jobOffer = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($alias);
 
         return $this->jobOffer;
     }

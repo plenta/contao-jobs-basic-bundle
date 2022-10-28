@@ -13,11 +13,10 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
 use Contao\Config;
-use Contao\PageModel;
-use Contao\ModuleModel;
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManagerInterface;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\ModuleModel;
+use Contao\PageModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
 
 /**
@@ -25,37 +24,19 @@ use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
  */
 class GetSearchablePagesListener
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $registry;
-
-    /**
-     * @var Connection
-     */
-    private Connection $connection;
-
-    public function __construct(Connection $connection, EntityManagerInterface $registry)
-    {
-        $this->connection = $connection;
-        $this->registry = $registry;
-    }
-
     public function __invoke(array $pages, $rootId = null, bool $isSitemap = false, string $language = null): array
     {
         $processed = [];
 
-        $jobOfferRepo = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
-
         $modules = ModuleModel::findByType('plenta_jobs_basic_offer_list');
         if ($modules) {
             foreach ($modules as $module) {
-                $jobs = $jobOfferRepo->findAllPublished();
+                $jobs = PlentaJobsBasicOfferModel::findBy('published', 1);
                 foreach ($jobs as $job) {
-                    if (!\in_array($job->getId(), $processed, true)) {
+                    if (!\in_array($job->id, $processed, true)) {
                         if ($page = $this->generateJobOfferUrl($job, $module)) {
                             $pages[] = $page;
-                            $processed[] = $job->getId();
+                            $processed[] = $job->id;
                         }
                     }
                 }
@@ -65,7 +46,7 @@ class GetSearchablePagesListener
         return $pages;
     }
 
-    public function generateJobOfferUrl(TlPlentaJobsBasicOffer $jobOffer, ModuleModel $model): ?string
+    public function generateJobOfferUrl(PlentaJobsBasicOfferModel $jobOffer, ModuleModel $model): ?string
     {
         $objPage = $model->getRelated('jumpTo');
 
@@ -73,7 +54,7 @@ class GetSearchablePagesListener
             return null;
         }
 
-        $params = (Config::get('useAutoItem') ? '/' : '/items/').($jobOffer->getAlias() ?: $jobOffer->getId());
+        $params = (Config::get('useAutoItem') ? '/' : '/items/').($jobOffer->alias ?: $jobOffer->id);
 
         return ampersand($objPage->getAbsoluteUrl($params));
     }

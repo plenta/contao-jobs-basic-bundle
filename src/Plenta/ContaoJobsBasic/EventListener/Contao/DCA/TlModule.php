@@ -12,44 +12,25 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
-use Contao\CoreBundle\Slug\Slug;
-use Contao\DataContainer;
-use Contao\Input;
-use Contao\StringUtil;
-use Contao\System;
-use Doctrine\Persistence\ManagerRegistry;
-use Exception;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer as TlPlentaJobsBasicOfferEntity;
-use Plenta\ContaoJobsBasic\Helper\EmploymentType;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 
 class TlModule
 {
-    protected ManagerRegistry $registry;
-
-    public function __construct(
-        ManagerRegistry $registry
-    ) {
-        $this->registry = $registry;
-    }
-
     public function jobLocationOptionsCallback(): array
     {
-        $jobLocationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
-
-        $jobLocations = $jobLocationRepository->findAll();
+        $jobLocations = PlentaJobsBasicJobLocationModel::findAll();
 
         $return = [];
         foreach ($jobLocations as $jobLocation) {
-            $return[$jobLocation->getId()] = $jobLocation->getOrganization()->getName().': ';
-            if ($jobLocation->getJobTypeLocation() === 'onPremise') {
-                $return[$jobLocation->getId()] .= $jobLocation->getStreetAddress();
+            $return[$jobLocation->id] = $jobLocation->getRelated('pid')->name.': ';
+            if ('onPremise' === $jobLocation->jobTypeLocation) {
+                $return[$jobLocation->id] .= $jobLocation->streetAddress;
 
-                if ('' !== $jobLocation->getAddressLocality()) {
-                    $return[$jobLocation->getId()] .= ', '.$jobLocation->getAddressLocality();
+                if ('' !== $jobLocation->addressLocality) {
+                    $return[$jobLocation->id] .= ', '.$jobLocation->addressLocality;
                 }
             } else {
-                $return[$jobLocation->getId()] .= $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'].' ['.$jobLocation->getRequirementValue().']';
+                $return[$jobLocation->id] .= $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'].' ['.$jobLocation->requirementValue.']';
             }
         }
 

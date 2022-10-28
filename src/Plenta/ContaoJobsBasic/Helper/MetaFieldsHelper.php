@@ -20,30 +20,25 @@ use Contao\FilesModel;
 use Contao\FrontendTemplate;
 use Contao\StringUtil;
 use Contao\System;
-use Doctrine\Persistence\ManagerRegistry;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class MetaFieldsHelper
 {
     protected EmploymentType $employmentTypeHelper;
 
-    protected ManagerRegistry $registry;
-
     protected RequestStack $requestStack;
 
     public function __construct(
         EmploymentType $employmentTypeHelper,
-        ManagerRegistry $registry,
         RequestStack $requestStack
     ) {
         $this->employmentTypeHelper = $employmentTypeHelper;
-        $this->registry = $registry;
         $this->requestStack = $requestStack;
     }
 
-    public function getMetaFields(TlPlentaJobsBasicOffer $jobOffer, $imageSize = null): array
+    public function getMetaFields(PlentaJobsBasicOfferModel $jobOffer, $imageSize = null): array
     {
         $metaFields = [];
 
@@ -55,21 +50,21 @@ class MetaFieldsHelper
 
         $translation = $jobOffer->getTranslation($mainRequest->getLocale());
 
-        $metaFields['publicationDateFormatted'] = Date::parse(Date::getNumericDateFormat(), $jobOffer->getDatePosted());
-        $metaFields['employmentTypeFormatted'] = $this->employmentTypeHelper->getEmploymentTypesFormatted($jobOffer->getEmploymentType());
+        $metaFields['publicationDateFormatted'] = Date::parse(Date::getNumericDateFormat(), $jobOffer->datePosted);
+        $metaFields['employmentTypeFormatted'] = $this->employmentTypeHelper->getEmploymentTypesFormatted(json_decode($jobOffer->employmentType, true));
         $metaFields['locationFormatted'] = $this->formatLocation($jobOffer);
         $metaFields['addressLocalityFormatted'] = $this->formatAddressLocality($jobOffer);
-        $metaFields['title'] = Controller::replaceInsertTags($translation ? $translation->getTitle() : $jobOffer->getTitle());
-        $metaFields['description'] = Controller::replaceInsertTags($translation ? $translation->getDescription() : $jobOffer->getDescription());
-        $metaFields['alias'] = $translation ? $translation->getAlias() : $jobOffer->getAlias();
-        if ($imageSize && $jobOffer->isAddImage()) {
-            $file = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->getSingleSRC()));
+        $metaFields['title'] = Controller::replaceInsertTags($translation['title'] ?? $jobOffer->title);
+        $metaFields['description'] = Controller::replaceInsertTags($translation['description'] ?? $jobOffer->description);
+        $metaFields['alias'] = $translation['alias'] ?? $jobOffer->alias;
+        if ($imageSize && $jobOffer->addImage) {
+            $file = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
             if ($file) {
                 $tpl = new FrontendTemplate('ce_image');
                 if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.11', '>=')) {
                     /** @var Studio $studio */
                     $studio = System::getContainer()->get('contao.image.studio');
-                    $figure = $studio->createFigureBuilder()->fromUuid($jobOffer->getSingleSRC())->setSize($imageSize)->build();
+                    $figure = $studio->createFigureBuilder()->fromUuid($jobOffer->singleSRC)->setSize($imageSize)->build();
                     $figure->applyLegacyTemplateData($tpl);
                 } else {
                     Controller::addImageToTemplate($tpl, ['singleSRC' => $file->path, 'size' => $imageSize]);
@@ -85,21 +80,20 @@ class MetaFieldsHelper
         return $metaFields;
     }
 
-    public function formatLocation(TlPlentaJobsBasicOffer $jobOffer): string
+    public function formatLocation(PlentaJobsBasicOfferModel $jobOffer): string
     {
         return $this->formatAddressLocality($jobOffer);
     }
 
-    public function formatAddressLocality(TlPlentaJobsBasicOffer $jobOffer): string
+    public function formatAddressLocality(PlentaJobsBasicOfferModel $jobOffer): string
     {
         $locationsTemp = [];
 
-        $locations = StringUtil::deserialize($jobOffer->getJobLocation());
-        $locationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
+        $locations = StringUtil::deserialize($jobOffer->jobLocation);
 
         foreach ($locations as $location) {
-            $locationEntity = $locationRepository->find($location);
-            $name = 'onPremise' === $locationEntity->getJobTypeLocation() ? $locationEntity->getAddressLocality() : $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
+            $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            $name = 'onPremise' === $objLocation->jobTypeLocation ? $objLocation->addressLocality : $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
             if (!\in_array($name, $locationsTemp, true)) {
                 $locationsTemp[] = $name;
             }

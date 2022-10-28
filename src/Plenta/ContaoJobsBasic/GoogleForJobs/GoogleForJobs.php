@@ -20,10 +20,9 @@ use Contao\Image\PictureConfiguration;
 use Contao\Image\PictureConfigurationItem;
 use Contao\Image\ResizeConfiguration;
 use Contao\StringUtil;
-use Doctrine\Persistence\ManagerRegistry;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOrganization;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\NumberHelper;
 
@@ -31,7 +30,6 @@ class GoogleForJobs
 {
     public const ALLOWED_TYPES = ['Country'/*, 'State', 'City', 'SchoolDistrict'*/]; // Google Search Console Validator allows only Country atm
 
-    protected ManagerRegistry $registry;
     protected PictureFactory $pictureFactory;
     protected ContaoContext $contaoFileContext;
     protected EmploymentType $employmentTypeHelper;
@@ -39,20 +37,18 @@ class GoogleForJobs
     protected string $projectDir;
 
     public function __construct(
-        ManagerRegistry $registry,
         PictureFactory $pictureFactory,
         ContaoContext $contaoFileContext,
         EmploymentType $employmentTypeHelper,
         string $projectDir
     ) {
-        $this->registry = $registry;
         $this->pictureFactory = $pictureFactory;
         $this->contaoFileContext = $contaoFileContext;
         $this->employmentTypeHelper = $employmentTypeHelper;
         $this->projectDir = $projectDir;
     }
 
-    public function generateStructuredData(?TlPlentaJobsBasicOffer $jobOffer): ?string
+    public function generateStructuredData(?PlentaJobsBasicOfferModel $jobOffer): ?string
     {
         if (false === $this->checkPrerequisites($jobOffer)) {
             return null;
@@ -60,18 +56,18 @@ class GoogleForJobs
 
         $arrStructuredData['@context'] = 'https://schema.org';
         $arrStructuredData['@type'] = 'JobPosting';
-        $arrStructuredData['title'] = StringUtil::restoreBasicEntities($jobOffer->getTitle());
-        $arrStructuredData['datePosted'] = date('c', (int) $jobOffer->getDatePosted());
+        $arrStructuredData['title'] = StringUtil::restoreBasicEntities($jobOffer->title);
+        $arrStructuredData['datePosted'] = date('c', (int) $jobOffer->datePosted);
 
-        if (!empty($jobOffer->getValidThrough())) {
-            $arrStructuredData['validThrough'] = date('Y-m-d\TH:i:sP', (int) $jobOffer->getValidThrough());
+        if (!empty($jobOffer->validThrough)) {
+            $arrStructuredData['validThrough'] = date('Y-m-d\TH:i:sP', (int) $jobOffer->validThrough);
         }
 
-        if (null !== ($description = $this->sanitizeDescription($jobOffer->getDescription()))) {
+        if (null !== ($description = $this->sanitizeDescription($jobOffer->description))) {
             $arrStructuredData['description'] = $description;
         }
 
-        $employmentType = $this->employmentTypeHelper->getMappedEmploymentTypesForGoogleForJobs($jobOffer->getEmploymentType());
+        $employmentType = $this->employmentTypeHelper->getMappedEmploymentTypesForGoogleForJobs(json_decode($jobOffer->employmentType, true));
 
         if (null !== $employmentType) {
             if (1 === \count($employmentType)) {
@@ -81,7 +77,7 @@ class GoogleForJobs
             }
         }
 
-        $arrStructuredData['directApply'] = $jobOffer->getDirectApply();
+        $arrStructuredData['directApply'] = $jobOffer->directApply;
 
         $arrStructuredData = $this->generateJobLocation($jobOffer, $arrStructuredData);
         $arrStructuredData = $this->generateHiringOrganization($jobOffer, $arrStructuredData);
@@ -96,24 +92,23 @@ class GoogleForJobs
         return '<script type="application/ld+json">'.$json.'</script>';
     }
 
-    public function generateHiringOrganization(TlPlentaJobsBasicOffer $jobOffer, array $structuredData): array
+    public function generateHiringOrganization(PlentaJobsBasicOfferModel $jobOffer, array $structuredData): array
     {
-        $jobLocationIds = $jobOffer->getJobLocation();
-        $jobLocationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
+        $jobLocationIds = $jobOffer->jobLocation;
 
         if (null !== $jobLocationIds) {
             $jobLocations = StringUtil::deserialize($jobLocationIds);
 
-            $jobLocation = $jobLocationRepository->find($jobLocations[0]);
-            $hiringOrganization = $jobLocation->getOrganization();
+            $jobLocation = PlentaJobsBasicJobLocationModel::findByPk($jobLocations[0]);
+            $hiringOrganization = $jobLocation->getRelated('pid');
 
             $structuredData['hiringOrganization'] = [];
             $structuredData['hiringOrganization']['@type'] = 'Organization';
 
-            $structuredData['hiringOrganization']['name'] = StringUtil::restoreBasicEntities($hiringOrganization->getName());
+            $structuredData['hiringOrganization']['name'] = StringUtil::restoreBasicEntities($hiringOrganization->name);
 
-            if ('' !== $hiringOrganization->getSameAs()) {
-                $sameAs = $hiringOrganization->getSameAs();
+            if ('' !== $hiringOrganization->sameAs) {
+                $sameAs = $hiringOrganization->sameAs;
 
                 if ('http' != substr($sameAs, 0, 4)) {
                     $sameAs = 'https://'.$sameAs;
@@ -128,9 +123,9 @@ class GoogleForJobs
         return $structuredData;
     }
 
-    public function generateLogo(TlPlentaJobsBasicOrganization $hiringOrganization, array $structuredData): array
+    public function generateLogo(PlentaJobsBasicOrganizationModel $hiringOrganization, array $structuredData): array
     {
-        $uuid = $hiringOrganization->getLogo();
+        $uuid = $hiringOrganization->logo;
 
         if (null !== $uuid && '' !== $uuid) {
             $image = FilesModel::findByUuid($uuid);
@@ -161,42 +156,41 @@ class GoogleForJobs
         return $structuredData;
     }
 
-    public function generateJobLocation(TlPlentaJobsBasicOffer $jobOffer, array $structuredData): array
+    public function generateJobLocation(PlentaJobsBasicOfferModel $jobOffer, array $structuredData): array
     {
-        $jobLocationIds = $jobOffer->getJobLocation();
-        $jobLocationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
+        $jobLocationIds = $jobOffer->jobLocation;
 
         $structuredDataTemp = [];
 
-        if (null !== $jobLocationIds && (!$jobOffer->isRemote() || !$jobOffer->isOnlyRemote())) {
+        if (null !== $jobLocationIds) {
             $jobLocations = StringUtil::deserialize($jobLocationIds);
 
             foreach ($jobLocations as $jobLocationId) {
-                $jobLocation = $jobLocationRepository->find($jobLocationId);
-                if ($jobLocation->getJobTypeLocation() === 'onPremise') {
+                $jobLocation = PlentaJobsBasicJobLocationModel::findByPk($jobLocationId);
+                if ('onPremise' === $jobLocation->jobTypeLocation) {
                     $jobLocationTemp = [];
                     $jobLocationTemp['@type'] = 'Place';
                     $jobLocationTemp['address'] = [];
                     $jobLocationTemp['address']['@type'] = 'PostalAddress';
 
-                    if ('' !== $jobLocation->getStreetAddress()) {
-                        $jobLocationTemp['address']['streetAddress'] = $jobLocation->getStreetAddress();
+                    if ('' !== $jobLocation->streetAddress) {
+                        $jobLocationTemp['address']['streetAddress'] = $jobLocation->streetAddress;
                     }
 
-                    if ('' !== $jobLocation->getAddressLocality()) {
-                        $jobLocationTemp['address']['addressLocality'] = $jobLocation->getAddressLocality();
+                    if ('' !== $jobLocation->addressLocality) {
+                        $jobLocationTemp['address']['addressLocality'] = $jobLocation->addressLocality;
                     }
 
-                    if ('' !== $jobLocation->getPostalCode()) {
-                        $jobLocationTemp['address']['postalCode'] = $jobLocation->getPostalCode();
+                    if ('' !== $jobLocation->postalCode) {
+                        $jobLocationTemp['address']['postalCode'] = $jobLocation->postalCode;
                     }
 
-                    if ('' !== $jobLocation->getAddressRegion()) {
-                        $jobLocationTemp['address']['addressRegion'] = $jobLocation->getAddressRegion();
+                    if ('' !== $jobLocation->addressRegion) {
+                        $jobLocationTemp['address']['addressRegion'] = $jobLocation->addressRegion;
                     }
 
-                    if ('' !== $jobLocation->getAddressCountry()) {
-                        $jobLocationTemp['address']['addressCountry'] = $jobLocation->getAddressCountry();
+                    if ('' !== $jobLocation->addressCountry) {
+                        $jobLocationTemp['address']['addressCountry'] = $jobLocation->addressCountry;
                     }
 
                     $structuredDataTemp[] = $jobLocationTemp;
@@ -206,13 +200,12 @@ class GoogleForJobs
                     $structuredDataTempRequirements = $structuredData['applicantLocationRequirements'] ?? [];
 
                     $structuredDataTempRequirements[] = [
-                        '@type' => $jobLocation->getRequirementType(),
-                        'name' => $jobLocation->getRequirementValue(),
+                        '@type' => $jobLocation->requirementType,
+                        'name' => $jobLocation->requirementValue,
                     ];
 
                     $structuredData['applicantLocationRequirements'] = $structuredDataTempRequirements;
                 }
-
             }
         }
 
@@ -225,7 +218,7 @@ class GoogleForJobs
         return $structuredData;
     }
 
-    public function checkPrerequisites(?TlPlentaJobsBasicOffer $jobsOffer): bool
+    public function checkPrerequisites(?PlentaJobsBasicOfferModel $jobsOffer): bool
     {
         if (null === $jobsOffer) {
             return false;
@@ -242,30 +235,29 @@ class GoogleForJobs
 
         $description = strip_tags($description, '<br><p><ol><ul><li><h1><h2><h3><h4><h5><strong><em>');
         $description = StringUtil::stripInsertTags($description);
-        $description = StringUtil::restoreBasicEntities($description);
 
-        return $description;
+        return StringUtil::restoreBasicEntities($description);
     }
 
-    public function generateSalary(TlPlentaJobsBasicOffer $jobOffer, array $structuredData)
+    public function generateSalary(PlentaJobsBasicOfferModel $jobOffer, array $structuredData)
     {
-        $numberHelper = new NumberHelper($jobOffer->getSalaryCurrency(), 'en');
+        $numberHelper = new NumberHelper($jobOffer->salaryCurrency, 'en');
 
-        if ($jobOffer->isAddSalary()) {
+        if ($jobOffer->addSalary) {
             $structuredDataTemp = [
                 '@type' => 'MonetaryAmount',
-                'currency' => $jobOffer->getSalaryCurrency(),
+                'currency' => $jobOffer->salaryCurrency,
                 'value' => [
                     '@type' => 'QuantitativeValue',
-                    'unitText' => $jobOffer->getSalaryUnit(),
+                    'unitText' => $jobOffer->salaryUnit,
                 ],
             ];
 
-            if ($jobOffer->getSalaryMaxValue() > 0 && $jobOffer->getSalaryValue() > 0) {
-                $structuredDataTemp['value']['minValue'] = $numberHelper->formatNumberFromDbForDCAField((string) $jobOffer->getSalaryValue());
-                $structuredDataTemp['value']['maxValue'] = $numberHelper->formatNumberFromDbForDCAField((string) $jobOffer->getSalaryMaxValue());
+            if ($jobOffer->salaryMaxValue > 0 && $jobOffer->salaryValue > 0) {
+                $structuredDataTemp['value']['minValue'] = $numberHelper->formatNumberFromDbForDCAField((string) $jobOffer->salaryValue);
+                $structuredDataTemp['value']['maxValue'] = $numberHelper->formatNumberFromDbForDCAField((string) $jobOffer->salaryMaxValue);
             } else {
-                $structuredDataTemp['value']['value'] = $numberHelper->formatNumberFromDbForDCAField((string) max($jobOffer->getSalaryMaxValue(), $jobOffer->getSalaryValue()));
+                $structuredDataTemp['value']['value'] = $numberHelper->formatNumberFromDbForDCAField((string) max($jobOffer->salaryMaxValue, $jobOffer->salaryValue));
             }
 
             $structuredData['baseSalary'] = $structuredDataTemp;

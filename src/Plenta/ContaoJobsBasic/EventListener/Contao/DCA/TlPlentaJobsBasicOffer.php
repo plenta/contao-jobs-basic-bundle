@@ -20,11 +20,9 @@ use Contao\Input;
 use Contao\Message;
 use Contao\StringUtil;
 use Contao\System;
-use Doctrine\Persistence\ManagerRegistry;
 use Exception;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer as TlPlentaJobsBasicOfferEntity;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOfferTranslation;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\NumberHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -34,8 +32,6 @@ class TlPlentaJobsBasicOffer
 {
     protected EmploymentType $employmentTypeHelper;
 
-    protected ManagerRegistry $registry;
-
     protected Slug $slugGenerator;
 
     protected RequestStack $requestStack;
@@ -44,13 +40,11 @@ class TlPlentaJobsBasicOffer
 
     public function __construct(
         EmploymentType $employmentTypeHelper,
-        ManagerRegistry $registry,
         Slug $slugGenerator,
         RequestStack $requestStack,
         TwigEnvironment $twig
     ) {
         $this->employmentTypeHelper = $employmentTypeHelper;
-        $this->registry = $registry;
         $this->slugGenerator = $slugGenerator;
         $this->requestStack = $requestStack;
         $this->twig = $twig;
@@ -63,16 +57,14 @@ class TlPlentaJobsBasicOffer
      */
     public function aliasSaveCallback($varValue, DataContainer $dc): string
     {
-        $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferEntity::class);
-        $jobOfferTranslationRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferTranslation::class);
         if ('alias' === $dc->inputName) {
             $title = $dc->activeRecord->title;
-            $aliasExists = fn (string $alias): bool => $jobOfferRepository->doesAliasExist($alias, (int) $dc->activeRecord->id);
+            $aliasExists = fn (string $alias): bool => PlentaJobsBasicOfferModel::doesAliasExist($alias, (int) $dc->activeRecord->id);
         } else {
             $index = str_replace('translations__alias__', '', $dc->inputName);
             $title = Input::post('translations__title__'.$index);
             $lang = Input::post('translations__language__'.$index);
-            $aliasExists = fn (string $alias): bool => $jobOfferRepository->doesAliasExist($alias) || $jobOfferTranslationRepository->doesAliasExist($alias, (int) $dc->activeRecord->id, $lang);
+            $aliasExists = fn (string $alias): bool => PlentaJobsBasicOfferModel::doesAliasExist($alias) || PlentaJobsBasicOfferModel::doesAliasExist($alias, (int) $dc->activeRecord->id, $lang);
         }
 
         if (empty($varValue)) {
@@ -92,21 +84,19 @@ class TlPlentaJobsBasicOffer
 
     public function jobLocationOptionsCallback(): array
     {
-        $jobLocationRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
-
-        $jobLocations = $jobLocationRepository->findAll();
+        $jobLocations = PlentaJobsBasicJobLocationModel::findAll();
 
         $return = [];
         foreach ($jobLocations as $jobLocation) {
-            $return[$jobLocation->getId()] = $jobLocation->getOrganization()->getName().': ';
-            if ('onPremise' === $jobLocation->getJobTypeLocation()) {
-                $return[$jobLocation->getId()] .= $jobLocation->getStreetAddress();
+            $return[$jobLocation->id] = $jobLocation->getRelated('pid')->name.': ';
+            if ('onPremise' === $jobLocation->jobTypeLocation) {
+                $return[$jobLocation->id] .= $jobLocation->streetAddress;
 
-                if ('' !== $jobLocation->getAddressLocality()) {
-                    $return[$jobLocation->getId()] .= ($jobLocation->getStreetAddress() ? ', ' : '').$jobLocation->getAddressLocality();
+                if ('' !== $jobLocation->addressLocality) {
+                    $return[$jobLocation->id] .= ($jobLocation->streetAddress ? ', ' : '').$jobLocation->addressLocality;
                 }
             } else {
-                $return[$jobLocation->getId()] .= $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'].' ['.$jobLocation->getRequirementValue().']';
+                $return[$jobLocation->id] .= $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'].' ['.$jobLocation->requirementValue.']';
             }
         }
 
@@ -153,11 +143,9 @@ class TlPlentaJobsBasicOffer
         }
 
         if (null === $dc->activeRecord->datePosted && !empty(Input::post('published'))) {
-            $offerRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferEntity::class);
-            $offer = $offerRepository->find($dc->activeRecord->id);
-            $offer->setDatePosted(time());
-            $this->registry->getManager()->persist($offer);
-            $this->registry->getManager()->flush();
+            $offer = PlentaJobsBasicOfferModel::findByPk($dc->activeRecord->id);
+            $offer->datePosted = time();
+            $offer->save();
         }
     }
 
@@ -199,9 +187,6 @@ class TlPlentaJobsBasicOffer
     {
         $jobLocations = [];
         $locations = $this->jobLocationOptionsCallback();
-        if ($row['isRemote']) {
-            $jobLocations[] = $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
-        }
         $locationsArr = StringUtil::deserialize($row['jobLocation']);
         foreach ($locationsArr as $location) {
             $jobLocations[] = $locations[$location];

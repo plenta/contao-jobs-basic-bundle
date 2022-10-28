@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2022, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -17,6 +17,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
         'ctable' => ['tl_plenta_jobs_basic_job_location'],
         'switchToEdit' => true,
         'enableVersioning' => true,
+        'sql' => [
+            'keys' => [
+                'id' => 'primary',
+            ],
+        ],
     ],
 
     'list' => [
@@ -62,8 +67,18 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
     // Fields
     'fields' => [
         'id' => [
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'autoincrement' => true,
+            ],
         ],
         'tstamp' => [
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'default' => 0,
+            ],
         ],
         'name' => [
             'label' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_organization']['name'],
@@ -74,6 +89,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
                 'maxlength' => 255,
                 'tl_class' => 'w50',
                 'mandatory' => true,
+            ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
             ],
         ],
         'sameAs' => [
@@ -86,6 +106,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
                 'tl_class' => 'w50',
                 'rgxp' => 'url',
             ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
+            ],
         ],
         'logo' => [
             'exclude' => true,
@@ -94,6 +119,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
                 'fieldType' => 'radio',
                 'filesOnly' => true,
                 'extensions' => Contao\Config::get('validImageTypes'),
+            ],
+            'sql' => [
+                'type' => 'binary_string',
+                'notnull' => false,
+                'default' => null,
             ],
         ],
     ],

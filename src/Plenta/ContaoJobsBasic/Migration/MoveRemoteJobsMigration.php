@@ -29,7 +29,7 @@ class MoveRemoteJobsMigration extends \Contao\CoreBundle\Migration\AbstractMigra
 
     public function getName(): string
     {
-        return 'Plenta Jobs Basic Bundle 2.0 Update';
+        return 'Plenta Jobs Basic Bundle 2.0 Update - Remote jobs';
     }
 
     public function shouldRun(): bool

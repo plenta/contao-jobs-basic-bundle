@@ -18,6 +18,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
         'switchToEdit' => true,
         'markAsCopy' => 'title',
         'enableVersioning' => true,
+        'sql' => [
+            'keys' => [
+                'id' => 'primary',
+            ],
+        ],
     ],
 
     'list' => [
@@ -68,8 +73,18 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
     // Fields
     'fields' => [
         'id' => [
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'autoincrement' => true,
+            ],
         ],
         'tstamp' => [
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'default' => 0,
+            ],
         ],
         'title' => [
             'exclude' => true,
@@ -79,6 +94,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
                 'maxlength' => 255,
                 'tl_class' => 'w50',
                 'mandatory' => true,
+            ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
             ],
         ],
         'google_for_jobs_mapping' => [
@@ -91,6 +111,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
             'eval' => [
                 'tl_class' => 'w50',
                 'mandatory' => true,
+            ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 32,
+                'default' => 'OTHER',
             ],
         ],
         'translation' => [
@@ -111,6 +136,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
                 TlPlentaJobsBasicSettingsEmploymentType::class,
                 'translationSaveCallback',
             ]],
+            'sql' => 'JSON NULL default NULL',
         ],
     ],
 ];

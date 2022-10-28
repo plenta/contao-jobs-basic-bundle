@@ -11,6 +11,11 @@ declare(strict_types=1);
  */
 
 use Composer\InstalledVersions;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicSettingsEmploymentTypeModel;
+use Plenta\ContaoJobsBasic\EventListener\Contao\Hooks\ChangelanguageNavigationListener;
 
 array_insert($GLOBALS['BE_MOD'], 1, [
     'plenta_jobs_basic' => [
@@ -32,8 +37,11 @@ if (defined('TL_MODE') && TL_MODE == 'BE') {
     $GLOBALS['TL_CSS'][] = 'bundles/plentacontaojobsbasic/backend.css|static';
 }
 
-$GLOBALS['TL_MODELS'][Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel::getTable()] = Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel::class;
+$GLOBALS['TL_MODELS'][PlentaJobsBasicOfferModel::getTable()] = PlentaJobsBasicOfferModel::class;
+$GLOBALS['TL_MODELS'][PlentaJobsBasicJobLocationModel::getTable()] = PlentaJobsBasicJobLocationModel::class;
+$GLOBALS['TL_MODELS'][PlentaJobsBasicOrganizationModel::getTable()] = PlentaJobsBasicOrganizationModel::class;
+$GLOBALS['TL_MODELS'][PlentaJobsBasicSettingsEmploymentTypeModel::getTable()] = PlentaJobsBasicSettingsEmploymentTypeModel::class;
 
 if (InstalledVersions::isInstalled('terminal42/contao-changelanguage')) {
-    $GLOBALS['TL_HOOKS']['changelanguageNavigation'][] = [\Plenta\ContaoJobsBasic\EventListener\Contao\Hooks\ChangelanguageNavigationListener::class, 'onChangelanguageNavigation'];
+    $GLOBALS['TL_HOOKS']['changelanguageNavigation'][] = [ChangelanguageNavigationListener::class, 'onChangelanguageNavigation'];
 }

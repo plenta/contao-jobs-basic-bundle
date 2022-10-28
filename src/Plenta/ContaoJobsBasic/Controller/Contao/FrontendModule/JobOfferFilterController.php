@@ -18,10 +18,9 @@ use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\ModuleModel;
 use Contao\StringUtil;
 use Contao\Template;
-use Doctrine\Persistence\ManagerRegistry;
 use Haste\Form\Form as HasteForm;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicJobLocation;
-use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +36,6 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class JobOfferFilterController extends AbstractFrontendModuleController
 {
-    protected ManagerRegistry $registry;
     protected MetaFieldsHelper $metaFieldsHelper;
     protected EmploymentType $employmentTypeHelper;
     protected RouterInterface $router;
@@ -47,12 +45,10 @@ class JobOfferFilterController extends AbstractFrontendModuleController
     protected array $offers = [];
 
     public function __construct(
-        ManagerRegistry $registry,
         MetaFieldsHelper $metaFieldsHelper,
         EmploymentType $employmentTypeHelper,
         RouterInterface $router
     ) {
-        $this->registry = $registry;
         $this->metaFieldsHelper = $metaFieldsHelper;
         $this->employmentTypeHelper = $employmentTypeHelper;
         $this->router = $router;
@@ -107,15 +103,14 @@ class JobOfferFilterController extends AbstractFrontendModuleController
     public function getAllOffers($model): array
     {
         if (empty($this->offers)) {
-            $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
             $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
             if (!\is_array($moduleLocations)) {
                 $moduleLocations = [];
             }
-            $jobOffers = $jobOfferRepository->findAllPublishedByTypesAndLocation([], $moduleLocations);
+            $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation([], $moduleLocations);
 
             foreach ($jobOffers as $jobOffer) {
-                $this->collectEmploymenttypes($jobOffer->getEmploymentType());
+                $this->collectEmploymenttypes(json_decode($jobOffer->employmentType, true));
                 $this->collectLocations($jobOffer, $model);
                 $this->offers[] = $jobOffer;
             }
@@ -137,20 +132,20 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         }
     }
 
-    public function collectLocations(?TlPlentaJobsBasicOffer $jobOffer, $model): void
+    public function collectLocations(?PlentaJobsBasicOfferModel $jobOffer, $model): void
     {
-        $locations = StringUtil::deserialize($jobOffer->getJobLocation());
+        $locations = StringUtil::deserialize($jobOffer->jobLocation);
         $addedLocations = [];
         if (\is_array($locations)) {
             foreach ($locations as $locationId) {
-                /** @var TlPlentaJobsBasicJobLocation $location */
+                /** @var PlentaJobsBasicJobLocationModel $location */
                 $location = $this->getAllLocations($model)[(int) $locationId] ?? null;
 
                 if (null === $location) {
                     continue;
                 }
 
-                $name = 'onPremise' === $location->getJobTypeLocation() ? $location->getAddressLocality() : $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
+                $name = 'onPremise' === $location->jobTypeLocation ? $location->addressLocality : $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
 
                 if (\in_array($name, $addedLocations, true)) {
                     continue;
@@ -174,14 +169,14 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         $options = [];
 
         foreach ($this->getAllLocations($model) as $k) {
-            $name = 'onPremise' === $k->getJobTypeLocation() ? $k->getAddressLocality() : $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
+            $name = 'onPremise' === $k->jobTypeLocation ? $k->addressLocality : $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
             if (!$model->plentaJobsBasicShowAllLocations && !\array_key_exists($name, $this->counterLocation)) {
                 continue;
             }
             if (\array_key_exists($name, $options)) {
-                $options[$name] = $options[$name].'|'.$k->getId();
+                $options[$name] = $options[$name].'|'.$k->id;
             } else {
-                $options[$name] = $k->getId();
+                $options[$name] = $k->id;
             }
         }
 
@@ -197,16 +192,15 @@ class JobOfferFilterController extends AbstractFrontendModuleController
     public function getAllLocations($model): array
     {
         if (empty($this->locations)) {
-            $locationsRepository = $this->registry->getRepository(TlPlentaJobsBasicJobLocation::class);
             $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
             if (!\is_array($moduleLocations) || empty($moduleLocations)) {
-                $locations = $locationsRepository->findAll();
+                $locations = PlentaJobsBasicJobLocationModel::findAll();
             } else {
-                $locations = $locationsRepository->findBy(['id' => $moduleLocations]);
+                $locations = PlentaJobsBasicJobLocationModel::findMultipleByIds($moduleLocations);
             }
 
             foreach ($locations as $location) {
-                $this->locations[$location->getId()] = $location;
+                $this->locations[$location->id] = $location;
             }
         }
 

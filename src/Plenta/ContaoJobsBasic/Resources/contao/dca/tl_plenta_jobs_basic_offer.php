@@ -28,6 +28,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             TlPlentaJobsBasicOffer::class,
             'saveCallbackGlobal',
         ]],
+        'sql' => [
+            'keys' => [
+                'id' => 'primary',
+            ],
+        ],
     ],
 
     'list' => [
@@ -96,10 +101,20 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     'fields' => [
         'id' => [
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'autoincrement' => true,
+            ],
         ],
         'tstamp' => [
             'sorting' => true,
             'flag' => 6,
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'default' => 0,
+            ],
         ],
         'title' => [
             'inputType' => 'text',
@@ -110,6 +125,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'maxlength' => 255,
                 'tl_class' => 'w50',
             ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
+            ],
         ],
         'alias' => [
             'inputType' => 'text',
@@ -119,6 +139,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 TlPlentaJobsBasicOffer::class,
                 'aliasSaveCallback',
             ]],
+            'sql' => [
+                'type' => 'text',
+                'notnull' => false,
+                'default' => null,
+            ],
         ],
         'description' => [
             'exclude' => true,
@@ -128,6 +153,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'mandatory' => true,
                 'rte' => 'tinyMCE',
                 'tl_class' => 'clr',
+            ],
+            'sql' => [
+                'type' => 'text',
+                'notnull' => false,
+                'default' => null,
             ],
         ],
         'jobLocation' => [
@@ -144,6 +174,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'mandatory' => true,
                 'multiple' => true,
                 'chosen' => true,
+            ],
+            'sql' => [
+                'type' => 'text',
+                'notnull' => false,
+                'default' => null,
             ],
         ],
         'employmentType' => [
@@ -170,11 +205,17 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'multiple' => true,
                 'chosen' => true,
             ],
+            'sql' => 'json NULL default NULL',
         ],
         'validThrough' => [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+            'sql' => [
+                'type' => 'string',
+                'length' => 10,
+                'default' => '',
+            ],
         ],
         'directApply' => [
             'exclude' => true,
@@ -182,26 +223,15 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'eval' => ['tl_class' => 'w50 m12', 'isBoolean' => true],
             'sql' => ['type' => 'boolean', 'default' => true],
         ],
-        'url' => [
-            'label' => &$GLOBALS['TL_LANG']['MSC']['url'],
-            'exclude' => true,
-            'inputType' => 'text',
-            'eval' => [
-                'mandatory' => true,
-                'rgxp' => 'url',
-                'decodeEntities' => true,
-                'maxlength' => 255,
-                'dcaPicker' => true,
-                'addWizardClass' => false,
-                'tl_class' => 'w50',
-            ],
-            'sql' => "varchar(255) NOT NULL default ''",
-        ],
         'cssClass' => [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50'],
-            'sql' => "varchar(255) NOT NULL default ''",
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
+            ],
         ],
         'published' => [
             'exclude' => true,
@@ -220,11 +250,21 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+            'sql' => [
+                'type' => 'string',
+                'length' => 10,
+                'default' => '',
+            ],
         ],
         'stop' => [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['rgxp' => 'datim', 'datepicker' => true, 'tl_class' => 'w50 wizard'],
+            'sql' => [
+                'type' => 'string',
+                'length' => 10,
+                'default' => '',
+            ],
         ],
         'addImage' => [
             'exclude' => true,
@@ -236,24 +276,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'inputType' => 'fileTree',
             'eval' => ['fieldType' => 'radio', 'filesOnly' => true, 'mandatory' => true, 'tl_class' => 'clr'],
-        ],
-        'isRemote' => [
-            'exclude' => true,
-            'inputType' => 'checkbox',
-            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50 m12', 'isBoolean' => true],
-            'sql' => ['type' => 'boolean', 'default' => false],
-        ],
-        'isOnlyRemote' => [
-            'exclude' => true,
-            'inputType' => 'checkbox',
-            'eval' => ['tl_class' => 'clr w50'],
-            'sql' => ['type' => 'boolean', 'default' => false],
-        ],
-        'hasLocationRequirements' => [
-            'exclude' => true,
-            'inputType' => 'checkbox',
-            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50'],
-            'sql' => ['type' => 'boolean', 'default' => false],
+            'sql' => [
+                'type' => 'binary_string',
+                'notnull' => false,
+            ],
         ],
         'addSalary' => [
             'exclude' => true,
@@ -271,6 +297,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'mandatory' => true,
                 'tl_class' => 'w50',
             ],
+            'sql' => [
+                'type' => 'string',
+                'length' => 5,
+                'default' => 'EUR',
+            ],
         ],
         'salaryValue' => [
             'exclude' => true,
@@ -286,6 +317,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'save_callback' => [
                 [TlPlentaJobsBasicOffer::class, 'salaryOnSave'],
             ],
+            'sql' => [
+                'type' => 'integer',
+                'default' => 0,
+            ],
         ],
         'salaryMaxValue' => [
             'exclude' => true,
@@ -300,6 +335,10 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'save_callback' => [
                 [TlPlentaJobsBasicOffer::class, 'salaryOnSave'],
             ],
+            'sql' => [
+                'type' => 'integer',
+                'default' => 0,
+            ],
         ],
         'salaryUnit' => [
             'exclude' => true,
@@ -311,11 +350,14 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'tl_class' => 'w50',
             ],
             'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryUnits'],
+            'sql' => [
+                'type' => 'string',
+                'length' => 5,
+                'default' => '',
+            ],
         ],
-
         'translations' => [
             'inputType' => 'group',
-            'storage' => 'entity',
             'palette' => ['language', 'title', 'alias', 'description'],
             'fields' => [
                 'language' => [
@@ -326,6 +368,19 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                         'mandatory' => true,
                     ],
                 ],
+            ],
+            'sql' => [
+                'type' => 'text',
+                'notnull' => false,
+                'default' => null,
+            ],
+        ],
+        'datePosted' => [
+            'sql' => [
+                'type' => 'integer',
+                'unsigned' => true,
+                'notnull' => false,
+                'default' => null,
             ],
         ],
     ],
