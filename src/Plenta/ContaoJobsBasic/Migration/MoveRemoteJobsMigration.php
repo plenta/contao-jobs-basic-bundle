@@ -121,7 +121,7 @@ class MoveRemoteJobsMigration extends \Contao\CoreBundle\Migration\AbstractMigra
                 $this->database->update(
                     'tl_plenta_jobs_basic_offer',
                     [
-                        'isRemote' => '',
+                        'isRemote' => 0,
                         'applicantLocationRequirements' => null,
                         'jobLocation' => serialize($locations),
                     ],
