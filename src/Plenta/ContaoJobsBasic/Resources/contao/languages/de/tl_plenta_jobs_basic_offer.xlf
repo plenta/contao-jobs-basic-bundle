@@ -8,11 +8,20 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.settings_legend">
                 <target>Eigenschaften</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.translations_legend">
+                <target>Übersetzungen</target>
+            </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.title.0">
                 <target>Stellentitel</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.title.1">
                 <target>Bitte geben Sie den Stellentitel ein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.teaser.0">
+                <target>Teasertext</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.teaser.1">
+                <target>Der Teasertext kann in einer Listenansicht angezeigt werden.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.description.0">
                 <target>Stellenbeschreibung</target>
@@ -178,10 +187,28 @@
                 <target>Bitte wählen Sie eine Sprache aus der Liste aus.</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.directApply.0">
-                <target>Direkte Bewerbung </target>
+                <target>Direkte Bewerbung</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.directApply.1">
                 <target>Gibt an, ob die direkte Bewerbung für die Stellenanzeige möglich ist. Laut Google muss ein kurzer und unkomplizierter Bewerbungsvorgang ohne unnötige Zwischenschritte angeboten sein.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.pageTitle.0">
+                <target>Meta-Titel</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.pageTitle.1">
+                <target>Hier können Sie einen individuellen Meta-Titel eingeben, um den Stellentitel zu überschreiben.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.robots.0">
+                <target>Robots-Tag</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.robots.1">
+                <target>Hier legen Sie fest, wie Suchmaschinen die Stellenanzeige behandelt.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.pageDescription.0">
+                <target>Meta-Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.pageDescription.1">
+                <target>Hier können Sie eine individuelle Meta-Beschreibung eingeben, um die Stellenbeschreibung zu überschreiben.</target>
             </trans-unit>
         </body>
     </file>

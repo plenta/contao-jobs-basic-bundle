@@ -205,4 +205,11 @@ class TlPlentaJobsBasicOffer
 
         return $label;
     }
+
+    public function getSerpUrl(PlentaJobsBasicOfferModel $offer): string
+    {
+        $strSuffix = '/';
+
+        return sprintf(preg_replace('/%(?!s)/', '%%', $strSuffix), $offer->alias ?: $offer->id);
+    }
 }

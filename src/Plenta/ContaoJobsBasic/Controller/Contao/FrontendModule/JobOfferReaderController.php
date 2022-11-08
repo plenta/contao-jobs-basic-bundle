@@ -12,10 +12,12 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
+use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\Exception\PageNotFoundException;
+use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\Date;
 use Contao\Environment;
@@ -98,7 +100,31 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         // Fill the template with data from the parent record
         $template->jobOffer = $jobOffer;
         $template->jobOfferMeta = $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
-        $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($metaFields['title']));
+
+        $responseContext = System::getContainer()
+            ->get('contao.routing.response_context_accessor')
+            ->getResponseContext();
+
+        if ($responseContext && $responseContext->has(HtmlHeadBag::class)) {
+            $htmlHeadBag = $responseContext->get(HtmlHeadBag::class);
+            $htmlDecoder = System::getContainer()->get('contao.string.html_decoder');
+
+            if ($jobOffer->pageTitle) {
+                $htmlHeadBag->setTitle($jobOffer->pageTitle);
+            } elseif ($jobOffer->title) {
+                $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($jobOffer->title));
+            }
+
+            if ($jobOffer->pageDescription) {
+                $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($jobOffer->pageDescription));
+            } elseif ($jobOffer->description) {
+                $htmlHeadBag->setMetaDescription($htmlDecoder->htmlToPlainText($jobOffer->description));
+            }
+
+            if ($jobOffer->robots) {
+                $htmlHeadBag->setMetaRobots($jobOffer->robots);
+            }
+        }
 
         $content = '';
 
