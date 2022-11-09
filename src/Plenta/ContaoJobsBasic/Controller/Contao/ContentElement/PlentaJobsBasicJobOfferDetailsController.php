@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\ContentElement;
 
+use Contao\Config;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\Input;
-use Contao\ModuleModel;
 use Contao\StringUtil;
 use Contao\Template;
 use Doctrine\Persistence\ManagerRegistry;
@@ -67,7 +67,10 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
         $jobOfferRepository = $this->registry->getRepository(TlPlentaJobsBasicOffer::class);
         $jobOfferTransRepository = $this->registry->getRepository(TlPlentaJobsBasicOfferTranslation::class);
 
-        $alias = Input::get('auto_item');
+        if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
+            Input::setGet('items', Input::get('auto_item'));
+        }
+        $alias = Input::get('items');
 
         if (null === $alias) {
             return null;
