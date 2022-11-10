@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\Hooks;
 
 use Composer\InstalledVersions;
+use Contao\Config;
 use Contao\Input;
 use Doctrine\ORM\EntityManagerInterface;
 use Plenta\ContaoJobsBasic\Entity\TlPlentaJobsBasicOffer;
@@ -35,7 +36,10 @@ class ChangelanguageNavigationListener
     {
         $targetRoot = $event->getNavigationItem()->getRootPage();
         $language = $targetRoot->language;
-        $alias = Input::get('auto_item');
+        if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
+            Input::setGet('items', Input::get('auto_item'));
+        }
+        $alias = Input::get('items');
 
         if ($alias) {
             if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
