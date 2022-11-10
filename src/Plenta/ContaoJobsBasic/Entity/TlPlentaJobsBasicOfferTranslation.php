@@ -38,7 +38,7 @@ class TlPlentaJobsBasicOfferTranslation extends DCADefault
     protected ?string $alias = '';
 
     /**
-     * @ORM\Column(type="string", length="5", options={"default": ""})
+     * @ORM\Column(type="string", length=5, options={"default": ""})
      */
     protected ?string $language = 'en';
 
