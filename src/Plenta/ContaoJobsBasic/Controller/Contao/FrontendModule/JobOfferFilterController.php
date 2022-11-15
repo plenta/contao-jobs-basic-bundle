@@ -223,7 +223,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return $this->locations;
     }
 
-    public function getHeadlineHtml(string $content, string $type): string
+    public function getHeadlineHtml(?string $content, string $type): string
     {
         if (empty($content)) {
             return '';
