@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\Hooks;
 
+use Contao\Config;
 use Contao\Input;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -30,7 +31,10 @@ class ChangelanguageNavigationListener
     {
         $targetRoot = $event->getNavigationItem()->getRootPage();
         $language = $targetRoot->language;
-        $alias = Input::get('auto_item');
+        if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
+            Input::setGet('items', Input::get('auto_item'));
+        }
+        $alias = Input::get('items');
 
         if ($alias) {
             $jobOffer = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($alias);

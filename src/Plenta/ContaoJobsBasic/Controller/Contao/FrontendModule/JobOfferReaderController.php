@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
+use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
@@ -85,7 +86,10 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
         }
 
-        $alias = Input::get('auto_item');
+        if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
+            Input::setGet('items', Input::get('auto_item'));
+        }
+        $alias = Input::get('items');
 
         $jobOffer = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($alias);
 
