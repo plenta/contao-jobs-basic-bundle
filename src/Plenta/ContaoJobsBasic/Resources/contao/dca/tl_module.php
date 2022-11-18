@@ -66,7 +66,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSubmit'] = [
     'exclude' => true,
     'inputType' => 'text',
     'eval' => ['mandatory' => true, 'maxlength' => 64, 'tl_class' => 'w50 clr'],
-    'sql' => "varchar(64) NOT NULL default '' COLLATE ascii_bin",
+    'sql' => "varchar(64) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicShowTypes'] = [
