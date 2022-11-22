@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer;
 use Symfony\Component\Intl\Currencies;
 
@@ -92,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     'palettes' => [
         '__selector__' => ['addImage', 'addSalary'],
-        'default' => '{title_legend},title,alias,description,translations;{settings_legend},employmentType,validThrough,directApply;{location_legend},jobLocation;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        'default' => '{title_legend},title,alias,teaser,description;{translations_legend:hide},translations;{meta_legend},pageTitle,robots,pageDescription,serpPreview;{settings_legend},employmentType,validThrough,directApply;{location_legend},jobLocation;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC',
@@ -145,6 +146,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'default' => null,
             ],
         ],
+        'teaser' => [
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'textarea',
+            'eval' => ['rte'=>'tinyMCE', 'tl_class'=>'clr'],
+            'sql' => "text NULL"
+        ],
         'description' => [
             'exclude' => true,
             'search' => true,
@@ -159,6 +167,36 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'notnull' => false,
                 'default' => null,
             ],
+        ],
+        'pageTitle' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['maxlength'=>255, 'decodeEntities'=>true, 'tl_class'=>'w50'],
+            'sql' => "varchar(255) NOT NULL default ''"
+        ],
+        'robots' => [
+            'exclude' => true,
+            'inputType' => 'select',
+            'options' => ['index,follow', 'index,nofollow', 'noindex,follow', 'noindex,nofollow'],
+            'eval' => ['tl_class'=>'w50', 'includeBlankOption' => true],
+            'sql' => "varchar(32) NOT NULL default ''"
+        ],
+        'pageDescription' => [
+            'exclude' => true,
+            'inputType' => 'textarea',
+            'eval' => ['style'=>'height:60px', 'decodeEntities'=>true, 'tl_class'=>'clr'],
+            'sql' => "text NULL"
+        ],
+        'serpPreview' => [
+            'label' => &$GLOBALS['TL_LANG']['MSC']['serpPreview'],
+            'exclude' => true,
+            'inputType' => 'serpPreview',
+            'eval' => [
+                'url_callback' => [TlPlentaJobsBasicOffer::class, 'getSerpUrl'],
+                'titleFields' => ['pageTitle', 'title'],
+                'descriptionFields' => ['pageDescription', 'description']
+            ],
+            'sql' => null
         ],
         'jobLocation' => [
             'inputType' => 'select',
