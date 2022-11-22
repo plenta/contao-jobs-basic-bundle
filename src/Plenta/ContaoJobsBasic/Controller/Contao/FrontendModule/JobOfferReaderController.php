@@ -104,6 +104,8 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template->jobOfferMeta = $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
         $objPage->pageTitle = strip_tags(StringUtil::stripInsertTags($metaFields['title']));
 
+        $this->buildCanonical($request, $jobOffer);
+
         $content = '';
 
         if (\in_array('title', $parts, true)) {
@@ -158,6 +160,13 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         }
 
         return $template->getResponse();
+    }
+
+    private function buildCanonical(Request $request, PlentaJobsBasicOfferModel $jobOffer): void
+    {
+        if ($jobOffer->getReaderPage($request->getLocale())->id !== $this->getPageModel()->id) {
+            $GLOBALS['TL_HEAD'][] = '<link rel="canonical" href="'.$jobOffer->getAbsoluteUrl($request->getLocale()).'" />';
+        }
     }
 
     private function getContentElements($request, $parentId): ?string

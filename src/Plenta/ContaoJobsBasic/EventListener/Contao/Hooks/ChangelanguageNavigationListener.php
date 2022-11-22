@@ -45,11 +45,10 @@ class ChangelanguageNavigationListener
                 } else {
                     $translation = $jobOffer->getTranslation($language);
                     if (!$translation) {
-                        $event->skipInNavigation();
-
-                        return;
+                        $newAlias = $jobOffer->alias;
+                    } else {
+                        $newAlias = $translation['alias'];
                     }
-                    $newAlias = $translation['alias'];
                 }
 
                 $event->getUrlParameterBag()->setUrlAttribute('items', $newAlias);

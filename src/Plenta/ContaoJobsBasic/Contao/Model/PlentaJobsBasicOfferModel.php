@@ -13,7 +13,10 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\Contao\Model;
 
 use Composer\InstalledVersions;
+use Contao\Config;
 use Contao\Model;
+use Contao\ModuleModel;
+use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 
@@ -25,6 +28,8 @@ class PlentaJobsBasicOfferModel extends Model
      * @var string
      */
     protected static $strTable = 'tl_plenta_jobs_basic_offer';
+
+    protected $readerPage = [];
 
     public static function findAllPublishedByTypesAndLocation(array $types, array $locations)
     {
@@ -113,27 +118,78 @@ class PlentaJobsBasicOfferModel extends Model
     public static function findPublishedByIdOrAlias($alias)
     {
         $jobOffer = self::findOneBy(['(id = ? OR alias = ?)', 'published = ?'], [$alias, $alias, 1]);
+        $requestStack = System::getContainer()->get('request_stack');
+        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
+            $language = $requestStack->getMainRequest()->getLocale();
+        } else {
+            $language = $requestStack->getMasterRequest()->getLocale();
+        }
+
+        if ($jobOffer && $jobOffer->getTranslation($language)) {
+            $jobOffer = null;
+        }
 
         if (!$jobOffer) {
-            $requestStack = System::getContainer()->get('request_stack');
-            if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
-                $language = $requestStack->getMainRequest()->getLocale();
-            } else {
-                $language = $requestStack->getMasterRequest()->getLocale();
-            }
-
             $offers = self::findBy(['translations LIKE ?', 'published = ?'], ['%"'.$alias.'"%', 1]);
-            foreach ($offers as $offer) {
-                $translations = StringUtil::deserialize($offer->translations);
-                foreach ($translations as $translation) {
-                    if ($translation['language'] === $language && $translation['alias'] === $alias) {
-                        $jobOffer = $offer;
-                        break 2;
+            if ($offers) {
+                foreach ($offers as $offer) {
+                    $translations = StringUtil::deserialize($offer->translations);
+                    foreach ($translations as $translation) {
+                        if ($translation['language'] === $language && $translation['alias'] === $alias) {
+                            $jobOffer = $offer;
+                            break 2;
+                        }
                     }
                 }
             }
         }
 
         return $jobOffer;
+    }
+
+    public function getReaderPage($language): ?PageModel
+    {
+        if (empty($this->readerPage[$language])) {
+            $modules = ModuleModel::findByType('plenta_jobs_basic_offer_list');
+            foreach ($modules as $module) {
+                $jobLocations = StringUtil::deserialize($this->jobLocation);
+                $locations = StringUtil::deserialize($module->plentaJobsBasicLocations);
+                $isCorrectModule = false;
+                if (\is_array($locations)) {
+                    foreach ($locations as $location) {
+                        if (\in_array($location, $jobLocations, true)) {
+                            $isCorrectModule = true;
+                            break;
+                        }
+                    }
+                } else {
+                    $isCorrectModule = true;
+                }
+                if ($isCorrectModule) {
+                    $page = PageModel::findWithDetails($module->jumpTo);
+                    if ($page->rootLanguage === $language) {
+                        $this->readerPage[$language] = $page;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $this->readerPage[$language] ?? null;
+    }
+
+    public function getAbsoluteUrl($language)
+    {
+        $objPage = $this->getReaderPage($language);
+        if (!$objPage) {
+            return null;
+        }
+        $alias = $this->alias;
+        if ($translation = $this->getTranslation($language)) {
+            $alias = $translation['alias'];
+        }
+
+        $params = (Config::get('useAutoItem') ? '/' : '/items/').($alias ?: $this->id);
+        return ampersand($objPage->getAbsoluteUrl($params));
     }
 }

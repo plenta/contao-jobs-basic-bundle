@@ -69,8 +69,11 @@ class EmploymentType
     {
         if (null === $this->customEmploymentTypes) {
             $employmentTypes = [];
-            foreach (PlentaJobsBasicSettingsEmploymentTypeModel::findAll() as $employmentType) {
-                $employmentTypes[$employmentType->id] = $employmentType;
+            $objEmploymentTypes = PlentaJobsBasicSettingsEmploymentTypeModel::findAll();
+            if ($objEmploymentTypes) {
+                foreach ($objEmploymentTypes as $employmentType) {
+                    $employmentTypes[$employmentType->id] = $employmentType;
+                }
             }
             $this->customEmploymentTypes = $employmentTypes;
         }
