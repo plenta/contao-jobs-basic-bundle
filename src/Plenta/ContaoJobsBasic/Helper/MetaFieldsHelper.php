@@ -22,6 +22,7 @@ use Contao\StringUtil;
 use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class MetaFieldsHelper
@@ -57,6 +58,7 @@ class MetaFieldsHelper
         $metaFields['title'] = Controller::replaceInsertTags($translation['title'] ?? $jobOffer->title);
         $metaFields['description'] = Controller::replaceInsertTags($translation['description'] ?? $jobOffer->description);
         $metaFields['alias'] = $translation['alias'] ?? $jobOffer->alias;
+        $metaFields['company'] = $this->formatCompany($jobOffer);
         if ($imageSize && $jobOffer->addImage) {
             $file = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
             if ($file) {
@@ -100,5 +102,19 @@ class MetaFieldsHelper
         }
 
         return implode(', ', $locationsTemp);
+    }
+
+    public function formatCompany(PlentaJobsBasicOfferModel $jobOffer): string
+    {
+        $company = [];
+        $locations = StringUtil::deserialize($jobOffer->jobLocation);
+        foreach ($locations as $location) {
+            $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            if (!in_array($objLocation->pid, $company)) {
+                $company[$objLocation->pid] = PlentaJobsBasicOrganizationModel::findByPk($objLocation->pid)->name;
+            }
+        }
+
+        return implode(', ', $company);
     }
 }

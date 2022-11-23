@@ -20,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasic
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocations,plentaJobsBasicNoFilter;
+    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocations,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize;
     {redirect_legend},jumpTo;
     {template_legend:hide},customTpl;
     {expert_legend:hide},cssID'
@@ -200,4 +200,15 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicHideRemoteRequirements
     'exclude' => true,
     'inputType' => 'checkbox',
     'sql' => "char(1) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicListParts'] = [
+    'exclude' => true,
+    'inputType' => 'checkbox',
+    'options' => ['image', 'teaser', 'company',  'jobLocation', 'publicationDate', 'employmentType'],
+    'eval' => [
+        'multiple' => true,
+    ],
+    'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicReaderTemplate']['parts'],
+    'sql' => "varchar(255) COLLATE ascii_bin NOT NULL default '".serialize(['jobLocation', 'publicationDate', 'employmentType'])."'",
 ];

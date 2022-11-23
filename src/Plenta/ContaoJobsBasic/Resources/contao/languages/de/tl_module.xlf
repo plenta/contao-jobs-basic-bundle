@@ -152,6 +152,15 @@
             <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.jobLocation">
                 <target>Arbeitsort</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.teaser">
+                <target>Teaser-Text</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.publicationDate">
+                <target>Veröffentlichungsdatum</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.company">
+                <target>Unternehmen</target>
+            </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.backlink">
                 <target>Zurück-Link</target>
             </trans-unit>
@@ -190,6 +199,12 @@
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicHideRemoteRequirements.1">
                 <target>Die Ortseinschränkungen für Home-Office werden nicht angezeigt.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicListParts.0">
+                <target>Stelleneigenschaften</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicListParts.1">
+                <target>Bitte wählen Sie die Eigenschaften aus, die in der Listenansicht angezeigt werden sollen.</target>
             </trans-unit>
         </body>
     </file>

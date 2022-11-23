@@ -167,8 +167,13 @@ class JobOfferListController extends AbstractFrontendModuleController
             foreach ($jobOffers as $jobOffer) {
                 $itemTemplate = new FrontendTemplate('plenta_jobs_basic_offer_default');
                 $itemTemplate->jobOffer = $jobOffer;
-                $itemTemplate->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer);
+                $itemTemplate->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
                 $itemTemplate->headlineUnit = $model->plentaJobsBasicHeadlineTag;
+                $parts = StringUtil::deserialize($model->plentaJobsBasicListParts);
+                if (!is_array($parts)) {
+                    $parts = [];
+                }
+                $itemTemplate->parts = $parts;
 
                 $itemTemplate->link = $this->generateJobOfferUrl($jobOffer, $model);
 
