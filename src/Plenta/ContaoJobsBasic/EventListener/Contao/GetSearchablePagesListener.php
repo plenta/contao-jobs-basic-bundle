@@ -22,7 +22,8 @@ class GetSearchablePagesListener
 {
     public function __invoke(array $pages, $rootId = null, bool $isSitemap = false, string $language = null): array
     {
-        $jobs = PlentaJobsBasicOfferModel::findBy('published', 1);
+        $time = time();
+        $jobs = PlentaJobsBasicOfferModel::findBy(['published = ?', '(start = ? OR start > ?)', '(stop = ? or stop < ?)'], [1, '', $time, '', $time]);
         if ($jobs) {
             foreach ($jobs as $job) {
                 if ($page = $job->getAbsoluteUrl($language)) {
