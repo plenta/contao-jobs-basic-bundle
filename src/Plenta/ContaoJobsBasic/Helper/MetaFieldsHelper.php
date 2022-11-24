@@ -59,6 +59,7 @@ class MetaFieldsHelper
         $metaFields['description'] = Controller::replaceInsertTags($translation['description'] ?? $jobOffer->description);
         $metaFields['alias'] = $translation['alias'] ?? $jobOffer->alias;
         $metaFields['company'] = $this->formatCompany($jobOffer);
+        $metaFields['teaser'] = Controller::replaceInsertTags($jobOffer->teaser);
         if ($imageSize && $jobOffer->addImage) {
             $file = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
             if ($file) {

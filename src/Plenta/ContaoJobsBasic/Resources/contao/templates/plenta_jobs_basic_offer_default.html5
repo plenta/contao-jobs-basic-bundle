@@ -1,4 +1,4 @@
-<div class="ce_plenta_jobs_basic_offer_default block<?php if ($this->jobOffer->cssClass): ?> <?= $this->jobOffer->cssClass ?><?php endif; ?>">
+<div class="layout_default block<?php if ($this->jobOffer->cssClass): ?> <?= $this->jobOffer->cssClass ?><?php endif; ?>">
     <?php if (in_array('image', $this->parts)): ?>
         <div class="image">
             <?= $this->jobOfferMeta['image']; ?>
@@ -8,17 +8,23 @@
         <<?= $this->headlineUnit; ?> class="title">
             <a href="<?= $this->link; ?>"><?= $this->jobOfferMeta['title']; ?></a>
         </<?= $this->headlineUnit; ?>>
-    <?php if (in_array('company', $this->parts)): ?>
+        <?php if (in_array('company', $this->parts)): ?>
         <div class="organizations">
             <?= $this->jobOfferMeta['company']; ?>
         </div>
-    <?php endif; ?>
-    <?php if (in_array('jobLocation', $this->parts)): ?>
+        <?php endif; ?>
+        <?php if (in_array('jobLocation', $this->parts)): ?>
         <div class="job-location">
             <?= $this->jobOfferMeta['addressLocalityFormatted']; ?>
         </div>
-    <?php endif; ?>
+        <?php endif; ?>
+        <?php if (in_array('teaser', $this->parts)): ?>
+        <div class="job-teaser">
+            <?= $this->jobOfferMeta['teaser']; ?>
+        </div>
+        <?php endif; ?>
     </div>
+    <?php if (in_array('publicationDate', $this->parts) || in_array('employmentType', $this->parts)): ?>
     <div class="second-column">
         <?php if (in_array('publicationDate', $this->parts)): ?>
         <div class="publication-date">
@@ -31,4 +37,5 @@
         </div>
         <?php endif; ?>
     </div>
+    <?php endif; ?>
 </div>
