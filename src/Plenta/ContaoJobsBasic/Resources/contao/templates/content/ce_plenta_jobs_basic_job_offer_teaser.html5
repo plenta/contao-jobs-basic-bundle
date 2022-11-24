@@ -23,6 +23,11 @@
             <?= $this->jobOfferMeta['addressLocalityFormatted']; ?>
         </div>
     <?php endif; ?>
+    <?php if (in_array('teaser', $this->parts)): ?>
+        <div class="job-teaser">
+            <?= $this->jobOfferMeta['teaser']; ?>
+        </div>
+    <?php endif; ?>
 </div>
 <div class="second-column">
     <?php if (in_array('publicationDate', $this->parts)): ?>
