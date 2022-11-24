@@ -19,7 +19,6 @@ use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\Template;
-use Doctrine\Persistence\ManagerRegistry;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,8 +29,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementController
 {
-    protected ManagerRegistry $registry;
-
     protected MetaFieldsHelper $metaFieldsHelper;
 
     protected ?PlentaJobsBasicOfferModel $jobOffer = null;
@@ -39,10 +36,8 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
     protected ?array $metaFields = null;
 
     public function __construct(
-        ManagerRegistry $registry,
         MetaFieldsHelper $metaFieldsHelper
     ) {
-        $this->registry = $registry;
         $this->metaFieldsHelper = $metaFieldsHelper;
     }
 

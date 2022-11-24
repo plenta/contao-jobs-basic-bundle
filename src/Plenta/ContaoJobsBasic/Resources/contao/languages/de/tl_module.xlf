@@ -6,7 +6,7 @@
                 <target>Überschriftentyp</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicHeadlineTag.1">
-                <target>Bitte wählen Sie ein Überschriftentyp aus.</target>
+                <target>Bitte wählen Sie einen Überschriftentyp aus.</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicSubmit.0">
                 <target>Bezeichnung der Absende-Schaltfläche</target>
@@ -133,42 +133,6 @@
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.jobLocation__DESC">
                 <target>Standort (absteigend)</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.title">
-                <target>Stellentitel</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.image">
-                <target>Stellenbild</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.description">
-                <target>Stellenbeschreibung</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.employmentType">
-                <target>Stellenart</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.validThrough">
-                <target>Bewerbungsfrist</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.jobLocation">
-                <target>Arbeitsort</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.teaser">
-                <target>Teaser-Text</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.publicationDate">
-                <target>Veröffentlichungsdatum</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.company">
-                <target>Unternehmen</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.backlink">
-                <target>Zurück-Link</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.elements">
-                <target>Inhaltselemente</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicReaderTemplate.parts.salary">
-                <target>Gehalt</target>
             </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicTemplateParts.0">
                 <target>Template-Teile</target>

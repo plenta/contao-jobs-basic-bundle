@@ -18,4 +18,9 @@ class JobOfferFields
     {
         return ['title', 'tstamp', 'datePosted', 'jobLocation'];
     }
+
+    public static function getParts()
+    {
+        return ['image', 'teaser', 'company',  'jobLocation', 'publicationDate', 'employmentType'];
+    }
 }

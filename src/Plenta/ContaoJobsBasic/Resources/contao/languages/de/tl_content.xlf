@@ -10,6 +10,24 @@
                 <source>Job offer details</source>
                 <target>Bitte wählen sie die auszugebenden Eigenschaften.</target>
             </trans-unit>
+            <trans-unit id="tl_content.plentaJobsBasicHeadlineTag.0">
+                <target>Überschriftentyp (Anzeigen-Titel)</target>
+            </trans-unit>
+            <trans-unit id="tl_content.plentaJobsBasicHeadlineTag.1">
+                <target>Bitte wählen Sie einen Überschriftentyp aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_content.plentaJobsBasicJobOffer.0">
+                <target>Stellenanzeige</target>
+            </trans-unit>
+            <trans-unit id="tl_content.plentaJobsBasicJobOffer.1">
+                <target>Bitte wählen Sie eine Stellenanzeige aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_content.plentaJobsBasicJobOfferTeaserParts.0">
+                <target>Eigenschaften</target>
+            </trans-unit>
+            <trans-unit id="tl_content.plentaJobsBasicJobOfferTeaserParts.1">
+                <target>Bitte wählen Sie die Eigenschaften aus, die angezeigt werden sollen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -172,7 +172,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicTemplateParts'] = [
     'inputType' => 'checkboxWizard',
     'options' => ['title', 'image', 'elements', 'description', 'employmentType', 'validThrough', 'salary', 'jobLocation', 'backlink'],
     'eval' => ['multiple' => true, 'tl_class' => 'clr'],
-    'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicReaderTemplate']['parts'],
+    'reference' => &$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['offerParts'],
     'sql' => 'mediumtext null',
 ];
 
@@ -205,10 +205,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicHideRemoteRequirements
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicListParts'] = [
     'exclude' => true,
     'inputType' => 'checkbox',
-    'options' => ['image', 'teaser', 'company',  'jobLocation', 'publicationDate', 'employmentType'],
+    'options' => JobOfferFields::getParts(),
     'eval' => [
         'multiple' => true,
     ],
-    'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicReaderTemplate']['parts'],
+    'reference' => &$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['offerParts'],
     'sql' => "varchar(255) COLLATE ascii_bin NOT NULL default '".serialize(['jobLocation', 'publicationDate', 'employmentType'])."'",
 ];

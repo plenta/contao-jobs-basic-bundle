@@ -35,6 +35,12 @@
             <trans-unit id="CTE.plenta_jobs_basic_job_offer_details.1">
                 <target>Details zum Jobangebot</target>
             </trans-unit>
+            <trans-unit id="CTE.plenta_jobs_basic_job_offer_teaser.0">
+                <target>Stellenanzeigen-Teaser</target>
+            </trans-unit>
+            <trans-unit id="CTE.plenta_jobs_basic_job_offer_teaser.1">
+                <target>Stellenanzeigen-Teaser</target>
+            </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.emptyList">
                 <target>Es sind momentan keine Stellenanzeigen vorhanden.</target>
             </trans-unit>
@@ -52,6 +58,42 @@
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.remote_in">
                 <target>Remote in</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.title">
+                <target>Stellentitel</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.image">
+                <target>Stellenbild</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.description">
+                <target>Stellenbeschreibung</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.employmentType">
+                <target>Stellenart</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.validThrough">
+                <target>Bewerbungsfrist</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.jobLocation">
+                <target>Arbeitsort</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.teaser">
+                <target>Teaser-Text</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.publicationDate">
+                <target>Veröffentlichungsdatum</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.company">
+                <target>Unternehmen</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.backlink">
+                <target>Zurück-Link</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.elements">
+                <target>Inhaltselemente</target>
+            </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.salary">
+                <target>Gehalt</target>
             </trans-unit>
         </body>
     </file>
