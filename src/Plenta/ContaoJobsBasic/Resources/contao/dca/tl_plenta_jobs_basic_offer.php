@@ -396,7 +396,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         ],
         'translations' => [
             'inputType' => 'group',
-            'palette' => ['language', 'title', 'alias', 'description'],
+            'palette' => ['language', 'title', 'alias', 'teaser', 'description', 'pageTitle', 'pageDescription'],
             'fields' => [
                 'language' => [
                     'inputType' => 'select',
