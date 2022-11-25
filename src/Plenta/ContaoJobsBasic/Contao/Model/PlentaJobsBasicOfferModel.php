@@ -184,12 +184,29 @@ class PlentaJobsBasicOfferModel extends Model
         if (!$objPage) {
             return null;
         }
+        $params = $this->getParams($language);
+
+        return ampersand($objPage->getAbsoluteUrl($params));
+    }
+
+    public function getFrontendUrl($language)
+    {
+        $objPage = $this->getReaderPage($language);
+        if (!$objPage) {
+            return null;
+        }
+        $params = $this->getParams($language);
+
+        return ampersand($objPage->getAbsoluteUrl($params));
+    }
+
+    protected function getParams($language)
+    {
         $alias = $this->alias;
         if ($translation = $this->getTranslation($language)) {
             $alias = $translation['alias'];
         }
 
-        $params = (Config::get('useAutoItem') ? '/' : '/items/').($alias ?: $this->id);
-        return ampersand($objPage->getAbsoluteUrl($params));
+        return (Config::get('useAutoItem') ? '/' : '/items/').($alias ?: $this->id);
     }
 }
