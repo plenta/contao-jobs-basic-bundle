@@ -84,7 +84,7 @@
                 <target>Vor Ort</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_job_location.jobTypeLocationOptions.Telecommute">
-                <target>Remote</target>
+                <target>Homeoffice</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_job_location.type_legend">
                 <target>Typen-Einstellungen</target>

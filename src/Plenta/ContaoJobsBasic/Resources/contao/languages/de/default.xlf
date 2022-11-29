@@ -54,7 +54,7 @@
                 <target>Supporter werden</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.remote">
-                <target>Remote</target>
+                <target>Homeoffice</target>
             </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.remote_in">
                 <target>Remote in</target>
