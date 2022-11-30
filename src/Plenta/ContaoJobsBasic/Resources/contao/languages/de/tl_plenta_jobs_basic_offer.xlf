@@ -165,10 +165,10 @@
                 <target>Jahr</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.remoteIsPossible">
-                <target>Diese Stelle kann im Home-Office ausgeübt werden.</target>
+                <target>Homeoffice</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.remoteIsPossibleWithRequirements">
-                <target>Diese Stelle kann an folgenden Orten im Home-Office ausgeübt werden: %s</target>
+                <target>Homeoffice (%s)</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.meta_legend">
                 <source>Meta data</source>

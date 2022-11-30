@@ -19,7 +19,7 @@
                 <?php $remote[] = $location->requirementValue; ?>
             <?php endif; ?>
         <?php endforeach; ?>
-    <?php if (!empty($remote)): ?>
+    <?php if (!empty($remote)): dump($remote); ?>
         <div class="job_location">
             <?= sprintf($this->trans('tl_plenta_jobs_basic_offer.remoteIsPossible'.(!$this->plentaJobsBasicHideRemoteRequirements ? 'WithRequirements' : '')), implode(', ', $remote)); ?>
         </div>
