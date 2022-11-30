@@ -31,7 +31,7 @@ class InsertTagListener
     /**
      * @var string|null
      */
-    protected ?string $autoItem;
+    protected ?string $autoItem = null;
 
     public function __construct(RequestStack $requestStack)
     {
