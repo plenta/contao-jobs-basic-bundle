@@ -60,7 +60,7 @@
                 <target>Name</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_job_location.requirementValue.1">
-                <target>Bitte geben Sie den Namen der Verwaltungseinheit an (z.B. Deutschland, Bayern oder Hannover).</target>
+                <target>Bitte geben Sie den Namen der Verwaltungseinheit an (z.B. Deutschland).</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_job_location.administrativeAreas.Country">
                 <target>Land</target>
