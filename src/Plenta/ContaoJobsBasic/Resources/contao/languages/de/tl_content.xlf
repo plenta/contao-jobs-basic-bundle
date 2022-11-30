@@ -28,6 +28,9 @@
             <trans-unit id="tl_content.plentaJobsBasicJobOfferTeaserParts.1">
                 <target>Bitte wählen Sie die Eigenschaften aus, die angezeigt werden sollen.</target>
             </trans-unit>
+            <trans-unit id="tl_content.plenta_jobs_basic_legend">
+                <target>Stellenanzeige</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

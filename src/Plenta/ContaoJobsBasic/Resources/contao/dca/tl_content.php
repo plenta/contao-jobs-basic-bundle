@@ -13,7 +13,7 @@ declare(strict_types=1);
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\JobOfferFields;
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['plenta_jobs_basic_job_offer_details'] = '{type_legend},type,plenta_jobs_basic_job_offer_details;{image_legend},size;{expert_legend},guests,cssID;{invisible_legend:hide},invisible,start,stop';
-$GLOBALS['TL_DCA']['tl_content']['palettes']['plenta_jobs_basic_job_offer_teaser'] = '{type_legend},type;{plenta_jobs_basic_legend},text,plentaJobsBasicHeadlineTag,plentaJobsBasicJobOffer,plentaJobsBasicJobOfferTeaserParts;{image_legend},size;{expert_legend},guests,cssID;{invisible_legend:hide},invisible,start,stop';
+$GLOBALS['TL_DCA']['tl_content']['palettes']['plenta_jobs_basic_job_offer_teaser'] = '{type_legend},type,headline;{plenta_jobs_basic_legend},text,plentaJobsBasicHeadlineTag,plentaJobsBasicJobOffer,plentaJobsBasicJobOfferTeaserParts;{image_legend},size;{expert_legend},guests,cssID;{invisible_legend:hide},invisible,start,stop';
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['plenta_jobs_basic_job_offer_details'] = [
     'exclude' => true,

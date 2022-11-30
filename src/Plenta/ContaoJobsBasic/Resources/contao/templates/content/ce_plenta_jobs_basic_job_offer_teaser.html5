@@ -1,4 +1,10 @@
 <div class="ce_plenta_jobs_basic_job_offer_teaser block<?php if ($this->jobOffer->cssClass): ?> <?= $this->jobOffer->cssClass ?><?php endif; ?>">
+    <?php $this->block('headline'); ?>
+    <?php if ($this->headline): ?>
+    <<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>>
+    <?php endif; ?>
+    <?php $this->endblock(); ?>
+
     <?php if (!empty($this->text)): ?>
         <div class="text">
             <?= $this->text ?>
