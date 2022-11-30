@@ -204,7 +204,10 @@
                 <target>Year</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.remoteIsPossible">
-                <target>This job can be worked remotely.</target>
+                <target>Remote</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.remoteIsPossibleWithRequirements">
+                <target>Remote (%s)</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.meta_legend">
                 <source>Meta data</source>
