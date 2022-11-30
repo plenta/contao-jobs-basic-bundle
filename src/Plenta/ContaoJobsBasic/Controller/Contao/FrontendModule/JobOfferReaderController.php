@@ -292,6 +292,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             }
         }
 
+        $template->showCompanyName = $model->plentaJobsBasicShowCompany;
         $template->organizations = $organizations;
         $template->locations = $locationsTpl;
         $template->imgs = $imgs;

@@ -5,7 +5,9 @@
             <?php if (array_key_exists($key, $this->imgs)): ?>
                 <?= $this->imgs[$key] ?>
             <?php endif; ?>
+        <?php if ($this->showCompanyName): ?>
         <strong><?= $this->organizations[$key]->name ?></strong>
+        <?php endif; ?>
     </div>
     <?php $remote = []; foreach ($locations as $location): ?>
         <?php if ($location->jobTypeLocation === 'onPremise'): ?>
@@ -19,7 +21,7 @@
                 <?php $remote[] = $location->requirementValue; ?>
             <?php endif; ?>
         <?php endforeach; ?>
-    <?php if (!empty($remote)): dump($remote); ?>
+    <?php if (!empty($remote)): ?>
         <div class="job_location">
             <?= sprintf($this->trans('tl_plenta_jobs_basic_offer.remoteIsPossible'.(!$this->plentaJobsBasicHideRemoteRequirements ? 'WithRequirements' : '')), implode(', ', $remote)); ?>
         </div>

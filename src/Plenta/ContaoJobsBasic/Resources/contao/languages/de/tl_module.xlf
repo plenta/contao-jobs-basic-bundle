@@ -146,6 +146,12 @@
             <trans-unit id="tl_module.plentaJobsBasicLocations.1">
                 <target>Bitte wählen Sie die Standorte aus, die angezeigt werden sollen. Wenn kein Standort ausgewählt ist, werden alle angezeigt.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowCompany.0">
+                <target>Unternehmensname anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowCompany.1">
+                <target>Bitte wählen Sie diese Option nur aus, wenn dar Name des Unternehmens im Arbeitsort-Teil der Jobdetailansicht angezeigt werden soll.</target>
+            </trans-unit>
             <trans-unit id="tl_module.plentaJobsBasicShowLogo.0">
                 <target>Unternehmens-Logo anzeigen</target>
             </trans-unit>
