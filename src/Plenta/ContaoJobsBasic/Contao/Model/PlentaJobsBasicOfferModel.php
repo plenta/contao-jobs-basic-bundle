@@ -31,7 +31,7 @@ class PlentaJobsBasicOfferModel extends Model
 
     protected $readerPage = [];
 
-    public static function findAllPublishedByTypesAndLocation(array $types, array $locations)
+    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, string $sortBy = null, string $order = null)
     {
         $time = time();
 
@@ -63,8 +63,19 @@ class PlentaJobsBasicOfferModel extends Model
 
             $columns[] = '('.implode(' OR ', $criteria).')';
         }
+        
+        if ( !empty($sortBy) && in_array($sortBy, ['title', 'tstamp', 'datePosted']) ) {
+            if ( !empty($order) && in_array($order, ['ASC', 'DESC'])) {
+                $sortDirection = $order;
+            } else {
+                $sortDirection = 'ASC';
+            }
+            $arrOptions = ['order' => 'title '. $sortDirection];
+        } else {
+            $arrOptions = [];
+        }
 
-        return self::findBy($columns, $values);
+        return self::findBy($columns, $values, $arrOptions);
     }
 
     public static function doesAliasExist($alias, $id = null, $language = null): bool
