@@ -63,14 +63,14 @@ class PlentaJobsBasicOfferModel extends Model
 
             $columns[] = '('.implode(' OR ', $criteria).')';
         }
-        
-        if ( !empty($sortBy) && in_array($sortBy, ['title', 'tstamp', 'datePosted']) ) {
-            if ( !empty($order) && in_array($order, ['ASC', 'DESC'])) {
+
+        if (!empty($sortBy) && \in_array($sortBy, ['title', 'tstamp', 'datePosted'], true)) {
+            if (!empty($order) && \in_array($order, ['ASC', 'DESC'], true)) {
                 $sortDirection = $order;
             } else {
                 $sortDirection = 'ASC';
             }
-            $arrOptions = ['order' => 'title '. $sortDirection];
+            $arrOptions = ['order' => $sortBy.' '.$sortDirection];
         } else {
             $arrOptions = [];
         }
@@ -166,7 +166,7 @@ class PlentaJobsBasicOfferModel extends Model
                 $jobLocations = StringUtil::deserialize($this->jobLocation);
                 $locations = StringUtil::deserialize($module->plentaJobsBasicLocations);
                 $isCorrectModule = false;
-                if (\is_array($locations)) {
+                if (\is_array($locations) && \is_array($jobLocations)) {
                     foreach ($locations as $location) {
                         if (\in_array($location, $jobLocations, true)) {
                             $isCorrectModule = true;
