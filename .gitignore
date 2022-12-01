@@ -25,12 +25,6 @@ nbproject/
 composer.phar
 gulp.config.js
 /node_modules/
-/app/Resources/contao/config/runonce.php
+/app/Resources/contao/config/runonce*
 .phpunit.result.cache
 
-# Contao Manager
-/contao-manager/
-
-# Custom
-/packages
-composer.json
