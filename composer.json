@@ -22,7 +22,7 @@
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
         "contao/conflicts": "@dev",
-        "contao/core-bundle": "^4.9",
+        "contao/core-bundle": "^4.13",
         "codefog/contao-haste": "^4.25",
         "doctrine/orm": "^2.6.4",
         "doctrine/data-fixtures": "^1.4.2",
@@ -31,7 +31,7 @@
         "symfony/intl": "^5.4"
     },
     "require-dev": {
-        "contao/manager-bundle": "^4.9.1",
+        "contao/manager-bundle": "^4.13",
         "phpunit/phpunit": "^9.5.10",
         "contao/test-case": "^4.4.0",
         "symfony/phpunit-bridge": "v5.3.8",
@@ -39,7 +39,7 @@
         "phpstan/phpstan-symfony": "^0.12.44",
         "contao/phpstan": "^0.12.9",
         "phpstan/phpstan-phpunit": "^0.12.22",
-        "contao/news-bundle": "4.9.*",
+        "contao/news-bundle": "4.13.*",
         "friendsofphp/php-cs-fixer": "^3.2"
     },
     "extra": {
