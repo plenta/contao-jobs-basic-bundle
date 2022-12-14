@@ -56,6 +56,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
                 'href' => 'act=edit',
                 'icon' => 'header.svg',
             ],
+            'delete' => [
+                'href' => 'act=delete',
+                'icon' => 'delete.svg',
+                'attributes' => 'onclick="if(!confirm(\''.($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null).'\'))return false;Backend.getScrollOffset()"',
+            ],
         ],
     ],
 
