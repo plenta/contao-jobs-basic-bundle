@@ -24,11 +24,8 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
 
     private array $options;
 
-    public function __construct(array $columns, array $values, array $options)
+    public function __construct()
     {
-        $this->columns = $columns;
-        $this->values = $values;
-        $this->options = $options;
     }
 
     /**
