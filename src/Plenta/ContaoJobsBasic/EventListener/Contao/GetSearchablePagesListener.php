@@ -29,7 +29,7 @@ class GetSearchablePagesListener
                 if ($job->robots === 'noindex,nofollow') {
                     continue;
                 }
-                
+
                 if ($page = $job->getAbsoluteUrl($language)) {
                     $pages[] = $page;
                 }

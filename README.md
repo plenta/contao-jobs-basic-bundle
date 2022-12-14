@@ -24,7 +24,7 @@ composer require plenta/contao-jobs-basic-bundle
 ## System requirements
 
 - PHP: `^7.4 || ^8.0`
-- Contao: `^4.9` (and later)
+- Contao: `^4.13` (and later)
 - mvo/contao-group-widget `^1.4`
 
 
