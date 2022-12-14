@@ -26,6 +26,10 @@ class GetSearchablePagesListener
         $jobs = PlentaJobsBasicOfferModel::findBy(['published = ?', '(start = ? OR start > ?)', '(stop = ? or stop < ?)'], [1, '', $time, '', $time]);
         if ($jobs) {
             foreach ($jobs as $job) {
+                if ($job->robots === 'noindex,nofollow') {
+                    continue;
+                }
+
                 if ($page = $job->getAbsoluteUrl($language)) {
                     $pages[] = $page;
                 }
