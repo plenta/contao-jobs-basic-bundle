@@ -29,12 +29,8 @@ class JobOfferListBeforeParseTemplateEvent extends Event
 
     private ModuleModel $model;
 
-    public function __construct($jobOffers, Template $template, ModuleModel $model, JobOfferListController $objModule)
+    public function __construct()
     {
-        $this->jobOffers = $jobOffers;
-        $this->template = $template;
-        $this->model = $model;
-        $this->objModule = $objModule;
     }
 
     /**
