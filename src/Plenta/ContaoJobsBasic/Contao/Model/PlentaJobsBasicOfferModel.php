@@ -19,6 +19,7 @@ use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
+use Plenta\ContaoJobsBasic\Events\Model\FindAllPublishedByTypesAndLocationEvent;
 
 class PlentaJobsBasicOfferModel extends Model
 {
@@ -74,6 +75,18 @@ class PlentaJobsBasicOfferModel extends Model
         } else {
             $arrOptions = [];
         }
+
+        $dispatcher = System::getContainer()->get('event_dispatcher');
+        $findAllPublishedByTypesAndLocationEvent = new FindAllPublishedByTypesAndLocationEvent();
+        $findAllPublishedByTypesAndLocationEvent
+            ->setcolumns($columns)
+            ->setValues($values)
+            ->setOptions($arrOptions);
+        $dispatcher->dispatch($findAllPublishedByTypesAndLocationEvent, FindAllPublishedByTypesAndLocationEvent::NAME);
+
+        $columns = $findAllPublishedByTypesAndLocationEvent->getColumns();
+        $values = $findAllPublishedByTypesAndLocationEvent->getValues();
+        $arrOptions = $findAllPublishedByTypesAndLocationEvent->getOptions();
 
         return self::findBy($columns, $values, $arrOptions);
     }
