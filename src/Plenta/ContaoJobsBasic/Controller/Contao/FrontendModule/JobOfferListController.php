@@ -85,6 +85,10 @@ class JobOfferListController extends AbstractFrontendModuleController
         if (!\is_array($moduleLocations)) {
             $moduleLocations = [];
         }
+        $moduleJobTypes = StringUtil::deserialize($model->plentaJobsBasicEmploymentTypes);
+        if (!\is_array($moduleJobTypes)) {
+            $moduleJobTypes = [];
+        }
 
         $types = \is_array($request->get('types')) && !$model->plentaJobsBasicNoFilter ? $request->get('types') : [];
         $locations = \is_array($request->get('location')) && !$model->plentaJobsBasicNoFilter ? $request->get('location') : $moduleLocations;
@@ -102,6 +106,13 @@ class JobOfferListController extends AbstractFrontendModuleController
             });
             if (empty($locations)) {
                 $locations = $moduleLocations;
+            }
+        }
+
+        if (!empty($moduleJobTypes)) {
+            $types = array_filter($types, fn ($element) => \in_array($element, $moduleJobTypes, true));
+            if (empty($types)) {
+                $types = $moduleJobTypes;
             }
         }
 
@@ -170,7 +181,7 @@ class JobOfferListController extends AbstractFrontendModuleController
                 $itemTemplate->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
                 $itemTemplate->headlineUnit = $model->plentaJobsBasicHeadlineTag;
                 $parts = StringUtil::deserialize($model->plentaJobsBasicListParts);
-                if (!is_array($parts)) {
+                if (!\is_array($parts)) {
                     $parts = [];
                 }
                 $itemTemplate->parts = $parts;
