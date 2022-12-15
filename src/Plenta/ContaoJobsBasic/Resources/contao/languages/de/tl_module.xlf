@@ -176,6 +176,12 @@
             <trans-unit id="tl_module.plentaJobsBasicListParts.1">
                 <target>Bitte wählen Sie die Eigenschaften aus, die in der Listenansicht angezeigt werden sollen.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicEmploymentTypes.0">
+                <target>Stellenarten</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicEmploymentTypes.1">
+                <target>Bitte wählen Sie die Stellenarten aus, die angezeigt werden sollen. Wenn keine Stellenart ausgewählt ist, werden alle angezeigt.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

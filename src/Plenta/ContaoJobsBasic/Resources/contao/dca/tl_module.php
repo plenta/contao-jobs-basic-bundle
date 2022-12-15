@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\JobOfferFields;
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlModule;
+use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowTypes';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowLocations';
@@ -20,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasic
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocations,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize;
+    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocation,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize;
     {redirect_legend},jumpTo;
     {template_legend:hide},customTpl;
     {expert_legend:hide},cssID'
@@ -42,7 +43,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowButton'] = 'plentaJobsBasicSubmit';
-$GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowTypes'] = 'plentaJobsBasicTypesHeadline,plentaJobsBasicShowAllTypes,plentaJobsBasicShowQuantity';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowTypes'] = 'plentaJobsBasicTypesHeadline,plentaJobsBasicEmploymentTypes,plentaJobsBasicShowAllTypes,plentaJobsBasicShowQuantity';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowLocations'] = 'plentaJobsBasicLocationsHeadline,plentaJobsBasicLocations,plentaJobsBasicShowAllLocations,plentaJobsBasicShowLocationQuantity';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowSorting'] = 'plentaJobsBasicSortingFields';
 
@@ -179,7 +180,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicTemplateParts'] = [
         'validThrough',
         'salary',
         'jobLocation',
-        'backlink'],
+        'backlink', ],
     'eval' => ['multiple' => true, 'tl_class' => 'clr'],
     'reference' => &$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['offerParts'],
     'sql' => 'mediumtext null',
@@ -226,4 +227,15 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicListParts'] = [
     ],
     'reference' => &$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['offerParts'],
     'sql' => "varchar(255) COLLATE ascii_bin NOT NULL default '".serialize(['jobLocation', 'publicationDate', 'employmentType'])."'",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicEmploymentTypes'] = [
+    'exclude' => true,
+    'inputType' => 'checkboxWizard',
+    'options_callback' => [TlPlentaJobsBasicOffer::class, 'employmentTypeOptionsCallback'],
+    'eval' => [
+        'multiple' => true,
+        'tl_class' => 'clr'
+    ],
+    'sql' => 'mediumtext NULL',
 ];
