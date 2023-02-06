@@ -1,8 +1,8 @@
-<?php $this->extend('block_unsearchable'); ?>
+{% extends '@Contao/block_unsearchable.html.twig' %}
 
-<?php $this->block('content'); ?>
+{% block content %}
 
-<?= $this->form ?>
+{{ form(form) }}
 
 <script>
     (function ($) {
@@ -45,11 +45,12 @@
                     });
                     history.replaceState(null, null, location.pathname + str_args);
                     args['id'] = jobList.dataset.id;
-                    $.ajax('<?= $this->ajaxRoute ?>', {
+                    args['dateFormat'] = '{{ dateFormat }}';
+                    $.ajax('{{ ajaxRoute }}', {
                         method: 'GET',
                         data: args,
                         headers: {
-                            'Accept-Language': '<?= $this->local ?>'
+                            'Accept-Language': '{{ locale }}'
                         },
                         success: function (data) {
                             $('.mod_plenta_jobs_basic_offer_list:not(.no-filter)').replaceWith(data);
@@ -61,4 +62,5 @@
         });
     })(jQuery);
 </script>
-<?php $this->endblock(); ?>
+
+{% endblock %}
