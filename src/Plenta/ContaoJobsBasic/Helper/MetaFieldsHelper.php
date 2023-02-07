@@ -18,6 +18,7 @@ use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\Date;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
+use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
@@ -51,7 +52,7 @@ class MetaFieldsHelper
 
         $translation = $jobOffer->getTranslation($mainRequest->getLocale());
 
-        $metaFields['publicationDateFormatted'] = Date::parse(Date::getNumericDateFormat(), $jobOffer->datePosted);
+        $metaFields['publicationDateFormatted'] = Date::parse(Input::get('dateFormat') ?? Date::getNumericDateFormat(), $jobOffer->datePosted);
         $metaFields['employmentTypeFormatted'] = $this->employmentTypeHelper->getEmploymentTypesFormatted(json_decode($jobOffer->employmentType, true));
         $metaFields['locationFormatted'] = $this->formatLocation($jobOffer);
         $metaFields['addressLocalityFormatted'] = $this->formatAddressLocality($jobOffer);

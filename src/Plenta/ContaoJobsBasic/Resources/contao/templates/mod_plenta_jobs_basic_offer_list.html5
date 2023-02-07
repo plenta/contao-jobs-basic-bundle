@@ -12,7 +12,7 @@
 
         <script>
             (function ($) {
-                $('.hasteform_<?= $this->formId ?> select#ctrl_sort').on('change', function () {
+                $('.form_<?= $this->formId ?> select#sort').on('change', function () {
                     let searchParams = new URLSearchParams(location.search);
                     let vals = $(this).val().split('__');
                     searchParams.set('sortBy', vals[0]);

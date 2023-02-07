@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -18,11 +18,13 @@ use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\ModuleModel;
 use Contao\StringUtil;
 use Contao\Template;
-use Haste\Form\Form as HasteForm;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Plenta\ContaoJobsBasic\Events\JobOfferFilterAfterFormBuildEvent;
+use Plenta\ContaoJobsBasic\Form\Type\JobOfferFilterType;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
@@ -43,15 +45,18 @@ class JobOfferFilterController extends AbstractFrontendModuleController
     protected array $counterLocation = [];
     protected array $locations = [];
     protected array $offers = [];
+    protected EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
         MetaFieldsHelper $metaFieldsHelper,
         EmploymentType $employmentTypeHelper,
-        RouterInterface $router
+        RouterInterface $router,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->metaFieldsHelper = $metaFieldsHelper;
         $this->employmentTypeHelper = $employmentTypeHelper;
         $this->router = $router;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function getTypes(ModuleModel $model): ?array
@@ -228,55 +233,26 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-        $form = new HasteForm('plenta_jobs_basic_filter_'.$model->id, 'GET', fn ($objHaste) => false);
+        $form = $this->createForm(JobOfferFilterType::class, null, [
+            'types' => $this->getTypes($model),
+            'locations' => $this->getLocations($model),
+            'fmd' => $model,
+        ]);
 
-        if (0 !== (int) $model->jumpTo) {
-            $form->setFormActionFromPageId($model->jumpTo);
-        }
+        $event = new JobOfferFilterAfterFormBuildEvent();
+        $event->setForm($form);
 
-        if ($model->plentaJobsBasicShowTypes) {
-            $form->addFormField('typesHeadline', [
-                'inputType' => 'html',
-                'eval' => [
-                    'html' => $this->getHeadlineHtml($model->plentaJobsBasicTypesHeadline, 'jobTypes'),
-                ],
-            ]);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
 
-            $form->addFormField('types', [
-                'inputType' => 'checkbox',
-                'default' => $request->get('types'),
-                'options' => $this->getTypes($model),
-                'eval' => ['multiple' => true],
-            ]);
-        }
+        $form = $event->getForm();
 
-        if ($model->plentaJobsBasicShowLocations) {
-            $form->addFormField('locationHeadline', [
-                'inputType' => 'html',
-                'eval' => [
-                    'html' => $this->getHeadlineHtml($model->plentaJobsBasicLocationsHeadline, 'jobLocation'),
-                ],
-            ]);
+        global $objPage;
 
-            $form->addFormField('location', [
-                'inputType' => 'checkbox',
-                'default' => $request->get('location'),
-                'options' => $this->getLocations($model),
-                'eval' => ['multiple' => true],
-            ]);
-        }
-
-        if ($model->plentaJobsBasicShowButton) {
-            $form->addFormField('submit', [
-                'label' => $model->plentaJobsBasicSubmit,
-                'inputType' => 'submit',
-            ]);
-        }
-
-        $template->form = $form->generate();
-        $template->local = $request->getLocale();
-        $template->ajaxRoute = $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath();
-
-        return $template->getResponse();
+        return $this->renderForm('@PlentaContaoJobsBasic/mod_plenta_jobs_basic_filter.html.twig', [
+            'form' => $form,
+            'ajaxRoute' => $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath(),
+            'locale' => $request->getLocale(),
+            'dateFormat' => $objPage->dateFormat,
+        ]);
     }
 }

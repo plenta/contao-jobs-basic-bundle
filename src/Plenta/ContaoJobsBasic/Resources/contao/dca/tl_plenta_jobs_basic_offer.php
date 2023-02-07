@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -73,16 +73,9 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'showInHeader' => true,
             ],
             'renewDatePosted' => [
-                'attributes' => 'onclick="Backend.getScrollOffset();"',
-                'haste_ajax_operation' => [
-                    'field' => 'datePosted',
-                    'options' => [
-                        [
-                            'value' => time(),
-                            'icon' => 'sync.svg',
-                        ],
-                    ],
-                ],
+                'attributes' => 'onclick="Backend.getScrollOffset()"',
+                'href' => 'action=renewDatePosted',
+                'icon' => 'sync.svg',
             ],
             'show' => [
                 'href' => 'act=show',
@@ -150,8 +143,8 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'search' => true,
             'inputType' => 'textarea',
-            'eval' => ['rte'=>'tinyMCE', 'tl_class'=>'clr'],
-            'sql' => "text NULL"
+            'eval' => ['rte' => 'tinyMCE', 'tl_class' => 'clr'],
+            'sql' => 'text NULL',
         ],
         'description' => [
             'exclude' => true,
@@ -171,21 +164,21 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'pageTitle' => [
             'exclude' => true,
             'inputType' => 'text',
-            'eval' => ['maxlength'=>255, 'decodeEntities'=>true, 'tl_class'=>'w50'],
-            'sql' => "varchar(255) NOT NULL default ''"
+            'eval' => ['maxlength' => 255, 'decodeEntities' => true, 'tl_class' => 'w50'],
+            'sql' => "varchar(255) NOT NULL default ''",
         ],
         'robots' => [
             'exclude' => true,
             'inputType' => 'select',
             'options' => ['index,follow', 'index,nofollow', 'noindex,follow', 'noindex,nofollow'],
-            'eval' => ['tl_class'=>'w50', 'includeBlankOption' => true],
-            'sql' => "varchar(32) NOT NULL default ''"
+            'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true],
+            'sql' => "varchar(32) NOT NULL default ''",
         ],
         'pageDescription' => [
             'exclude' => true,
             'inputType' => 'textarea',
-            'eval' => ['style'=>'height:60px', 'decodeEntities'=>true, 'tl_class'=>'clr'],
-            'sql' => "text NULL"
+            'eval' => ['style' => 'height:60px', 'decodeEntities' => true, 'tl_class' => 'clr'],
+            'sql' => 'text NULL',
         ],
         'serpPreview' => [
             'label' => &$GLOBALS['TL_LANG']['MSC']['serpPreview'],
@@ -194,9 +187,9 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'eval' => [
                 'url_callback' => [TlPlentaJobsBasicOffer::class, 'getSerpUrl'],
                 'titleFields' => ['pageTitle', 'title'],
-                'descriptionFields' => ['pageDescription', 'teaser']
+                'descriptionFields' => ['pageDescription', 'teaser'],
             ],
-            'sql' => null
+            'sql' => null,
         ],
         'jobLocation' => [
             'inputType' => 'select',
@@ -433,6 +426,10 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
     {
         parent::__construct();
         $this->import('Contao\BackendUser', 'User');
+
+        if (Input::get('action') === 'renewDatePosted') {
+            $this->renewDatePosted(Input::get('id'));
+        }
     }
 
     /**
@@ -450,7 +447,7 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
         if (Contao\Input::get('tid')) {
-            $this->toggleVisibility(Contao\Input::get('tid'), (1 == Contao\Input::get('state')), (func_num_args() <= 12 ? null : func_get_arg(12)));
+            $this->toggleVisibility(Contao\Input::get('tid'), 1 == Contao\Input::get('state'), func_num_args() <= 12 ? null : func_get_arg(12));
             $this->redirect($this->getReferer());
         }
 
@@ -560,5 +557,12 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
         if ($dc) {
             $dc->invalidateCacheTags();
         }
+    }
+
+    public function renewDatePosted($intId) {
+        $objJobOffer = PlentaJobsBasicOfferModel::findByPk($intId);
+        $objJobOffer->datePosted = time();
+        $objJobOffer->save();
+        $this->redirect($this->getReferer());
     }
 }

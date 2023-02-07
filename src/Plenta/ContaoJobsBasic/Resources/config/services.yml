@@ -3,6 +3,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            $csrfTokenName: '%contao.csrf_token_name%'
 
     Plenta\ContaoJobsBasic\:
         resource: ../../../../../src/Plenta/ContaoJobsBasic/*

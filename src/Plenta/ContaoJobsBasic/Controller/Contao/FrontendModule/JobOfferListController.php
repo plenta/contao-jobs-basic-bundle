@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -22,15 +22,17 @@ use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Template;
-use Haste\Form\Form;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Plenta\ContaoJobsBasic\Events\JobOfferListAfterFormBuildEvent;
 use Plenta\ContaoJobsBasic\Events\JobOfferListBeforeParseTemplateEvent;
+use Plenta\ContaoJobsBasic\Form\Type\JobSortingType;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment as TwigEnvironment;
 
 /**
  * @FrontendModule("plenta_jobs_basic_offer_list",
@@ -47,14 +49,18 @@ class JobOfferListController extends AbstractFrontendModuleController
 
     protected EventDispatcherInterface $eventDispatcher;
 
+    protected TwigEnvironment $twig;
+
     public function __construct(
         MetaFieldsHelper $metaFieldsHelper,
         TranslatorInterface $translator,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        TwigEnvironment $twig
     ) {
         $this->metaFieldsHelper = $metaFieldsHelper;
         $this->translator = $translator;
         $this->eventDispatcher = $eventDispatcher;
+        $this->twig = $twig;
     }
 
     public function generateJobOfferUrl(PlentaJobsBasicOfferModel $jobOffer, ModuleModel $model): string
@@ -134,15 +140,22 @@ class JobOfferListController extends AbstractFrontendModuleController
                 $options[] = $field.'__DESC';
             }
 
-            $form = new Form($formId, 'POST', fn ($objHaste) => false);
-            $form->addFormField('sort', [
-                'inputType' => 'select',
-                'default' => $default,
-                'options' => $options,
-                'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasicSortingFields']['fields'],
+            $form = $this->createForm(JobSortingType::class, null, [
+                'sortingOptions' => $options,
+                'attr' => [
+                    'class' => 'form_'.$formId,
+                ],
             ]);
 
-            $template->sortingForm = $form->generate();
+            $event = new JobOfferListAfterFormBuildEvent();
+            $event->setForm($form);
+
+            $this->eventDispatcher->dispatch($event, $event::NAME);
+
+            $form = $event->getForm();
+
+            $template->sortingForm = $this->twig->render('@PlentaContaoJobsBasic/form.html.twig', ['form' => $form->createView()]);
+
             $template->showSorting = true;
             $template->formId = $formId;
 
