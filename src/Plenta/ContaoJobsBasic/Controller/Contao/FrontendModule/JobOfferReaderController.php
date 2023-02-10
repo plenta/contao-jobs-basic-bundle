@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -332,15 +332,18 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     private function setMetaTitle(
         PlentaJobsBasicOfferModel $jobOffer,
         HtmlHeadBag $htmlHeadBag,
-        HtmlDecoder$htmlDecoder,
+        HtmlDecoder $htmlDecoder,
         ?array $translation
-    ): void
-    {
+    ): void {
         if ($jobOffer->pageTitle || (null !== $translation)) {
-            $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($jobOffer->pageTitle));
+            if ($jobOffer->pageTitle) {
+                $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($jobOffer->pageTitle));
+            }
 
             if (null !== $translation) {
-                $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($translation['title']));
+                if ($translation['title']) {
+                    $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($translation['title']));
+                }
 
                 if ($translation['pageTitle']) {
                     $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($translation['pageTitle']));
@@ -354,29 +357,34 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     private function setMetaDescription(
         PlentaJobsBasicOfferModel $jobOffer,
         HtmlHeadBag $htmlHeadBag,
-        HtmlDecoder$htmlDecoder,
+        HtmlDecoder $htmlDecoder,
         ?array $translation
-    ): void
-    {
+    ): void {
         if ($jobOffer->pageDescription || (null !== $translation)) {
-            $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($jobOffer->pageDescription));
+            if ($jobOffer->pageDescription) {
+                $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($jobOffer->pageDescription));
+            }
 
             if (null !== $translation) {
-                $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($translation['description']));
-
-                if  ($translation['teaser']) {
-                    $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($translation['teaser']));
+                if ($translation['description']) {
+                    $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($translation['description']));
                 }
 
+                if ($translation['teaser']) {
+                    $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($translation['teaser']));
+                }
                 if ($translation['pageDescription']) {
                     $htmlHeadBag->setMetaDescription(
-                        $htmlDecoder->inputEncodedToPlainText($translation['pageDescription']
+                        $htmlDecoder->inputEncodedToPlainText(
+                            $translation['pageDescription']
                         )
                     );
                 }
             }
         } elseif ($jobOffer->teaser || $jobOffer->description) {
-            $htmlHeadBag->setMetaDescription($htmlDecoder->htmlToPlainText($jobOffer->description));
+            if ($jobOffer->description) {
+                $htmlHeadBag->setMetaDescription($htmlDecoder->htmlToPlainText($jobOffer->description));
+            }
 
             if ($jobOffer->teaser) {
                 $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($jobOffer->teaser));
