@@ -32,7 +32,7 @@ class PlentaJobsBasicOfferModel extends Model
 
     protected $readerPage = [];
 
-    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, string $sortBy = null, string $order = null)
+    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, ?array $authors = null, string $sortBy = null, string $order = null)
     {
         $time = time();
 
@@ -63,6 +63,10 @@ class PlentaJobsBasicOfferModel extends Model
             }
 
             $columns[] = '('.implode(' OR ', $criteria).')';
+        }
+
+        if (!empty($authors)) {
+            $columns[] = 'author IN ('.implode(',', $authors).')';
         }
 
         if (!empty($sortBy) && \in_array($sortBy, ['title', 'tstamp', 'datePosted'], true)) {

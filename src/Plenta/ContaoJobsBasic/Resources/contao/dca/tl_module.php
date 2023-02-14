@@ -21,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasic
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocation,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize;
+    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocation,plentaJobsBasicEmploymentTypes,plentaJobsBasicAuthor,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize;
     {redirect_legend},jumpTo;
     {template_legend:hide},customTpl;
     {expert_legend:hide},cssID'
@@ -36,7 +36,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations;
+    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations,plentaJobsBasicAuthor;
     {template_legend:hide},customTpl;
     {redirect_legend},jumpTo;
     {expert_legend:hide},cssID'
@@ -235,7 +235,18 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicEmploymentTypes'] = [
     'options_callback' => [TlPlentaJobsBasicOffer::class, 'employmentTypeOptionsCallback'],
     'eval' => [
         'multiple' => true,
-        'tl_class' => 'clr'
+        'tl_class' => 'clr',
+    ],
+    'sql' => 'mediumtext NULL',
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicAuthor'] = [
+    'exclude' => true,
+    'inputType' => 'checkboxWizard',
+    'foreignKey' => 'tl_user.name',
+    'eval' => [
+        'multiple' => true,
+        'includeBlankOption' => true,
     ],
     'sql' => 'mediumtext NULL',
 ];

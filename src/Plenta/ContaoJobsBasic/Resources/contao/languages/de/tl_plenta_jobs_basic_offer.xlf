@@ -210,6 +210,12 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.pageDescription.1">
                 <target>Hier können Sie eine individuelle Meta-Beschreibung eingeben, um die Stellenbeschreibung zu überschreiben.</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.author.0">
+                <target>Stellenautor</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.pageDescription.1">
+                <target>Bitte wählen Sie einen Autor aus der Liste aus.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

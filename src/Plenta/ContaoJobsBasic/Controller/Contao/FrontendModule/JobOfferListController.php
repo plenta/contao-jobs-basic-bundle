@@ -122,6 +122,8 @@ class JobOfferListController extends AbstractFrontendModuleController
             }
         }
 
+        $authors = StringUtil::deserialize($model->plentaJobsBasicAuthor);
+
         $sortByLocation = null;
         $sortBy = $request->get('sortBy') ?? $model->plentaJobsBasicSortingDefaultField;
         $order = $request->get('order') ?? $model->plentaJobsBasicSortingDefaultDirection;
@@ -166,7 +168,7 @@ class JobOfferListController extends AbstractFrontendModuleController
             }
         }
 
-        $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order);
+        $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, $authors, $sortBy, $order);
 
         if (null !== $sortByLocation) {
             $itemParts = [];

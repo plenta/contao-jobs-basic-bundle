@@ -86,7 +86,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     'palettes' => [
         '__selector__' => ['addImage', 'addSalary'],
-        'default' => '{title_legend},title,alias,teaser,description;{meta_legend},pageTitle,robots,pageDescription,serpPreview;{translations_legend:hide},translations;{settings_legend},employmentType,validThrough,directApply;{location_legend},jobLocation;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        'default' => '{title_legend},title,alias,teaser,description,author;{meta_legend},pageTitle,robots,pageDescription,serpPreview;{translations_legend:hide},translations;{settings_legend},employmentType,validThrough,directApply;{location_legend},jobLocation;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC',
@@ -414,6 +414,19 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'default' => null,
             ],
         ],
+        'author' => [
+            'default' => BackendUser::getInstance()->id,
+            'exclude' => true,
+            'search' => true,
+            'filter' => true,
+            'sorting' => true,
+            'flag' => DataContainer::SORT_ASC,
+            'inputType' => 'select',
+            'foreignKey' => 'tl_user.name',
+            'eval' => ['doNotCopy' => true, 'chosen' => true, 'includeBlankOption' => true, 'tl_class' => 'w50'],
+            'sql' => 'int(10) unsigned NOT NULL default 0',
+            'relation' => ['type' => 'hasOne', 'load' => 'lazy'],
+        ],
     ],
 ];
 
@@ -427,7 +440,7 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
         parent::__construct();
         $this->import('Contao\BackendUser', 'User');
 
-        if (Input::get('action') === 'renewDatePosted') {
+        if ('renewDatePosted' === Input::get('action')) {
             $this->renewDatePosted(Input::get('id'));
         }
     }
@@ -559,7 +572,8 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
         }
     }
 
-    public function renewDatePosted($intId) {
+    public function renewDatePosted($intId): void
+    {
         $objJobOffer = PlentaJobsBasicOfferModel::findByPk($intId);
         $objJobOffer->datePosted = time();
         $objJobOffer->save();
