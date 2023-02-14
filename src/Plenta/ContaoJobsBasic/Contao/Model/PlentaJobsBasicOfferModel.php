@@ -65,10 +65,6 @@ class PlentaJobsBasicOfferModel extends Model
             $columns[] = '('.implode(' OR ', $criteria).')';
         }
 
-        if (!empty($authors)) {
-            $columns[] = 'author IN ('.implode(',', $authors).')';
-        }
-
         if (!empty($sortBy) && \in_array($sortBy, ['title', 'tstamp', 'datePosted'], true)) {
             if (!empty($order) && \in_array($order, ['ASC', 'DESC'], true)) {
                 $sortDirection = $order;
