@@ -182,12 +182,6 @@
             <trans-unit id="tl_module.plentaJobsBasicEmploymentTypes.1">
                 <target>Bitte wählen Sie die Stellenarten aus, die angezeigt werden sollen. Wenn keine Stellenart ausgewählt ist, werden alle angezeigt.</target>
             </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicAuthor.0">
-                <target>Stellenautoren</target>
-            </trans-unit>
-            <trans-unit id="tl_module.plentaJobsBasicAuthor.1">
-                <target>Bitte wählen Sie die Stellenautoren aus, die angezeigt werden sollen. Wenn kein Autor ausgewählt ist, werden alle angezeigt.</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -116,7 +116,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             if (!\is_array($moduleEmploymentTypes)) {
                 $moduleEmploymentTypes = [];
             }
-            $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($moduleEmploymentTypes, $moduleLocations, StringUtil::deserialize($model->plentaJobsBasicAuthor));
+            $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($moduleEmploymentTypes, $moduleLocations);
 
             if ($jobOffers) {
                 foreach ($jobOffers as $jobOffer) {
