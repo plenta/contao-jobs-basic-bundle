@@ -182,6 +182,12 @@
             <trans-unit id="tl_module.plentaJobsBasicEmploymentTypes.1">
                 <target>Bitte wählen Sie die Stellenarten aus, die angezeigt werden sollen. Wenn keine Stellenart ausgewählt ist, werden alle angezeigt.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicHideOffersWithoutTranslation.0">
+                <target>Stellen ohne Übersetzung nicht anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicHideOffersWithoutTranslation.1">
+                <target>Stellen, die keine Übersetzung für die aktuelle Sprache haben, werden nicht angezeigt.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

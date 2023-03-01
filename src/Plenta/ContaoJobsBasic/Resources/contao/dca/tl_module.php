@@ -21,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasic
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocations,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize;
+    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocations,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize,plentaJobsBasicHideOffersWithoutTranslation;
     {redirect_legend},jumpTo;
     {template_legend:hide},customTpl;
     {expert_legend:hide},cssID'
@@ -36,7 +36,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations;
+    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations,plentaJobsBasicHideOffersWithoutTranslation;
     {template_legend:hide},customTpl;
     {redirect_legend},jumpTo;
     {expert_legend:hide},cssID'
@@ -215,7 +215,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicNoFilter'] = [
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicHideRemoteRequirements'] = [
     'exclude' => true,
     'inputType' => 'checkbox',
-    'sql' => "char(1) NOT NULL default ''",
+    'sql' => "char(1) NOT NULL default '' COLLATE ascii_bin",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicListParts'] = [
@@ -238,4 +238,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicEmploymentTypes'] = [
         'tl_class' => 'clr',
     ],
     'sql' => 'mediumtext NULL',
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicHideOffersWithoutTranslation'] = [
+    'exclude' => true,
+    'inputType' => 'checkbox',
+    'eval' => ['tl_class' => 'clr w50'],
+    'sql' => "char(1) COLLATE ascii_bin NOT NULL default ''",
 ];

@@ -166,7 +166,7 @@ class JobOfferListController extends AbstractFrontendModuleController
             }
         }
 
-        $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order);
+        $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order, $model->plentaJobsBasicHideOffersWithoutTranslation);
 
         if (null !== $sortByLocation) {
             $itemParts = [];

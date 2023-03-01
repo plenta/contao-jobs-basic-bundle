@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -32,7 +32,7 @@ class PlentaJobsBasicOfferModel extends Model
 
     protected $readerPage = [];
 
-    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, string $sortBy = null, string $order = null)
+    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, string $sortBy = null, string $order = null, $onlyTranslated = false)
     {
         $time = time();
 
@@ -63,6 +63,17 @@ class PlentaJobsBasicOfferModel extends Model
             }
 
             $columns[] = '('.implode(' OR ', $criteria).')';
+        }
+
+        if ($onlyTranslated) {
+            $requestStack = System::getContainer()->get('request_stack');
+            $language = $requestStack->getMainRequest()->getLocale();
+            $page = PageModel::findBy(['type = ?', 'language = ?'], ['root', $language]);
+            if ($page && !$page->fallback) {
+                $str = 's:8:"language";s:'.\strlen($language).':"'.$language.'"';
+                $columns[] = 'translations LIKE ?';
+                $values[] = '%'.$str.'%';
+            }
         }
 
         if (!empty($sortBy) && \in_array($sortBy, ['title', 'tstamp', 'datePosted'], true)) {
@@ -210,7 +221,7 @@ class PlentaJobsBasicOfferModel extends Model
         }
         $params = $this->getParams($language);
 
-        return ampersand($objPage->getAbsoluteUrl($params));
+        return StringUtil::ampersand($objPage->getAbsoluteUrl($params));
     }
 
     public function getFrontendUrl($language)
@@ -221,7 +232,7 @@ class PlentaJobsBasicOfferModel extends Model
         }
         $params = $this->getParams($language);
 
-        return ampersand($objPage->getAbsoluteUrl($params));
+        return StringUtil::ampersand($objPage->getAbsoluteUrl($params));
     }
 
     protected function getParams($language)
