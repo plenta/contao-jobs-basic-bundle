@@ -171,7 +171,6 @@
                 <target>Homeoffice (%s)</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.meta_legend">
-                <source>Meta data</source>
                 <target>Metadaten</target>
             </trans-unit>
             <trans-unit id="tl_plenta_jobs_basic_offer.translations.0">
