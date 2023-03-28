@@ -56,6 +56,7 @@ class MetaFieldsHelper
         $metaFields['employmentTypeFormatted'] = $this->employmentTypeHelper->getEmploymentTypesFormatted(json_decode($jobOffer->employmentType, true));
         $metaFields['locationFormatted'] = $this->formatLocation($jobOffer);
         $metaFields['addressLocalityFormatted'] = $this->formatAddressLocality($jobOffer);
+        $metaFields['addressCountryFormatted'] = $this->formatAddressCountry($jobOffer);
         $metaFields['title'] = Controller::replaceInsertTags($translation['title'] ?? $jobOffer->title);
         $metaFields['description'] = Controller::replaceInsertTags($translation['description'] ?? $jobOffer->description);
         $metaFields['alias'] = $translation['alias'] ?? $jobOffer->alias;
@@ -104,6 +105,22 @@ class MetaFieldsHelper
         }
 
         return implode(', ', $locationsTemp);
+    }
+
+    public function formatAddressCountry(PlentaJobsBasicOfferModel $jobOffer): string
+    {
+        $countriesTemp = [];
+        $locations = StringUtil::deserialize($jobOffer->jobLocation);
+
+        foreach ($locations as $location) {
+            $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            $name = $GLOBALS['TL_LANG']['CNT'][$objLocation->addressCountry];
+            if (!\in_array($name, $countriesTemp, true)) {
+                $countriesTemp[] = $name;
+            }
+        }
+
+        return implode(', ', $countriesTemp);
     }
 
     public function formatCompany(PlentaJobsBasicOfferModel $jobOffer): string
