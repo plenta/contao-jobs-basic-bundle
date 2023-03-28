@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -114,8 +114,8 @@ class MetaFieldsHelper
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
-            $name = $GLOBALS['TL_LANG']['CNT'][$objLocation->addressCountry];
-            if (!\in_array($name, $countriesTemp, true)) {
+            $name = 'onPremise' === $objLocation->jobTypeLocation ? $GLOBALS['TL_LANG']['CNT'][$objLocation->addressCountry] : ('Country' === $objLocation->requirementType ? $objLocation->requirementValue : null);
+            if ($name && !\in_array($name, $countriesTemp, true)) {
                 $countriesTemp[] = $name;
             }
         }
@@ -129,7 +129,7 @@ class MetaFieldsHelper
         $locations = StringUtil::deserialize($jobOffer->jobLocation);
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
-            if (!in_array($objLocation->pid, $company)) {
+            if (!\in_array($objLocation->pid, $company, true)) {
                 $company[$objLocation->pid] = PlentaJobsBasicOrganizationModel::findByPk($objLocation->pid)->name;
             }
         }
