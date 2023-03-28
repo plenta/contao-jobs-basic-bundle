@@ -75,7 +75,7 @@ class InsertTagListener
                 return $translation['alias'] ?? (string) $jobOfferData->alias;
             }
 
-            if ('date_posted' === $chunks[1]) {
+            if ('datePosted' === $chunks[1]) {
                 $objPage = $GLOBALS['objPage'] ?? null;
                 return Date::parse($elements[1] ?? ($objPage->dateFormat ?? Config::get('dateFormat')));
             }
