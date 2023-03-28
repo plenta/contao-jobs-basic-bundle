@@ -12,12 +12,14 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
-use Composer\InstalledVersions;
-use Contao\Config;
-use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\Date;
 use Contao\Input;
-use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Contao\Config;
+use Contao\UserModel;
+use Composer\InstalledVersions;
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 
 /**
  * @Hook("replaceInsertTags")
@@ -71,6 +73,29 @@ class InsertTagListener
 
             if ('alias' === $chunks[1]) {
                 return $translation['alias'] ?? (string) $jobOfferData->alias;
+            }
+
+            if ('datePosted' === $chunks[1]) {
+                $objPage = $GLOBALS['objPage'] ?? null;
+                return Date::parse($elements[1] ?? ($objPage->dateFormat ?? Config::get('dateFormat')));
+            }
+
+            if ('author' === $chunks[1] && isset($chunks[2])) {
+                $author = UserModel::findById((int) $jobOfferData->author);
+
+                if (null !== $author) {
+                    if ('name' === $chunks[2]) {
+                        return (string) $author->name;
+                    }
+
+                    if ('email' === $chunks[2]) {
+                        return (string) $author->email;
+                    }
+
+                    if ('username' === $chunks[2]) {
+                        return (string) $author->username;
+                    }
+                }
             }
         }
 

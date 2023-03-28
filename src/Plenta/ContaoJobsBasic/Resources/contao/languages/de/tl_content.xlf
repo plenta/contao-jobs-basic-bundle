@@ -3,11 +3,9 @@
     <file>
         <body>
             <trans-unit id="tl_content.plenta_jobs_basic_job_offer_details.0">
-                <source>Job offer details</source>
                 <target>Eigenschaften</target>
             </trans-unit>
             <trans-unit id="tl_content.plenta_jobs_basic_job_offer_details.1">
-                <source>Job offer details</source>
                 <target>Bitte wählen sie die auszugebenden Eigenschaften.</target>
             </trans-unit>
             <trans-unit id="tl_content.plentaJobsBasicHeadlineTag.0">
