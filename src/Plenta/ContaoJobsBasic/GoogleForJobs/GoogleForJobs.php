@@ -20,6 +20,7 @@ use Contao\Image\PictureConfiguration;
 use Contao\Image\PictureConfigurationItem;
 use Contao\Image\ResizeConfiguration;
 use Contao\StringUtil;
+use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
@@ -46,6 +47,8 @@ class GoogleForJobs
         $this->contaoFileContext = $contaoFileContext;
         $this->employmentTypeHelper = $employmentTypeHelper;
         $this->projectDir = $projectDir;
+
+        // contao.string.html_decoder
     }
 
     public function generateStructuredData(?PlentaJobsBasicOfferModel $jobOffer): ?string
@@ -56,7 +59,7 @@ class GoogleForJobs
 
         $arrStructuredData['@context'] = 'https://schema.org';
         $arrStructuredData['@type'] = 'JobPosting';
-        $arrStructuredData['title'] = StringUtil::restoreBasicEntities($jobOffer->title);
+        $arrStructuredData['title'] = strip_tags(StringUtil::restoreBasicEntities($jobOffer->title));
         $arrStructuredData['datePosted'] = date('c', (int) $jobOffer->datePosted);
 
         if (!empty($jobOffer->validThrough)) {
