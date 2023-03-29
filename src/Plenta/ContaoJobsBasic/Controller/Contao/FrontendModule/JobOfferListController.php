@@ -91,6 +91,7 @@ class JobOfferListController extends AbstractFrontendModuleController
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
         global $objPage;
+
         if (!$objPage) {
             $objPage = PageModel::findWithDetails(Input::get('page'));
             if ($layout = LayoutModel::findByPk($objPage->layout)) {
@@ -98,10 +99,12 @@ class JobOfferListController extends AbstractFrontendModuleController
                 $objPage->templateGroup = ($theme ? $theme->templates : null);
             }
         }
+
         $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
         if (!\is_array($moduleLocations)) {
             $moduleLocations = [];
         }
+
         $moduleJobTypes = StringUtil::deserialize($model->plentaJobsBasicEmploymentTypes);
         if (!\is_array($moduleJobTypes)) {
             $moduleJobTypes = [];
@@ -177,7 +180,18 @@ class JobOfferListController extends AbstractFrontendModuleController
             }
         }
 
-        $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order, $model->plentaJobsBasicHideOffersWithoutTranslation);
+        $limit = 0;
+        $offset = 0;
+
+        if ($model->numberOfItems > 0) {
+            $limit = $model->numberOfItems;
+        }
+
+        if ($model->perPage > 0) {
+            $offset = $model->perPage;
+        }
+
+        $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, $limit, $offset, $sortBy, $order, $model->plentaJobsBasicHideOffersWithoutTranslation);
 
         if (null !== $sortByLocation) {
             $itemParts = [];

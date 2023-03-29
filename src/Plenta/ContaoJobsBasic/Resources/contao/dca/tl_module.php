@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2022-2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -21,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasic
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocations,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize,plentaJobsBasicHideOffersWithoutTranslation;
+    {config_legend},numberOfItems,perPage,plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocations,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize,plentaJobsBasicHideOffersWithoutTranslation;
     {redirect_legend},jumpTo;
     {template_legend:hide},customTpl;
     {expert_legend:hide},cssID'

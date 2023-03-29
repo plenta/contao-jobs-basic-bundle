@@ -32,7 +32,7 @@ class PlentaJobsBasicOfferModel extends Model
 
     protected $readerPage = [];
 
-    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, string $sortBy = null, string $order = null, $onlyTranslated = false)
+    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, int $limit = 0, int $offset = 0, string $sortBy = null, string $order = null, $onlyTranslated = false)
     {
         $time = time();
 
@@ -41,6 +41,7 @@ class PlentaJobsBasicOfferModel extends Model
             '(start < ? OR start = ?)',
             '(stop > ? OR stop = ?)',
         ];
+
         $values = [1, $time, '', $time, ''];
 
         if (!empty($types)) {
@@ -86,6 +87,9 @@ class PlentaJobsBasicOfferModel extends Model
         } else {
             $arrOptions = [];
         }
+
+        $arrOptions['limit']  = $limit;
+        $arrOptions['offset'] = $offset;
 
         $dispatcher = System::getContainer()->get('event_dispatcher');
         $findAllPublishedByTypesAndLocationEvent = new FindAllPublishedByTypesAndLocationEvent();
