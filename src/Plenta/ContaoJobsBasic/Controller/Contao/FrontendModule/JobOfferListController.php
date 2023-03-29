@@ -17,11 +17,14 @@ use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\Environment;
 use Contao\FrontendTemplate;
+use Contao\Input;
+use Contao\LayoutModel;
 use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Template;
+use Contao\ThemeModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Events\JobOfferListAfterFormBuildEvent;
@@ -87,6 +90,14 @@ class JobOfferListController extends AbstractFrontendModuleController
      */
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
+        global $objPage;
+        if (!$objPage) {
+            $objPage = PageModel::findWithDetails(Input::get('page'));
+            if ($layout = LayoutModel::findByPk($objPage->layout)) {
+                $theme = ThemeModel::findByPk($layout->pid);
+                $objPage->templateGroup = ($theme ? $theme->templates : null);
+            }
+        }
         $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
         if (!\is_array($moduleLocations)) {
             $moduleLocations = [];

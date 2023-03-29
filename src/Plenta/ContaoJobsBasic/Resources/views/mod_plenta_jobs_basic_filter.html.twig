@@ -45,7 +45,7 @@
                     });
                     history.replaceState(null, null, location.pathname + str_args);
                     args['id'] = jobList.dataset.id;
-                    args['dateFormat'] = '{{ dateFormat }}';
+                    args['page'] = {{ page }};
                     $.ajax('{{ ajaxRoute }}', {
                         method: 'GET',
                         data: args,

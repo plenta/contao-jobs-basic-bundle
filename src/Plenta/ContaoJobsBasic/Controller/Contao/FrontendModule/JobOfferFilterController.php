@@ -252,7 +252,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             'form' => $form,
             'ajaxRoute' => $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath(),
             'locale' => $request->getLocale(),
-            'dateFormat' => $objPage->dateFormat,
+            'page' => $objPage->id,
         ]);
     }
 }
