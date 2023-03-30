@@ -183,6 +183,7 @@ class JobOfferListController extends AbstractFrontendModuleController
         $limit = 0;
         $offset = 0;
 
+        /*
         if ($model->numberOfItems > 0) {
             $limit = $model->numberOfItems;
         }
@@ -191,7 +192,14 @@ class JobOfferListController extends AbstractFrontendModuleController
             $offset = $model->perPage;
         }
 
+        if ($this->perPage > 0 && (!isset($limit) || $this->numberOfItems > $this->perPage)) {
+
+        }
+        */
+
         $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, $limit, $offset, $sortBy, $order, $model->plentaJobsBasicHideOffersWithoutTranslation);
+
+        $intTotal = $jobOffers->count();
 
         if (null !== $sortByLocation) {
             $itemParts = [];
