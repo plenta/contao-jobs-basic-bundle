@@ -34,76 +34,27 @@ class PlentaJobsBasicOfferModel extends Model
 
     public static function findAllPublishedByTypesAndLocation(array $types, array $locations, int $limit = 0, int $offset = 0, string $sortBy = null, string $order = null, $onlyTranslated = false)
     {
-        $time = time();
+        $columns = [];
+        $values = [];
+        $arrOptions = [];
 
-        $columns = [
-            'published = ?',
-            '(start < ? OR start = ?)',
-            '(stop > ? OR stop = ?)',
-        ];
+        self::buildSearchQuery($columns, $arrOptions, $values, $types, $locations, $sortBy, $order, $onlyTranslated);
 
-        $values = [1, $time, '', $time, ''];
-
-        if (!empty($types)) {
-            $criteria = [];
-            foreach ($types as $type) {
-                $criteria[] = 'employmentType LIKE ?';
-                $values[] = '%"'.$type.'"%';
-            }
-
-            $columns[] = '('.implode(' OR ', $criteria).')';
-        }
-
-        if (!empty($locations)) {
-            $criteria = [];
-            foreach ($locations as $location) {
-                foreach (explode('|', $location) as $l) {
-                    $criteria[] = 'jobLocation LIKE ?';
-                    $values[] = '%"'.$l.'"%';
-                }
-            }
-
-            $columns[] = '('.implode(' OR ', $criteria).')';
-        }
-
-        if ($onlyTranslated) {
-            $requestStack = System::getContainer()->get('request_stack');
-            $language = $requestStack->getMainRequest()->getLocale();
-            $page = PageModel::findBy(['type = ?', 'language = ?'], ['root', $language]);
-            if ($page && !$page->fallback) {
-                $str = 's:8:"language";s:'.\strlen($language).':"'.$language.'"';
-                $columns[] = 'translations LIKE ?';
-                $values[] = '%'.$str.'%';
-            }
-        }
-
-        if (!empty($sortBy) && \in_array($sortBy, ['title', 'tstamp', 'datePosted'], true)) {
-            if (!empty($order) && \in_array($order, ['ASC', 'DESC'], true)) {
-                $sortDirection = $order;
-            } else {
-                $sortDirection = 'ASC';
-            }
-            $arrOptions = ['order' => $sortBy.' '.$sortDirection];
-        } else {
-            $arrOptions = [];
-        }
-
-        $arrOptions['limit']  = $limit;
+        $arrOptions['limit'] = $limit;
         $arrOptions['offset'] = $offset;
 
-        $dispatcher = System::getContainer()->get('event_dispatcher');
-        $findAllPublishedByTypesAndLocationEvent = new FindAllPublishedByTypesAndLocationEvent();
-        $findAllPublishedByTypesAndLocationEvent
-            ->setcolumns($columns)
-            ->setValues($values)
-            ->setOptions($arrOptions);
-        $dispatcher->dispatch($findAllPublishedByTypesAndLocationEvent, FindAllPublishedByTypesAndLocationEvent::NAME);
-
-        $columns = $findAllPublishedByTypesAndLocationEvent->getColumns();
-        $values = $findAllPublishedByTypesAndLocationEvent->getValues();
-        $arrOptions = $findAllPublishedByTypesAndLocationEvent->getOptions();
-
         return self::findBy($columns, $values, $arrOptions);
+    }
+
+    public static function countAllPublishedByTypesAndLocation(array $types, array $locations, $onlyTranslated = false)
+    {
+        $columns = [];
+        $values = [];
+        $arrOptions = [];
+
+        self::buildSearchQuery($columns, $arrOptions, $values, $types, $locations, null, null, $onlyTranslated);
+
+        return self::countBy($columns, $values, $arrOptions);
     }
 
     public static function doesAliasExist($alias, $id = null, $language = null): bool
@@ -237,6 +188,75 @@ class PlentaJobsBasicOfferModel extends Model
         $params = $this->getParams($language);
 
         return StringUtil::ampersand($objPage->getAbsoluteUrl($params));
+    }
+
+    protected static function buildSearchQuery(array &$columns, array &$arrOptions, array &$values, array $types, array $locations, string $sortBy = null, string $order = null, $onlyTranslated = false): void
+    {
+        $time = time();
+
+        $columns = [
+            'published = ?',
+            '(start < ? OR start = ?)',
+            '(stop > ? OR stop = ?)',
+        ];
+
+        $values = [1, $time, '', $time, ''];
+
+        if (!empty($types)) {
+            $criteria = [];
+            foreach ($types as $type) {
+                $criteria[] = 'employmentType LIKE ?';
+                $values[] = '%"'.$type.'"%';
+            }
+
+            $columns[] = '('.implode(' OR ', $criteria).')';
+        }
+
+        if (!empty($locations)) {
+            $criteria = [];
+            foreach ($locations as $location) {
+                foreach (explode('|', $location) as $l) {
+                    $criteria[] = 'jobLocation LIKE ?';
+                    $values[] = '%"'.$l.'"%';
+                }
+            }
+
+            $columns[] = '('.implode(' OR ', $criteria).')';
+        }
+
+        if ($onlyTranslated) {
+            $requestStack = System::getContainer()->get('request_stack');
+            $language = $requestStack->getMainRequest()->getLocale();
+            $page = PageModel::findBy(['type = ?', 'language = ?'], ['root', $language]);
+            if ($page && !$page->fallback) {
+                $str = 's:8:"language";s:'.\strlen($language).':"'.$language.'"';
+                $columns[] = 'translations LIKE ?';
+                $values[] = '%'.$str.'%';
+            }
+        }
+
+        if (!empty($sortBy) && \in_array($sortBy, ['title', 'tstamp', 'datePosted'], true)) {
+            if (!empty($order) && \in_array($order, ['ASC', 'DESC'], true)) {
+                $sortDirection = $order;
+            } else {
+                $sortDirection = 'ASC';
+            }
+            $arrOptions = ['order' => $sortBy.' '.$sortDirection];
+        } else {
+            $arrOptions = [];
+        }
+
+        $dispatcher = System::getContainer()->get('event_dispatcher');
+        $findAllPublishedByTypesAndLocationEvent = new FindAllPublishedByTypesAndLocationEvent();
+        $findAllPublishedByTypesAndLocationEvent
+            ->setcolumns($columns)
+            ->setValues($values)
+            ->setOptions($arrOptions);
+        $dispatcher->dispatch($findAllPublishedByTypesAndLocationEvent, FindAllPublishedByTypesAndLocationEvent::NAME);
+
+        $columns = $findAllPublishedByTypesAndLocationEvent->getColumns();
+        $values = $findAllPublishedByTypesAndLocationEvent->getValues();
+        $arrOptions = $findAllPublishedByTypesAndLocationEvent->getOptions();
     }
 
     protected function getParams($language)

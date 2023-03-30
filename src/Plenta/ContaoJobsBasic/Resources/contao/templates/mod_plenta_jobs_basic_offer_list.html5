@@ -29,6 +29,9 @@
             <p class="empty"><?= $this->empty ?></p>
         <?php else: ?>
             <?= implode('', $this->items) ?>
+            <?php if ($this->pagination): ?>
+                <?= $this->pagination ?>
+            <?php endif; ?>
         <?php endif; ?>
     <?php $this->endblock(); ?>
 </div>
