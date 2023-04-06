@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2022-2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\GoogleForJobs;
 
 use Contao\CoreBundle\Asset\ContaoContext;
-use Contao\CoreBundle\Image\PictureFactory;
+use Contao\CoreBundle\Image\PictureFactoryInterface;
 use Contao\Environment;
 use Contao\FilesModel;
 use Contao\Image\PictureConfiguration;
@@ -31,14 +31,14 @@ class GoogleForJobs
 {
     public const ALLOWED_TYPES = ['Country'/*, 'State', 'City', 'SchoolDistrict'*/]; // Google Search Console Validator allows only Country atm
 
-    protected PictureFactory $pictureFactory;
+    protected PictureFactoryInterface $pictureFactory;
     protected ContaoContext $contaoFileContext;
     protected EmploymentType $employmentTypeHelper;
 
     protected string $projectDir;
 
     public function __construct(
-        PictureFactory $pictureFactory,
+        PictureFactoryInterface $pictureFactory,
         ContaoContext $contaoFileContext,
         EmploymentType $employmentTypeHelper,
         string $projectDir
