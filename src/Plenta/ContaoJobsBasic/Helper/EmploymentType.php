@@ -187,7 +187,7 @@ class EmploymentType
                     continue;
                 }
 
-                $return[] = $employmentTypes[$employmentTypeId]->googleForJobsMapping;
+                $return[] = $employmentTypes[$employmentTypeId]->google_for_jobs_mapping;
             } else {
                 $return[] = $employmentTypeUnmapped;
             }
