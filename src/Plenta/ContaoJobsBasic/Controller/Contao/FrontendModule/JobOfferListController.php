@@ -14,6 +14,7 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
 use Contao\Config;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\Environment;
 use Contao\FrontendTemplate;
@@ -21,6 +22,7 @@ use Contao\Input;
 use Contao\LayoutModel;
 use Contao\ModuleModel;
 use Contao\PageModel;
+use Contao\Pagination;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Template;
@@ -91,6 +93,7 @@ class JobOfferListController extends AbstractFrontendModuleController
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
         global $objPage;
+
         if (!$objPage) {
             $objPage = PageModel::findWithDetails(Input::get('page'));
             if ($layout = LayoutModel::findByPk($objPage->layout)) {
@@ -98,10 +101,12 @@ class JobOfferListController extends AbstractFrontendModuleController
                 $objPage->templateGroup = ($theme ? $theme->templates : null);
             }
         }
+
         $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
         if (!\is_array($moduleLocations)) {
             $moduleLocations = [];
         }
+
         $moduleJobTypes = StringUtil::deserialize($model->plentaJobsBasicEmploymentTypes);
         if (!\is_array($moduleJobTypes)) {
             $moduleJobTypes = [];
@@ -177,7 +182,29 @@ class JobOfferListController extends AbstractFrontendModuleController
             }
         }
 
-        $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, $sortBy, $order, $model->plentaJobsBasicHideOffersWithoutTranslation);
+        $limit = 0;
+        $offset = 0;
+
+        $intTotal = PlentaJobsBasicOfferModel::countAllPublishedByTypesAndLocation($types, $locations, $model->plentaJobsBasicHideOffersWithoutTranslation);
+
+        if ($model->numberOfItems > 0) {
+            $limit = $model->numberOfItems;
+        }
+
+        if ($model->perPage > 0 && (empty($limit) || $model->numberOfItems > $model->perPage)) {
+            $limit = $model->perPage;
+            $pageParameter = 'page_n'.$model->id;
+            $page = Input::get($pageParameter) ?? 1;
+            $pages = ceil($intTotal / $model->perPage);
+            if ($page > $pages || $page < 1) {
+                throw new PageNotFoundException('Page not found: '.$request->getUri());
+            }
+            $offset = ($page - 1) * $model->perPage;
+            $pagination = new Pagination($intTotal, $model->perPage, 7, $pageParameter);
+            $template->pagination = $pagination->generate();
+        }
+
+        $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($types, $locations, (int) $limit, $offset, $sortBy, $order, $model->plentaJobsBasicHideOffersWithoutTranslation);
 
         if (null !== $sortByLocation) {
             $itemParts = [];
