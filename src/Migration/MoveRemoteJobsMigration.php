@@ -36,11 +36,11 @@ class MoveRemoteJobsMigration extends \Contao\CoreBundle\Migration\AbstractMigra
     {
         $schemaManager = $this->database->getSchemaManager();
 
-        if (!$schemaManager->tablesExist(['contao\dca\tl_plenta_jobs_basic_offer', 'tl_plenta_jobs_basic_job_location'])) {
+        if (!$schemaManager->tablesExist(['tl_plenta_jobs_basic_offer', 'tl_plenta_jobs_basic_job_location'])) {
             return false;
         }
 
-        $columns = $schemaManager->listTableColumns('contao\dca\tl_plenta_jobs_basic_offer');
+        $columns = $schemaManager->listTableColumns('tl_plenta_jobs_basic_offer');
         $columnsLocation = $schemaManager->listTableColumns('tl_plenta_jobs_basic_job_location');
 
         if (!isset($columns['isremote']) || !isset($columnsLocation['requirementtype'])) {
@@ -119,7 +119,7 @@ class MoveRemoteJobsMigration extends \Contao\CoreBundle\Migration\AbstractMigra
 
             if (null !== $newLocation) {
                 $this->database->update(
-                    'contao\dca\tl_plenta_jobs_basic_offer',
+                    'tl_plenta_jobs_basic_offer',
                     [
                         'isRemote' => 0,
                         'applicantLocationRequirements' => null,

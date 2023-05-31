@@ -37,11 +37,11 @@ class BoolCharToIntMigration extends AbstractMigration
     {
         $schemaManager = $this->database->getSchemaManager();
 
-        if (!$schemaManager->tablesExist(['contao\dca\tl_plenta_jobs_basic_offer'])) {
+        if (!$schemaManager->tablesExist(['tl_plenta_jobs_basic_offer'])) {
             return false;
         }
 
-        $columns = $schemaManager->listTableColumns('contao\dca\tl_plenta_jobs_basic_offer');
+        $columns = $schemaManager->listTableColumns('tl_plenta_jobs_basic_offer');
 
         $shouldRun = false;
 
@@ -65,7 +65,7 @@ class BoolCharToIntMigration extends AbstractMigration
     public function run(): MigrationResult
     {
         $schemaManager = $this->database->getSchemaManager();
-        $columns = $schemaManager->listTableColumns('contao\dca\tl_plenta_jobs_basic_offer');
+        $columns = $schemaManager->listTableColumns('tl_plenta_jobs_basic_offer');
 
         foreach ($columns as $currentColumn) {
             $currentColumnName = $currentColumn->getName();

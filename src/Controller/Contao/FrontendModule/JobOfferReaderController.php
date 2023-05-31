@@ -16,6 +16,7 @@ use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
@@ -41,13 +42,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @FrontendModule("plenta_jobs_basic_offer_reader",
- *   category="plentaJobsBasic",
- *   template="mod_plenta_jobs_basic_offer_reader",
- *   renderer="forward"
- * )
- */
+#[AsFrontendModule(type: 'plenta_jobs_basic_offer_reader', category: 'plentaJobsBasic')]
 class JobOfferReaderController extends AbstractFrontendModuleController
 {
     protected MetaFieldsHelper $metaFieldsHelper;
@@ -77,7 +72,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
         $parts = StringUtil::deserialize($model->plentaJobsBasicTemplateParts);
 
-        System::loadLanguageFile('contao\dca\tl_plenta_jobs_basic_offer');
+        System::loadLanguageFile('tl_plenta_jobs_basic_offer');
 
         if (!\is_array($parts)) {
             $parts = [];
@@ -127,8 +122,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $content = '';
 
         if (\in_array('title', $parts, true)) {
-            $template->headline = StringUtil::stripInsertTags($metaFields['title']);
-            $template->hl = $model->plentaJobsBasicHeadlineTag;
+            $template->headline = ['text' => StringUtil::stripInsertTags($metaFields['title']), 'tag_name' => $model->plentaJobsBasicHeadlineTag];
         }
 
         foreach ($parts as $part) {
@@ -189,7 +183,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     private function getContentElements($request, $parentId): ?string
     {
-        $elements = ContentModel::findPublishedByPidAndTable($parentId, 'contao\dca\tl_plenta_jobs_basic_offer');
+        $elements = ContentModel::findPublishedByPidAndTable($parentId, 'tl_plenta_jobs_basic_offer');
 
         if (null === $elements) {
             return null;
@@ -240,7 +234,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         $template = new FrontendTemplate('plenta_jobs_basic_reader_attribute');
         $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer);
-        $template->label = $GLOBALS['TL_LANG']['contao\dca\tl_plenta_jobs_basic_offer']['employmentType'][0];
+        $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['employmentType'][0];
         $template->value = $metaFields['employmentTypeFormatted'];
         $template->class = 'job_employment_type';
 
@@ -251,7 +245,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         if ($jobOffer->validThrough) {
             $template = new FrontendTemplate('plenta_jobs_basic_reader_attribute');
-            $template->label = $GLOBALS['TL_LANG']['contao\dca\tl_plenta_jobs_basic_offer']['validThrough'][0];
+            $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['validThrough'][0];
             $template->value = Date::parse(Date::getNumericDatimFormat(), $jobOffer->validThrough);
             $template->class = 'job_valid_through';
 
@@ -321,7 +315,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             }
 
             $template->salary = implode(' - ', $salary);
-            $template->unit = $GLOBALS['TL_LANG']['contao\dca\tl_plenta_jobs_basic_offer']['salaryUnits'][$jobOffer->salaryUnit];
+            $template->unit = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryUnits'][$jobOffer->salaryUnit];
 
             return $template->parse();
         }

@@ -46,14 +46,14 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
      */
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
-        $loader->load(__DIR__.'/../../../../config/config.yml');
+        $loader->load(__DIR__.'/../../config/config.yml');
     }
 
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
     {
         return $resolver
-            ->resolve(__DIR__.'/../../../../config/routing.yml')
-            ->load(__DIR__.'/../../../../config/routing.yml')
+            ->resolve(__DIR__.'/../../config/routing.yml')
+            ->load(__DIR__.'/../../config/routing.yml')
         ;
     }
 }

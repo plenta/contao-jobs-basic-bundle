@@ -21,7 +21,7 @@ use Plenta\ContaoJobsBasic\EventListener\Contao\Hooks\ChangelanguageNavigationLi
 ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, [
     'plenta_jobs_basic' => [
         'plenta_jobs_basic_offers' => [
-            'tables' => ['contao\dca\tl_plenta_jobs_basic_offer', 'tl_content'],
+            'tables' => ['tl_plenta_jobs_basic_offer', 'tl_content'],
         ],
         'plenta_jobs_basic_organizations' => [
             'tables' => ['tl_plenta_jobs_basic_organization', 'tl_plenta_jobs_basic_job_location'],

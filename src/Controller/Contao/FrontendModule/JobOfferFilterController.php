@@ -15,6 +15,7 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 use Contao\ArrayUtil;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\ModuleModel;
@@ -31,13 +32,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * @FrontendModule("plenta_jobs_basic_filter",
- *   category="plentaJobsBasic",
- *   template="mod_plenta_jobs_basic_filter",
- *   renderer="forward"
- * )
- */
+#[AsFrontendModule(category: 'plentaJobsBasic', type: 'plenta_jobs_basic_filter')]
 class JobOfferFilterController extends AbstractFrontendModuleController
 {
     protected MetaFieldsHelper $metaFieldsHelper;
@@ -247,14 +242,13 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         $this->eventDispatcher->dispatch($event, $event::NAME);
 
         $form = $event->getForm();
+        $template->form = $form;
+        $template->ajaxRoute = $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath();
+        $template->locale = $request->getLocale();
 
         global $objPage;
+        $template->page = $objPage->id;
 
-        return $this->render('@PlentaContaoJobsBasic/mod_plenta_jobs_basic_filter.html.twig', [
-            'form' => $form,
-            'ajaxRoute' => $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath(),
-            'locale' => $request->getLocale(),
-            'page' => $objPage->id,
-        ]);
+        return $template->getResponse();
     }
 }

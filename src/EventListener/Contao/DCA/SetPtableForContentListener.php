@@ -41,7 +41,7 @@ class SetPtableForContentListener
         }
 
         if ('plenta_jobs_basic_offers' === $request->query->get('do')) {
-            $GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'contao\dca\tl_plenta_jobs_basic_offer';
+            $GLOBALS['TL_DCA']['tl_content']['config']['ptable'] = 'tl_plenta_jobs_basic_offer';
         }
     }
 }

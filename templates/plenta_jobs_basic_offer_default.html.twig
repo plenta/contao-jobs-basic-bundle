@@ -1,0 +1,41 @@
+<div class="layout_default block{% if jobOffer.cssClass %} {{ jobOffer.cssClass }}{% endif %}">
+    {% if 'image' in parts %}
+        <div class="image">
+            {{ jobOfferMeta.image|raw }}
+        </div>
+    {% endif %}
+    <div class="first-column">
+        <{{ headlineUnit }} class="title">
+            <a href="{{ link }}">{{ jobOfferMeta.title|raw }}</a>
+        </{{ headlineUnit }}>
+        {% if 'company' in parts %}
+        <div class="organizations">
+            {{ jobOfferMeta.company }}
+        </div>
+        {% endif %}
+        {% if 'jobLocation' in parts %}
+        <div class="job-location">
+            {{ jobOfferMeta.addressLocalityFormatted }}
+        </div>
+        {% endif %}
+        {% if 'teaser' in parts %}
+        <div class="job-teaser">
+            {{ jobOfferMeta.teaser }}
+        </div>
+        {% endif %}
+    </div>
+    {% if 'publicationDate' in parts or 'employmentType' in parts %}
+    <div class="second-column">
+        {% if 'publicationDate' in parts %}
+        <div class="publication-date">
+            {{ jobOfferMeta.publicationDateFormatted }}
+        </div>
+        {% endif %}
+        {% if 'employmentType' in parts %}
+        <div class="employment-type">
+            {{ jobOfferMeta.employmentTypeFormatted }}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>

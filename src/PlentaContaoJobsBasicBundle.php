@@ -12,16 +12,18 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic;
 
+use Plenta\ContaoJobsBasic\DependencyInjection\PlentaContaoJobsBasicExtension;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Configures the bundle.
  */
-class PlentaContaoJobsBasicBundle extends Bundle
+class PlentaContaoJobsBasicBundle extends AbstractBundle
 {
-    public function getPath(): string
+    public function getContainerExtension(): ?ExtensionInterface
     {
-        return dirname(__DIR__);
+        return new PlentaContaoJobsBasicExtension();
     }
 }

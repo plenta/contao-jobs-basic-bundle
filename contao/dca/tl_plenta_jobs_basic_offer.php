@@ -24,7 +24,7 @@ use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer;
 use Symfony\Component\Intl\Currencies;
 
-$GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer'] = [
+$GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     'config' => [
         'dataContainer' => DC_Table::class,
         'ctable' => ['tl_content'],
@@ -78,8 +78,6 @@ $GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer'] = [
             'toggle' => [
                 'href' => null,
                 'icon' => 'visible.svg',
-                'attributes' => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-                'button_callback' => ['contao\dca\tl_plenta_jobs_basic_offer', 'toggleIcon'],
                 'showInHeader' => true,
             ],
             'renewDatePosted' => [
@@ -278,6 +276,7 @@ $GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'filter' => true,
             'flag' => 1,
+            'toggle' => true,
             'inputType' => 'checkbox',
             'eval' => [
                 'isBoolean' => true,
@@ -390,7 +389,7 @@ $GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer'] = [
                 'mandatory' => true,
                 'tl_class' => 'w50',
             ],
-            'reference' => &$GLOBALS['TL_LANG']['contao\dca\tl_plenta_jobs_basic_offer']['salaryUnits'],
+            'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryUnits'],
             'sql' => [
                 'type' => 'string',
                 'length' => 5,
@@ -508,8 +507,8 @@ class tl_plenta_jobs_basic_offer extends Backend
         }
 
         // Trigger the onload_callback
-        if (isset($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['onload_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onload_callback'])) {
-            foreach ($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['onload_callback'] as $callback) {
+        if (isset($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onload_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onload_callback'])) {
+            foreach ($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onload_callback'] as $callback) {
                 if (is_array($callback)) {
                     $this->import($callback[0]);
                     $this->{$callback[0]}->{$callback[1]}($dc);
@@ -537,12 +536,12 @@ class tl_plenta_jobs_basic_offer extends Backend
             $dc->activeRecord = $objRow;
         }
 
-        $objVersions = new Versions('contao\dca\tl_plenta_jobs_basic_offer', $intId);
+        $objVersions = new Versions('tl_plenta_jobs_basic_offer', $intId);
         $objVersions->initialize();
 
         // Trigger the save_callback
-        if (isset($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['save_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields']['published']['save_callback'])) {
-            foreach ($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['fields']['published']['save_callback'] as $callback) {
+        if (isset($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['save_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields']['published']['save_callback'])) {
+            foreach ($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields']['published']['save_callback'] as $callback) {
                 if (is_array($callback)) {
                     $this->import($callback[0]);
                     $blnVisible = $this->{$callback[0]}->{$callback[1]}($blnVisible, $dc);
@@ -564,8 +563,8 @@ class tl_plenta_jobs_basic_offer extends Backend
         }
 
         // Trigger the onsubmit_callback
-        if (isset($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['onsubmit_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onsubmit_callback'])) {
-            foreach ($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['onsubmit_callback'] as $callback) {
+        if (isset($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onsubmit_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onsubmit_callback'])) {
+            foreach ($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onsubmit_callback'] as $callback) {
                 if (is_array($callback)) {
                     $this->import($callback[0]);
                     $this->{$callback[0]}->{$callback[1]}($dc);

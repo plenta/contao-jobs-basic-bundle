@@ -14,6 +14,7 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
 use Contao\Config;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\CoreBundle\Twig\FragmentTemplate;
@@ -40,13 +41,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as TwigEnvironment;
 
-/**
- * @FrontendModule("plenta_jobs_basic_offer_list",
- *   category="plentaJobsBasic",
- *   template="mod_plenta_jobs_basic_offer_list",
- *   renderer="forward"
- * )
- */
+#[AsFrontendModule(type: 'plenta_jobs_basic_offer_list', category: 'plentaJobsBasic')]
 class JobOfferListController extends AbstractFrontendModuleController
 {
     protected MetaFieldsHelper $metaFieldsHelper;
@@ -228,17 +223,19 @@ class JobOfferListController extends AbstractFrontendModuleController
 
         if ($jobOffers) {
             foreach ($jobOffers as $jobOffer) {
-                $itemTemplate = new FrontendTemplate('plenta_jobs_basic_offer_default');
-                $itemTemplate->jobOffer = $jobOffer;
-                $itemTemplate->jobOfferMeta = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
-                $itemTemplate->headlineUnit = $model->plentaJobsBasicHeadlineTag;
                 $parts = StringUtil::deserialize($model->plentaJobsBasicListParts);
                 if (!\is_array($parts)) {
                     $parts = [];
                 }
-                $itemTemplate->parts = $parts;
+                $data = [
+                    'jobOffer' => $jobOffer,
+                    'jobOfferMeta' => $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize),
+                    'headlineUnit' => $model->plentaJobsBasicHeadlineTag,
+                    'parts' => $parts,
+                    'link' => $this->generateJobOfferUrl($jobOffer, $model),
+                ];
 
-                $itemTemplate->link = $this->generateJobOfferUrl($jobOffer, $model);
+                $stream = $this->twig->render('@PlentaContaoJobsBasic/plenta_jobs_basic_offer_default.html.twig', $data);
 
                 if (null !== $sortByLocation) {
                     $jobLocations = StringUtil::deserialize($jobOffer->jobLocation);
@@ -247,13 +244,13 @@ class JobOfferListController extends AbstractFrontendModuleController
                         $joinedLocations = explode('|', $location);
                         foreach ($joinedLocations as $joinedLocation) {
                             if (\in_array((string) $joinedLocation, $jobLocations, true)) {
-                                $itemParts[$location][] = $itemTemplate->parse();
+                                $itemParts[$location][] = $stream;
                                 break 2;
                             }
                         }
                     }
                 } else {
-                    $items[] = $itemTemplate->parse();
+                    $items[] = $stream;
                 }
             }
         }
