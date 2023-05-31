@@ -168,7 +168,7 @@ class TlPlentaJobsBasicOffer
     {
         $GLOBALS['TL_CSS'][] = 'bundles/plentacontaojobsbasic/dashboard.css';
         $info = $this->twig->render('@PlentaContaoJobsBasic/be_plenta_info.html.twig', [
-            'version' => PackageUtil::getVersion('plenta/contao-jobs-basic-bundle'),
+            'version' => InstalledVersions::getVersion('plenta/contao-jobs-basic-bundle'),
         ]);
 
         Message::addRaw($info);

@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
+use Contao\DC_Table;
 use Contao\System;
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicJobLocation;
 use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
@@ -17,7 +18,7 @@ use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
     // Config
     'config' => [
-        'dataContainer' => \Contao\DC_Table::class,
+        'dataContainer' => DC_Table::class,
         'ptable' => 'tl_plenta_jobs_basic_organization',
         'switchToEdit' => true,
         'enableVersioning' => true,
@@ -174,7 +175,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         'addressCountry' => [
             'exclude' => true,
             'inputType' => 'select',
-            'options' => System::getCountries(),
+            'options' => System::getContainer()->get('contao.intl.countries')->getCountries(),
             'eval' => [
                 'mandatory' => true,
                 'includeBlankOption' => true,

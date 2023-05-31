@@ -1,13 +1,7 @@
-{% extends "@ContaoCore/Backend/be_page.html.twig" %}
+{% extends "@Contao/be_main.html.twig" %}
+{% set type = '' %}
 
-{% block headline %}
-{{ title }}
-{% endblock %}
-
-{% block error %}
-{% endblock %}
-
-{% block main %}
+{% block main_content %}
     {% include('@PlentaContaoJobsBasic/be_plenta_info.html.twig') %}
 
     <div class="tl_listing_container">

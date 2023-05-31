@@ -12,9 +12,11 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
+use Contao\ArrayUtil;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\ModuleModel;
 use Contao\StringUtil;
 use Contao\Template;
@@ -70,7 +72,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             $employmentTypes[$employmentType] = $employmentTypeHelper->getEmploymentTypeName($employmentType);
         }
 
-        if (array_is_assoc($employmentTypes)) {
+        if (ArrayUtil::isAssoc($employmentTypes)) {
             foreach ($employmentTypes as $k => $v) {
                 if (true !== (bool) $model->plentaJobsBasicShowAllTypes) {
                     if (!\array_key_exists($k, $this->counterEmploymentType)) {
@@ -231,7 +233,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return $return;
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         $form = $this->createForm(JobOfferFilterType::class, null, [
             'types' => $this->getTypes($model),
@@ -248,7 +250,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
         global $objPage;
 
-        return $this->renderForm('@PlentaContaoJobsBasic/mod_plenta_jobs_basic_filter.html.twig', [
+        return $this->render('@PlentaContaoJobsBasic/mod_plenta_jobs_basic_filter.html.twig', [
             'form' => $form,
             'ajaxRoute' => $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath(),
             'locale' => $request->getLocale(),

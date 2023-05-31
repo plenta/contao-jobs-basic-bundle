@@ -10,13 +10,14 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
-use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicSettingsEmploymentType;
+use Contao\DC_Table;
 
-$GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
+$GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
+    // Config
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => DC_Table::class,
+        'ctable' => ['tl_plenta_jobs_basic_job_location'],
         'switchToEdit' => true,
-        'markAsCopy' => 'title',
         'enableVersioning' => true,
         'sql' => [
             'keys' => [
@@ -27,14 +28,14 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
 
     'list' => [
         'sorting' => [
-            'mode' => 1,
-            'fields' => ['title'],
+            'mode' => 2,
+            'fields' => ['name'],
             'flag' => 1,
-            'panelLayout' => 'filter;search,sort,limit',
+            'disableGrouping' => true,
         ],
         'label' => [
-            'fields' => ['title'],
-            'showColumns' => false,
+            'fields' => ['name'],
+            'format' => '%s',
         ],
         'global_operations' => [
             'back' => [
@@ -50,12 +51,12 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
         ],
         'operations' => [
             'edit' => [
-                'href' => 'act=edit',
+                'href' => 'table=tl_plenta_jobs_basic_job_location',
                 'icon' => 'edit.svg',
             ],
-            'copy' => [
-                'href' => 'act=copy',
-                'icon' => 'copy.svg',
+            'editheader' => [
+                'href' => 'act=edit',
+                'icon' => 'header.svg',
             ],
             'delete' => [
                 'href' => 'act=delete',
@@ -67,7 +68,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
 
     // Palettes
     'palettes' => [
-        'default' => '{settings_legend},title,google_for_jobs_mapping;translation',
+        'default' => '{organization_legend},name,sameAs;{logo_legend},logo',
     ],
 
     // Fields
@@ -86,10 +87,11 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
                 'default' => 0,
             ],
         ],
-        'title' => [
+        'name' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_organization']['name'],
             'exclude' => true,
-            'search' => true,
             'inputType' => 'text',
+            'default' => '',
             'eval' => [
                 'maxlength' => 255,
                 'tl_class' => 'w50',
@@ -101,42 +103,35 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_settings_employment_type'] = [
                 'default' => '',
             ],
         ],
-        'google_for_jobs_mapping' => [
+        'sameAs' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_organization']['sameAs'],
             'exclude' => true,
-            'inputType' => 'select',
-            'options_callback' => [
-                TlPlentaJobsBasicSettingsEmploymentType::class,
-                'googleForJobsMappingOptionsCallback',
-            ],
+            'inputType' => 'text',
+            'default' => '',
             'eval' => [
+                'maxlength' => 255,
                 'tl_class' => 'w50',
-                'mandatory' => true,
+                'rgxp' => 'url',
             ],
             'sql' => [
                 'type' => 'string',
-                'length' => 32,
-                'default' => 'OTHER',
+                'length' => 255,
+                'default' => '',
             ],
         ],
-        'translation' => [
-            'inputType' => 'metaWizard',
+        'logo' => [
+            'exclude' => true,
+            'inputType' => 'fileTree',
             'eval' => [
-                'class' => 'clr',
-                'allowHtml' => true,
-                'multiple' => true,
-                'metaFields' => [
-                    'title' => 'maxlength="255"',
-                ],
+                'fieldType' => 'radio',
+                'filesOnly' => true,
+                'extensions' => Contao\Config::get('validImageTypes'),
             ],
-            'load_callback' => [[
-                TlPlentaJobsBasicSettingsEmploymentType::class,
-                'translationLoadCallback',
-            ]],
-            'save_callback' => [[
-                TlPlentaJobsBasicSettingsEmploymentType::class,
-                'translationSaveCallback',
-            ]],
-            'sql' => 'JSON NULL default NULL',
+            'sql' => [
+                'type' => 'binary_string',
+                'notnull' => false,
+                'default' => null,
+            ],
         ],
     ],
 ];

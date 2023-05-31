@@ -34,11 +34,11 @@ class RefactorTranslationsMigration extends \Contao\CoreBundle\Migration\Abstrac
     {
         $schemaManager = $this->database->getSchemaManager();
 
-        if (!$schemaManager->tablesExist(['tl_plenta_jobs_basic_offer_translation', 'tl_plenta_jobs_basic_offer'])) {
+        if (!$schemaManager->tablesExist(['tl_plenta_jobs_basic_offer_translation', 'contao\dca\tl_plenta_jobs_basic_offer'])) {
             return false;
         }
 
-        $columns = $schemaManager->listTableColumns('tl_plenta_jobs_basic_offer');
+        $columns = $schemaManager->listTableColumns('contao\dca\tl_plenta_jobs_basic_offer');
 
         if (!\array_key_exists('translations', $columns)) {
             return false;

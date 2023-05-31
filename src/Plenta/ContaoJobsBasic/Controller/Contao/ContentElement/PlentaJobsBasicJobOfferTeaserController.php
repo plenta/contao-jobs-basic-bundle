@@ -15,6 +15,7 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao\ContentElement;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\StringUtil;
 use Contao\Template;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
@@ -47,9 +48,12 @@ class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementCont
         return $this->metaFields;
     }
 
-    public function getResponse(Template $template, ContentModel $model, Request $request): ?Response
+    public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         $jobOffer = PlentaJobsBasicOfferModel::findByIdOrAlias($model->plentaJobsBasicJobOffer);
+        if (!$jobOffer) {
+            return new Response();
+        }
         $template->jobOffer = $jobOffer;
         $parts = StringUtil::deserialize($model->plentaJobsBasicJobOfferTeaserParts);
         if (!\is_array($parts)) {

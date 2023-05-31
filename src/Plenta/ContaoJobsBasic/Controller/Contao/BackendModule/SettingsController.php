@@ -12,25 +12,17 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\BackendModule;
 
-use Contao\CoreBundle\Controller\AbstractController;
+use Composer\InstalledVersions;
+use Contao\CoreBundle\Controller\AbstractBackendController;
 use Contao\CoreBundle\Exception\AccessDeniedException;
-use Contao\CoreBundle\Util\PackageUtil;
 use Contao\System;
 use Plenta\ContaoJobsBasic\Helper\PermissionsHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment as TwigEnvironment;
 
-class SettingsController extends AbstractController
-{
-    private $twig;
-
-    public function __construct(TwigEnvironment $twig)
-    {
-        $this->twig = $twig;
-    }
-
-    public function showSettings(): Response
+class SettingsController extends AbstractBackendController
+{public function showSettings(): Response
     {
         if (!PermissionsHelper::canAccessModule('settings')) {
             throw new AccessDeniedException('The settings module of the Plenta Jobs Basic Bundle is not allowed for user "'.\BackendUser::getInstance()->username.'".');
@@ -52,14 +44,14 @@ class SettingsController extends AbstractController
             }
         }
 
-        return new Response($this->twig->render(
+        return $this->render(
             '@PlentaContaoJobsBasic/be_plenta_jobs_basic_settings.html.twig',
             [
                 'title' => $GLOBALS['TL_LANG']['MOD']['plenta_jobs_basic_settings'][0],
                 'mods' => $mods,
-                'version' => PackageUtil::getVersion('plenta/contao-jobs-basic-bundle'),
+                'version' => InstalledVersions::getVersion('plenta/contao-jobs-basic-bundle'),
             ]
-        ));
+        );
     }
 
     public static function isActive(RequestStack $requestStack)

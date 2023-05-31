@@ -1,0 +1,2 @@
+twig:
+    form_themes: ['@PlentaContaoJobsBasic/forms/form_layout.html.twig']

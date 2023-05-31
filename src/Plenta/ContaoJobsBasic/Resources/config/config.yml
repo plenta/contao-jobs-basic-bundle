@@ -1,9 +1,0 @@
-doctrine:
-    orm:
-        entity_managers:
-            default:
-                mappings:
-                    PlentaContaoJobsBasicBundle: ~
-
-twig:
-    form_themes: ['@PlentaContaoJobsBasic/forms/form_layout.html.twig']

@@ -1,5 +1,5 @@
 <?php if (is_array($this->locations)): ?>
-<p class="job_location_label"><strong><?= $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['jobLocation'][0] ?>:</strong></p>
+<p class="job_location_label"><strong><?= $GLOBALS['TL_LANG']['contao\dca\tl_plenta_jobs_basic_offer']['jobLocation'][0] ?>:</strong></p>
 <?php foreach ($this->locations as $key => $locations): ?>
     <div class="job_organization_info">
             <?php if (array_key_exists($key, $this->imgs)): ?>

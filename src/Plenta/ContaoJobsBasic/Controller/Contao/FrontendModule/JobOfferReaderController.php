@@ -20,6 +20,7 @@ use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\CoreBundle\String\HtmlDecoder;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Date;
 use Contao\Environment;
 use Contao\FilesModel;
@@ -29,7 +30,6 @@ use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
-use Contao\Template;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Events\JobOfferReaderBeforeParseTemplateEvent;
@@ -70,14 +70,14 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         /* @var PageModel $objPage */
         global $objPage;
 
         $parts = StringUtil::deserialize($model->plentaJobsBasicTemplateParts);
 
-        System::loadLanguageFile('tl_plenta_jobs_basic_offer');
+        System::loadLanguageFile('contao\dca\tl_plenta_jobs_basic_offer');
 
         if (!\is_array($parts)) {
             $parts = [];
@@ -189,7 +189,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     private function getContentElements($request, $parentId): ?string
     {
-        $elements = ContentModel::findPublishedByPidAndTable($parentId, 'tl_plenta_jobs_basic_offer');
+        $elements = ContentModel::findPublishedByPidAndTable($parentId, 'contao\dca\tl_plenta_jobs_basic_offer');
 
         if (null === $elements) {
             return null;
@@ -219,9 +219,9 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                     'singleSRC' => $image->path,
                     'size' => $model->imgSize,
                 ]);
+                return $template->parse();
             }
 
-            return $template->parse();
         }
 
         return '';
@@ -240,7 +240,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         $template = new FrontendTemplate('plenta_jobs_basic_reader_attribute');
         $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer);
-        $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['employmentType'][0];
+        $template->label = $GLOBALS['TL_LANG']['contao\dca\tl_plenta_jobs_basic_offer']['employmentType'][0];
         $template->value = $metaFields['employmentTypeFormatted'];
         $template->class = 'job_employment_type';
 
@@ -251,7 +251,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         if ($jobOffer->validThrough) {
             $template = new FrontendTemplate('plenta_jobs_basic_reader_attribute');
-            $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['validThrough'][0];
+            $template->label = $GLOBALS['TL_LANG']['contao\dca\tl_plenta_jobs_basic_offer']['validThrough'][0];
             $template->value = Date::parse(Date::getNumericDatimFormat(), $jobOffer->validThrough);
             $template->class = 'job_valid_through';
 
@@ -276,7 +276,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             foreach ($locations as $location) {
                 $organization = $location->getRelated('pid');
                 if (!\array_key_exists($organization->id, $organizations)) {
-                    if ($model->plentaJobsBasicShowLogo && $organization->logo) {
+                    /*if ($model->plentaJobsBasicShowLogo && $organization->logo) {
                         $imgTpl = new FrontendTemplate('ce_image');
                         $image = FilesModel::findByUuid($organization->logo);
                         Controller::addImageToTemplate($imgTpl, [
@@ -284,7 +284,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                             'size' => [200, 200, 'proportional'],
                         ]);
                         $imgs[$organization->id] = $imgTpl->parse();
-                    }
+                    }*/
                     $organizations[$organization->id] = $organization;
                     $locationsTpl[$organization->id] = [];
                 }
@@ -321,7 +321,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             }
 
             $template->salary = implode(' - ', $salary);
-            $template->unit = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryUnits'][$jobOffer->salaryUnit];
+            $template->unit = $GLOBALS['TL_LANG']['contao\dca\tl_plenta_jobs_basic_offer']['salaryUnits'][$jobOffer->salaryUnit];
 
             return $template->parse();
         }

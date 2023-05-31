@@ -132,28 +132,30 @@ class GoogleForJobs
 
         if (null !== $uuid && '' !== $uuid) {
             $image = FilesModel::findByUuid($uuid);
-            $staticUrl = $this->contaoFileContext->getStaticUrl();
+            if ($image) {
+                $staticUrl = $this->contaoFileContext->getStaticUrl();
 
-            $imageConfigItem = new PictureConfigurationItem();
-            $resizeConfig = new ResizeConfiguration();
-            $pictureConfiguration = new PictureConfiguration();
+                $imageConfigItem = new PictureConfigurationItem();
+                $resizeConfig = new ResizeConfiguration();
+                $pictureConfiguration = new PictureConfiguration();
 
-            // Set sizes
-            $resizeConfig->setWidth(700);
-            $resizeConfig->setHeight(700);
-            $resizeConfig->setZoomLevel(100);
-            $resizeConfig->setMode(ResizeConfiguration::MODE_PROPORTIONAL);
-            $pictureConfiguration->setSize($imageConfigItem->setResizeConfig($resizeConfig));
+                // Set sizes
+                $resizeConfig->setWidth(700);
+                $resizeConfig->setHeight(700);
+                $resizeConfig->setZoomLevel(100);
+                $resizeConfig->setMode(ResizeConfiguration::MODE_PROPORTIONAL);
+                $pictureConfiguration->setSize($imageConfigItem->setResizeConfig($resizeConfig));
 
-            // Create Contao picture factory object
-            $picture = $this->pictureFactory->create(
-                $this->projectDir.'/'.$image->path,
-                $pictureConfiguration
-            );
+                // Create Contao picture factory object
+                $picture = $this->pictureFactory->create(
+                    $this->projectDir.'/'.$image->path,
+                    $pictureConfiguration
+                );
 
-            $imgSrc = $picture->getImg($this->projectDir, $staticUrl)['src'];
+                $imgSrc = $picture->getImg($this->projectDir, $staticUrl)['src'];
 
-            $structuredData['hiringOrganization']['logo'] = Environment::get('url').'/'.$imgSrc;
+                $structuredData['hiringOrganization']['logo'] = Environment::get('url').'/'.$imgSrc;
+            }
         }
 
         return $structuredData;

@@ -10,13 +10,23 @@ declare(strict_types=1);
  * @link          https://github.com/plenta/
  */
 
+namespace contao\dca;
+
+use Contao;
+use Contao\Backend;
+use Contao\BackendUser;
+use Contao\CoreBundle\Exception\AccessDeniedException;
+use Contao\DataContainer;
+use Contao\DC_Table;
+use Contao\Input;
+use Contao\Versions;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer;
 use Symfony\Component\Intl\Currencies;
 
-$GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
+$GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer'] = [
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => DC_Table::class,
         'ctable' => ['tl_content'],
         'switchToEdit' => true,
         'markAsCopy' => 'title',
@@ -63,13 +73,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'delete' => [
                 'href' => 'act=delete',
                 'icon' => 'delete.svg',
-                'attributes' => 'onclick="if(!confirm(\''.($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null).'\'))return false;Backend.getScrollOffset()"',
+                'attributes' => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\'))return false;Backend.getScrollOffset()"',
             ],
             'toggle' => [
                 'href' => null,
                 'icon' => 'visible.svg',
                 'attributes' => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-                'button_callback' => ['tl_plenta_jobs_basic_offer', 'toggleIcon'],
+                'button_callback' => ['contao\dca\tl_plenta_jobs_basic_offer', 'toggleIcon'],
                 'showInHeader' => true,
             ],
             'renewDatePosted' => [
@@ -380,7 +390,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'mandatory' => true,
                 'tl_class' => 'w50',
             ],
-            'reference' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['salaryUnits'],
+            'reference' => &$GLOBALS['TL_LANG']['contao\dca\tl_plenta_jobs_basic_offer']['salaryUnits'],
             'sql' => [
                 'type' => 'string',
                 'length' => 5,
@@ -430,7 +440,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     ],
 ];
 
-class tl_plenta_jobs_basic_offer extends \Contao\Backend
+class tl_plenta_jobs_basic_offer extends Backend
 {
     /**
      * Import the back end user object.
@@ -448,7 +458,7 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
     /**
      * Return the "toggle visibility" button.
      *
-     * @param array  $row
+     * @param array $row
      * @param string $href
      * @param string $label
      * @param string $title
@@ -460,7 +470,7 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
         if (Contao\Input::get('tid')) {
-            $this->toggleVisibility(Contao\Input::get('tid'), 1 == Contao\Input::get('state'), func_num_args() <= 12 ? null : func_get_arg(12));
+            $this->toggleVisibility(Contao\Input::get('tid'), 1 == Input::get('state'), func_num_args() <= 12 ? null : func_get_arg(12));
             $this->redirect($this->getReferer());
         }
 
@@ -469,25 +479,25 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
             return '';
         }
 
-        $href .= '&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
+        $href .= '&amp;tid=' . $row['id'] . '&amp;state=' . ($row['published'] ? '' : 1);
 
         if (!$row['published']) {
             $icon = 'invisible.svg';
         }
 
-        return '<a href="'.$this->addToUrl($href).'" title="'.Contao\StringUtil::specialchars($title).'"'.$attributes.'>'.Contao\Image::getHtml($icon, $label, 'data-state="'.($row['published'] ? 1 : 0).'"').'</a> ';
+        return '<a href="' . $this->addToUrl($href) . '" title="' . Contao\StringUtil::specialchars($title) . '"' . $attributes . '>' . Contao\Image::getHtml($icon, $label, 'data-state="' . ($row['published'] ? 1 : 0) . '"') . '</a> ';
     }
 
     /**
      * Disable/enable a job offer.
      *
-     * @param int                  $intId
-     * @param bool                 $blnVisible
-     * @param Contao\DataContainer $dc
+     * @param int $intId
+     * @param bool $blnVisible
+     * @param DataContainer $dc
      *
-     * @throws Contao\CoreBundle\Exception\AccessDeniedException
+     * @throws AccessDeniedException
      */
-    public function toggleVisibility($intId, $blnVisible, Contao\DataContainer $dc = null): void
+    public function toggleVisibility($intId, $blnVisible, DataContainer $dc = null): void
     {
         // Set the ID and action
         Contao\Input::setGet('id', $intId);
@@ -498,8 +508,8 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
         }
 
         // Trigger the onload_callback
-        if (isset($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onload_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onload_callback'])) {
-            foreach ($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onload_callback'] as $callback) {
+        if (isset($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['onload_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onload_callback'])) {
+            foreach ($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['onload_callback'] as $callback) {
                 if (is_array($callback)) {
                     $this->import($callback[0]);
                     $this->{$callback[0]}->{$callback[1]}($dc);
@@ -511,7 +521,7 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
 
         // Check the field access
         if (!$this->User->hasAccess('tl_plenta_jobs_basic_offer::published', 'alexf')) {
-            throw new Contao\CoreBundle\Exception\AccessDeniedException('Not enough permissions to publish/unpublish job offer ID "'.$intId.'".');
+            throw new AccessDeniedException('Not enough permissions to publish/unpublish job offer ID "' . $intId . '".');
         }
 
         $objRow = $this->Database->prepare('SELECT * FROM tl_plenta_jobs_basic_offer WHERE id=?')
@@ -519,7 +529,7 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
             ->execute($intId);
 
         if ($objRow->numRows < 1) {
-            throw new Contao\CoreBundle\Exception\AccessDeniedException('Invalid job offer ID "'.$intId.'".');
+            throw new AccessDeniedException('Invalid job offer ID "' . $intId . '".');
         }
 
         // Set the current record
@@ -527,12 +537,12 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
             $dc->activeRecord = $objRow;
         }
 
-        $objVersions = new Contao\Versions('tl_plenta_jobs_basic_offer', $intId);
+        $objVersions = new Versions('contao\dca\tl_plenta_jobs_basic_offer', $intId);
         $objVersions->initialize();
 
         // Trigger the save_callback
-        if (isset($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['save_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields']['published']['save_callback'])) {
-            foreach ($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields']['published']['save_callback'] as $callback) {
+        if (isset($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['save_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields']['published']['save_callback'])) {
+            foreach ($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['fields']['published']['save_callback'] as $callback) {
                 if (is_array($callback)) {
                     $this->import($callback[0]);
                     $blnVisible = $this->{$callback[0]}->{$callback[1]}($blnVisible, $dc);
@@ -545,7 +555,7 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
         $time = time();
 
         // Update the database
-        $this->Database->prepare("UPDATE tl_plenta_jobs_basic_offer SET tstamp=$time, published='".($blnVisible ? '1' : '0')."' WHERE id=?")
+        $this->Database->prepare("UPDATE tl_plenta_jobs_basic_offer SET tstamp=$time, published='" . ($blnVisible ? '1' : '0') . "' WHERE id=?")
             ->execute($intId);
 
         if ($dc) {
@@ -554,8 +564,8 @@ class tl_plenta_jobs_basic_offer extends \Contao\Backend
         }
 
         // Trigger the onsubmit_callback
-        if (isset($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onsubmit_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onsubmit_callback'])) {
-            foreach ($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onsubmit_callback'] as $callback) {
+        if (isset($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['onsubmit_callback']) && is_array($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['config']['onsubmit_callback'])) {
+            foreach ($GLOBALS['TL_DCA']['contao\dca\tl_plenta_jobs_basic_offer']['config']['onsubmit_callback'] as $callback) {
                 if (is_array($callback)) {
                     $this->import($callback[0]);
                     $this->{$callback[0]}->{$callback[1]}($dc);

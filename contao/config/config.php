@@ -11,16 +11,17 @@ declare(strict_types=1);
  */
 
 use Composer\InstalledVersions;
+use Contao\ArrayUtil;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicSettingsEmploymentTypeModel;
 use Plenta\ContaoJobsBasic\EventListener\Contao\Hooks\ChangelanguageNavigationListener;
 
-array_insert($GLOBALS['BE_MOD'], 1, [
+ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, [
     'plenta_jobs_basic' => [
         'plenta_jobs_basic_offers' => [
-            'tables' => ['tl_plenta_jobs_basic_offer', 'tl_content'],
+            'tables' => ['contao\dca\tl_plenta_jobs_basic_offer', 'tl_content'],
         ],
         'plenta_jobs_basic_organizations' => [
             'tables' => ['tl_plenta_jobs_basic_organization', 'tl_plenta_jobs_basic_job_location'],

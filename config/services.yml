@@ -7,8 +7,8 @@ services:
             $csrfTokenName: '%contao.csrf_token_name%'
 
     Plenta\ContaoJobsBasic\:
-        resource: ../../../../../src/Plenta/ContaoJobsBasic/*
-        exclude: ../../../../../src/Plenta/ContaoJobsBasic/{Entity,Migrations,Resources,Tests}
+        resource: ../src/Plenta/ContaoJobsBasic/*
+        exclude: ../src/Plenta/ContaoJobsBasic/{Entity,Migrations,Resources,Tests}
 
     Plenta\ContaoJobsBasic\Helper\EmploymentType:
         class: Plenta\ContaoJobsBasic\Helper\EmploymentType
@@ -38,6 +38,11 @@ services:
 
 
     Plenta\ContaoJobsBasic\Migration\MoveRemoteJobsMigration:
+        public: true
+        tags:
+            - { name: contao.migration, priority: 0 }
+
+    Plenta\ContaoJobsBasic\Migration\JobLocationCountryUppercaseMigration:
         public: true
         tags:
             - { name: contao.migration, priority: 0 }

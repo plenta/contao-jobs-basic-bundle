@@ -15,6 +15,7 @@ namespace Plenta\ContaoJobsBasic\Helper;
 use Composer\InstalledVersions;
 use Contao\Controller;
 use Contao\CoreBundle\Image\Studio\Studio;
+use Contao\CoreBundle\InsertTag\InsertTagParser;
 use Contao\Date;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
@@ -25,30 +26,21 @@ use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
 use Symfony\Component\HttpFoundation\RequestStack;
-
+use Symfony\Component\Intl\Countries;
 class MetaFieldsHelper
 {
-    protected EmploymentType $employmentTypeHelper;
-
-    protected RequestStack $requestStack;
-
     public function __construct(
-        EmploymentType $employmentTypeHelper,
-        RequestStack $requestStack
+        protected EmploymentType $employmentTypeHelper,
+        protected RequestStack $requestStack,
+        protected InsertTagParser $insertTagParser
     ) {
-        $this->employmentTypeHelper = $employmentTypeHelper;
-        $this->requestStack = $requestStack;
     }
 
     public function getMetaFields(PlentaJobsBasicOfferModel $jobOffer, $imageSize = null): array
     {
         $metaFields = [];
 
-        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
-            $mainRequest = $this->requestStack->getMainRequest();
-        } else {
-            $mainRequest = $this->requestStack->getMasterRequest();
-        }
+        $mainRequest = $this->requestStack->getMainRequest();
 
         $translation = $jobOffer->getTranslation($mainRequest->getLocale());
 
@@ -57,23 +49,19 @@ class MetaFieldsHelper
         $metaFields['locationFormatted'] = $this->formatLocation($jobOffer);
         $metaFields['addressLocalityFormatted'] = $this->formatAddressLocality($jobOffer);
         $metaFields['addressCountryFormatted'] = $this->formatAddressCountry($jobOffer);
-        $metaFields['title'] = Controller::replaceInsertTags($translation['title'] ?? $jobOffer->title);
-        $metaFields['description'] = Controller::replaceInsertTags($translation['description'] ?? $jobOffer->description);
+        $metaFields['title'] = $this->insertTagParser->replace($translation['title'] ?? $jobOffer->title);
+        $metaFields['description'] = $this->insertTagParser->replace($translation['description'] ?? $jobOffer->description);
         $metaFields['alias'] = $translation['alias'] ?? $jobOffer->alias;
         $metaFields['company'] = $this->formatCompany($jobOffer);
-        $metaFields['teaser'] = Controller::replaceInsertTags($translation['teaser'] ?? $jobOffer->teaser);
+        $metaFields['teaser'] = $this->insertTagParser->replace($translation['teaser'] ?? $jobOffer->teaser ?? '');
         if ($imageSize && $jobOffer->addImage) {
             $file = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
             if ($file) {
                 $tpl = new FrontendTemplate('ce_image');
-                if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.11', '>=')) {
-                    /** @var Studio $studio */
-                    $studio = System::getContainer()->get('contao.image.studio');
-                    $figure = $studio->createFigureBuilder()->fromUuid($jobOffer->singleSRC)->setSize($imageSize)->build();
-                    $figure->applyLegacyTemplateData($tpl);
-                } else {
-                    Controller::addImageToTemplate($tpl, ['singleSRC' => $file->path, 'size' => $imageSize]);
-                }
+                /** @var Studio $studio */
+                $studio = System::getContainer()->get('contao.image.studio');
+                $figure = $studio->createFigureBuilder()->fromUuid($jobOffer->singleSRC)->setSize($imageSize)->build();
+                $figure->applyLegacyTemplateData($tpl);
                 $metaFields['image'] = $tpl->parse();
             }
         }
@@ -98,7 +86,7 @@ class MetaFieldsHelper
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
-            $name = 'onPremise' === $objLocation->jobTypeLocation ? $objLocation->addressLocality : $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
+            $name = 'onPremise' === $objLocation->jobTypeLocation ? $objLocation->addressLocality : ('Country' === $objLocation->requirementType ? $objLocation->requirementValue : null);
             if (!\in_array($name, $locationsTemp, true)) {
                 $locationsTemp[] = $name;
             }
@@ -114,7 +102,7 @@ class MetaFieldsHelper
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
-            $name = 'onPremise' === $objLocation->jobTypeLocation ? $GLOBALS['TL_LANG']['CNT'][$objLocation->addressCountry] : ('Country' === $objLocation->requirementType ? $objLocation->requirementValue : null);
+            $name = 'onPremise' === $objLocation->jobTypeLocation ? Countries::getName($objLocation->addressCountry) : ('Country' === $objLocation->requirementType ? $objLocation->requirementValue : null);
             if ($name && !\in_array($name, $countriesTemp, true)) {
                 $countriesTemp[] = $name;
             }

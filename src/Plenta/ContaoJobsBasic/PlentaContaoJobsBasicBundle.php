@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic;
 
+use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -19,4 +20,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class PlentaContaoJobsBasicBundle extends Bundle
 {
+    public function getPath(): string
+    {
+        return dirname(__DIR__);
+    }
 }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+  <file>
+    <body>
+      <trans-unit id="MSC.PLENTA_JOBS.FULL_TIME">
+        <target>Full time</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.PART_TIME">
+        <target>Part time</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.CONTRACTOR">
+        <target>Contractor</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.TEMPORARY">
+        <target>Temporary</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.INTERN">
+        <target>Intern</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.VOLUNTEER">
+        <target>Volunteer</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.PER_DIEM">
+        <target>Per diem</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.OTHER">
+        <target>Other</target>
+      </trans-unit>
+      <trans-unit id="CTE.plentaJobsBasic">
+        <target>Jobs (Basic)</target>
+      </trans-unit>
+      <trans-unit id="CTE.plenta_jobs_basic_job_offer_details.0">
+        <target>Job offer details</target>
+      </trans-unit>
+      <trans-unit id="CTE.plenta_jobs_basic_job_offer_details.1">
+        <target>Job offer details</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.emptyList">
+        <target>There are no jobs available at the moment.</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.documentation">
+        <target>Documentation</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.report_error">
+        <target>Report a error</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.sponsor">
+        <target>Become a sponsor</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.remote">
+        <target>Remote</target>
+      </trans-unit>
+      <trans-unit id="MSC.PLENTA_JOBS.remote_in">
+        <target>Remote in</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

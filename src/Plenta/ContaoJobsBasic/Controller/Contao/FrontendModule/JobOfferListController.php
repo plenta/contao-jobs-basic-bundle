@@ -16,6 +16,7 @@ use Contao\Config;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\Input;
@@ -73,11 +74,11 @@ class JobOfferListController extends AbstractFrontendModuleController
         $objPage = $model->getRelated('jumpTo');
 
         if (!$objPage instanceof PageModel) {
-            $url = ampersand(Environment::get('request'));
+            $url = StringUtil::ampersand(Environment::get('request'));
         } else {
             $params = (Config::get('useAutoItem') ? '/' : '/items/').($this->metaFieldsHelper->getMetaFields($jobOffer)['alias'] ?: $jobOffer->id);
 
-            $url = ampersand($objPage->getFrontendUrl($params));
+            $url = StringUtil::ampersand($objPage->getFrontendUrl($params));
         }
 
         return $url;
@@ -90,7 +91,7 @@ class JobOfferListController extends AbstractFrontendModuleController
      *
      * @return Response|null
      */
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         global $objPage;
 

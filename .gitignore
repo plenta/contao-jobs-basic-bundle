@@ -14,10 +14,8 @@ nbproject/
 /app/config/parameters.yml
 
 # Generated folders
-/assets/
 /files/
 /system/
-/templates/
 /var/
 /vendor/
 /web/*

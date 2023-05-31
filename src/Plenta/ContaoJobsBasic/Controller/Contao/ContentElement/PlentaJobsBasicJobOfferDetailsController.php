@@ -15,7 +15,9 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao\ContentElement;
 use Contao\Config;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\Template;
@@ -24,9 +26,7 @@ use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @ContentElement(category="plentaJobsBasic",template="ce_plenta_jobs_basic_job_offer_details")
- */
+#[AsContentElement(category: 'plentaJobsBasic', template: 'ce_plenta_jobs_basic_job_offer_details')]
 class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementController
 {
     protected MetaFieldsHelper $metaFieldsHelper;
@@ -81,7 +81,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
         return '<div class="'.$class.'">'.$data.'</div>';
     }
 
-    protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
+    protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         if ('FE' === TL_MODE) {
             if (null === $this->getJobOffer($request->getLocale())) {

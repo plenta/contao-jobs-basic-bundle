@@ -28,7 +28,7 @@ class PlentaJobsBasicOfferModel extends Model
      *
      * @var string
      */
-    protected static $strTable = 'tl_plenta_jobs_basic_offer';
+    protected static $strTable = 'contao\dca\tl_plenta_jobs_basic_offer';
 
     protected $readerPage = [];
 
