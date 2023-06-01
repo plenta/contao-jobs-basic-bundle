@@ -66,6 +66,14 @@ class InsertTagListener
             if ('id' === $chunks[1]) {
                 return (string) $jobOfferData->id;
             }
+            
+           if ('teasertext' === $chunks[1]) {
+                return $translation['teaser'] ?? (string) $jobOfferData->teaser;
+            }
+            if ('description' === $chunks[1]) {
+                return $translation['description'] ?? (string) $jobOfferData->description;
+            }
+
 
             if ('title' === $chunks[1]) {
                 return $translation['title'] ?? (string) $jobOfferData->title;
