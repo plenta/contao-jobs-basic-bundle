@@ -16,6 +16,7 @@ use Contao\Config;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Input;
@@ -24,21 +25,22 @@ use Contao\Template;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsContentElement(category: 'plentaJobsBasic', template: 'ce_plenta_jobs_basic_job_offer_details')]
+#[AsContentElement(category: 'plentaJobsBasic')]
 class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementController
 {
-    protected MetaFieldsHelper $metaFieldsHelper;
 
     protected ?PlentaJobsBasicOfferModel $jobOffer = null;
 
     protected ?array $metaFields = null;
 
     public function __construct(
-        MetaFieldsHelper $metaFieldsHelper
+        protected MetaFieldsHelper $metaFieldsHelper,
+        protected RequestStack $requestStack,
+        protected ScopeMatcher $matcher
     ) {
-        $this->metaFieldsHelper = $metaFieldsHelper;
     }
 
     public function getMetaFields(ContentModel $model): array
@@ -83,11 +85,12 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
 
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        if ('FE' === TL_MODE) {
+        if ($this->matcher->isFrontendRequest($this->requestStack->getCurrentRequest())) {
             if (null === $this->getJobOffer($request->getLocale())) {
                 return new Response('');
             }
             $metaFields = $this->getMetaFields($model);
+            $template->content = '';
             if (!empty($model->plenta_jobs_basic_job_offer_details)) {
                 $detailsSelected = StringUtil::deserialize($model->plenta_jobs_basic_job_offer_details);
 

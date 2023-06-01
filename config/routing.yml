@@ -10,3 +10,7 @@ Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\SettingsController:
     defaults:
         _scope: backend
         _controller: Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\SettingsController::showSettings
+
+jobs_basic:
+    resource: ../src/Controller
+    type: annotation

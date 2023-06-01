@@ -50,7 +50,7 @@ class MetaFieldsHelper
         $metaFields['addressLocalityFormatted'] = $this->formatAddressLocality($jobOffer);
         $metaFields['addressCountryFormatted'] = $this->formatAddressCountry($jobOffer);
         $metaFields['title'] = $this->insertTagParser->replace($translation['title'] ?? $jobOffer->title);
-        $metaFields['description'] = $this->insertTagParser->replace($translation['description'] ?? $jobOffer->description);
+        $metaFields['description'] = $this->insertTagParser->replace(StringUtil::restoreBasicEntities($translation['description'] ?? $jobOffer->description));
         $metaFields['alias'] = $translation['alias'] ?? $jobOffer->alias;
         $metaFields['company'] = $this->formatCompany($jobOffer);
         $metaFields['teaser'] = $this->insertTagParser->replace($translation['teaser'] ?? $jobOffer->teaser ?? '');

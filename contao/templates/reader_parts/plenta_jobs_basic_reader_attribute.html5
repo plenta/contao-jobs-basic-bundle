@@ -1,1 +1,0 @@
-<p<?php if ($this->class):?> class="<?= $this->class ?>"<?php endif; ?>><strong><?= $this->label ?>:</strong> <?= $this->value ?></p>

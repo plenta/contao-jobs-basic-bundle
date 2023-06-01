@@ -1,0 +1,36 @@
+{% trans_default_domain 'contao_tl_plenta_jobs_basic_offer' %}
+{% if locations %}
+<p class="job_location_label"><strong>{{ 'tl_plenta_jobs_basic_offer.jobLocation.0'|trans }}:</strong></p>
+{% for key, location in locations %}
+    <div class="job_organization_info">
+            {% if key in imgs|keys %}
+                {{ attribute(imgs, key)|raw }}
+            {% endif %}
+        {% if showCompanyName %}
+        <strong>{{ attribute(attribute(organizations, key), 'name') }}</strong>
+        {% endif %}
+    </div>
+    {% set remote = [] %}
+    {% for loc in location %}
+        {% if loc.jobTypeLocation == 'onPremise' %}
+            <div class="job_location">
+                {% if loc.streetAddress|trim %}
+                {{ loc.streetAddress }}<br />
+                {% endif %}
+                {{ loc.postalCode }} {{ loc.addressLocality }}
+            </div>
+        {% else %}
+            {% set remote = remote|merge([loc.requirementValue]) %}
+        {% endif %}
+    {% endfor %}
+    {% if remote|length > 0 %}
+        <div class="job_location">
+            {% if plentaJobsBasicHideRemoteRequirements %}
+                {{ 'tl_plenta_jobs_basic_offer.remoteIsPossible'|trans }}
+            {% else %}
+                {{ 'tl_plenta_jobs_basic_offer.remoteIsPossibleWithRequirements'|trans([remote|join(', ')]) }}
+            {% endif %}
+        </div>
+    {% endif %}
+    {% endfor %}
+{% endif %}

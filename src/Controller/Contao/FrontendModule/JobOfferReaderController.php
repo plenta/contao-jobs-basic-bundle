@@ -19,7 +19,8 @@ use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
-use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
+use Contao\CoreBundle\Routing\ResponseContext\ResponseContext;
+use Contao\CoreBundle\Routing\ResponseContext\ResponseContextAccessor;
 use Contao\CoreBundle\String\HtmlDecoder;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Date;
@@ -45,31 +46,19 @@ use Symfony\Component\HttpFoundation\Response;
 #[AsFrontendModule(type: 'plenta_jobs_basic_offer_reader', category: 'plentaJobsBasic')]
 class JobOfferReaderController extends AbstractFrontendModuleController
 {
-    protected MetaFieldsHelper $metaFieldsHelper;
-
-    protected GoogleForJobs $googleForJobs;
-
-    protected RequestStack $requestStack;
-
-    protected EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
-        MetaFieldsHelper $metaFieldsHelper,
-        GoogleForJobs $googleForJobs,
-        RequestStack $requestStack,
-        EventDispatcherInterface $eventDispatcher
+        protected MetaFieldsHelper $metaFieldsHelper,
+        protected GoogleForJobs $googleForJobs,
+        protected RequestStack $requestStack,
+        protected EventDispatcherInterface $eventDispatcher,
+        protected HtmlDecoder $htmlDecoder,
+        protected ResponseContextAccessor $responseContextAccessor
     ) {
-        $this->metaFieldsHelper = $metaFieldsHelper;
-        $this->googleForJobs = $googleForJobs;
-        $this->requestStack = $requestStack;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
-        /* @var PageModel $objPage */
-        global $objPage;
-
         $parts = StringUtil::deserialize($model->plentaJobsBasicTemplateParts);
 
         System::loadLanguageFile('tl_plenta_jobs_basic_offer');
@@ -100,17 +89,15 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template->jobOffer = $jobOffer;
         $template->jobOfferMeta = $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
 
-        $responseContext = System::getContainer()
-            ->get('contao.routing.response_context_accessor')
+        $responseContext = $this->responseContextAccessor
             ->getResponseContext();
 
         if ($responseContext && $responseContext->has(HtmlHeadBag::class)) {
             $htmlHeadBag = $responseContext->get(HtmlHeadBag::class);
-            $htmlDecoder = System::getContainer()->get('contao.string.html_decoder');
             $translation = $jobOffer->getTranslation($request->getLocale());
 
-            $this->setMetaTitle($jobOffer, $htmlHeadBag, $htmlDecoder, $translation);
-            $this->setMetaDescription($jobOffer, $htmlHeadBag, $htmlDecoder, $translation);
+            $this->setMetaTitle($jobOffer, $htmlHeadBag, $translation);
+            $this->setMetaDescription($jobOffer, $htmlHeadBag, $translation);
 
             if ($jobOffer->robots) {
                 $htmlHeadBag->setMetaRobots($jobOffer->robots);
@@ -209,13 +196,11 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $template->class = 'ce_image';
             $image = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
             if ($image) {
-                Controller::addImageToTemplate($template, [
-                    'singleSRC' => $image->path,
-                    'size' => $model->imgSize,
-                ]);
+                $template->image = $image;
+                $template->imgSize = $model->imgSize;
+
                 return $template->parse();
             }
-
         }
 
         return '';
@@ -270,15 +255,16 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             foreach ($locations as $location) {
                 $organization = $location->getRelated('pid');
                 if (!\array_key_exists($organization->id, $organizations)) {
-                    /*if ($model->plentaJobsBasicShowLogo && $organization->logo) {
-                        $imgTpl = new FrontendTemplate('ce_image');
+                    if ($model->plentaJobsBasicShowLogo && $organization->logo) {
                         $image = FilesModel::findByUuid($organization->logo);
-                        Controller::addImageToTemplate($imgTpl, [
-                            'singleSRC' => $image->path,
-                            'size' => [200, 200, 'proportional'],
-                        ]);
-                        $imgs[$organization->id] = $imgTpl->parse();
-                    }*/
+                        if ($image) {
+                            $imgTpl = new FrontendTemplate('plenta_jobs_basic_reader_image');
+                            $imgSize = [200, 200, 'proportional'];
+                            $imgTpl->image = $image;
+                            $imgTpl->imgSize = $imgSize;
+                            $imgs[$organization->id] = $imgTpl->parse();
+                        }
+                    }
                     $organizations[$organization->id] = $organization;
                     $locationsTpl[$organization->id] = [];
                 }
@@ -326,50 +312,48 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     private function setMetaTitle(
         PlentaJobsBasicOfferModel $jobOffer,
         HtmlHeadBag $htmlHeadBag,
-        HtmlDecoder $htmlDecoder,
         ?array $translation
     ): void {
         if ($jobOffer->pageTitle || (null !== $translation)) {
             if ($jobOffer->pageTitle) {
-                $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($jobOffer->pageTitle));
+                $htmlHeadBag->setTitle($this->htmlDecoder->inputEncodedToPlainText($jobOffer->pageTitle));
             }
 
             if (null !== $translation) {
                 if ($translation['title']) {
-                    $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($translation['title']));
+                    $htmlHeadBag->setTitle($this->htmlDecoder->inputEncodedToPlainText($translation['title']));
                 }
 
                 if ($translation['pageTitle']) {
-                    $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($translation['pageTitle']));
+                    $htmlHeadBag->setTitle($this->htmlDecoder->inputEncodedToPlainText($translation['pageTitle']));
                 }
             }
         } elseif ($jobOffer->title) {
-            $htmlHeadBag->setTitle($htmlDecoder->inputEncodedToPlainText($jobOffer->title));
+            $htmlHeadBag->setTitle($this->htmlDecoder->inputEncodedToPlainText($jobOffer->title));
         }
     }
 
     private function setMetaDescription(
         PlentaJobsBasicOfferModel $jobOffer,
         HtmlHeadBag $htmlHeadBag,
-        HtmlDecoder $htmlDecoder,
         ?array $translation
     ): void {
         if ($jobOffer->pageDescription || (null !== $translation)) {
             if ($jobOffer->pageDescription) {
-                $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($jobOffer->pageDescription));
+                $htmlHeadBag->setMetaDescription($this->htmlDecoder->inputEncodedToPlainText($jobOffer->pageDescription));
             }
 
             if (null !== $translation) {
                 if ($translation['description']) {
-                    $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($translation['description']));
+                    $htmlHeadBag->setMetaDescription($this->htmlDecoder->inputEncodedToPlainText($translation['description']));
                 }
 
                 if ($translation['teaser']) {
-                    $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($translation['teaser']));
+                    $htmlHeadBag->setMetaDescription($this->htmlDecoder->inputEncodedToPlainText($translation['teaser']));
                 }
                 if ($translation['pageDescription']) {
                     $htmlHeadBag->setMetaDescription(
-                        $htmlDecoder->inputEncodedToPlainText(
+                        $this->htmlDecoder->inputEncodedToPlainText(
                             $translation['pageDescription']
                         )
                     );
@@ -377,11 +361,11 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             }
         } elseif ($jobOffer->teaser || $jobOffer->description) {
             if ($jobOffer->description) {
-                $htmlHeadBag->setMetaDescription($htmlDecoder->htmlToPlainText($jobOffer->description));
+                $htmlHeadBag->setMetaDescription($this->htmlDecoder->htmlToPlainText($jobOffer->description));
             }
 
             if ($jobOffer->teaser) {
-                $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($jobOffer->teaser));
+                $htmlHeadBag->setMetaDescription($this->htmlDecoder->inputEncodedToPlainText($jobOffer->teaser));
             }
         }
     }

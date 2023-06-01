@@ -5,21 +5,21 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
+use Composer\InstalledVersions;
+use Contao\Config;
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\Date;
 use Contao\Input;
-use Contao\Config;
 use Contao\UserModel;
-use Composer\InstalledVersions;
-use Contao\CoreBundle\ServiceAnnotation\Hook;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @Hook("replaceInsertTags")
@@ -77,6 +77,7 @@ class InsertTagListener
 
             if ('datePosted' === $chunks[1]) {
                 $objPage = $GLOBALS['objPage'] ?? null;
+
                 return Date::parse($elements[1] ?? ($objPage->dateFormat ?? Config::get('dateFormat')));
             }
 

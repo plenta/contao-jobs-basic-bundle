@@ -1,0 +1,44 @@
+{% extends '@Contao/content_element/_base.html.twig' %}
+
+{% block content %}
+    {% if data.text %}
+        <div class="text">
+            {{ data.text|raw }}
+        </div>
+    {% endif %}
+    {% if 'image' in parts %}
+        {{ jobOfferMeta.image|raw }}
+    {% endif %}
+    <div class="first-column">
+        <{{ data.plentaJobsBasicHeadlineTag }} class="title">
+        <a href="{{ link }}">{{ jobOfferMeta.title }}</a>
+    </{{ data.plentaJobsBasicHeadlineTag }}>
+    {% if 'company' in parts %}
+        <div class="organizations">
+            {{ jobOfferMeta.company }}
+        </div>
+    {% endif %}
+    {% if 'jobLocation' in parts %}
+        <div class="job-location">
+            {{ jobOfferMeta.addressLocalityFormatted }}
+        </div>
+    {% endif %}
+    {% if 'teaser' in parts %}
+        <div class="job-teaser">
+            {{ jobOfferMeta.teaser }}
+        </div>
+    {% endif %}
+</div>
+<div class="second-column">
+    {% if 'publicationDate' in parts %}
+        <div class="publication-date">
+            {{ jobOfferMeta.publicationDateFormatted }}
+        </div>
+    {% endif %}
+    {% if 'employmentType' in parts %}
+        <div class="employment-type">
+            {{ jobOfferMeta.employmentTypeFormatted }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

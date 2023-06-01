@@ -13,14 +13,11 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
 use Contao\ArrayUtil;
-use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
-use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\ModuleModel;
 use Contao\StringUtil;
-use Contao\Template;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Events\JobOfferFilterAfterFormBuildEvent;
@@ -32,7 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
-#[AsFrontendModule(category: 'plentaJobsBasic', type: 'plenta_jobs_basic_filter')]
+#[AsFrontendModule(type: 'plenta_jobs_basic_filter', category: 'plentaJobsBasic')]
 class JobOfferFilterController extends AbstractFrontendModuleController
 {
     protected MetaFieldsHelper $metaFieldsHelper;
@@ -84,8 +81,8 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     public function addItemCounter(ModuleModel $model, string $key): string
     {
-        if (true === (bool) $model->plentaJobsBasicShowQuantity &&
-            \array_key_exists($key, $this->counterEmploymentType)
+        if (true === (bool) $model->plentaJobsBasicShowQuantity
+            && \array_key_exists($key, $this->counterEmploymentType)
         ) {
             return '<span class="item-counter">['.$this->counterEmploymentType[$key].']</span>';
         }
@@ -213,19 +210,6 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         }
 
         return $this->locations;
-    }
-
-    public function getHeadlineHtml(?string $content, string $type): string
-    {
-        if (empty($content)) {
-            return '';
-        }
-
-        $return = '<div class="plenta_jobs_basic_filter_widget_headline '.$type.'">';
-        $return .= Controller::replaceInsertTags($content);
-        $return .= '</div>';
-
-        return $return;
     }
 
     protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
