@@ -47,6 +47,9 @@
             <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.sponsor">
                 <target>Become a sponsor</target>
             </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.DASHBOARD.addons">
+                <target>Add-ons</target>
+            </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.remote">
                 <target>Remote</target>
             </trans-unit>
