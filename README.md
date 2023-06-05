@@ -27,7 +27,7 @@ composer require plenta/contao-jobs-basic-bundle
 - Contao: `^4.13` || `^5`
 - mvo/contao-group-widget `^1.4`
 
-##Which version is right for you?
+## Which version is right for you?
 
 | Contao Version | PHP Version | Jobs Version |
 |----------------|-------------|--------------|
