@@ -2,7 +2,7 @@
 
 {% block content %}
     {% block sorting %}
-        {% if showSorting %}
+        {% if showSorting|default(false) %}
             {{ sortingForm|raw }}
             <script>
                 (function ($) {
@@ -23,7 +23,9 @@
     {% else %}
         <p class="empty">{{ empty }}</p>
     {% endfor %}
-    {{ pagination|raw }}
+    {% if pagination is defined %}
+        {{ pagination|raw }}
+    {% endif %}
 {% endblock %}
   {#<div class="<?= $this->class ?> block<?php if ($this->plentaJobsBasicNoFilter): ?> no-filter<?php endif; ?>"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?><?= $this->attributes ? ' '.$this->attributes : ''; ?> >
 
