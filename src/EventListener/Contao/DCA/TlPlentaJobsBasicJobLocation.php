@@ -17,7 +17,7 @@ class TlPlentaJobsBasicJobLocation
     public function listLocations(array $arrRow): string
     {
         if ('onPremise' === $arrRow['jobTypeLocation']) {
-            return '<div class="tl_content_left">'.$arrRow['addressLocality'].', '.$arrRow['postalCode'].'</div>';
+            return '<div class="tl_content_left">'.$arrRow['addressLocality'].', '.$arrRow['postalCode'].(!empty($arrRow['streetAddress']) ? ', '.$arrRow['streetAddress'] : '').'</div>';
         }
 
         $return = '<div class="tl_content_left">'.$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['remote'];
