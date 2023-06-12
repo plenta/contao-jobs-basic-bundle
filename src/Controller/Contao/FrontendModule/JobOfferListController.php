@@ -109,7 +109,7 @@ class JobOfferListController extends AbstractFrontendModuleController
         }
 
         $types = \is_array($request->get('types')) && !$model->plentaJobsBasicNoFilter ? $request->get('types') : [];
-        $locations = \is_array($request->get('location')) && !$model->plentaJobsBasicNoFilter ? $request->get('location') : $moduleLocations;
+        $locations = \is_array($request->get('location')) && !$model->plentaJobsBasicNoFilter ? $request->get('location') : (!empty($request->get('location')) && !$model->plentaJobsBasicNoFilter ? [$request->get('location')] : $moduleLocations);
 
         if (!empty($moduleLocations)) {
             $locations = array_filter($locations, function ($element) use ($moduleLocations) {

@@ -188,6 +188,12 @@
             <trans-unit id="tl_module.plentaJobsBasicHideOffersWithoutTranslation.1">
                 <target>Stellen, die keine Übersetzung für die aktuelle Sprache haben, werden nicht angezeigt.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicDisableMultipleLocations.0">
+                <target>Nur einzelne Standorte auswählbar</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicDisableMultipleLocations.1">
+                <target>Im Filter kann immer nur ein Standort ausgewählt werden.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
