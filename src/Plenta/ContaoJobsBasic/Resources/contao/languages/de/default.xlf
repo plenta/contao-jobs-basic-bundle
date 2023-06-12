@@ -98,6 +98,9 @@
             <trans-unit id="MSC.PLENTA_JOBS.offerParts.salary">
                 <target>Gehalt</target>
             </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.filterForm.locationPlaceholder">
+                <target>Alle Standorte</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

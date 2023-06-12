@@ -60,14 +60,16 @@ class JobOfferFilterType extends AbstractType
             ]);
             $builder->add('location', ChoiceType::class, [
                 'choices' => array_flip($options['locations']),
-                'multiple' => true,
+                'multiple' => !$model->plentaJobsBasicDisableMultipleLocations,
                 'expanded' => true,
                 'label' => false,
                 'required' => false,
                 'row_attr' => [
                     'class' => 'widget-checkbox',
                 ],
-                'data' => $this->requestStack->getMainRequest()->get('location', []),
+                'placeholder' => 'MSC.PLENTA_JOBS.filterForm.locationPlaceholder',
+                'translation_domain' => 'contao_default',
+                'data' => $this->requestStack->getMainRequest()->get('location', $model->plentaJobsBasicDisableMultipleLocations ? '' : []),
             ]);
         }
 
