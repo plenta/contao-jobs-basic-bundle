@@ -166,7 +166,7 @@ class JobOfferListController extends AbstractFrontendModuleController
 
             $form = $event->getForm();
 
-            $template->sortingForm = $this->twig->render('@PlentaContaoJobsBasic/form.html.twig', ['form' => $form->createView()]);
+            $template->sortingForm = $this->twig->render('@Contao/plenta_jobs_basic_form.html.twig', ['form' => $form->createView()]);
 
             $template->showSorting = true;
             $template->formId = $formId;
@@ -235,7 +235,7 @@ class JobOfferListController extends AbstractFrontendModuleController
                     'link' => $this->generateJobOfferUrl($jobOffer, $model),
                 ];
 
-                $stream = $this->twig->render('@PlentaContaoJobsBasic/plenta_jobs_basic_offer_default.html.twig', $data);
+                $stream = $this->twig->render('@Contao/plenta_jobs_basic_offer_default.html.twig', $data);
 
                 if (null !== $sortByLocation) {
                     $jobLocations = StringUtil::deserialize($jobOffer->jobLocation);
