@@ -50,6 +50,9 @@ class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementCont
     public function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {
         $jobOffer = PlentaJobsBasicOfferModel::findByIdOrAlias($model->plentaJobsBasicJobOffer);
+        if (!$jobOffer) {
+            return new Response();
+        }
         $template->jobOffer = $jobOffer;
         $parts = StringUtil::deserialize($model->plentaJobsBasicJobOfferTeaserParts);
         if (!\is_array($parts)) {
