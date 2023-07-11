@@ -235,7 +235,14 @@ class PlentaJobsBasicOfferModel extends Model
             }
         }
 
-        if (!empty($sortBy) && \in_array($sortBy, ['title', 'tstamp', 'datePosted'], true)) {
+        $sortingFields = [];
+        foreach ($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields'] as $name => $field) {
+            if (!empty($field['sorting'])) {
+                $sortingFields[] = $name;
+            }
+        }
+
+        if (!empty($sortBy) && \in_array($sortBy, $sortingFields, true)) {
             if (!empty($order) && \in_array($order, ['ASC', 'DESC'], true)) {
                 $sortDirection = $order;
             } else {
