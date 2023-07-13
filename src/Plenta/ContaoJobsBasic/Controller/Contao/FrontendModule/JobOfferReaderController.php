@@ -33,6 +33,7 @@ use Contao\Template;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Events\JobOfferReaderBeforeParseTemplateEvent;
+use Plenta\ContaoJobsBasic\Events\JobOfferReaderContentPartEvent;
 use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Plenta\ContaoJobsBasic\Helper\NumberHelper;
@@ -153,6 +154,19 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                     break;
                 case 'jobLocation':
                     $content .= $this->getJobLocation($jobOffer, $model);
+                    break;
+                default:
+                    $event = new JobOfferReaderContentPartEvent();
+                    $event
+                        ->setJobOffer($jobOffer)
+                        ->setModel($model)
+                        ->setRequest($request)
+                        ->setPart($part)
+                    ;
+
+                    $this->eventDispatcher->dispatch($event, $event::NAME);
+
+                    $content .= $event->getContentResponse();
                     break;
             }
         }
