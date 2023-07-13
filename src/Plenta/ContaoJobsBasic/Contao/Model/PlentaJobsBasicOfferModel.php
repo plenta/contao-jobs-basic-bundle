@@ -14,6 +14,7 @@ namespace Plenta\ContaoJobsBasic\Contao\Model;
 
 use Composer\InstalledVersions;
 use Contao\Config;
+use Contao\Controller;
 use Contao\Model;
 use Contao\ModuleModel;
 use Contao\PageModel;
@@ -236,6 +237,7 @@ class PlentaJobsBasicOfferModel extends Model
         }
 
         $sortingFields = [];
+        Controller::loadDataContainer('tl_plenta_jobs_basic_offer');
         foreach ($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields'] as $name => $field) {
             if (!empty($field['sorting'])) {
                 $sortingFields[] = $name;
