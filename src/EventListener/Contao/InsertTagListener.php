@@ -55,11 +55,7 @@ class InsertTagListener
         }
 
         $jobOfferData = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($this->autoItem);
-        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
-            $language = $this->requestStack->getMainRequest()->getLocale();
-        } else {
-            $language = $this->requestStack->getMasterRequest()->getLocale();
-        }
+        $language = $this->requestStack->getMainRequest()->getLocale();
 
         if (null !== $jobOfferData) {
             $translation = $jobOfferData->getTranslation($language);
