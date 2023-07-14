@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\Events;
 
 use Contao\ModuleModel;
-use Symfony\Component\HttpFoundation\Request;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class JobOfferReaderContentPartEvent extends Event

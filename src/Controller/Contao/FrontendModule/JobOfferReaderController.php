@@ -19,7 +19,6 @@ use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\Routing\ResponseContext\HtmlHeadBag\HtmlHeadBag;
-use Contao\CoreBundle\Routing\ResponseContext\ResponseContext;
 use Contao\CoreBundle\Routing\ResponseContext\ResponseContextAccessor;
 use Contao\CoreBundle\String\HtmlDecoder;
 use Contao\CoreBundle\Twig\FragmentTemplate;
@@ -29,7 +28,6 @@ use Contao\FilesModel;
 use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\ModuleModel;
-use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
