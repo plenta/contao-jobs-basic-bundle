@@ -118,11 +118,7 @@ class EmploymentType
             return null;
         }
 
-        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
-            $mainRequest = $this->requestStack->getMainRequest();
-        } else {
-            $mainRequest = $this->requestStack->getMasterRequest();
-        }
+        $mainRequest = $this->requestStack->getMainRequest();
 
         $language = substr(
             $mainRequest->getLocale(),

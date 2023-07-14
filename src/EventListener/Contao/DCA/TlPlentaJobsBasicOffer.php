@@ -176,11 +176,7 @@ class TlPlentaJobsBasicOffer
 
     public function getLanguages(): array
     {
-        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
-            return System::getContainer()->get('contao.intl.locales')->getLanguages();
-        }
-
-        return System::getLanguages();
+        return System::getContainer()->get('contao.intl.locales')->getLanguages();
     }
 
     public function labelCallback(array $row, string $label, DataContainer $dc, array $labels): string
