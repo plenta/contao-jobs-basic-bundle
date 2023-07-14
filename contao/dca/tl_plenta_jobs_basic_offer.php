@@ -396,6 +396,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             ],
         ],
         'datePosted' => [
+            'sorting' => true,
             'sql' => [
                 'type' => 'integer',
                 'unsigned' => true,
