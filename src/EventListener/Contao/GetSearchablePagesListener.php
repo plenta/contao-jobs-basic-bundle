@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2022-2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -23,7 +23,7 @@ class GetSearchablePagesListener
     public function __invoke(array $pages, $rootId = null, bool $isSitemap = false, string $language = null): array
     {
         $time = time();
-        $jobs = PlentaJobsBasicOfferModel::findBy(['published = ?', '(start = ? OR start > ?)', '(stop = ? or stop < ?)'], [1, '', $time, '', $time]);
+        $jobs = PlentaJobsBasicOfferModel::findAllPublished();
         if ($jobs) {
             foreach ($jobs as $job) {
                 if ($job->robots === 'noindex,nofollow') {
