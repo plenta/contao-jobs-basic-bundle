@@ -277,4 +277,14 @@ class PlentaJobsBasicOfferModel extends Model
 
         return (Config::get('useAutoItem') ? '/' : '/items/').($alias ?: $this->id);
     }
+
+    public static function findAllPublished()
+    {
+        $t = static::$strTable;
+        $time = time();
+
+        $arrColumns[] = "$t.published='1' AND ($t.start='' OR $t.start<=$time) AND ($t.stop='' OR $t.stop>$time)";
+
+        return static::findBy($arrColumns, null);
+    }
 }
