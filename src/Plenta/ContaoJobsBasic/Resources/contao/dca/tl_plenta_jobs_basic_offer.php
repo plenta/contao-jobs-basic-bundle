@@ -47,6 +47,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'fields' => ['title'],
             'showColumns' => false,
         ],
+        'global_operations' => [
+            'all' => [
+                'href' => 'act=select',
+                'class' => 'header_edit_all',
+                'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"'
+            ],
+        ],
         'operations' => [
             'edit' => [
                 'href' => 'table=tl_content',
