@@ -35,7 +35,6 @@
         "phpunit/phpunit": "^9.5.10",
         "contao/test-case": "^4.4.0",
         "symfony/phpunit-bridge": "v5.3.8",
-        "contao/news-bundle": "4.13.*",
         "friendsofphp/php-cs-fixer": "^3.2"
     },
     "extra": {
