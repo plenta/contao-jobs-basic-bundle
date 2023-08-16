@@ -92,12 +92,13 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
     ],
 
     'palettes' => [
-        '__selector__' => ['addImage', 'addSalary'],
+        '__selector__' => ['addImage', 'overwriteMeta', 'addSalary'],
         'default' => '{title_legend},title,alias,author,teaser,description;{meta_legend},pageTitle,robots,pageDescription,serpPreview;{translations_legend:hide},translations;{settings_legend},employmentType,validThrough,directApply;{location_legend},jobLocation;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
-        'addImage' => 'singleSRC',
+        'addImage' => 'singleSRC,overwriteMeta',
         'addSalary' => 'salaryCurrency,salaryUnit,salaryValue,salaryMaxValue',
+        'overwriteMeta' => 'alt,imageTitle,imageUrl,caption',
     ],
 
     'fields' => [
@@ -434,6 +435,46 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'eval' => ['doNotCopy' => true, 'chosen' => true, 'includeBlankOption' => true, 'tl_class' => 'w50'],
             'sql' => 'int(10) unsigned NOT NULL default 0',
             'relation' => ['type' => 'hasOne', 'load' => 'lazy'],
+        ],
+        'overwriteMeta' => [
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50 clr'],
+            'sql' => "char(1) COLLATE ascii_bin NOT NULL default ''"
+        ],
+        'alt' => [
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'text',
+            'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
+            'sql' => "varchar(255) NOT NULL default ''"
+        ],
+        'imageTitle' => [
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'text',
+            'eval' => ['maxlength'=>255, 'tl_class'=>'w50'],
+            'sql' => "varchar(255) NOT NULL default ''"
+        ],
+        'imageUrl' => [
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'text',
+            'eval' => [
+                'rgxp' => 'url',
+                'decodeEntities' => true,
+                'maxlength' => 2048,
+                'dcaPicker' => true,
+                'tl_class' => 'w50'
+            ],
+            'sql' => "text NULL"
+        ],
+        'caption' => [
+            'exclude' => true,
+            'search' => true,
+            'inputType' => 'text',
+            'eval' => ['maxlength' => 255, 'allowHtml' => true, 'tl_class' => 'w50'],
+            'sql' => "varchar(255) NOT NULL default ''"
         ],
     ],
 ];

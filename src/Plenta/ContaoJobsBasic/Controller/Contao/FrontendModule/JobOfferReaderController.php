@@ -228,11 +228,16 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $template = new FrontendTemplate('plenta_jobs_basic_reader_image');
             $template->class = 'ce_image';
             $image = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
+
             if ($image) {
                 Controller::addImageToTemplate($template, [
                     'singleSRC' => $image->path,
-                    'size' => $model->imgSize,
-                ]);
+                    'size' => $model->imgSize
+                    ],
+                    null,
+                    null,
+                    $image
+                );
             }
 
             return $template->parse();
