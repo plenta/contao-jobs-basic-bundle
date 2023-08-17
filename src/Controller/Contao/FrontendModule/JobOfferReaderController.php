@@ -175,7 +175,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     private function buildCanonical(Request $request, PlentaJobsBasicOfferModel $jobOffer): void
     {
-        if ($jobOffer->getReaderPage($request->getLocale())->id !== $this->getPageModel()->id) {
+        if (($page = $jobOffer->getReaderPage($request->getLocale())) && $page->id !== $this->getPageModel()->id) {
             $GLOBALS['TL_HEAD'][] = '<link rel="canonical" href="'.$jobOffer->getAbsoluteUrl($request->getLocale()).'" />';
         }
     }

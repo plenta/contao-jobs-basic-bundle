@@ -138,25 +138,27 @@ class PlentaJobsBasicOfferModel extends Model
     {
         if (empty($this->readerPage[$language])) {
             $modules = ModuleModel::findByType('plenta_jobs_basic_offer_list');
-            foreach ($modules as $module) {
-                $jobLocations = StringUtil::deserialize($this->jobLocation);
-                $locations = StringUtil::deserialize($module->plentaJobsBasicLocations);
-                $isCorrectModule = false;
-                if (\is_array($locations) && \is_array($jobLocations)) {
-                    foreach ($locations as $location) {
-                        if (\in_array($location, $jobLocations, true)) {
-                            $isCorrectModule = true;
+            if ($modules) {
+                foreach ($modules as $module) {
+                    $jobLocations = StringUtil::deserialize($this->jobLocation);
+                    $locations = StringUtil::deserialize($module->plentaJobsBasicLocations);
+                    $isCorrectModule = false;
+                    if (\is_array($locations) && \is_array($jobLocations)) {
+                        foreach ($locations as $location) {
+                            if (\in_array($location, $jobLocations, true)) {
+                                $isCorrectModule = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        $isCorrectModule = true;
+                    }
+                    if ($isCorrectModule) {
+                        $page = PageModel::findWithDetails($module->jumpTo);
+                        if ($page->rootLanguage === $language) {
+                            $this->readerPage[$language] = $page;
                             break;
                         }
-                    }
-                } else {
-                    $isCorrectModule = true;
-                }
-                if ($isCorrectModule) {
-                    $page = PageModel::findWithDetails($module->jumpTo);
-                    if ($page->rootLanguage === $language) {
-                        $this->readerPage[$language] = $page;
-                        break;
                     }
                 }
             }
