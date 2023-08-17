@@ -23,6 +23,7 @@ use Contao\CoreBundle\String\HtmlDecoder;
 use Contao\Date;
 use Contao\Environment;
 use Contao\FilesModel;
+use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\ModuleModel;
@@ -41,6 +42,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Contao\CoreBundle\File\ModelMetadataTrait;
 
 /**
  * @FrontendModule("plenta_jobs_basic_offer_reader",
@@ -230,14 +232,23 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $image = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
 
             if ($image) {
-                Controller::addImageToTemplate($template, [
+                $rowData = [
                     'singleSRC' => $image->path,
                     'size' => $model->imgSize
-                    ],
-                    null,
-                    null,
-                    $image
-                );
+                ];
+
+                if (true === (bool) $jobOffer->overwriteMeta) {
+                    global $objPage;
+
+                    $arrMeta = Frontend::getMetaData($image->meta, $objPage->language);
+                    $rowData['overwriteMeta'] = true;
+                    $rowData['alt'] = $jobOffer->alt ?: $arrMeta['alt'];
+                    $rowData['imageTitle'] = $jobOffer->imageTitle ?: $arrMeta['title'];
+                    $rowData['imageUrl'] = $jobOffer->imageUrl ?: $arrMeta['link'];
+                    $rowData['caption'] = $jobOffer->caption ?: $arrMeta['caption'];
+                }
+
+                Controller::addImageToTemplate($template, $rowData, null, null, $image);
             }
 
             return $template->parse();
