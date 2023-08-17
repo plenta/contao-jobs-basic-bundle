@@ -25,6 +25,7 @@ use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Date;
 use Contao\Environment;
 use Contao\FilesModel;
+use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\ModuleModel;
@@ -41,6 +42,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Contao\CoreBundle\File\ModelMetadataTrait;
 
 #[AsFrontendModule(type: 'plenta_jobs_basic_offer_reader', category: 'plentaJobsBasic')]
 class JobOfferReaderController extends AbstractFrontendModuleController
@@ -115,6 +117,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             switch ($part) {
                 case 'image':
                     $content .= $this->getImage($jobOffer, $model);
+                    dump($content);
                     break;
                 case 'elements':
                     $content .= $this->getContentElements($request, $parentId);
@@ -207,9 +210,27 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $template = new FrontendTemplate('plenta_jobs_basic_reader_image');
             $template->class = 'ce_image';
             $image = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
+
             if ($image) {
                 $template->image = $image;
                 $template->imgSize = $model->imgSize;
+                $options = [];
+
+                if ($jobOffer->overwriteMeta) {
+                    global $objPage;
+
+                    $arrMeta = Frontend::getMetaData($image->meta, $objPage->language);
+                    $meta = [
+                        'alt' => $jobOffer->alt ?: $arrMeta['alt'],
+                        'imageTitle' => $jobOffer->imageTitle ?: $arrMeta['title'],
+                        'imageUrl' => $jobOffer->imageUrl ?: $arrMeta['link'],
+                        'caption' => $jobOffer->caption ?: $arrMeta['caption'],
+                    ];
+                    $options['metadata'] = $meta;
+                    $template->overwriteMeta = true;
+                }
+
+                $template->options = $options;
 
                 return $template->parse();
             }

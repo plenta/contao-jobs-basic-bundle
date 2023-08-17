@@ -212,6 +212,37 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.meta_legend">
                 <target>Meta data</target>
             </trans-unit>
+
+            <trans-unit id="tl_plenta_jobs_basic_offer.overwriteMeta.0">
+                <target>Overwrite metadata</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.overwriteMeta.1">
+                <target>Overwrite the metadata from the file manager.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.alt.0">
+                <target>Alternate text</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.alt.1">
+                <target>Here you can enter an alternate text for the image (alt attribute).</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.imageTitle.0">
+                <target>Image title</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.imageTitle.1">
+                <target>Here you can enter the image title (title attribute).</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.imageUrl.0">
+                <target>Image link target</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.imageUrl.1">
+                <target>A custom image link target will override the lightbox link, so the image cannot be viewed fullsize anymore.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.caption.0">
+                <target>Image caption</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.caption.1">
+                <target>Here you can enter a short text that will be displayed below the image.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

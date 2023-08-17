@@ -1,5 +1,5 @@
 {% extends '@Contao/block_searchable.html.twig' %}
 
 {% block content %}
-    {{ contao_figure(image, imgSize) }}
+    {{ contao_figure(image, imgSize, options|default({})) }}
 {% endblock %}
