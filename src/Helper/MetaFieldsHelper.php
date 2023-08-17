@@ -14,10 +14,12 @@ namespace Plenta\ContaoJobsBasic\Helper;
 
 use Composer\InstalledVersions;
 use Contao\Controller;
+use Contao\CoreBundle\File\Metadata;
 use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\CoreBundle\InsertTag\InsertTagParser;
 use Contao\Date;
 use Contao\FilesModel;
+use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\StringUtil;
@@ -60,7 +62,19 @@ class MetaFieldsHelper
                 $tpl = new FrontendTemplate('ce_image');
                 /** @var Studio $studio */
                 $studio = System::getContainer()->get('contao.image.studio');
-                $figure = $studio->createFigureBuilder()->fromUuid($jobOffer->singleSRC)->setSize($imageSize)->build();
+                $figureBuilder = $studio->createFigureBuilder()->fromUuid($jobOffer->singleSRC)->setSize($imageSize);
+                if ($jobOffer->overwriteMeta) {
+                    global $objPage;
+                    $arrMeta = Frontend::getMetaData($file->meta, $objPage->language);
+                    $meta = [
+                        'alt' => $jobOffer->alt ?: $arrMeta['alt'],
+                        'imageTitle' => $jobOffer->imageTitle ?: $arrMeta['title'],
+                        'imageUrl' => $jobOffer->imageUrl ?: $arrMeta['link'],
+                        'caption' => $jobOffer->caption ?: $arrMeta['caption'],
+                    ];
+                    $figureBuilder->setMetadata(new Metadata($meta));
+                }
+                $figure = $figureBuilder->build();
                 $figure->applyLegacyTemplateData($tpl);
                 $metaFields['image'] = $tpl->parse();
             }
