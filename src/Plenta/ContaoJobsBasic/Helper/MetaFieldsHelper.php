@@ -17,10 +17,12 @@ use Contao\Controller;
 use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\Date;
 use Contao\FilesModel;
+use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
+use Contao\CoreBundle\File\Metadata;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
@@ -67,9 +69,29 @@ class MetaFieldsHelper
             if ($file) {
                 $tpl = new FrontendTemplate('ce_image');
                 if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.11', '>=')) {
-                    /** @var Studio $studio */
                     $studio = System::getContainer()->get('contao.image.studio');
-                    $figure = $studio->createFigureBuilder()->fromUuid($jobOffer->singleSRC)->setSize($imageSize)->build();
+                    $figureBuilder = $studio->createFigureBuilder()->fromUuid($jobOffer->singleSRC)->setSize($imageSize);
+                    if ($jobOffer->overwriteMeta) {
+                        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+                        if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
+                            $language = $request->getLocale();
+                        } else {
+                            global $objPage;
+                            $language = $objPage->language;
+                        }
+
+                        $arrMeta = Frontend::getMetaData($file->meta, $language);
+                        $meta = [
+                            'alt' => $jobOffer->alt ?: $arrMeta['alt'],
+                            'imageTitle' => $jobOffer->imageTitle ?: $arrMeta['title'],
+                            'imageUrl' => $jobOffer->imageUrl ?: $arrMeta['link'],
+                            'caption' => $jobOffer->caption ?: $arrMeta['caption'],
+                        ];
+
+                        $figureBuilder->setMetadata(new Metadata($meta));
+                    }
+
+                    $figure = $figureBuilder->build();
                     $figure->applyLegacyTemplateData($tpl);
                 } else {
                     Controller::addImageToTemplate($tpl, ['singleSRC' => $file->path, 'size' => $imageSize]);
