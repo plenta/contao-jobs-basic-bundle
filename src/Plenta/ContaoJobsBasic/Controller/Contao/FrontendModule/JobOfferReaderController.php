@@ -42,7 +42,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Contao\CoreBundle\File\ModelMetadataTrait;
 
 /**
  * @FrontendModule("plenta_jobs_basic_offer_reader",
@@ -135,42 +134,42 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         }
 
         foreach ($parts as $part) {
+            $tempContent = '';
             switch ($part) {
                 case 'image':
-                    $content .= $this->getImage($jobOffer, $model);
+                    $tempContent = $this->getImage($jobOffer, $model);
                     break;
                 case 'elements':
-                    $content .= $this->getContentElements($request, $parentId);
+                    $tempContent = $this->getContentElements($request, $parentId);
                     break;
                 case 'description':
-                    $content .= $this->getDescription($jobOffer);
+                    $tempContent = $this->getDescription($jobOffer);
                     break;
                 case 'employmentType':
-                    $content .= $this->getEmploymentType($jobOffer);
+                    $tempContent = $this->getEmploymentType($jobOffer);
                     break;
                 case 'validThrough':
-                    $content .= $this->getValidThrough($jobOffer);
+                    $tempContent = $this->getValidThrough($jobOffer);
                     break;
                 case 'salary':
-                    $content .= $this->getSalary($jobOffer);
+                    $tempContent = $this->getSalary($jobOffer);
                     break;
                 case 'jobLocation':
-                    $content .= $this->getJobLocation($jobOffer, $model);
-                    break;
-                default:
-                    $event = new JobOfferReaderContentPartEvent();
-                    $event
-                        ->setJobOffer($jobOffer)
-                        ->setModel($model)
-                        ->setRequest($request)
-                        ->setPart($part)
-                    ;
-
-                    $this->eventDispatcher->dispatch($event, $event::NAME);
-
-                    $content .= $event->getContentResponse();
+                    $tempContent = $this->getJobLocation($jobOffer, $model);
                     break;
             }
+            $event = new JobOfferReaderContentPartEvent();
+            $event
+                ->setJobOffer($jobOffer)
+                ->setModel($model)
+                ->setRequest($request)
+                ->setPart($part)
+                ->setContentResponse($tempContent)
+            ;
+
+            $this->eventDispatcher->dispatch($event, $event::NAME);
+
+            $content .= $event->getContentResponse();
         }
 
         $template->content = $content;
