@@ -164,7 +164,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                 ->setModel($model)
                 ->setRequest($request)
                 ->setPart($part)
-                ->setContentResponse($tempContent)
+                ->setContentResponse($tempContent ?? '')
             ;
 
             $this->eventDispatcher->dispatch($event, $event::NAME);
