@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Helper;
 
-use Composer\InstalledVersions;
-use Contao\Controller;
 use Contao\CoreBundle\File\Metadata;
 use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\CoreBundle\InsertTag\InsertTagParser;
@@ -21,7 +19,6 @@ use Contao\Date;
 use Contao\FilesModel;
 use Contao\Frontend;
 use Contao\FrontendTemplate;
-use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
@@ -29,6 +26,7 @@ use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Countries;
+
 class MetaFieldsHelper
 {
     public function __construct(
@@ -64,8 +62,14 @@ class MetaFieldsHelper
                 $studio = System::getContainer()->get('contao.image.studio');
                 $figureBuilder = $studio->createFigureBuilder()->fromUuid($jobOffer->singleSRC)->setSize($imageSize);
                 if ($jobOffer->overwriteMeta) {
-                    global $objPage;
-                    $arrMeta = Frontend::getMetaData($file->meta, $objPage->language);
+                    $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+                    if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
+                        $language = $request->getLocale();
+                    } else {
+                        global $objPage;
+                        $language = $objPage->language;
+                    }
+                    $arrMeta = Frontend::getMetaData($file->meta, $language);
                     $meta = [
                         'alt' => $jobOffer->alt ?: $arrMeta['alt'],
                         'imageTitle' => $jobOffer->imageTitle ?: $arrMeta['title'],
