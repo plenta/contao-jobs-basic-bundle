@@ -1,7 +1,0 @@
-<?php $this->extend('block_unsearchable'); ?>
-
-<?php $this->block('content'); ?>
-
-<p class="empty"><?= $this->empty ?></p>
-
-<?php $this->endblock(); ?>

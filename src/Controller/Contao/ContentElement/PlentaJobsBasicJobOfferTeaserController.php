@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2022-2023, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -25,7 +25,8 @@ use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Environment as TwigEnvironment;
 
 #[AsContentElement(category: 'plentaJobsBasic')]
 class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementController
@@ -34,6 +35,8 @@ class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementCont
 
     public function __construct(
         protected MetaFieldsHelper $metaFieldsHelper,
+        protected TwigEnvironment $twig,
+        protected TranslatorInterface $translator
     ) {
     }
 
@@ -50,15 +53,26 @@ class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementCont
 
     public function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        $jobOffer = PlentaJobsBasicOfferModel::findByIdOrAlias($model->plentaJobsBasicJobOffer);
+        $jobOffer = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($model->plentaJobsBasicJobOffer);
+
         if (!$jobOffer) {
-            return new Response();
+            return $this->render(
+                '@PlentaContaoJobsBasic/plenta_jobs_basic_job_offer_teaser_empty.html.twig',
+                [
+                    'class' => $template->getName(),
+                    'empty' => $model->plentaJobsBasicNotice ?:
+                        $this->translator->trans('MSC.PLENTA_JOBS.emptyList', [], 'contao_default'),
+                ]
+            );
         }
+
         $template->jobOffer = $jobOffer;
         $parts = StringUtil::deserialize($model->plentaJobsBasicJobOfferTeaserParts);
+
         if (!\is_array($parts)) {
             $parts = [];
         }
+
         $template->parts = $parts;
         $template->jobOfferMeta = $this->getMetaFields($model, $jobOffer);
         $template->link = $jobOffer->getFrontendUrl($request->getLocale());
