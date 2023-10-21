@@ -26,6 +26,12 @@
             <trans-unit id="tl_content.plentaJobsBasicJobOfferTeaserParts.1">
                 <target>Bitte wählen Sie die Eigenschaften aus, die angezeigt werden sollen.</target>
             </trans-unit>
+            <trans-unit id="tl_content.plentaJobsBasicNotice.0">
+                <target>Hinweis für nicht verfügbare Stellenanzeige</target>
+            </trans-unit>
+            <trans-unit id="tl_content.plentaJobsBasicNotice.1">
+                <target>Hier haben Sie die Möglichkeit, einen Hinweistext einzufügen, der angezeigt wird, wenn die ausgewählte Stellenanzeige nicht mehr verfügbar ist.</target>
+            </trans-unit>
             <trans-unit id="tl_content.plenta_jobs_basic_legend">
                 <target>Stellenanzeige</target>
             </trans-unit>
