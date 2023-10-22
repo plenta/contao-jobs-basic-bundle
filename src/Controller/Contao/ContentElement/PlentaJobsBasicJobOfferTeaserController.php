@@ -20,13 +20,13 @@ use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\StringUtil;
 use Contao\Template;
+use Contao\FrontendTemplate;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment as TwigEnvironment;
 
 #[AsContentElement(category: 'plentaJobsBasic')]
 class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementController
@@ -35,7 +35,6 @@ class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementCont
 
     public function __construct(
         protected MetaFieldsHelper $metaFieldsHelper,
-        protected TwigEnvironment $twig,
         protected TranslatorInterface $translator
     ) {
     }
@@ -56,14 +55,25 @@ class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementCont
         $jobOffer = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($model->plentaJobsBasicJobOffer);
 
         if (!$jobOffer) {
-            return $this->render(
-                '@PlentaContaoJobsBasic/plenta_jobs_basic_job_offer_teaser_empty.html.twig',
-                [
-                    'class' => $template->getName(),
-                    'empty' => $model->plentaJobsBasicNotice ?:
-                        $this->translator->trans('MSC.PLENTA_JOBS.emptyList', [], 'contao_default'),
-                ]
-            );
+            $headlineData = StringUtil::deserialize($model->headline ?? [] ?: '', true);
+            $attributesData = StringUtil::deserialize($model->cssID ?? [] ?: '', true);
+
+            $template = new FrontendTemplate('plenta_jobs_basic_job_offer_empty');
+            $template->setData([
+                'type' => $this->getType(),
+                'template' => $template->getName(),
+                'data' => $model,
+                'element_html_id' => $attributesData[0] ?? null,
+                'element_css_classes' => trim($attributesData[1] ?? ''),
+                'empty' => $model->plentaJobsBasicNotice ?:
+                    $this->translator->trans('MSC.PLENTA_JOBS.emptyList', [], 'contao_default'),
+                'headline' => [
+                    'text' => $headlineData['value'] ?? '',
+                    'tag_name' => $headlineData['unit'] ?? 'h1',
+                ],
+            ]);
+
+            return $template->getResponse();
         }
 
         $template->jobOffer = $jobOffer;

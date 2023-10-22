@@ -137,6 +137,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                     $tempContent = $this->getJobLocation($jobOffer, $model);
                     break;
             }
+
             $event = new JobOfferReaderContentPartEvent();
             $event
                 ->setJobOffer($jobOffer)
