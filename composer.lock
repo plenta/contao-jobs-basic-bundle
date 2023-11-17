@@ -340,16 +340,16 @@
         },
         {
             "name": "contao-components/ace",
-            "version": "1.30.0",
+            "version": "1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/ace.git",
-                "reference": "0b0c488529f863babb8dc7f3f7f498b29a558285"
+                "reference": "2262d9fe950b107a5da7d28b2adb38bc414d3f9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/ace/zipball/0b0c488529f863babb8dc7f3f7f498b29a558285",
-                "reference": "0b0c488529f863babb8dc7f3f7f498b29a558285",
+                "url": "https://api.github.com/repos/contao-components/ace/zipball/2262d9fe950b107a5da7d28b2adb38bc414d3f9c",
+                "reference": "2262d9fe950b107a5da7d28b2adb38bc414d3f9c",
                 "shasum": ""
             },
             "require": {
@@ -369,9 +369,9 @@
             "description": "ACE code editor integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/ace/issues",
-                "source": "https://github.com/contao-components/ace/tree/1.30.0"
+                "source": "https://github.com/contao-components/ace/tree/1.31.0"
             },
-            "time": "2023-10-16T08:21:16+00:00"
+            "time": "2023-10-23T15:03:12+00:00"
         },
         {
             "name": "contao-components/chosen",
@@ -952,16 +952,16 @@
         },
         {
             "name": "contao-components/tinymce4",
-            "version": "6.7.0",
+            "version": "6.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao-components/tinymce4.git",
-                "reference": "9a6cb3dd5f741ce9a63e22ff65c8a47cc0483e67"
+                "reference": "1db4eafe6d1f19169171c4cfe0c401b4e4a82a90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao-components/tinymce4/zipball/9a6cb3dd5f741ce9a63e22ff65c8a47cc0483e67",
-                "reference": "9a6cb3dd5f741ce9a63e22ff65c8a47cc0483e67",
+                "url": "https://api.github.com/repos/contao-components/tinymce4/zipball/1db4eafe6d1f19169171c4cfe0c401b4e4a82a90",
+                "reference": "1db4eafe6d1f19169171c4cfe0c401b4e4a82a90",
                 "shasum": ""
             },
             "require": {
@@ -981,9 +981,9 @@
             "description": "TinyMCE integration for Contao Open Source CMS",
             "support": {
                 "issues": "https://github.com/contao-components/tinymce4/issues",
-                "source": "https://github.com/contao-components/tinymce4/tree/6.7.0"
+                "source": "https://github.com/contao-components/tinymce4/tree/6.7.1"
             },
-            "time": "2023-08-31T10:37:07+00:00"
+            "time": "2023-10-23T09:41:47+00:00"
         },
         {
             "name": "contao-components/tristen-tablesort",
