@@ -71,10 +71,10 @@ class MetaFieldsHelper
                     }
                     $arrMeta = Frontend::getMetaData($file->meta, $language);
                     $meta = [
-                        'alt' => $jobOffer->alt ?: $arrMeta['alt'],
-                        'imageTitle' => $jobOffer->imageTitle ?: $arrMeta['title'],
-                        'imageUrl' => $jobOffer->imageUrl ?: $arrMeta['link'],
-                        'caption' => $jobOffer->caption ?: $arrMeta['caption'],
+                        'alt' => $jobOffer->alt ?: ($arrMeta['alt'] ?? ''),
+                        'imageTitle' => $jobOffer->imageTitle ?: ($arrMeta['title'] ?? ''),
+                        'imageUrl' => $jobOffer->imageUrl ?: ($arrMeta['link'] ?? ''),
+                        'caption' => $jobOffer->caption ?: ($arrMeta['caption'] ?? ''),
                     ];
                     $figureBuilder->setMetadata(new Metadata($meta));
                 }
