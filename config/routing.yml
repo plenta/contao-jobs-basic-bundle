@@ -6,7 +6,7 @@ plenta_jobs_basic.offer_filter:
         _controller: Plenta\ContaoJobsBasic\Controller\JobsOfferFilterRequestController::filterOffersAction
 
 Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\SettingsController:
-    path: /contao/plentajobsbasic/settings
+    path: /%contao.backend.route_prefix%/plentajobsbasic/settings
     defaults:
         _scope: backend
         _controller: Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\SettingsController::showSettings
