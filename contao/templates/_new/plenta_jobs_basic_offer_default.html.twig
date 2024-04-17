@@ -20,7 +20,7 @@
         {% endif %}
         {% if 'teaser' in parts %}
         <div class="job-teaser">
-            {{ jobOfferMeta.teaser }}
+            {{ jobOfferMeta.teaser|raw }}
         </div>
         {% endif %}
     </div>
