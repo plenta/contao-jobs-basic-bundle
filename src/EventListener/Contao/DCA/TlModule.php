@@ -12,10 +12,16 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
+use Contao\CoreBundle\Twig\Finder\FinderFactory;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 
 class TlModule
 {
+    public function __construct(protected FinderFactory $finderFactory)
+    {
+    }
+
     public function jobLocationOptionsCallback(): array
     {
         $jobLocations = PlentaJobsBasicJobLocationModel::findAll();
@@ -35,5 +41,16 @@ class TlModule
         }
 
         return $return;
+    }
+
+    #[AsCallback(table: 'tl_module', target: 'fields.plentaJobsBasicElementTpl.options')]
+    public function onElementTplOptionsCallback()
+    {
+        return $this->finderFactory
+            ->create()
+            ->identifier('plenta_jobs_basic_offer_default')
+            ->extension('html.twig')
+            ->withVariants()
+            ->asTemplateOptions();
     }
 }

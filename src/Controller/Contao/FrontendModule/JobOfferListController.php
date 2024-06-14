@@ -235,7 +235,9 @@ class JobOfferListController extends AbstractFrontendModuleController
                     'link' => $this->generateJobOfferUrl($jobOffer, $model),
                 ];
 
-                $stream = $this->twig->render('@Contao/plenta_jobs_basic_offer_default.html.twig', $data);
+                $tpl = $model->plentaJobsBasicElementTpl ?: 'plenta_jobs_basic_offer_default';
+
+                $stream = $this->twig->render('@Contao/'.$tpl.'.html.twig', $data);
 
                 if (null !== $sortByLocation) {
                     $jobLocations = StringUtil::deserialize($jobOffer->jobLocation);

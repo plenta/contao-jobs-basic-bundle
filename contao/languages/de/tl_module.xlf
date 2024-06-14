@@ -194,6 +194,12 @@
             <trans-unit id="tl_module.plentaJobsBasicDisableMultipleLocations.1">
                 <target>Im Filter kann immer nur ein Standort ausgewählt werden.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicElementTpl.0">
+                <target>Stellenanzeigen-Template</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicElementTpl.1">
+                <target>Bitte wählen Sie ein Template aus der Liste aus.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

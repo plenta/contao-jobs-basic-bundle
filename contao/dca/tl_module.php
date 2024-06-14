@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     '{title_legend},name,type;
     {config_legend},numberOfItems,perPage,plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocations,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize,plentaJobsBasicHideOffersWithoutTranslation;
     {redirect_legend},jumpTo;
-    {template_legend:hide},customTpl;
+    {template_legend:hide},plentaJobsBasicElementTpl,customTpl;
     {expert_legend:hide},cssID'
 ;
 
@@ -252,4 +252,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicDisableMultipleLocatio
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'clr w50'],
     'sql' => "char(1) COLLATE ascii_bin NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicElementTpl'] = [
+    'exclude' => true,
+    'inputType' => 'select',
+    'eval' => ['tl_class' => 'w50'],
+    'sql' => "varchar(255) NOT NULL default ''",
 ];
