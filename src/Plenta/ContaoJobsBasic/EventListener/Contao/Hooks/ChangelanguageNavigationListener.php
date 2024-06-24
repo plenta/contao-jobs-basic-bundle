@@ -32,7 +32,7 @@ class ChangelanguageNavigationListener
         $targetRoot = $event->getNavigationItem()->getRootPage();
         $language = $targetRoot->language;
         if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
-            Input::setGet('items', Input::get('auto_item'));
+            Input::setGet('items', Input::get('auto_item', false, true));
         }
         $alias = Input::get('items');
 

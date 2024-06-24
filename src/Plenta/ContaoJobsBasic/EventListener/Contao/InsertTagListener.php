@@ -81,7 +81,7 @@ class InsertTagListener
     {
         if (null === $this->autoItem) {
             if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
-                Input::setGet('items', Input::get('auto_item'));
+                Input::setGet('items', Input::get('auto_item', false, true));
             }
 
             $this->autoItem = Input::get('items');
