@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022-2023, Plenta.io
+ * @copyright     Copyright (c) 2024, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -13,14 +13,14 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
 use Contao\ArticleModel;
+use Contao\ContentModel;
+use Contao\CoreBundle\Event\SitemapEvent;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Database;
 use Contao\ModuleModel;
 use Contao\PageModel;
-use Contao\CoreBundle\Event\SitemapEvent;
-use Contao\ContentModel;
-use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener(event: SitemapEvent::class)]
 class SitemapListener
@@ -50,34 +50,41 @@ class SitemapListener
 
             foreach ($objArticles as $article) {
                 if (true === $article->published) {
-                    $objContent = $this->framework->getAdapter(ContentModel::class)->findByPid($article->id);
+                    $objContents = $this->framework->getAdapter(ContentModel::class)->findByPid($article->id);
 
-                    if ('module' === $objContent->type && false === $objContent->invisible) {
-                        $module = $this->framework->getAdapter(ModuleModel::class)->findByPk($objContent->module);
+                    if (empty($objContents)) {
+                        continue;
+                    }
 
-                        if (null === $module) {
-                            continue;
-                        }
+                    foreach ($objContents as $objContent) {
+                        if ('module' === $objContent->type && false === $objContent->invisible) {
+                            $module = $this->framework->getAdapter(ModuleModel::class)->findByPk($objContent->module);
 
-                        if ('plenta_jobs_basic_offer_reader' !== $module->type) {
-                            continue;
-                        }
+                            if (null === $module) {
+                                continue;
+                            }
 
-                        $jobs = PlentaJobsBasicOfferModel::findAllPublished();
-                        if ($jobs) {
-                            foreach ($jobs as $job) {
-                                if ('noindex,nofollow' === $job->robots) {
-                                    continue;
-                                }
+                            if ('plenta_jobs_basic_offer_reader' !== $module->type) {
+                                continue;
+                            }
 
-                                if ($page = $job->getAbsoluteUrl($objPage->language)) {
-                                    if (!in_array($page, $arrPages)) {
-                                        $arrPages[] = $page;
+                            $jobs = PlentaJobsBasicOfferModel::findAllPublished();
+                            if ($jobs) {
+                                foreach ($jobs as $job) {
+                                    if ('noindex,nofollow' === $job->robots) {
+                                        continue;
+                                    }
+
+                                    if ($page = $job->getAbsoluteUrl($objPage->language)) {
+                                        if (!\in_array($page, $arrPages, true)) {
+                                            $arrPages[] = $page;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+
                 }
             }
         }
