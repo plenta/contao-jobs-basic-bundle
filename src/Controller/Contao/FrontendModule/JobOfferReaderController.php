@@ -154,7 +154,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $StructuredData = $this->googleForJobs->generatestructuredData($jobOffer);
 
         if ($jobOffer->cssClass) {
-            $template->class .= ('' != $template->class ? ' ' : '').$jobOffer->cssClass;
+            $template->element_css_classes .= ('' != $template->element_css_classes ? ' ' : '').$jobOffer->cssClass;
         }
 
         $event = new JobOfferReaderBeforeParseTemplateEvent($jobOffer, $template, $model, $this, $StructuredData);
