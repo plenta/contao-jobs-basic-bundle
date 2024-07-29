@@ -82,7 +82,7 @@ class InsertTagListener
             if ('datePosted' === $chunks[1]) {
                 $objPage = $GLOBALS['objPage'] ?? null;
 
-                return Date::parse($elements[1] ?? ($objPage->dateFormat ?? Config::get('dateFormat')));
+                return Date::parse($objPage->dateFormat ?? Config::get('dateFormat'), $jobOfferData->datePosted);
             }
 
             if ('author' === $chunks[1] && isset($chunks[2])) {
