@@ -3,7 +3,7 @@
 {% block content %}
     {{ content|raw }}
 
-    {% if back %}
+    {% if back|default %}
         <!-- indexer::stop -->
         <p class="back"><a href="{{ referer }}" title="{{ back }}">{{ back }}</a></p>
         <!-- indexer::continue -->
