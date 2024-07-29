@@ -269,11 +269,12 @@ class PlentaJobsBasicOfferModel extends Model
     protected function getParams($language)
     {
         $alias = $this->alias;
+
         if ($translation = $this->getTranslation($language)) {
             $alias = $translation['alias'];
         }
 
-        return (Config::get('useAutoItem') ? '/' : '/items/').($alias ?: $this->id);
+        return '/'.($alias ?: $this->id);
     }
 
     public static function findAllPublished()
