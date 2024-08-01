@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file>
+        <body>
+            <trans-unit id="tl_plenta_jobs_basic_offer.title_legend">
+                <target>Job title and details</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.settings_legend">
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.title.0">
+                <target>Job title</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.title.1">
+                <target>Please enter a title for the job offer.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.description.0">
+                <target>Job offer description</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.description.1">
+                <target>Please enter the description for the job offer.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.employmentType.0">
+                <target>Employment type</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.employmentType.1">
+                <target>Please select one or more employment types.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.alias.0">
+                <target>Alias</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.alias.1">
+                <target>The job offer alias is a unique reference to the job offer which can be called instead of its numeric ID.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.expert_legend">
+                <target>Expert settings</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.cssClass.0">
+                <target>CSS class</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.cssClass.1">
+                <target>Here you can define one or more classes.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.publish_legend">
+                <target>Publishing</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.published.0">
+                <target>Publish job offer</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.published.1">
+                <target>Show the job offer on the website.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.start.0">
+                <target>Show from</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.start.1">
+                <target>If you want to prevent the job offer from showing on the website before a certain date/time, you can enter it here. Otherwise leave the field blank.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.stop.0">
+                <target>Show until</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.stop.1">
+                <target>If you want to prevent the job offer from showing on the website after a certain date/time, you can enter it here. Otherwise leave the field blank.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.tstamp.0">
+                <target>Revision date</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.tstamp.1">
+                <target>Date and time of the last revision.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.jobLocation.0">
+                <target>Job location</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.jobLocation.1">
+                <target>Please choose a location for the job offer.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.validThrough.0">
+                <target>Application deadline</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.validThrough.1">
+                <target>This field is only required for jobs with an application deadline.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.renewDatePosted.0">
+                <target>Renew published date</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.renewDatePosted.1">
+                <target>Renew the published date of the job offer.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.addImage.0">
+                <target>Add an image</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.addImage.1">
+                <target>Add an image to the job offer. (Frontend)</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.singleSRC.0">
+                <target>Source file</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.singleSRC.1">
+                <target>Please choose a file from the file tree.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.image_legend">
+                <target>Image settings</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.basesalary_legend">
+                <target>Salary</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.isRemote.0">
+                <target>Remote is possible</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.isRemote.1">
+                <target>The job can be worked remotely.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.isOnlyRemote.0">
+                <target>Only remote is possible</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.isOnlyRemote.1">
+                <target>The job can only be worked remotely.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.hasLocationRequirements.0">
+                <target>Remote location is constrained</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.hasLocationRequirements.1">
+                <target>The job can only be worked remotely from some locations.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.applicantLocationRequirements.0">
+                <target>Location requirements</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.applicantLocationRequirements.1">
+                <target>Add an entry for every possible location.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.key.0">
+                <target>Administrative area</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.key.1">
+                <target>Please choose the type of the administrative area.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.value.0">
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.value.1">
+                <target>Please enter the name of the administrative area (e.g. Germany, Bavaria or Hannover).</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.location_legend">
+                <target>Location</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.administrativeAreas.Country">
+                <target>Country</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.administrativeAreas.State">
+                <target>State</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.administrativeAreas.City">
+                <target>City</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.administrativeAreas.SchoolDistrict">
+                <target>School District</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salary_legend">
+                <target>Salary</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.addSalary.0">
+                <target>Add salary</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.addSalary.1">
+                <target>Add a salary to the job offer.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryCurrency.0">
+                <target>Currency</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryCurrency.1">
+                <target>Please choose a currency from the list.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryValue.0">
+                <target>Salary</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryValue.1">
+                <target>Please enter the salary.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryMaxValue.0">
+                <target>Maximum salary</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryMaxValue.1">
+                <target>If you want to supply a salary range instead of a fixed salary, please enter the maximum salary.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnit.0">
+                <target>Time unit</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnit.1">
+                <target>Please choose, for which time unit the salary applies.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.HOUR">
+                <target>Hour</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.DAY">
+                <target>Day</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.WEEK">
+                <target>Woche</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.MONTH">
+                <target>Month</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.salaryUnits.YEAR">
+                <target>Year</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.remoteIsPossible">
+                <target>Remote</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.remoteIsPossibleWithRequirements">
+                <target>Remote (%s)</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.meta_legend">
+                <target>Meta data</target>
+            </trans-unit>
+
+            <trans-unit id="tl_plenta_jobs_basic_offer.overwriteMeta.0">
+                <target>Overwrite metadata</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.overwriteMeta.1">
+                <target>Overwrite the metadata from the file manager.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.alt.0">
+                <target>Alternate text</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.alt.1">
+                <target>Here you can enter an alternate text for the image (alt attribute).</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.imageTitle.0">
+                <target>Image title</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.imageTitle.1">
+                <target>Here you can enter the image title (title attribute).</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.imageUrl.0">
+                <target>Image link target</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.imageUrl.1">
+                <target>A custom image link target will override the lightbox link, so the image cannot be viewed fullsize anymore.</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.caption.0">
+                <target>Image caption</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.caption.1">
+                <target>Here you can enter a short text that will be displayed below the image.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

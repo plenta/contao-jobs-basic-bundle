@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file>
+        <body>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.tstamp__ASC">
+                <target>Modification date (ascending)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.datePosted__ASC">
+                <target>Publication date (ascending)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title__ASC">
+                <target>A-Z</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.tstamp__DESC">
+                <target>Modification date (descending)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.datePosted__DESC">
+                <target>Publication date (descending)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.title__DESC">
+                <target>Z-A</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.jobLocation__ASC">
+                <target>Job location (ascending)</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicSortingFields.fields.jobLocation__DESC">
+                <target>Job location (descending)</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

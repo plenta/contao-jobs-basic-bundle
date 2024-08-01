@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.1">
+    <file datatype="php">
+        <body>
+            <trans-unit id="MOD.plenta_jobs_basic">
+                <target>Jobs (Basic)</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_offers.0">
+                <target>Jobs</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_offers.1">
+                <target>Manage job offers</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_organizations.0">
+                <target>Companies</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_organizations.1">
+                <target>Manage companies</target>
+            </trans-unit>
+            <trans-unit id="MOD.tl_plenta_jobs_basic_job_location">
+                <target>Locations</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_location.0">
+                <target>Locations</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_location.1">
+                <target>Manage locations</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_settings.0">
+                <target>Settings</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_settings.1">
+                <target>Manage settings</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_dashboard">
+                <target>Dashboard</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_support.0">
+                <target>Support</target>
+            </trans-unit>
+            <trans-unit id="MOD.plenta_jobs_basic_support.1">
+                <target>Here you will find support and options for assistance.</target>
+            </trans-unit>
+            <trans-unit id="FMD.plentaJobsBasic">
+                <target>Jobs (Basic)</target>
+            </trans-unit>
+            <trans-unit id="FMD.plenta_jobs_basic_offer_list.0">
+                <target>Job offer list</target>
+            </trans-unit>
+            <trans-unit id="FMD.plenta_jobs_basic_offer_list.1">
+                <target>Job offer list</target>
+            </trans-unit>
+            <trans-unit id="FMD.plenta_jobs_basic_offer_reader.0">
+                <target>Job offer reader</target>
+            </trans-unit>
+            <trans-unit id="FMD.plenta_jobs_basic_offer_reader.1">
+                <target>Job offer reader</target>
+            </trans-unit>
+            <trans-unit id="FMD.plenta_jobs_basic_filter.0">
+                <target>Job offer filter</target>
+            </trans-unit>
+            <trans-unit id="FMD.plenta_jobs_basic_filter.1">
+                <target>Job offer filter</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
