@@ -57,10 +57,8 @@ class MetaFieldsHelper
         if ($imageSize && $jobOffer->addImage) {
             $file = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
             if ($file) {
-                $tpl = new FrontendTemplate('ce_image');
-                /** @var Studio $studio */
-                $studio = System::getContainer()->get('contao.image.studio');
-                $figureBuilder = $studio->createFigureBuilder()->fromUuid($jobOffer->singleSRC)->setSize($imageSize);
+                $tpl = new FrontendTemplate('plenta_jobs_basic_reader_image');
+                $meta = [];
                 if ($jobOffer->overwriteMeta) {
                     $request = System::getContainer()->get('request_stack')->getCurrentRequest();
                     if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
@@ -76,10 +74,25 @@ class MetaFieldsHelper
                         'imageUrl' => $jobOffer->imageUrl ?: ($arrMeta['link'] ?? ''),
                         'caption' => $jobOffer->caption ?: ($arrMeta['caption'] ?? ''),
                     ];
-                    $figureBuilder->setMetadata(new Metadata($meta));
                 }
-                $figure = $figureBuilder->build();
-                $figure->applyLegacyTemplateData($tpl);
+                $data = [
+                    'id' => null,
+                    'singleSRC' => $jobOffer->singleSRC,
+                    'sortBy' => 'custom',
+                    'fullsize' => false,
+                    'size' => $imageSize,
+                ];
+
+                if (!empty($meta)) {
+                    $data['overwriteMeta'] = true;
+                    $data['alt'] = $meta['alt'] ?? '';
+                    $data['imageTitle'] = $meta['imageTitle'] ?? '';
+                    $data['imageUrl'] = $meta['imageUrl'] ?? '';
+                    $data['caption'] = $meta['caption'] ?? '';
+                }
+
+                $tpl->data = $data;
+
                 $metaFields['image'] = $tpl->parse();
             }
         }

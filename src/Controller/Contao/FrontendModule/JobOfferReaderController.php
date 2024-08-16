@@ -206,33 +206,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     private function getImage(PlentaJobsBasicOfferModel $jobOffer, $model): ?string
     {
         if ($jobOffer->addImage) {
-            $template = new FrontendTemplate('plenta_jobs_basic_reader_image');
-            $template->class = 'ce_image';
-            $image = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
-
-            if ($image) {
-                $template->image = $image;
-                $template->imgSize = $model->imgSize;
-                $options = [];
-
-                if ($jobOffer->overwriteMeta) {
-                    global $objPage;
-
-                    $arrMeta = Frontend::getMetaData($image->meta, $objPage->language);
-                    $meta = [
-                        'alt' => $jobOffer->alt ?: $arrMeta['alt'],
-                        'imageTitle' => $jobOffer->imageTitle ?: $arrMeta['title'],
-                        'imageUrl' => $jobOffer->imageUrl ?: $arrMeta['link'],
-                        'caption' => $jobOffer->caption ?: $arrMeta['caption'],
-                    ];
-                    $options['metadata'] = $meta;
-                    $template->overwriteMeta = true;
-                }
-
-                $template->options = $options;
-
-                return $template->parse();
-            }
+            return $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize)['image'] ?? '';
         }
 
         return '';
@@ -242,7 +216,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         $template = new FrontendTemplate('plenta_jobs_basic_reader_description');
         $template->text = $this->metaFieldsHelper->getMetaFields($jobOffer)['description'];
-        $template->class = 'ce_text job_description';
+        $template->class = 'job-description';
 
         return $template->parse();
     }
@@ -291,9 +265,14 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                         $image = FilesModel::findByUuid($organization->logo);
                         if ($image) {
                             $imgTpl = new FrontendTemplate('plenta_jobs_basic_reader_image');
-                            $imgSize = [200, 200, 'proportional'];
-                            $imgTpl->image = $image;
-                            $imgTpl->imgSize = $imgSize;
+                            $data = [
+                                'id' => null,
+                                'singleSRC' => $jobOffer->singleSRC,
+                                'sortBy' => 'custom',
+                                'fullsize' => false,
+                                'size' => serialize([200, 200, 'proportional']),
+                            ];
+                            $imgTpl->data = $data;
                             $imgs[$organization->id] = $imgTpl->parse();
                         }
                     }
@@ -406,7 +385,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         $template = new FrontendTemplate('plenta_jobs_basic_reader_teaser');
         $template->text = $this->metaFieldsHelper->getMetaFields($jobOffer)['teaser'];
-        $template->class = 'ce_text job_teaser';
+        $template->class = 'job-teaser';
 
         return $template->parse();
     }
