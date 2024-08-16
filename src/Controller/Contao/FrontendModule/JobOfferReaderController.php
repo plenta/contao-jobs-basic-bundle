@@ -133,6 +133,9 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                 case 'jobLocation':
                     $tempContent = $this->getJobLocation($jobOffer, $model);
                     break;
+                case 'teaser':
+                    $tempContent = $this->getTeaser($jobOffer);
+                    break;
             }
 
             $event = new JobOfferReaderContentPartEvent();
@@ -397,5 +400,14 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                 $htmlHeadBag->setMetaDescription($this->htmlDecoder->inputEncodedToPlainText($jobOffer->teaser));
             }
         }
+    }
+
+    private function getTeaser(PlentaJobsBasicOfferModel $jobOffer): ?string
+    {
+        $template = new FrontendTemplate('plenta_jobs_basic_reader_teaser');
+        $template->text = $this->metaFieldsHelper->getMetaFields($jobOffer)['teaser'];
+        $template->class = 'ce_text job_teaser';
+
+        return $template->parse();
     }
 }
