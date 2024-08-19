@@ -16,6 +16,10 @@ class TlPlentaJobsBasicJobLocation
 {
     public function listLocations(array $arrRow): string
     {
+        if ($arrRow['title']) {
+            return $arrRow['title'];
+        }
+
         if ('onPremise' === $arrRow['jobTypeLocation']) {
             return '<div class="tl_content_left">'.$arrRow['addressLocality'].', '.$arrRow['postalCode'].(!empty($arrRow['streetAddress']) ? ', '.$arrRow['streetAddress'] : '').'</div>';
         }

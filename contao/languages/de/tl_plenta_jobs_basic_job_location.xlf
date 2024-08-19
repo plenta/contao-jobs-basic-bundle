@@ -92,6 +92,12 @@
             <trans-unit id="tl_plenta_jobs_basic_job_location.location_legend">
                 <target>Standort-Einstellungen</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.title.0">
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_job_location.title.1">
+                <target>Bitte geben Sie einen Titel ein.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

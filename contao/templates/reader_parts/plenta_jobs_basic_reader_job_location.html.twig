@@ -14,6 +14,9 @@
     {% for loc in location %}
         {% if loc.jobTypeLocation == 'onPremise' %}
             <div class="job_location">
+                {% if loc.title|default %}
+                    <span class="title">{{ loc.title }}</span><br />
+                {% endif %}
                 {% if loc.streetAddress|trim %}
                 {{ loc.streetAddress }}<br />
                 {% endif %}

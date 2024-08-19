@@ -76,9 +76,9 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
     // Palettes
     'palettes' => [
         '__selector__' => ['jobTypeLocation'],
-        'default' => '{type_legend},jobTypeLocation',
-        'onPremise' => '{type_legend},jobTypeLocation;{address_legend},streetAddress,postalCode,addressLocality,addressRegion,addressCountry',
-        'Telecommute' => '{type_legend},jobTypeLocation;{location_legend},requirementType,requirementValue',
+        'default' => '{type_legend},jobTypeLocation,title',
+        'onPremise' => '{type_legend},jobTypeLocation,title;{address_legend},streetAddress,postalCode,addressLocality,addressRegion,addressCountry',
+        'Telecommute' => '{type_legend},jobTypeLocation,title;{location_legend},requirementType,requirementValue',
     ],
 
     // Fields
@@ -218,6 +218,16 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
             'exclude' => true,
             'inputType' => 'text',
             'eval' => ['mandatory' => true, 'tl_class' => 'w50'],
+            'sql' => [
+                'type' => 'string',
+                'length' => 255,
+                'default' => '',
+            ],
+        ],
+        'title' => [
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['tl_class' => 'w50'],
             'sql' => [
                 'type' => 'string',
                 'length' => 255,

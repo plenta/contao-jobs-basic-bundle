@@ -89,7 +89,11 @@ class TlPlentaJobsBasicOffer
         $return = [];
         foreach ($jobLocations as $jobLocation) {
             $return[$jobLocation->id] = $jobLocation->getRelated('pid')->name.': ';
-            if ('onPremise' === $jobLocation->jobTypeLocation) {
+
+            if ($jobLocation->title) {
+                $return[$jobLocation->id] .= $jobLocation->title;
+            }
+            elseif ('onPremise' === $jobLocation->jobTypeLocation) {
                 $return[$jobLocation->id] .= $jobLocation->streetAddress;
 
                 if ('' !== $jobLocation->addressLocality) {
