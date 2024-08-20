@@ -8,7 +8,7 @@
 <script>
     (function ($) {
         document.addEventListener('DOMContentLoaded', function () {
-            let jobList = document.querySelector('.module-plenta_jobs_basic_offer_list');
+            let jobList = document.querySelector('.module-plenta-jobs-basic-offer-list');
 
             if (null !== jobList) {
                 $('input').on('change', function () {
@@ -55,7 +55,7 @@
                         },
                         success: function (data) {
                             data = data.replaceAll('{{ ajaxRoute }}'.replace(/^\//, ''), location.pathname.replace(/^\//, ''));
-                            $('.module-plenta_jobs_basic_offer_list:not(.no-filter)').replaceWith(data);
+                            $('.module-plenta-jobs-basic-offer-list:not(.no-filter)').replaceWith(data);
                             $(document).trigger('plentaJobsBasic:updateList');
                         }
                     })

@@ -129,6 +129,7 @@ class JobOfferListController extends AbstractFrontendModuleController
 
         if (!empty($moduleJobTypes)) {
             $types = array_filter($types, fn ($element) => \in_array($element, $moduleJobTypes, true));
+
             if (empty($types)) {
                 $types = $moduleJobTypes;
             }
