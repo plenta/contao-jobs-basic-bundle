@@ -35,10 +35,10 @@ class JobsCountInsertTag implements InsertTagResolverNestedResolvedInterface
                 $types = $this->requestStack->getCurrentRequest()->query->all('types');
                 $locations = $this->requestStack->getCurrentRequest()->query->all('location');
 
-                return new InsertTagResult(PlentaJobsBasicOfferModel::countAllPublishedByTypesAndLocation($types, $locations));
+                return new InsertTagResult((string) PlentaJobsBasicOfferModel::countAllPublishedByTypesAndLocation($types, $locations));
             }
 
-            return new InsertTagResult(PlentaJobsBasicOfferModel::countAllPublishedByTypesAndLocation([], []));
+            return new InsertTagResult((string) PlentaJobsBasicOfferModel::countAllPublishedByTypesAndLocation([], []));
         }
 
         return new InsertTagResult('');
