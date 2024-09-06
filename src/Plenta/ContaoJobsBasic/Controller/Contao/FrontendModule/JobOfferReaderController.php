@@ -88,10 +88,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $template->back = $GLOBALS['TL_LANG']['MSC']['goBack'];
         }
 
-        if (!isset($_GET['items']) && isset($_GET['auto_item']) && Config::get('useAutoItem')) {
-            Input::setGet('items', Input::get('auto_item'));
-        }
-        $alias = Input::get('items');
+        $alias = Input::get('auto_item');
 
         $jobOffer = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($alias);
 
@@ -359,7 +356,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     ): void
     {
         if ($jobOffer->pageDescription || (null !== $translation)) {
-            $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($jobOffer->pageDescription));
+            $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText((string) $jobOffer->pageDescription));
 
             if (null !== $translation) {
                 $htmlHeadBag->setMetaDescription($htmlDecoder->inputEncodedToPlainText($translation['description']));

@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\Contao\Model;
 
 use Composer\InstalledVersions;
-use Contao\Config;
 use Contao\Model;
 use Contao\ModuleModel;
 use Contao\PageModel;
@@ -210,7 +209,7 @@ class PlentaJobsBasicOfferModel extends Model
         }
         $params = $this->getParams($language);
 
-        return ampersand($objPage->getAbsoluteUrl($params));
+        return StringUtil::ampersand($objPage->getAbsoluteUrl($params));
     }
 
     public function getFrontendUrl($language)
@@ -221,7 +220,7 @@ class PlentaJobsBasicOfferModel extends Model
         }
         $params = $this->getParams($language);
 
-        return ampersand($objPage->getAbsoluteUrl($params));
+        return StringUtil::ampersand($objPage->getAbsoluteUrl($params));
     }
 
     protected function getParams($language)
@@ -231,6 +230,6 @@ class PlentaJobsBasicOfferModel extends Model
             $alias = $translation['alias'];
         }
 
-        return (Config::get('useAutoItem') ? '/' : '/items/').($alias ?: $this->id);
+        return '/'.($alias ?: $this->id);
     }
 }
