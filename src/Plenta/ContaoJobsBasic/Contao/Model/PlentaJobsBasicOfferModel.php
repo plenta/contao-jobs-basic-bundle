@@ -277,7 +277,7 @@ class PlentaJobsBasicOfferModel extends Model
             $alias = $translation['alias'];
         }
 
-        return (Config::get('useAutoItem') ? '/' : '/items/').($alias ?: $this->id);
+        return '/'.($alias ?: $this->id);
     }
 
     public static function findAllPublished()
