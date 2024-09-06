@@ -134,6 +134,8 @@ class MetaFieldsHelper
         $countriesTemp = [];
         $locations = StringUtil::deserialize($jobOffer->jobLocation);
 
+        System::loadLanguageFile('countries');
+
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
             $name = 'onPremise' === $objLocation->jobTypeLocation ? $GLOBALS['TL_LANG']['CNT'][$objLocation->addressCountry] : ('Country' === $objLocation->requirementType ? $objLocation->requirementValue : null);
