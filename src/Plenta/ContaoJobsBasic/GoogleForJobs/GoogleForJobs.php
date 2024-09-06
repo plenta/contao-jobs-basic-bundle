@@ -132,6 +132,11 @@ class GoogleForJobs
 
         if (null !== $uuid && '' !== $uuid) {
             $image = FilesModel::findByUuid($uuid);
+
+            if (null === $image) {
+                return $structuredData;
+            }
+
             $staticUrl = $this->contaoFileContext->getStaticUrl();
 
             $imageConfigItem = new PictureConfigurationItem();
