@@ -230,7 +230,7 @@ class PlentaJobsBasicOfferModel extends Model
         if ($onlyTranslated) {
             $requestStack = System::getContainer()->get('request_stack');
             $language = $requestStack->getMainRequest()->getLocale();
-            $page = PageModel::findBy(['type = ?', 'language = ?'], ['root', $language]);
+            $page = PageModel::findBy(['type = ?', 'language = ?', '(dns = ? OR dns = ?)'], ['root', $language, '', $requestStack->getCurrentRequest()->getHost()]);
             if ($page && !$page->fallback) {
                 $str = 's:8:"language";s:'.\strlen($language).':"'.$language.'"';
                 $columns[] = 'translations LIKE ?';
