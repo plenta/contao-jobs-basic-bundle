@@ -46,13 +46,7 @@ class MetaFieldsHelper
     {
         $metaFields = [];
 
-        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
-            $mainRequest = $this->requestStack->getMainRequest();
-        } else {
-            $mainRequest = $this->requestStack->getMasterRequest();
-        }
-
-        $translation = $jobOffer->getTranslation($mainRequest->getLocale());
+        $translation = $jobOffer->getTranslation($this->requestStack->getCurrentRequest()->getLocale());
 
         $metaFields['publicationDateFormatted'] = Date::parse(Date::getNumericDateFormat(), $jobOffer->datePosted);
         $metaFields['employmentTypeFormatted'] = $this->employmentTypeHelper->getEmploymentTypesFormatted(json_decode($jobOffer->employmentType, true));

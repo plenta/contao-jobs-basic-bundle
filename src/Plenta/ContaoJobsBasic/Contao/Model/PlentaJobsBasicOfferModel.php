@@ -110,11 +110,7 @@ class PlentaJobsBasicOfferModel extends Model
     {
         $jobOffer = self::findOneBy(['(id = ? OR alias = ?)', 'published = ?'], [$alias, $alias, 1]);
         $requestStack = System::getContainer()->get('request_stack');
-        if (version_compare(InstalledVersions::getVersion('contao/core-bundle'), '4.13', '>=')) {
-            $language = $requestStack->getMainRequest()->getLocale();
-        } else {
-            $language = $requestStack->getMasterRequest()->getLocale();
-        }
+        $language = $requestStack->getCurrentRequest()->getLocale();
 
         if ($jobOffer && $jobOffer->getTranslation($language)) {
             $jobOffer = null;
@@ -229,7 +225,7 @@ class PlentaJobsBasicOfferModel extends Model
 
         if ($onlyTranslated) {
             $requestStack = System::getContainer()->get('request_stack');
-            $language = $requestStack->getMainRequest()->getLocale();
+            $language = $requestStack->getCurrentRequest()->getLocale();
             $page = PageModel::findBy(['type = ?', 'language = ?', '(dns = ? OR dns = ?)'], ['root', $language, '', $requestStack->getCurrentRequest()->getHost()]);
             if ($page && !$page->fallback) {
                 $str = 's:8:"language";s:'.\strlen($language).':"'.$language.'"';
