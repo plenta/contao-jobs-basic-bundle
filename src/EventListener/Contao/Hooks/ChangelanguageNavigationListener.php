@@ -49,7 +49,7 @@ class ChangelanguageNavigationListener
                     }
                 }
 
-                $event->getUrlParameterBag()->setUrlAttribute('items', $newAlias);
+                $event->getUrlParameterBag()->setUrlAttribute('auto_item', $newAlias);
             }
         }
     }
