@@ -40,9 +40,7 @@ class MetaFieldsHelper
     {
         $metaFields = [];
 
-        $mainRequest = $this->requestStack->getMainRequest();
-
-        $translation = $jobOffer->getTranslation($mainRequest->getLocale());
+        $translation = $jobOffer->getTranslation($this->requestStack->getCurrentRequest()->getLocale());
 
         $metaFields['publicationDateFormatted'] = Date::parse(Date::getNumericDateFormat(), $jobOffer->datePosted);
         $metaFields['employmentTypeFormatted'] = $this->employmentTypeHelper->getEmploymentTypesFormatted(json_decode($jobOffer->employmentType, true));
@@ -130,6 +128,8 @@ class MetaFieldsHelper
     {
         $countriesTemp = [];
         $locations = StringUtil::deserialize($jobOffer->jobLocation);
+
+        System::loadLanguageFile('countries');
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);

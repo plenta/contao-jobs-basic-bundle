@@ -118,10 +118,10 @@ class EmploymentType
             return null;
         }
 
-        $mainRequest = $this->requestStack->getMainRequest();
+        $request = $this->requestStack->getCurrentRequest();
 
         $language = substr(
-            $mainRequest->getLocale(),
+            $request->getLocale(),
             0,
             2
         );

@@ -55,7 +55,7 @@ class InsertTagListener
         }
 
         $jobOfferData = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($this->autoItem);
-        $language = $this->requestStack->getMainRequest()->getLocale();
+        $language = $this->requestStack->getCurrentRequest()->getLocale();
 
         if (null !== $jobOfferData) {
             $translation = $jobOfferData->getTranslation($language);

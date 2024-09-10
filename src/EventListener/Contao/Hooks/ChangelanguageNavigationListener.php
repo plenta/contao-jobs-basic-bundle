@@ -31,7 +31,8 @@ class ChangelanguageNavigationListener
     {
         $targetRoot = $event->getNavigationItem()->getRootPage();
         $language = $targetRoot->language;
-        $alias = Input::get('auto_item');
+
+        $alias = Input::get('auto_item', false, true);
 
         if ($alias) {
             $jobOffer = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($alias);
