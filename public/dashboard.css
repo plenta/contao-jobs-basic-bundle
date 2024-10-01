@@ -1,0 +1,31 @@
+.plenta-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.plenta-box {
+    flex: 50%;
+}
+
+.plenta-box a {
+    text-decoration: underline;
+}
+
+.plenta-box a:hover {
+    text-decoration: underline;
+}
+
+.plenta-box.last {
+    text-align: right;
+}
+
+#plentaJobsInfoPanel {
+    padding: 15px;
+    border-bottom: 1px solid #e6e6e8;
+}
+
+html[data-color-scheme="dark"] {
+    .plenta-box a:hover {
+        color: #fff;
+    }
+}
