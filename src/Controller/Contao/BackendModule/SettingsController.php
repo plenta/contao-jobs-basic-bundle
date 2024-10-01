@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\Controller\Contao\BackendModule;
 
 use Composer\InstalledVersions;
+use Contao\BackendUser;
 use Contao\CoreBundle\Controller\AbstractBackendController;
 use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\System;
@@ -22,10 +23,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment as TwigEnvironment;
 
 class SettingsController extends AbstractBackendController
-{public function showSettings(): Response
+{
+    public function showSettings(): Response
     {
         if (!PermissionsHelper::canAccessModule('settings')) {
-            throw new AccessDeniedException('The settings module of the Plenta Jobs Basic Bundle is not allowed for user "'.\BackendUser::getInstance()->username.'".');
+            throw new AccessDeniedException('The settings module of the Plenta Jobs Basic Bundle is not allowed for user "'.BackendUser::getInstance()->username.'".');
         }
 
         System::loadLanguageFile('modules');
