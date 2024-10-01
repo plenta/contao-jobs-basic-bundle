@@ -40,6 +40,10 @@ class BackendMenuListener
 
         $contentNode = $tree->getChild('plenta_jobs_basic');
 
+        if (!$contentNode) {
+            return;
+        }
+
         if (PermissionsHelper::canAccessModule('settings')) {
             $node = $factory
                 ->createItem('plenta-jobs-basic-settings')
