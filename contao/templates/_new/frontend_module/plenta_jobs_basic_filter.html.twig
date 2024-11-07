@@ -7,61 +7,91 @@
 
 <script>
     (function ($) {
+        let timer = null;
+        let delay = 1000;
+        let jobList = null;
+
         document.addEventListener('DOMContentLoaded', function () {
-            let jobList = document.querySelector('.module-plenta-jobs-basic-offer-list');
+            jobList = document.querySelector('.module-plenta-jobs-basic-offer-list');
 
             if (null !== jobList) {
-                $('input').on('change', function () {
-                    let args = {};
-                    $('input:checked').each(function () {
-                        let name = $(this).prop('name');
-                        if (name.endsWith('[]')) {
-                            name = name.replace('[]', '');
-                            if (typeof (args[name]) === 'undefined') {
-                                args[name] = [];
-                            }
-                            args[name].push($(this).val());
-                        } else {
-                            args[name] = $(this).val();
-                        }
-                    })
-                    let searchParams = new URLSearchParams(location.search);
-                    if (searchParams.has('sortBy')) {
-                        args['sortBy'] = searchParams.get('sortBy');
+                $('input, select').on('change', function () {
+                    if (this.type === 'text') {
+                        return;
                     }
-                    if (searchParams.has('order')) {
-                        args['order'] = searchParams.get('order');
-                    }
-                    let str_args = '';
-                    Object.entries(args).forEach(function (item) {
-                        if (typeof (item[1]) === 'object') {
-                            item[1].forEach(function (arrItem) {
-                                str_args += str_args === '' ? '?' : '&';
-                                str_args += item[0] + '[]=' + arrItem;
-                            })
-                        } else {
-                            str_args += str_args === '' ? '?' : '&';
-                            str_args += item[0] + '=' + item[1];
-                        }
-                    });
-                    history.replaceState(null, null, location.pathname + str_args);
-                    args['id'] = jobList.dataset.id;
-                    args['page'] = {{ page }};
-                    $.ajax('{{ ajaxRoute }}', {
-                        method: 'GET',
-                        data: args,
-                        headers: {
-                            'Accept-Language': '{{ locale }}'
-                        },
-                        success: function (data) {
-                            data = data.replaceAll('{{ ajaxRoute }}'.replace(/^\//, ''), location.pathname.replace(/^\//, ''));
-                            $('.module-plenta-jobs-basic-offer-list:not(.no-filter)').replaceWith(data);
-                            $(document).trigger('plentaJobsBasic:updateList');
-                        }
-                    })
+
+                    clearTimeout(timer);
+                    timer = setTimeout(doAjax, delay);
+                })
+
+                $('input[type=text]').on('keyup', function () {
+                    clearTimeout(timer);
+                    timer = setTimeout(doAjax, delay);
                 })
             }
         });
+
+        function doAjax()
+        {
+            let args = {};
+            $('input:checked').each(function () {
+                let name = $(this).prop('name');
+                if (name.endsWith('[]')) {
+                    name = name.replace('[]', '');
+                    if (typeof (args[name]) === 'undefined') {
+                        args[name] = [];
+                    }
+                    args[name].push($(this).val());
+                } else {
+                    args[name] = $(this).val();
+                }
+            })
+
+            $('input[type=text]').each(function () {
+                if (this.value) {
+                    args[this.name] = this.value;
+                }
+            })
+
+            $('select').each(function () {
+                args[this.name] = $(this).val();
+            })
+
+            let searchParams = new URLSearchParams(location.search);
+            if (searchParams.has('sortBy')) {
+                args['sortBy'] = searchParams.get('sortBy');
+            }
+            if (searchParams.has('order')) {
+                args['order'] = searchParams.get('order');
+            }
+            let str_args = '';
+            Object.entries(args).forEach(function (item) {
+                if (typeof (item[1]) === 'object') {
+                    item[1].forEach(function (arrItem) {
+                        str_args += str_args === '' ? '?' : '&';
+                        str_args += item[0] + '[]=' + arrItem;
+                    })
+                } else {
+                    str_args += str_args === '' ? '?' : '&';
+                    str_args += item[0] + '=' + item[1];
+                }
+            });
+            history.replaceState(null, null, location.pathname + str_args);
+            args['id'] = jobList.dataset.id;
+            args['page'] = {{ page }};
+            $.ajax('{{ ajaxRoute }}', {
+                method: 'GET',
+                data: args,
+                headers: {
+                    'Accept-Language': '{{ locale }}'
+                },
+                success: function (data) {
+                    data = data.replaceAll('{{ ajaxRoute }}'.replace(/^\//, ''), location.pathname.replace(/^\//, ''));
+                    $('.module-plenta-jobs-basic-offer-list:not(.no-filter)').replaceWith(data);
+                    $(document).trigger('plentaJobsBasic:updateList');
+                }
+            })
+        }
     })(jQuery);
 </script>
 

@@ -36,7 +36,6 @@ class JobOfferFilterType extends AbstractType
     {
         /** @var ModuleModel $model */
         $model = $options['fmd'];
-        $builder->add('REQUEST_TOKEN', ContaoRequestTokenType::class);
         if ($model->plentaJobsBasicShowTypes) {
             $builder->add('typesHeadline', HtmlType::class, [
                 'html' => $this->getHeadlineHtml($model->plentaJobsBasicTypesHeadline, 'jobTypes'),
@@ -91,6 +90,8 @@ class JobOfferFilterType extends AbstractType
             'fmd' => null,
             'types' => [],
             'locations' => [],
+            'method' => 'GET',
+            'csrf_protection' => false,
         ]);
     }
 

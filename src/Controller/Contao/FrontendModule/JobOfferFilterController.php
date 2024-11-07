@@ -224,11 +224,11 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         $event->setForm($form);
         $route = $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath();
         $event->setRoute($route);
-
         $this->eventDispatcher->dispatch($event, $event::NAME);
 
-
         $form = $event->getForm();
+        $form->handleRequest($request);
+
         $template->form = $form;
         $template->ajaxRoute = $event->getRoute();
         $template->locale = $request->getLocale();
