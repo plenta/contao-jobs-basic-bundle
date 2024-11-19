@@ -20,6 +20,7 @@ use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
+use Plenta\ContaoJobsBasic\Events\JobOfferModelKeywordFieldsEvent;
 use Plenta\ContaoJobsBasic\Events\Model\FindAllPublishedByTypesAndLocationEvent;
 
 class PlentaJobsBasicOfferModel extends Model
@@ -224,14 +225,41 @@ class PlentaJobsBasicOfferModel extends Model
             $columns[] = '('.implode(' OR ', $criteria).')';
         }
 
+        $requestStack = System::getContainer()->get('request_stack');
         if ($onlyTranslated) {
-            $requestStack = System::getContainer()->get('request_stack');
             $language = $requestStack->getCurrentRequest()->getLocale();
             $page = PageModel::findBy(['type = ?', 'language = ?', '(dns = ? OR dns = ?)'], ['root', $language, '', $requestStack->getCurrentRequest()->getHost()]);
             if ($page && !$page->fallback) {
                 $str = 's:8:"language";s:'.\strlen($language).':"'.$language.'"';
                 $columns[] = 'translations LIKE ?';
                 $values[] = '%'.$str.'%';
+            }
+        }
+
+        $dispatcher = System::getContainer()->get('event_dispatcher');
+
+        if ($applyFilterRequests && $keyword = $requestStack->getCurrentRequest()->get('keyword')) {
+            $fields = ['title', 'description', 'translations'];
+
+            $fieldEvent = new JobOfferModelKeywordFieldsEvent($fields);
+            $dispatcher->dispatch($fieldEvent, $fieldEvent::NAME);
+            $fields = $fieldEvent->getFields();
+
+            $keywords = array_filter(StringUtil::trimsplit(' ', $keyword));
+
+            if (!empty($keywords)) {
+                $criteria = [];
+
+                foreach ($fields as $searchField) {
+                    foreach ($keywords as $keyword) {
+                        $criteria[] = $searchField.' LIKE ?';
+                        $values[] = '%'.$keyword.'%';
+                    }
+                }
+
+                if (!empty($criteria)) {
+                    $columns[] = '('.implode(' OR ', $criteria).')';
+                }
             }
         }
 
@@ -254,7 +282,6 @@ class PlentaJobsBasicOfferModel extends Model
             $arrOptions = [];
         }
 
-        $dispatcher = System::getContainer()->get('event_dispatcher');
         $findAllPublishedByTypesAndLocationEvent = new FindAllPublishedByTypesAndLocationEvent();
         $findAllPublishedByTypesAndLocationEvent
             ->setColumns($columns)

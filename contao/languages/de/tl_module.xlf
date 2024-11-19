@@ -200,6 +200,18 @@
             <trans-unit id="tl_module.plentaJobsBasicElementTpl.1">
                 <target>Bitte wählen Sie ein Template aus der Liste aus.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowKeyword.0">
+                <target>Volltextsuche hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicShowKeyword.1">
+                <target>Soll eine Volltextsuche angezeigt werden?</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicKeywordHeadline.0">
+                <target>Volltextsuche-Überschrift</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicKeywordHeadline.1">
+                <target>Hier können Sie der Volltextsuche eine Überschrift hinzufügen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -18,6 +18,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasic
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowLocations';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowButton';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowSorting';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasicShowKeyword';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     '{title_legend},name,type,headline;
@@ -36,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations,plentaJobsBasicHideOffersWithoutTranslation;
+    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowKeyword,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations,plentaJobsBasicHideOffersWithoutTranslation;
     {template_legend:hide},customTpl;
     {redirect_legend},jumpTo;
     {expert_legend:hide},cssID'
@@ -46,6 +47,7 @@ $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowButton'] = 'p
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowTypes'] = 'plentaJobsBasicTypesHeadline,plentaJobsBasicEmploymentTypes,plentaJobsBasicShowAllTypes,plentaJobsBasicShowQuantity';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowLocations'] = 'plentaJobsBasicLocationsHeadline,plentaJobsBasicLocations,plentaJobsBasicShowAllLocations,plentaJobsBasicShowLocationQuantity,plentaJobsBasicDisableMultipleLocations';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowSorting'] = 'plentaJobsBasicSortingFields';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowKeyword'] = 'plentaJobsBasicKeywordHeadline';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicHeadlineTag'] = [
     'exclude' => true,
@@ -261,4 +263,18 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicElementTpl'] = [
     'inputType' => 'select',
     'eval' => ['tl_class' => 'w50'],
     'sql' => "varchar(255) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicShowKeyword'] = [
+    'exclude' => true,
+    'inputType' => 'checkbox',
+    'eval' => ['tl_class' => 'clr w50', 'submitOnChange' => true],
+    'sql' => "char(1) COLLATE ascii_bin NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicKeywordHeadline'] = [
+    'exclude' => true,
+    'inputType' => 'text',
+    'eval' => ['allowHtml' => true, 'tl_class' => 'w50'],
+    'sql' => 'tinytext NULL',
 ];

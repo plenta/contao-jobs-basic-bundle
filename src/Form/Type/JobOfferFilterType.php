@@ -17,6 +17,7 @@ use Contao\ModuleModel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,6 +37,20 @@ class JobOfferFilterType extends AbstractType
     {
         /** @var ModuleModel $model */
         $model = $options['fmd'];
+        if ($model->plentaJobsBasicShowKeyword) {
+            $builder->add('keywordHeadline', HtmlType::class, [
+                'html' => $this->getHeadlineHtml($model->plentaJobsBasicKeywordHeadline, 'keyword'),
+                'priority' => 110,
+            ]);
+            $builder->add('keyword', TextType::class, [
+                'label' => false,
+                'required' => false,
+                'row_attr' => [
+                    'class' => 'widget-text',
+                ],
+                'priority' => 109,
+            ]);
+        }
         if ($model->plentaJobsBasicShowTypes) {
             $builder->add('typesHeadline', HtmlType::class, [
                 'html' => $this->getHeadlineHtml($model->plentaJobsBasicTypesHeadline, 'jobTypes'),
