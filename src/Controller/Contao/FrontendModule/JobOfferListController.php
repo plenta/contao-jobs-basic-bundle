@@ -193,7 +193,7 @@ class JobOfferListController extends AbstractFrontendModuleController
             $pageParameter = 'page_n'.$model->id;
             $page = Input::get($pageParameter) ?? 1;
             $pages = ceil($intTotal / $model->perPage);
-            if ($page > $pages || $page < 1) {
+            if ($pages && ($page > $pages || $page < 1)) {
                 throw new PageNotFoundException('Page not found: '.$request->getUri());
             }
             $offset = ($page - 1) * $model->perPage;
