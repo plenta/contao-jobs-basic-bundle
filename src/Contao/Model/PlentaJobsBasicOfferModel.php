@@ -216,7 +216,7 @@ class PlentaJobsBasicOfferModel extends Model
         if (!empty($locations)) {
             $criteria = [];
             foreach ($locations as $location) {
-                foreach (explode('|', $location) as $l) {
+                foreach (explode('|', (string) $location) as $l) {
                     $criteria[] = 'jobLocation LIKE ?';
                     $values[] = '%"'.$l.'"%';
                 }

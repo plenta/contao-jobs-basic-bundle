@@ -21,6 +21,7 @@ use Contao\CoreBundle\InsertTag\Resolver\InsertTagResolverNestedResolvedInterfac
 use Contao\CoreBundle\Routing\PageFinder;
 use Contao\ModuleModel;
 use Contao\StringUtil;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule\JobOfferListController;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -76,6 +77,14 @@ class JobsCountInsertTag implements InsertTagResolverNestedResolvedInterface
             if ($model) {
                 $types = StringUtil::deserialize($model->plentaJobsBasicEmploymentTypes) ?? [];
                 $locations = StringUtil::deserialize($model->plentaJobsBasicLocations) ?? [];
+
+                if (empty($locations) && !empty($model->plentaJobsBasicCompanies)) {
+                    $locationObjs = PlentaJobsBasicJobLocationModel::findByMultiplePids(StringUtil::deserialize($model->plentaJobsBasicCompanies, true));
+
+                    foreach ($locationObjs as $locationObj) {
+                        $locations[] = $locationObj->id;
+                    }
+                }
             }
 
             if ($filtered) {

@@ -212,6 +212,12 @@
             <trans-unit id="tl_module.plentaJobsBasicKeywordHeadline.1">
                 <target>Hier können Sie der Volltextsuche eine Überschrift hinzufügen.</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicCompanies.0">
+                <target>Unternehmen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicCompanies.1">
+                <target>Es werden nur die Stellenanzeigen von bestimmten Unternehmen angezeigt. Wenn keine Unternehmen ausgewählt sind, werden alle angezeigt.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
