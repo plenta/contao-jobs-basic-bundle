@@ -33,13 +33,13 @@ class PlentaJobsBasicOfferModel extends Model
 
     protected $readerPage = [];
 
-    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, int $limit = 0, int $offset = 0, string $sortBy = null, string $order = null, $onlyTranslated = false)
+    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, int $limit = 0, int $offset = 0, string $sortBy = null, string $order = null, $onlyTranslated = false, $model = null, $applyFilterRequests = true)
     {
         $columns = [];
         $values = [];
         $arrOptions = [];
 
-        self::buildSearchQuery($columns, $arrOptions, $values, $types, $locations, $sortBy, $order, $onlyTranslated);
+        self::buildSearchQuery($columns, $arrOptions, $values, $types, $locations, $sortBy, $order, $onlyTranslated, $model, $applyFilterRequests);
 
         $arrOptions['limit'] = $limit;
         $arrOptions['offset'] = $offset;
@@ -47,13 +47,13 @@ class PlentaJobsBasicOfferModel extends Model
         return self::findBy($columns, $values, $arrOptions);
     }
 
-    public static function countAllPublishedByTypesAndLocation(array $types, array $locations, $onlyTranslated = false)
+    public static function countAllPublishedByTypesAndLocation(array $types, array $locations, $onlyTranslated = false, ?ModuleModel $model = null, $applyFilterRequests = true)
     {
         $columns = [];
         $values = [];
         $arrOptions = [];
 
-        self::buildSearchQuery($columns, $arrOptions, $values, $types, $locations, null, null, $onlyTranslated);
+        self::buildSearchQuery($columns, $arrOptions, $values, $types, $locations, null, null, $onlyTranslated, $model, $applyFilterRequests);
 
         return self::countBy($columns, $values, $arrOptions);
     }
@@ -189,7 +189,7 @@ class PlentaJobsBasicOfferModel extends Model
         return StringUtil::ampersand($objPage->getAbsoluteUrl($params));
     }
 
-    protected static function buildSearchQuery(array &$columns, array &$arrOptions, array &$values, array $types, array $locations, string $sortBy = null, string $order = null, $onlyTranslated = false): void
+    protected static function buildSearchQuery(array &$columns, array &$arrOptions, array &$values, array $types, array $locations, string $sortBy = null, string $order = null, $onlyTranslated = false, ?ModuleModel $model = null, $applyFilterRequests = true): void
     {
         $time = time();
 
@@ -256,9 +256,12 @@ class PlentaJobsBasicOfferModel extends Model
         $dispatcher = System::getContainer()->get('event_dispatcher');
         $findAllPublishedByTypesAndLocationEvent = new FindAllPublishedByTypesAndLocationEvent();
         $findAllPublishedByTypesAndLocationEvent
-            ->setcolumns($columns)
+            ->setColumns($columns)
             ->setValues($values)
-            ->setOptions($arrOptions);
+            ->setOptions($arrOptions)
+            ->setModel($model)
+            ->setApplyRequestFilters($applyFilterRequests)
+        ;
         $dispatcher->dispatch($findAllPublishedByTypesAndLocationEvent, FindAllPublishedByTypesAndLocationEvent::NAME);
 
         $columns = $findAllPublishedByTypesAndLocationEvent->getColumns();

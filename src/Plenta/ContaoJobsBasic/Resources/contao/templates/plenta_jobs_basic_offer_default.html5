@@ -1,9 +1,13 @@
 <div class="layout_default block<?php if ($this->jobOffer->cssClass): ?> <?= $this->jobOffer->cssClass ?><?php endif; ?>">
+    <?php $this->block('image'); ?>
     <?php if (in_array('image', $this->parts)): ?>
         <div class="image">
             <?= $this->jobOfferMeta['image']; ?>
         </div>
     <?php endif; ?>
+    <?php $this->endblock(); ?>
+
+    <?php $this->block('title'); ?>
     <div class="first-column">
         <<?= $this->headlineUnit; ?> class="title">
             <a href="<?= $this->link; ?>"><?= $this->jobOfferMeta['title']; ?></a>
@@ -24,6 +28,9 @@
         </div>
         <?php endif; ?>
     </div>
+<?php $this->endblock(); ?>
+
+<?php $this->block('publicationDate'); ?>
     <?php if (in_array('publicationDate', $this->parts) || in_array('employmentType', $this->parts)): ?>
     <div class="second-column">
         <?php if (in_array('publicationDate', $this->parts)): ?>
@@ -38,4 +45,5 @@
         <?php endif; ?>
     </div>
     <?php endif; ?>
+<?php $this->endblock(); ?>
 </div>

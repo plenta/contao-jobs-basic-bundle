@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Events\Model;
 
+use Contao\ModuleModel;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class FindAllPublishedByTypesAndLocationEvent extends Event
@@ -23,6 +24,10 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
     private array $values;
 
     private array $options;
+
+    private bool $applyRequestFilters = false;
+
+    private ?ModuleModel $model = null;
 
     public function __construct()
     {
@@ -41,7 +46,7 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
      *
      * @return FindAllPublishedByTypesAndLocationEvent
      */
-    public function setcolumns(array $columns): self
+    public function setColumns(array $columns): self
     {
         $this->columns = $columns;
 
@@ -85,6 +90,28 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
     {
         $this->options = $options;
 
+        return $this;
+    }
+
+    public function isApplyRequestFilters(): bool
+    {
+        return $this->applyRequestFilters;
+    }
+
+    public function setApplyRequestFilters(bool $applyRequestFilters): FindAllPublishedByTypesAndLocationEvent
+    {
+        $this->applyRequestFilters = $applyRequestFilters;
+        return $this;
+    }
+
+    public function getModel(): ?ModuleModel
+    {
+        return $this->model;
+    }
+
+    public function setModel(?ModuleModel $model): FindAllPublishedByTypesAndLocationEvent
+    {
+        $this->model = $model;
         return $this;
     }
 }

@@ -39,7 +39,8 @@ class JobOfferFilterType extends AbstractType
         $builder->add('REQUEST_TOKEN', ContaoRequestTokenType::class);
         if ($model->plentaJobsBasicShowTypes) {
             $builder->add('typesHeadline', HtmlType::class, [
-                'html' => $this->getHeadlineHtml($model->plentaJobsBasicTypesHeadline, 'jobTypes')
+                'html' => $this->getHeadlineHtml($model->plentaJobsBasicTypesHeadline, 'jobTypes'),
+                'priority' => 100,
             ]);
             $builder->add('types', ChoiceType::class, [
                 'choices' => array_flip($options['types']),
@@ -51,12 +52,14 @@ class JobOfferFilterType extends AbstractType
                     'class' => 'widget-checkbox',
                 ],
                 'data' => $this->requestStack->getMainRequest()->get('types', []),
+                'priority' => 99,
             ]);
         }
 
         if ($model->plentaJobsBasicShowLocations) {
             $builder->add('locationsHeadline', HtmlType::class, [
                 'html' => $this->getHeadlineHtml($model->plentaJobsBasicLocationsHeadline, 'jobLocation'),
+                'priority' => 90,
             ]);
             $builder->add('location', ChoiceType::class, [
                 'choices' => array_flip($options['locations']),
@@ -70,12 +73,14 @@ class JobOfferFilterType extends AbstractType
                 'placeholder' => 'MSC.PLENTA_JOBS.filterForm.locationPlaceholder',
                 'translation_domain' => 'contao_default',
                 'data' => $this->requestStack->getMainRequest()->get('location', $model->plentaJobsBasicDisableMultipleLocations ? '' : []),
+                'priority' => 89,
             ]);
         }
 
         if ($model->plentaJobsBasicShowButton) {
             $builder->add('submit', SubmitType::class, [
                 'label' => $model->plentaJobsBasicSubmit,
+                'priority' => 0,
             ]);
         }
     }

@@ -21,6 +21,8 @@ class JobOfferFilterAfterFormBuildEvent extends Event
 
     protected FormInterface $form;
 
+    protected string $route;
+
     /**
      * @return FormInterface
      */
@@ -38,6 +40,17 @@ class JobOfferFilterAfterFormBuildEvent extends Event
     {
         $this->form = $form;
 
+        return $this;
+    }
+
+    public function getRoute(): string
+    {
+        return $this->route;
+    }
+
+    public function setRoute(string $route): JobOfferFilterAfterFormBuildEvent
+    {
+        $this->route = $route;
         return $this;
     }
 }

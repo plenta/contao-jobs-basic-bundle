@@ -116,7 +116,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             if (!\is_array($moduleEmploymentTypes)) {
                 $moduleEmploymentTypes = [];
             }
-            $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($moduleEmploymentTypes, $moduleLocations, 0, 0, null, null, $model->plentaJobsBasicHideOffersWithoutTranslation);
+            $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($moduleEmploymentTypes, $moduleLocations, 0, 0, null, null, $model->plentaJobsBasicHideOffersWithoutTranslation, $model, false);
 
             if ($jobOffers) {
                 foreach ($jobOffers as $jobOffer) {
@@ -242,6 +242,9 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         $event = new JobOfferFilterAfterFormBuildEvent();
         $event->setForm($form);
 
+        $route = $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath();
+        $event->setRoute($route);
+
         $this->eventDispatcher->dispatch($event, $event::NAME);
 
         $form = $event->getForm();
@@ -250,7 +253,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
         return $this->renderForm('@PlentaContaoJobsBasic/mod_plenta_jobs_basic_filter.html.twig', [
             'form' => $form,
-            'ajaxRoute' => $this->router->getRouteCollection()->get('plenta_jobs_basic.offer_filter')->getPath(),
+            'ajaxRoute' => $event->getRoute(),
             'locale' => $request->getLocale(),
             'page' => $objPage->id,
         ]);
