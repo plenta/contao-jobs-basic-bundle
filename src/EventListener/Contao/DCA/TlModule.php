@@ -48,7 +48,7 @@ class TlModule
     {
         return $this->finderFactory
             ->create()
-            ->identifier('plenta_jobs_basic_offer_default')
+            ->identifier('jobs_basic/plenta_jobs_basic_offer_default')
             ->extension('html.twig')
             ->withVariants()
             ->asTemplateOptions();

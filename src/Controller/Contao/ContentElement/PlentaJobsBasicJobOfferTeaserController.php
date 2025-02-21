@@ -58,7 +58,7 @@ class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementCont
             $headlineData = StringUtil::deserialize($model->headline ?? [] ?: '', true);
             $attributesData = StringUtil::deserialize($model->cssID ?? [] ?: '', true);
 
-            $template = new FrontendTemplate('plenta_jobs_basic_job_offer_empty');
+            $template = new FrontendTemplate('jobs_basic/plenta_jobs_basic_job_offer_empty');
             $template->setData([
                 'type' => $this->getType(),
                 'template' => $template->getName(),
