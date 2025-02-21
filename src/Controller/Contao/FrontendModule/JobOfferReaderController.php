@@ -214,7 +214,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     private function getDescription(PlentaJobsBasicOfferModel $jobOffer): ?string
     {
-        $template = new FrontendTemplate('plenta_jobs_basic_reader_description');
+        $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_description');
         $template->text = $this->metaFieldsHelper->getMetaFields($jobOffer)['description'];
         $template->class = 'job-description';
 
@@ -223,7 +223,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     private function getEmploymentType(PlentaJobsBasicOfferModel $jobOffer): ?string
     {
-        $template = new FrontendTemplate('plenta_jobs_basic_reader_attribute');
+        $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_attribute');
         $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer);
         $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['employmentType'][0];
         $template->value = $metaFields['employmentTypeFormatted'];
@@ -235,7 +235,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     private function getValidThrough(PlentaJobsBasicOfferModel $jobOffer): ?string
     {
         if ($jobOffer->validThrough) {
-            $template = new FrontendTemplate('plenta_jobs_basic_reader_attribute');
+            $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_attribute');
             $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['validThrough'][0];
             $template->value = Date::parse(Date::getNumericDatimFormat(), $jobOffer->validThrough);
             $template->class = 'job_valid_through';
@@ -248,7 +248,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     private function getJobLocation(PlentaJobsBasicOfferModel $jobOffer, $model): ?string
     {
-        $template = new FrontendTemplate('plenta_jobs_basic_reader_job_location');
+        $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_job_location');
 
         $locationsArr = StringUtil::deserialize($jobOffer->jobLocation);
 
@@ -264,7 +264,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                     if ($model->plentaJobsBasicShowLogo && $organization->logo) {
                         $image = FilesModel::findByUuid($organization->logo);
                         if ($image) {
-                            $imgTpl = new FrontendTemplate('plenta_jobs_basic_reader_image');
+                            $imgTpl = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_image');
                             $data = [
                                 'id' => null,
                                 'singleSRC' => $jobOffer->singleSRC,
@@ -296,7 +296,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         if ($jobOffer->addSalary) {
             $numberHelper = new NumberHelper($jobOffer->salaryCurrency, $this->requestStack->getCurrentRequest()->getLocale());
-            $template = new FrontendTemplate('plenta_jobs_basic_reader_salary');
+            $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_salary');
             $salary = [];
 
             if ($jobOffer->salaryValue > 0) {
@@ -383,7 +383,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     private function getTeaser(PlentaJobsBasicOfferModel $jobOffer): ?string
     {
-        $template = new FrontendTemplate('plenta_jobs_basic_reader_teaser');
+        $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_teaser');
         $template->text = $this->metaFieldsHelper->getMetaFields($jobOffer)['teaser'];
         $template->class = 'job-teaser';
 

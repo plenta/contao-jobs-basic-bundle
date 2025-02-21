@@ -55,7 +55,7 @@ class MetaFieldsHelper
         if ($imageSize && $jobOffer->addImage) {
             $file = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
             if ($file) {
-                $tpl = new FrontendTemplate('plenta_jobs_basic_reader_image');
+                $tpl = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_image');
                 $meta = [];
                 if ($jobOffer->overwriteMeta) {
                     $request = System::getContainer()->get('request_stack')->getCurrentRequest();
