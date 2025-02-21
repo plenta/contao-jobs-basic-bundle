@@ -22,6 +22,7 @@ use Contao\Input;
 use Contao\Versions;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer;
+use Plenta\ContaoJobsBasic\Contao\Backend\OfferPanel;
 use Symfony\Component\Intl\Currencies;
 
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
@@ -211,7 +212,6 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
         'employmentType' => [
             'inputType' => 'select',
             'exclude' => true,
-            'filter' => true,
             'reference' => &$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS'],
             'options_callback' => [
                 TlPlentaJobsBasicOffer::class,
