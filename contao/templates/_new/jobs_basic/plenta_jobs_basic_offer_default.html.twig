@@ -1,3 +1,4 @@
+{% block content %}
 <div class="layout_default block{% if jobOffer.cssClass %} {{ jobOffer.cssClass }}{% endif %}">
     {% block image %}
         {% if 'image' in parts %}
@@ -51,3 +52,4 @@
         {% endif %}
     {% endblock %}
 </div>
+{% endblock %}
