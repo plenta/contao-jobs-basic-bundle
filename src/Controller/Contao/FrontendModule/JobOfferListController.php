@@ -103,6 +103,14 @@ class JobOfferListController extends AbstractFrontendModuleController
             $moduleLocations = [];
         }
 
+        if (empty($moduleLocations) && !empty($model->plentaJobsBasicCompanies)) {
+            $locations = PlentaJobsBasicJobLocationModel::findByMultiplePids(StringUtil::deserialize($model->plentaJobsBasicCompanies, true));
+
+            foreach ($locations as $location) {
+                $moduleLocations[] = $location->id;
+            }
+        }
+
         $moduleJobTypes = StringUtil::deserialize($model->plentaJobsBasicEmploymentTypes);
         if (!\is_array($moduleJobTypes)) {
             $moduleJobTypes = [];
@@ -113,7 +121,7 @@ class JobOfferListController extends AbstractFrontendModuleController
 
         if (!empty($moduleLocations)) {
             $locations = array_filter($locations, function ($element) use ($moduleLocations) {
-                $els = explode('|', $element);
+                $els = explode('|', (string) $element);
                 foreach ($els as $el) {
                     if (\in_array($el, $moduleLocations, true)) {
                         return true;
@@ -193,7 +201,7 @@ class JobOfferListController extends AbstractFrontendModuleController
             $pageParameter = 'page_n'.$model->id;
             $page = Input::get($pageParameter) ?? 1;
             $pages = ceil($intTotal / $model->perPage);
-            if ($page > $pages || $page < 1) {
+            if ($pages && ($page > $pages || $page < 1)) {
                 throw new PageNotFoundException('Page not found: '.$request->getUri());
             }
             $offset = ($page - 1) * $model->perPage;

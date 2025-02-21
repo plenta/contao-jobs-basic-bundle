@@ -88,7 +88,7 @@
                 success: function (data) {
                     data = data.replaceAll('{{ ajaxRoute }}'.replace(/^\//, ''), location.pathname.replace(/^\//, ''));
                     $('.module-plenta-jobs-basic-offer-list:not(.no-filter)').replaceWith(data);
-                    $(document).trigger('plentaJobsBasic:updateList');
+                    document.dispatchEvent(new Event('plentaJobsBasic:updateList'));
                 }
             })
         }

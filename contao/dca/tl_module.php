@@ -22,7 +22,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'plentaJobsBasic
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     '{title_legend},name,type,headline;
-    {config_legend},numberOfItems,perPage,plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicLocations,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize,plentaJobsBasicHideOffersWithoutTranslation;
+    {config_legend},numberOfItems,perPage,plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicCompanies,plentaJobsBasicLocations,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize,plentaJobsBasicHideOffersWithoutTranslation;
     {redirect_legend},jumpTo;
     {template_legend:hide},plentaJobsBasicElementTpl,customTpl;
     {expert_legend:hide},cssID'
@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicShowKeyword,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations,plentaJobsBasicHideOffersWithoutTranslation;
+    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicCompanies,plentaJobsBasicShowKeyword,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations,plentaJobsBasicHideOffersWithoutTranslation;
     {template_legend:hide},customTpl;
     {redirect_legend},jumpTo;
     {expert_legend:hide},cssID'
@@ -277,4 +277,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicKeywordHeadline'] = [
     'inputType' => 'text',
     'eval' => ['allowHtml' => true, 'tl_class' => 'w50'],
     'sql' => 'tinytext NULL',
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicCompanies'] = [
+    'inputType' => 'checkbox',
+    'foreignKey' => 'tl_plenta_jobs_basic_organization.name',
+    'eval' => ['multiple' => true, 'submitOnChange' => true],
+    'sql' => 'mediumtext NULL',
 ];

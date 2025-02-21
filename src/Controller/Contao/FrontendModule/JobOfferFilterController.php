@@ -103,6 +103,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
     {
         if (empty($this->offers)) {
             $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
+
             $moduleEmploymentTypes = StringUtil::deserialize($model->plentaJobsBasicEmploymentTypes);
             if (!\is_array($moduleLocations)) {
                 $moduleLocations = [];
@@ -110,6 +111,15 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             if (!\is_array($moduleEmploymentTypes)) {
                 $moduleEmploymentTypes = [];
             }
+
+            if (empty($moduleLocations) && !empty($model->plentaJobsBasicCompanies)) {
+                $locationObjs = PlentaJobsBasicJobLocationModel::findByMultiplePids(StringUtil::deserialize($model->plentaJobsBasicCompanies, true));
+
+                foreach ($locationObjs as $locationObj) {
+                    $moduleLocations[] = $locationObj->id;
+                }
+            }
+
             $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($moduleEmploymentTypes, $moduleLocations, 0, 0, null, null, $model->plentaJobsBasicHideOffersWithoutTranslation, $model, false);
 
             if ($jobOffers) {
@@ -199,7 +209,11 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         if (empty($this->locations)) {
             $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
             if (!\is_array($moduleLocations) || empty($moduleLocations)) {
-                $locations = PlentaJobsBasicJobLocationModel::findAll();
+                if (!empty($model->plentaJobsBasicCompanies)) {
+                    $locations = PlentaJobsBasicJobLocationModel::findByMultiplePids(StringUtil::deserialize($model->plentaJobsBasicCompanies, true));
+                } else {
+                    $locations = PlentaJobsBasicJobLocationModel::findAll();
+                }
             } else {
                 $locations = PlentaJobsBasicJobLocationModel::findMultipleByIds($moduleLocations);
             }

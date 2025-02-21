@@ -14,6 +14,8 @@ namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Twig\Finder\FinderFactory;
+use Contao\DataContainer;
+use Contao\StringUtil;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 
 class TlModule
@@ -22,9 +24,19 @@ class TlModule
     {
     }
 
-    public function jobLocationOptionsCallback(): array
+    public function jobLocationOptionsCallback(DataContainer $dc): array
     {
-        $jobLocations = PlentaJobsBasicJobLocationModel::findAll();
+        if ($dc->activeRecord->plentaJobsBasicCompanies) {
+            $companies = StringUtil::deserialize($dc->activeRecord->plentaJobsBasicCompanies);
+
+            if (!empty($companies)) {
+                $jobLocations = PlentaJobsBasicJobLocationModel::findByMultiplePids($companies);
+            }
+        }
+
+        if (empty($jobLocations)) {
+            $jobLocations = PlentaJobsBasicJobLocationModel::findAll();
+        }
 
         $return = [];
         foreach ($jobLocations as $jobLocation) {
