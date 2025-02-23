@@ -5,21 +5,18 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2023, Plenta.io
+ * @copyright     Copyright (c) 2023-2025, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
-use Contao\Config;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Exception\PageNotFoundException;
-use Contao\CoreBundle\ServiceAnnotation\FrontendModule;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Environment;
-use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\LayoutModel;
 use Contao\ModuleModel;
@@ -33,6 +30,7 @@ use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Events\JobOfferListAfterFormBuildEvent;
 use Plenta\ContaoJobsBasic\Events\JobOfferListBeforeParseTemplateEvent;
+use Plenta\ContaoJobsBasic\Events\JobOfferDataManipulatorEvent;
 use Plenta\ContaoJobsBasic\Form\Type\JobSortingType;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -233,9 +231,11 @@ class JobOfferListController extends AbstractFrontendModuleController
         if ($jobOffers) {
             foreach ($jobOffers as $jobOffer) {
                 $parts = StringUtil::deserialize($model->plentaJobsBasicListParts);
+
                 if (!\is_array($parts)) {
                     $parts = [];
                 }
+
                 $data = [
                     'jobOffer' => $jobOffer,
                     'jobOfferMeta' => $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize),
@@ -244,9 +244,17 @@ class JobOfferListController extends AbstractFrontendModuleController
                     'link' => $this->generateJobOfferUrl($jobOffer, $model),
                 ];
 
+                $event = new JobOfferDataManipulatorEvent();
+                $event
+                    ->setJob($jobOffer)
+                    ->setData($data)
+                ;
+
+                $this->eventDispatcher->dispatch($event, $event::NAME);
+
                 $tpl = $model->plentaJobsBasicElementTpl ?: 'jobs_basic/plenta_jobs_basic_offer_default';
 
-                $stream = $this->twig->render('@Contao/'.$tpl.'.html.twig', $data);
+                $stream = $this->twig->render('@Contao/'.$tpl.'.html.twig', $event->getData());
 
                 if (null !== $sortByLocation) {
                     $jobLocations = StringUtil::deserialize($jobOffer->jobLocation);
