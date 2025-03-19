@@ -13,6 +13,7 @@
 
 .plenta-box a:hover {
     text-decoration: underline;
+    color: var(--contao);
 }
 
 .plenta-box.last {
@@ -21,11 +22,16 @@
 
 #plentaJobsInfoPanel {
     padding: 15px;
-    border-bottom: 1px solid #e6e6e8;
+    border-bottom: 1px solid var(--blue);
 }
 
 html[data-color-scheme="dark"] {
+    .plenta-box,
+    .plenta-box a {
+        color: #ffffff;
+    }
+
     .plenta-box a:hover {
-        color: #fff;
+        color: var(--contao);
     }
 }
