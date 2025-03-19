@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2023, Plenta.io
+ * @copyright     Copyright (c) 2023-2025, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -170,6 +170,11 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
         if (null !== $StructuredData) {
             $GLOBALS['TL_BODY'][] = $StructuredData;
+        }
+
+        if ($this->container->has('fos_http_cache.http.symfony_response_tagger')) {
+            $responseTagger = $this->container->get('fos_http_cache.http.symfony_response_tagger');
+            $responseTagger->addTags(['contao.db.tl_plenta_jobs_basic_offer.'.$jobOffer->id]);
         }
 
         return $template->getResponse();

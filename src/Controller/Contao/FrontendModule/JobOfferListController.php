@@ -88,6 +88,8 @@ class JobOfferListController extends AbstractFrontendModuleController
     {
         global $objPage;
 
+        $tags = [];
+
         if (!$objPage) {
             $objPage = PageModel::findWithDetails(Input::get('page'));
             if ($layout = LayoutModel::findByPk($objPage->layout)) {
@@ -271,6 +273,8 @@ class JobOfferListController extends AbstractFrontendModuleController
                 } else {
                     $items[] = $stream;
                 }
+
+                $tags[] = 'contao.db.tl_plenta_jobs_basic_offer.'.$jobOffer->id;
             }
         }
 
@@ -292,6 +296,11 @@ class JobOfferListController extends AbstractFrontendModuleController
 
         $template = $event->getTemplate();
         $model = $event->getModel();
+
+        if ($this->container->has('fos_http_cache.http.symfony_response_tagger')) {
+            $responseTagger = $this->container->get('fos_http_cache.http.symfony_response_tagger');
+            $responseTagger->addTags($tags);
+        }
 
         return $template->getResponse();
     }
