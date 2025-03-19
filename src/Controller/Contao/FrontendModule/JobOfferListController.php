@@ -77,18 +77,9 @@ class JobOfferListController extends AbstractFrontendModuleController
         return $url;
     }
 
-    /**
-     * @param Template    $template
-     * @param ModuleModel $model
-     * @param Request     $request
-     *
-     * @return Response|null
-     */
     protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
         global $objPage;
-
-        $tags = [];
 
         if (!$objPage) {
             $objPage = PageModel::findWithDetails(Input::get('page'));
@@ -273,8 +264,6 @@ class JobOfferListController extends AbstractFrontendModuleController
                 } else {
                     $items[] = $stream;
                 }
-
-                $tags[] = 'contao.db.tl_plenta_jobs_basic_offer.'.$jobOffer->id;
             }
         }
 
@@ -297,7 +286,7 @@ class JobOfferListController extends AbstractFrontendModuleController
         $template = $event->getTemplate();
         $model = $event->getModel();
 
-        $this->tagResponse($tags);
+        $this->tagResponse('contao.db.tl_plenta_jobs_basic_offer');
 
         return $template->getResponse();
     }
