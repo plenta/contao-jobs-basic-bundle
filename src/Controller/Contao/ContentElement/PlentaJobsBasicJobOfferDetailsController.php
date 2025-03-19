@@ -107,10 +107,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
             $template->jobOfferMeta = $this->getMetaFields($model);
             $template->jobOffer = $this->getJobOffer();
 
-            if ($this->container->has('fos_http_cache.http.symfony_response_tagger')) {
-                $responseTagger = $this->container->get('fos_http_cache.http.symfony_response_tagger');
-                $responseTagger->addTags(['contao.db.tl_plenta_jobs_basic_offer.'.$template->jobOffer->id]);
-            }
+            $this->tagResponse('contao.db.tl_plenta_jobs_basic_offer.'.$this->jobOffer->id);
         }
 
         return $template->getResponse();

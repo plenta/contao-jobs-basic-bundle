@@ -172,10 +172,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
             $GLOBALS['TL_BODY'][] = $StructuredData;
         }
 
-        if ($this->container->has('fos_http_cache.http.symfony_response_tagger')) {
-            $responseTagger = $this->container->get('fos_http_cache.http.symfony_response_tagger');
-            $responseTagger->addTags(['contao.db.tl_plenta_jobs_basic_offer.'.$jobOffer->id]);
-        }
+        $this->tagResponse('contao.db.tl_plenta_jobs_basic_offer.'.$jobOffer->id);
 
         return $template->getResponse();
     }

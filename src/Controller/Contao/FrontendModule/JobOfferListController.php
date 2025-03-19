@@ -297,10 +297,7 @@ class JobOfferListController extends AbstractFrontendModuleController
         $template = $event->getTemplate();
         $model = $event->getModel();
 
-        if ($this->container->has('fos_http_cache.http.symfony_response_tagger')) {
-            $responseTagger = $this->container->get('fos_http_cache.http.symfony_response_tagger');
-            $responseTagger->addTags($tags);
-        }
+        $this->tagResponse($tags);
 
         return $template->getResponse();
     }
