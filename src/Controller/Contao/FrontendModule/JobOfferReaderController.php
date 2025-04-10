@@ -269,7 +269,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                             $imgTpl = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_image');
                             $data = [
                                 'id' => null,
-                                'singleSRC' => $jobOffer->singleSRC,
+                                'singleSRC' => $organization->logo,
                                 'sortBy' => 'custom',
                                 'fullsize' => false,
                                 'size' => serialize([200, 200, 'proportional']),
