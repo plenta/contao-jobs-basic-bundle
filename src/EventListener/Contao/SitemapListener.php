@@ -48,6 +48,10 @@ class SitemapListener
 
             $objArticles = $this->framework->getAdapter(ArticleModel::class)->findByPid($objPage->id);
 
+            if (empty($objArticles)) {
+                continue;
+            }
+
             foreach ($objArticles as $article) {
                 if (true === $article->published) {
                     $objContents = $this->framework->getAdapter(ContentModel::class)->findByPid($article->id);
@@ -87,6 +91,7 @@ class SitemapListener
 
                 }
             }
+
         }
 
         foreach ($arrPages as $strUrl) {
