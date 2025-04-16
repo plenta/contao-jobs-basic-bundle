@@ -17,6 +17,7 @@ use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\ModuleModel;
+use Contao\PageModel;
 use Contao\StringUtil;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
@@ -228,11 +229,17 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): Response
     {
-        $form = $this->createForm(JobOfferFilterType::class, null, [
+        $options = [
             'types' => $this->getTypes($model),
             'locations' => $this->getLocations($model),
             'fmd' => $model,
-        ]);
+        ];
+
+        if (($jumpTo = PageModel::findByPk($model->jumpTo)) && $jumpTo->id !== $this->getPageModel()->id) {
+            $options['action'] = $jumpTo->getFrontendUrl();
+        }
+
+        $form = $this->createForm(JobOfferFilterType::class, null, $options);
 
         $event = new JobOfferFilterAfterFormBuildEvent();
         $event->setForm($form);

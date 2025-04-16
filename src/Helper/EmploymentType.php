@@ -127,7 +127,7 @@ class EmploymentType
         );
 
         if (!is_null($employmentTypes[$employmentTypeId]->translation) && 
-            false === empty($translatedTitle = json_decode($employmentTypes[$employmentTypeId]->translation, true)[$language]['title'])) {
+            false === empty($translatedTitle = json_decode($employmentTypes[$employmentTypeId]->translation, true)[$language]['title'] ?? null)) {
             $translation = $translatedTitle;
         } else {
             $translation = $employmentTypes[$employmentTypeId]->title;
