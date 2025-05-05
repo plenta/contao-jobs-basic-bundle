@@ -69,7 +69,7 @@
                 if (typeof (item[1]) === 'object') {
                     item[1].forEach(function (arrItem) {
                         str_args += str_args === '' ? '?' : '&';
-                        str_args += item[0] + '[]=' + arrItem;
+                        str_args += item[0].replace('[]', '') + '[]=' + arrItem;
                     })
                 } else {
                     str_args += str_args === '' ? '?' : '&';
