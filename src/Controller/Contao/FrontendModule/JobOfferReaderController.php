@@ -136,6 +136,9 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                 case 'teaser':
                     $tempContent = $this->getTeaser($jobOffer);
                     break;
+                case 'publicationDate':
+                    $tempContent = $this->getPublicationDate($jobOffer);
+                    break;
             }
 
             $event = new JobOfferReaderContentPartEvent();
@@ -387,6 +390,16 @@ class JobOfferReaderController extends AbstractFrontendModuleController
     {
         $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_teaser');
         $template->text = $this->metaFieldsHelper->getMetaFields($jobOffer)['teaser'];
+        $template->class = 'job-teaser';
+
+        return $template->parse();
+    }
+
+    private function getPublicationDate(PlentaJobsBasicOfferModel $jobOffer): ?string
+    {
+        $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_attribute');
+        $template->label = $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['offerParts']['publicationDate'];
+        $template->value = $this->metaFieldsHelper->getMetaFields($jobOffer)['publicationDateFormatted'];
         $template->class = 'job-teaser';
 
         return $template->parse();
