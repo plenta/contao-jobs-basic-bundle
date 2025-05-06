@@ -43,7 +43,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
     {expert_legend:hide},cssID'
 ;
 
-$GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowButton'] = 'plentaJobsBasicSubmit';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowButton'] = 'plentaJobsBasicSubmit,plentaJobsBasicDynamicButton';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowTypes'] = 'plentaJobsBasicTypesHeadline,plentaJobsBasicEmploymentTypes,plentaJobsBasicShowAllTypes,plentaJobsBasicShowQuantity';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowLocations'] = 'plentaJobsBasicLocationsHeadline,plentaJobsBasicLocations,plentaJobsBasicShowAllLocations,plentaJobsBasicShowLocationQuantity,plentaJobsBasicDisableMultipleLocations';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowSorting'] = 'plentaJobsBasicSortingFields';
@@ -68,7 +68,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicShowButton'] = [
 $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicSubmit'] = [
     'exclude' => true,
     'inputType' => 'text',
-    'eval' => ['mandatory' => true, 'maxlength' => 64, 'tl_class' => 'w50 clr'],
+    'eval' => ['mandatory' => true, 'maxlength' => 64, 'tl_class' => 'w50 clr', 'decodeEntities' => true],
     'sql' => "varchar(64) NOT NULL default ''",
 ];
 
@@ -285,4 +285,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicCompanies'] = [
     'foreignKey' => 'tl_plenta_jobs_basic_organization.name',
     'eval' => ['multiple' => true, 'submitOnChange' => true],
     'sql' => 'mediumtext NULL',
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicDynamicButton'] = [
+    'inputType' => 'checkbox',
+    'eval' => ['tl_class' => 'clr'],
+    'sql' => "char(1) COLLATE ascii_bin NOT NULL default ''",
 ];

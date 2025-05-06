@@ -54,7 +54,7 @@ class PlentaJobsBasicOfferModel extends Model
         $values = [];
         $arrOptions = [];
 
-        self::buildSearchQuery($columns, $arrOptions, $values, $types, $locations, null, null, $onlyTranslated, $model);
+        self::buildSearchQuery($columns, $arrOptions, $values, $types, $locations, null, null, $onlyTranslated, $model, $applyFilterRequests);
 
         return self::countBy($columns, $values, $arrOptions);
     }

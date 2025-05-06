@@ -13,7 +13,10 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\Form\Type;
 
 use Contao\CoreBundle\InsertTag\InsertTagParser;
+use Contao\CoreBundle\String\SimpleTokenParser;
 use Contao\ModuleModel;
+use Contao\StringUtil;
+use Plenta\ContaoJobsBasic\Helper\CountJobsHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,13 +27,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class JobOfferFilterType extends AbstractType
 {
-    protected InsertTagParser $insertTagParser;
-    protected RequestStack $requestStack;
 
-    public function __construct(InsertTagParser $insertTagParser, RequestStack $requestStack)
-    {
-        $this->insertTagParser = $insertTagParser;
-        $this->requestStack = $requestStack;
+    public function __construct(
+        protected InsertTagParser $insertTagParser,
+        protected RequestStack $requestStack,
+        protected CountJobsHelper $countJobsHelper,
+        protected SimpleTokenParser $simpleTokenParser
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -93,7 +96,7 @@ class JobOfferFilterType extends AbstractType
 
         if ($model->plentaJobsBasicShowButton) {
             $builder->add('submit', SubmitType::class, [
-                'label' => $model->plentaJobsBasicSubmit,
+                'label' => $model->plentaJobsBasicDynamicButton ? $this->simpleTokenParser->parse($model->plentaJobsBasicSubmit, ['count' => $this->countJobsHelper->countJobs()]) : $model->plentaJobsBasicSubmit,
                 'priority' => 0,
             ]);
         }
