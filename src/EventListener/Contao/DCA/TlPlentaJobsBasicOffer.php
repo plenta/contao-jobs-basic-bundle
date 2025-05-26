@@ -18,6 +18,7 @@ use Contao\CoreBundle\Util\PackageUtil;
 use Contao\DataContainer;
 use Contao\Input;
 use Contao\Message;
+use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use Exception;
@@ -57,6 +58,8 @@ class TlPlentaJobsBasicOffer
      */
     public function aliasSaveCallback($varValue, DataContainer $dc): string
     {
+        $lang = null;
+
         if ('alias' === $dc->inputName) {
             $title = $dc->activeRecord->title;
             $aliasExists = fn (string $alias): bool => PlentaJobsBasicOfferModel::doesAliasExist($alias, (int) $dc->activeRecord->id);
@@ -68,9 +71,33 @@ class TlPlentaJobsBasicOffer
         }
 
         if (empty($varValue)) {
+            $rootPages = PageModel::findPublishedRootPages();
+            $fallback = null;
+            $rootPage = null;
+
+            foreach ($rootPages as $rootP) {
+                if ($rootP->fallback) {
+                    $fallback = $rootP->id;
+                }
+
+                if ($dc->inputName === 'alias' && $rootP->fallback) {
+                    $rootPage = $fallback;
+                    break;
+                }
+
+                if ($rootP->language === $lang) {
+                    $rootPage = $rootP->id;
+                    break;
+                }
+            }
+
+            if (empty($rootPage)) {
+                $rootPage = $fallback;
+            }
+
             $varValue = $this->slugGenerator->generate(
                 $title,
-                [],
+                $rootPage,
                 $aliasExists
             );
         } elseif (preg_match('/^[1-9]\d*$/', $varValue)) {
