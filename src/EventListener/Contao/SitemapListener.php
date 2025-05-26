@@ -40,7 +40,7 @@ class SitemapListener
         $arrPages = [];
 
         foreach ($arrRoot as $pageId) {
-            $objPage = $this->framework->getAdapter(PageModel::class)->findWithDetails($pageId);
+            $objPage = $this->framework->getAdapter(PageModel::class)->findPublishedById($pageId)?->loadDetails();
 
             if (null === $objPage) {
                 continue;
@@ -91,7 +91,6 @@ class SitemapListener
 
                 }
             }
-
         }
 
         foreach ($arrPages as $strUrl) {

@@ -156,7 +156,7 @@ class PlentaJobsBasicOfferModel extends Model
                         $isCorrectModule = true;
                     }
                     if ($isCorrectModule) {
-                        $page = PageModel::findWithDetails($module->jumpTo);
+                        $page = PageModel::findPublishedById($module->jumpTo)?->loadDetails();
                         if ($page->rootLanguage === $language) {
                             $this->readerPage[$language] = $page;
                             break;
@@ -172,9 +172,11 @@ class PlentaJobsBasicOfferModel extends Model
     public function getAbsoluteUrl($language)
     {
         $objPage = $this->getReaderPage($language);
+
         if (!$objPage) {
             return null;
         }
+
         $params = $this->getParams($language);
 
         return StringUtil::ampersand($objPage->getAbsoluteUrl($params));

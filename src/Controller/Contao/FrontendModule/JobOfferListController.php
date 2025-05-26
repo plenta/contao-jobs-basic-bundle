@@ -64,7 +64,7 @@ class JobOfferListController extends AbstractFrontendModuleController
 
     public function generateJobOfferUrl(PlentaJobsBasicOfferModel $jobOffer, ModuleModel $model): string
     {
-        $objPage = $model->getRelated('jumpTo');
+        $objPage = PageModel::findPublishedById($model->jumpTo);
 
         if (!$objPage instanceof PageModel) {
             $url = StringUtil::ampersand(Environment::get('request'));
