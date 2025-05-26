@@ -78,8 +78,13 @@ class CountJobsHelper
         }
 
         if ($filtered) {
-            $types = array_merge($types, $request->query->all('types'));
-            $locations = array_merge($locations, $request->query->all('location'));
+            $requestData = $request->query->all();
+
+            $queryTypes = $requestData['types'] ?? [];
+            $queryLocations = $requestData['location'] ?? [];
+
+            $types = array_merge($types, (is_array($queryTypes) || empty($queryTypes) ? $queryTypes : [$queryTypes]));
+            $locations = array_merge($locations, (is_array($queryLocations) || empty($queryLocations) ? $queryLocations : [$queryLocations]));
 
             return PlentaJobsBasicOfferModel::countAllPublishedByTypesAndLocation($types, $locations, true, $model);
         }
