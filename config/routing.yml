@@ -13,4 +13,4 @@ Plenta\ContaoJobsBasic\Controller\Contao\BackendModule\SettingsController:
 
 jobs_basic:
     resource: ../src/Controller
-    type: annotation
+    type: attribute

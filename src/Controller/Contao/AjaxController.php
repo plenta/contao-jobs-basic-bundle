@@ -18,7 +18,7 @@ use Contao\ModuleModel;
 use Plenta\ContaoJobsBasic\Helper\CountJobsHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('_plenta-jobs-basic/offer', defaults: ['_scope' => 'frontend'])]
 class AjaxController extends AbstractController

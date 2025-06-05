@@ -17,7 +17,7 @@ use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('%contao.backend.route_prefix%/_jobs', defaults: ['_scope' => 'backend'])]
 class BackendController extends AbstractBackendController
