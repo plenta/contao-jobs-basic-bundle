@@ -185,6 +185,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicTemplateParts'] = [
         'backlink',
         'teaser',
         'publicationDate',
+        'entryDate',
     ],
     'eval' => ['multiple' => true, 'tl_class' => 'clr'],
     'reference' => &$GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['offerParts'],

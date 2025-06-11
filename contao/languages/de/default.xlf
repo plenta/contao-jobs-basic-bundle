@@ -101,6 +101,9 @@
             <trans-unit id="MSC.PLENTA_JOBS.offerParts.teaser">
                 <target>Teaser-Text</target>
             </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.offerParts.entryDate">
+                <target>Eintrittsdatum</target>
+            </trans-unit>
             <trans-unit id="MSC.PLENTA_JOBS.filterForm.locationPlaceholder">
                 <target>Alle Standorte</target>
             </trans-unit>

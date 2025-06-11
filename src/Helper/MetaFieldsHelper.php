@@ -52,6 +52,11 @@ class MetaFieldsHelper
         $metaFields['alias'] = $translation['alias'] ?? $jobOffer->alias;
         $metaFields['company'] = $this->formatCompany($jobOffer);
         $metaFields['teaser'] = $this->insertTagParser->replace($translation['teaser'] ?? $jobOffer->teaser ?? '');
+
+        if ($jobOffer->entryDate) {
+            $metaFields['entryDateFormatted'] = Date::parse(Date::getNumericDateFormat(), $jobOffer->entryDate);
+        }
+
         if ($imageSize && $jobOffer->addImage) {
             $file = FilesModel::findByUuid(StringUtil::binToUuid($jobOffer->singleSRC));
             if ($file) {

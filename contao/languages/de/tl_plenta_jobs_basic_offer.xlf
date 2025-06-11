@@ -245,6 +245,12 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.caption.1">
                 <target>Hier können Sie einen kurzen Text eingeben, der unterhalb des Bildes angezeigt wird.</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.entryDate.0">
+                <target>Eintrittsdatum</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.entryDate.1">
+                <target>Bitte geben Sie das gewünschte Eintrittsdatum ein.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
