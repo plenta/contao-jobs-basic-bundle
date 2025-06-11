@@ -107,6 +107,9 @@
             <trans-unit id="MSC.PLENTA_JOBS.filterForm.locationPlaceholder">
                 <target>Alle Standorte</target>
             </trans-unit>
+            <trans-unit id="MSC.PLENTA_JOBS.startNow">
+                <target>ab sofort</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

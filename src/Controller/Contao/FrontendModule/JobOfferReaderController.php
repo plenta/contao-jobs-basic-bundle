@@ -400,9 +400,15 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
     private function getDate(PlentaJobsBasicOfferModel $jobOffer, string $part): ?string
     {
+        $value = $this->metaFieldsHelper->getMetaFields($jobOffer)[$part.'Formatted'] ?? '';
+
+        if (empty($value)) {
+            return '';
+        }
+
         $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_attribute');
         $template->label = $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['offerParts'][$part] ?? $part;
-        $template->value = $this->metaFieldsHelper->getMetaFields($jobOffer)[$part.'Formatted'];
+        $template->value = $value;
         $template->class = 'job-teaser';
 
         return $template->parse();

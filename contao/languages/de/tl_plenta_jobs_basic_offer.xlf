@@ -251,6 +251,12 @@
             <trans-unit id="tl_plenta_jobs_basic_offer.entryDate.1">
                 <target>Bitte geben Sie das gewünschte Eintrittsdatum ein.</target>
             </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.startNow.0">
+                <target>Eintritt ab sofort</target>
+            </trans-unit>
+            <trans-unit id="tl_plenta_jobs_basic_offer.startNow.1">
+                <target>Die Stelle ist ab sofort zu besetzen.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

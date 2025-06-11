@@ -82,7 +82,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
 
     'palettes' => [
         '__selector__' => ['addImage', 'overwriteMeta', 'addSalary'],
-        'default' => '{title_legend},title,alias,author,teaser,description;{meta_legend},pageTitle,robots,pageDescription,serpPreview;{translations_legend:hide},translations;{settings_legend},employmentType,validThrough,entryDate,directApply;{location_legend},jobLocation;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
+        'default' => '{title_legend},title,alias,author,teaser,description;{meta_legend},pageTitle,robots,pageDescription,serpPreview;{translations_legend:hide},translations;{settings_legend},employmentType,validThrough,entryDate,startNow,directApply;{location_legend},jobLocation;{salary_legend},addSalary;{image_legend},addImage;{expert_legend:hide},cssClass;{publish_legend},published,start,stop',
     ],
     'subpalettes' => [
         'addImage' => 'singleSRC,overwriteMeta',
@@ -470,6 +470,12 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'inputType' => 'text',
             'eval' => ['rgxp' => 'date', 'datepicker' => true, 'tl_class' => 'w50'],
             'sql' => "varchar(10) NOT NULL default ''",
+        ],
+        'startNow' => [
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['tl_class' => 'w50'],
+            'sql' => ['type' => 'boolean', 'default' => false],
         ],
     ],
 ];

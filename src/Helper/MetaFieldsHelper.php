@@ -26,13 +26,15 @@ use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Intl\Countries;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MetaFieldsHelper
 {
     public function __construct(
         protected EmploymentType $employmentTypeHelper,
         protected RequestStack $requestStack,
-        protected InsertTagParser $insertTagParser
+        protected InsertTagParser $insertTagParser,
+        protected TranslatorInterface $translator,
     ) {
     }
 
@@ -55,6 +57,8 @@ class MetaFieldsHelper
 
         if ($jobOffer->entryDate) {
             $metaFields['entryDateFormatted'] = Date::parse(Date::getNumericDateFormat(), $jobOffer->entryDate);
+        } elseif ($jobOffer->startNow) {
+            $metaFields['entryDateFormatted'] = $this->translator->trans('MSC.PLENTA_JOBS.startNow', [], 'contao_default');
         }
 
         if ($imageSize && $jobOffer->addImage) {
