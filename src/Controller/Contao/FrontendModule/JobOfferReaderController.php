@@ -245,7 +245,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         if ($jobOffer->validThrough) {
             $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_attribute');
             $template->label = $GLOBALS['TL_LANG']['tl_plenta_jobs_basic_offer']['validThrough'][0];
-            $template->value = Date::parse(Date::getNumericDatimFormat(), $jobOffer->validThrough);
+            $template->value = Date::parse(Date::getNumericDateFormat(), $jobOffer->validThrough);
             $template->class = 'job_valid_through';
 
             return $template->parse();
