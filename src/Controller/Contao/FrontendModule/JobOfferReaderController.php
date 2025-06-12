@@ -409,7 +409,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_attribute');
         $template->label = $GLOBALS['TL_LANG']['MSC']['PLENTA_JOBS']['offerParts'][$part] ?? $part;
         $template->value = $value;
-        $template->class = 'job-teaser';
+        $template->class = 'job-'.$part;
 
         return $template->parse();
     }
