@@ -25,6 +25,7 @@ use Plenta\ContaoJobsBasic\Events\JobOfferFilterAfterFormBuildEvent;
 use Plenta\ContaoJobsBasic\Form\Type\JobOfferFilterType;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
+use Plenta\ContaoJobsBasic\Helper\SortingHelper;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +47,8 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         MetaFieldsHelper $metaFieldsHelper,
         EmploymentType $employmentTypeHelper,
         RouterInterface $router,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        protected SortingHelper $sortingHelper,
     ) {
         $this->metaFieldsHelper = $metaFieldsHelper;
         $this->employmentTypeHelper = $employmentTypeHelper;
@@ -73,11 +75,15 @@ class JobOfferFilterController extends AbstractFrontendModuleController
                     }
                 }
 
-                $options[$k] = $v.$this->addItemCounter($model, $k);
+                $options[$k] = [
+                    'id' => $k,
+                    'name' => $v.$this->addItemCounter($model, $k),
+                    'count' => $this->counterEmploymentType[$k],
+                ];
             }
         }
 
-        return $options;
+        return $this->sortingHelper->sort($options, $model);
     }
 
     public function addItemCounter(ModuleModel $model, string $key): string
@@ -190,19 +196,18 @@ class JobOfferFilterController extends AbstractFrontendModuleController
                 continue;
             }
             if (\array_key_exists($name, $options)) {
-                $options[$name] = $options[$name].'|'.$k->id;
+                $options[$name]['id'] = $options[$name]['id'].'|'.$k->id;
             } else {
-                $options[$name] = $k->id;
+                $options[$name] = ['id' => $k->id, 'name' => $name];
             }
         }
 
-        $options = array_flip($options);
-
         foreach ($options as $key => $option) {
-            $options[$key] = $option.$this->addLocationCounter($model, $option);
+            $options[$key]['name'] = $option['name'].$this->addLocationCounter($model, $option['name']);
+            $options[$key]['count'] = $this->counterLocation[$key];
         }
 
-        return $options;
+        return $this->sortingHelper->sort($options, $model);
     }
 
     public function getAllLocations($model): array

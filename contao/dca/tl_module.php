@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
     '{title_legend},name,type;
-    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicCompanies,plentaJobsBasicShowKeyword,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations,plentaJobsBasicHideOffersWithoutTranslation;
+    {config_legend},plentaJobsBasicShowButton,plentaJobsBasicCompanies,plentaJobsBasicShowKeyword,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations,plentaJobsBasicHideOffersWithoutTranslation,plentaJobsBasic_filterSort;
     {template_legend:hide},customTpl;
     {redirect_legend},jumpTo;
     {expert_legend:hide},cssID'
@@ -292,4 +292,17 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicDynamicButton'] = [
     'inputType' => 'checkbox',
     'eval' => ['tl_class' => 'clr'],
     'sql' => "char(1) COLLATE ascii_bin NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasic_filterSort'] = [
+    'inputType' => 'select',
+    'options' => [
+        'az',
+        'za',
+        '09',
+        '90',
+    ],
+    'eval' => ['includeBlankOption' => true],
+    'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasic_filterSortRef'],
+    'sql' => "varchar(8) COLLATE ascii_bin NOT NULL default ''",
 ];

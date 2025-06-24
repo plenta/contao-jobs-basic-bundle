@@ -224,6 +224,24 @@
             <trans-unit id="tl_module.plentaJobsBasicDynamicButton.1">
                 <target>Bei Änderungen im Filter wird die Aufschrift des Buttons dynamisch angepasst. Dafür kann der Simple Token ##count## für die Anzahl an gefundenen Jobs verwendet werden (z. B. "{if count==1}##count## Job{else}##count## Jobs{endif} anzeigen").</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasic_filterSort.0">
+                <target>Filter sortieren</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasic_filterSort.1">
+                <target>Bitte wählen Sie eine Sortierungsvariante für die Filter-Elemente aus.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasic_filterSortRef.az">
+                <target>Alphabetisch, aufsteigend</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasic_filterSortRef.za">
+                <target>Alphabetisch, absteigend</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasic_filterSortRef.09">
+                <target>Treffer, aufsteigend</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasic_filterSortRef.90">
+                <target>Treffer, absteigend</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
