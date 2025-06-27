@@ -302,7 +302,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasic_filterSort'] = [
         '09',
         '90',
     ],
-    'eval' => ['includeBlankOption' => true],
+    'eval' => ['includeBlankOption' => true, 'tl_class' => 'clr w50'],
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasic_filterSortRef'],
     'sql' => "varchar(8) COLLATE ascii_bin NOT NULL default ''",
 ];
