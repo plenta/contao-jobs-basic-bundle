@@ -78,7 +78,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
                 $options[$k] = [
                     'id' => $k,
                     'name' => $v.$this->addItemCounter($model, $k),
-                    'count' => $this->counterEmploymentType[$k],
+                    'count' => $this->counterEmploymentType[$k] ?? 0,
                 ];
             }
         }
