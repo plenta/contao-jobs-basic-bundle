@@ -79,6 +79,10 @@
                 history.replaceState(null, null, location.pathname + str_args);
                 args['id'] = jobList.dataset.id;
                 args['page'] = {{ page }};
+
+                {% block beforeAjax %}
+                {% endblock %}
+
                 $.ajax('{{ ajaxRoute }}', {
                     method: 'GET',
                     data: args,
@@ -89,6 +93,9 @@
                         data = data.replaceAll('{{ ajaxRoute }}'.replace(/^\//, ''), location.pathname.replace(/^\//, ''));
                         $('.module-plenta-jobs-basic-offer-list:not(.no-filter)').replaceWith(data);
                         document.dispatchEvent(new Event('plentaJobsBasic:updateList'));
+
+                        {% block afterAjax %}
+                        {% endblock %}
                     }
                 })
             }
