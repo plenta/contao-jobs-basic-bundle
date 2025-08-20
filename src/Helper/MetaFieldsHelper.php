@@ -164,4 +164,21 @@ class MetaFieldsHelper
 
         return implode(', ', $company);
     }
+
+    public function formatAddressLocalityTitle(PlentaJobsBasicOfferModel $jobOffer): string
+    {
+        $locationsTemp = [];
+
+        $locations = StringUtil::deserialize($jobOffer->jobLocation);
+
+        foreach ($locations as $location) {
+            $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            $name = 'onPremise' === $objLocation->jobTypeLocation ? $objLocation->title : '';
+            if (!\in_array($name, $locationsTemp, true)) {
+                $locationsTemp[] = $name;
+            }
+        }
+
+        return implode(', ', $locationsTemp);
+    }
 }
