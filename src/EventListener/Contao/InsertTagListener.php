@@ -108,7 +108,7 @@ class InsertTagListener
             }
 
             if ('location' === $chunks[1]) {
-                return $this->metaFieldsHelper->formatAddressLocality($jobOfferData);
+                return $this->metaFieldsHelper->formatAddressLocality($jobOfferData) ?? '';
             }
         }
 
