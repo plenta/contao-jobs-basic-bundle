@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2023, Plenta.io
+ * @copyright     Copyright (c) 2023-2025, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -19,6 +19,7 @@ use Contao\Date;
 use Contao\Input;
 use Contao\UserModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -30,14 +31,17 @@ class InsertTagListener
 
     protected RequestStack $requestStack;
 
+    protected MetaFieldsHelper $metaFieldsHelper;
+
     /**
      * @var string|null
      */
     protected ?string $autoItem = null;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, MetaFieldsHelper $metaFieldsHelper)
     {
         $this->requestStack = $requestStack;
+        $this->metaFieldsHelper = $metaFieldsHelper;
     }
 
     public function __invoke(string $tag)
@@ -59,6 +63,7 @@ class InsertTagListener
 
         if (null !== $jobOfferData) {
             $translation = $jobOfferData->getTranslation($language);
+
             if ('id' === $chunks[1]) {
                 return (string) $jobOfferData->id;
             }
@@ -69,7 +74,6 @@ class InsertTagListener
             if ('description' === $chunks[1]) {
                 return $translation['description'] ?? (string) $jobOfferData->description;
             }
-
 
             if ('title' === $chunks[1]) {
                 return $translation['title'] ?? (string) $jobOfferData->title;
@@ -101,6 +105,10 @@ class InsertTagListener
                         return (string) $author->username;
                     }
                 }
+            }
+
+            if ('location' === $chunks[1]) {
+                return $this->metaFieldsHelper->formatAddressLocality($jobOfferData);
             }
         }
 
