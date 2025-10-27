@@ -4,7 +4,7 @@
     {% block sorting %}
         {% if showSorting|default(false) %}
             {{ sortingForm|raw }}
-            <script>
+            <script{{ attrs().setIfExists('nonce', csp_nonce('script-src')) }}>
                 (function ($) {
                     $('.form_{{ formId }} select#sort').on('change', function () {
                         let searchParams = new URLSearchParams(location.search);
