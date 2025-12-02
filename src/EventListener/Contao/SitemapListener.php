@@ -31,13 +31,14 @@ class SitemapListener
 
     public function __invoke(SitemapEvent $event): void
     {
-        $arrRoot = $this->framework->createInstance(Database::class)->getChildRecords($event->getRootPageIds(), 'tl_page');
+        $arrRoot = $event->getRootPageIds();
 
         if (empty($arrRoot)) {
             return;
         }
 
         $arrPages = [];
+        $jobs = PlentaJobsBasicOfferModel::findAllPublished();
 
         foreach ($arrRoot as $pageId) {
             $objPage = $this->framework->getAdapter(PageModel::class)->findPublishedById($pageId)?->loadDetails();
@@ -46,49 +47,17 @@ class SitemapListener
                 continue;
             }
 
-            $objArticles = $this->framework->getAdapter(ArticleModel::class)->findByPid($objPage->id);
-
-            if (empty($objArticles)) {
-                continue;
-            }
-
-            foreach ($objArticles as $article) {
-                if (true === $article->published) {
-                    $objContents = $this->framework->getAdapter(ContentModel::class)->findByPid($article->id);
-
-                    if (empty($objContents)) {
+            if ($jobs) {
+                foreach ($jobs as $job) {
+                    if ('noindex,nofollow' === $job->robots) {
                         continue;
                     }
 
-                    foreach ($objContents as $objContent) {
-                        if ('module' === $objContent->type && false === $objContent->invisible) {
-                            $module = $this->framework->getAdapter(ModuleModel::class)->findByPk($objContent->module);
-
-                            if (null === $module) {
-                                continue;
-                            }
-
-                            if ('plenta_jobs_basic_offer_reader' !== $module->type) {
-                                continue;
-                            }
-
-                            $jobs = PlentaJobsBasicOfferModel::findAllPublished();
-                            if ($jobs) {
-                                foreach ($jobs as $job) {
-                                    if ('noindex,nofollow' === $job->robots) {
-                                        continue;
-                                    }
-
-                                    if ($page = $job->getAbsoluteUrl($objPage->language)) {
-                                        if (!\in_array($page, $arrPages, true)) {
-                                            $arrPages[] = $page;
-                                        }
-                                    }
-                                }
-                            }
+                    if ($page = $job->getAbsoluteUrl($objPage->language)) {
+                        if (!\in_array($page, $arrPages, true)) {
+                            $arrPages[] = $page;
                         }
                     }
-
                 }
             }
         }
