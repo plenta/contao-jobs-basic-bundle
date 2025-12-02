@@ -80,6 +80,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
         'name' => [
             'label' => &$GLOBALS['TL_LANG']['tl_plenta_jobs_basic_organization']['name'],
             'exclude' => true,
+            'search' => true,
             'inputType' => 'text',
             'default' => '',
             'eval' => [

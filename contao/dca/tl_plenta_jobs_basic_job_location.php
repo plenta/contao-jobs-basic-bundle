@@ -114,6 +114,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         ],
         'streetAddress' => [
             'exclude' => true,
+            'search' => true,
             'inputType' => 'text',
             'default' => '',
             'eval' => [
@@ -128,6 +129,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         ],
         'postalCode' => [
             'exclude' => true,
+            'search' => true,
             'inputType' => 'text',
             'default' => '',
             'eval' => [
@@ -144,6 +146,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         'addressLocality' => [
             'exclude' => true,
             'sorting' => true,
+            'search' => true,
             'flag' => 5,
             'inputType' => 'text',
             'default' => '',
@@ -160,6 +163,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         ],
         'addressRegion' => [
             'exclude' => true,
+            'search' => true,
             'inputType' => 'text',
             'default' => '',
             'eval' => [
@@ -226,6 +230,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_job_location'] = [
         ],
         'title' => [
             'exclude' => true,
+            'search' => true,
             'inputType' => 'text',
             'eval' => ['tl_class' => 'w50'],
             'sql' => [

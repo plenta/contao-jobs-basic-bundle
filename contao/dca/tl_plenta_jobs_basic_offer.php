@@ -111,6 +111,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'inputType' => 'text',
             'exclude' => true,
             'sorting' => true,
+            'search' => true,
             'eval' => [
                 'mandatory' => true,
                 'maxlength' => 255,
