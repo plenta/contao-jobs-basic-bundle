@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Events;
 
+use Contao\Model;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -21,6 +22,7 @@ class JobOfferDataManipulatorEvent extends Event
 
     protected array $data;
     protected PlentaJobsBasicOfferModel $jobOffer;
+    protected Model $model;
 
     public function __construct()
     {
@@ -48,5 +50,17 @@ class JobOfferDataManipulatorEvent extends Event
         $this->data = $data;
 
         return $this;
+    }
+
+    public function setModel(Model $model): self
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    public function getModel(): Model
+    {
+        return $this->model;
     }
 }

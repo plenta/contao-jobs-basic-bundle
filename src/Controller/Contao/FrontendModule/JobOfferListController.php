@@ -241,6 +241,7 @@ class JobOfferListController extends AbstractFrontendModuleController
                 $event
                     ->setJob($jobOffer)
                     ->setData($data)
+                    ->setModel($model)
                 ;
 
                 $this->eventDispatcher->dispatch($event, $event::NAME);
