@@ -40,7 +40,7 @@ class EmploymentType
 
     public function getGoogleForJobsEmploymentTypes(): array
     {
-        $employmentTypes = [
+        return [
             'FULL_TIME',
             'PART_TIME',
             'CONTRACTOR',
@@ -50,13 +50,6 @@ class EmploymentType
             'PER_DIEM',
             'OTHER',
         ];
-
-        $customEmploymentTypesEvent = new EmploymentTypesEvent();
-        $customEmploymentTypesEvent->setEmploymentTypes($employmentTypes);
-        $this->eventDispatcher->dispatch($customEmploymentTypesEvent, $customEmploymentTypesEvent::NAME);
-        $employmentTypes = $customEmploymentTypesEvent->getEmploymentTypes();
-
-        return $employmentTypes;
     }
 
     public function getCustomEmploymentTypes(): array
@@ -99,8 +92,15 @@ class EmploymentType
      */
     public function getEmploymentTypes(): array
     {
+        $employmentTypes = $this->getGoogleForJobsEmploymentTypes();
+
+        $customEmploymentTypesEvent = new EmploymentTypesEvent();
+        $customEmploymentTypesEvent->setEmploymentTypes($employmentTypes);
+        $this->eventDispatcher->dispatch($customEmploymentTypesEvent, $customEmploymentTypesEvent::NAME);
+        $employmentTypes = $customEmploymentTypesEvent->getEmploymentTypes();
+
         return array_merge(
-            $this->getGoogleForJobsEmploymentTypes(),
+            $employmentTypes,
             $this->getCustomEmploymentTypes()
         );
     }
