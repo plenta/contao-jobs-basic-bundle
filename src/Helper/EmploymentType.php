@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Helper;
 
-use Composer\InstalledVersions;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicSettingsEmploymentTypeModel;
 use Plenta\ContaoJobsBasic\Events\EmploymentTypesEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -87,22 +86,18 @@ class EmploymentType
         return $this->customEmploymentTypes;
     }
 
-    /**
-     * @return string[]
-     */
     public function getEmploymentTypes(): array
     {
-        $employmentTypes = $this->getGoogleForJobsEmploymentTypes();
+        $employmentTypes = array_merge(
+            $this->getGoogleForJobsEmploymentTypes(),
+            $this->getCustomEmploymentTypes()
+        );
 
         $customEmploymentTypesEvent = new EmploymentTypesEvent();
         $customEmploymentTypesEvent->setEmploymentTypes($employmentTypes);
         $this->eventDispatcher->dispatch($customEmploymentTypesEvent, $customEmploymentTypesEvent::NAME);
-        $employmentTypes = $customEmploymentTypesEvent->getEmploymentTypes();
 
-        return array_merge(
-            $employmentTypes,
-            $this->getCustomEmploymentTypes()
-        );
+        return $customEmploymentTypesEvent->getEmploymentTypes();
     }
 
     public function getEmploymentTypeName(string $employmentType): ?string
