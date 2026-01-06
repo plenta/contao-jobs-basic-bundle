@@ -120,7 +120,7 @@ class MetaFieldsHelper
     {
         $locationsTemp = [];
 
-        $locations = StringUtil::deserialize($jobOffer->jobLocation);
+        $locations = StringUtil::deserialize($jobOffer->jobLocation, true);
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
@@ -136,7 +136,8 @@ class MetaFieldsHelper
     public function formatAddressCountry(PlentaJobsBasicOfferModel $jobOffer): string
     {
         $countriesTemp = [];
-        $locations = StringUtil::deserialize($jobOffer->jobLocation);
+
+        $locations = StringUtil::deserialize($jobOffer->jobLocation, true);
 
         System::loadLanguageFile('countries');
 
@@ -154,7 +155,9 @@ class MetaFieldsHelper
     public function formatCompany(PlentaJobsBasicOfferModel $jobOffer): string
     {
         $company = [];
-        $locations = StringUtil::deserialize($jobOffer->jobLocation);
+
+        $locations = StringUtil::deserialize($jobOffer->jobLocation, true);
+
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
             if (!\in_array($objLocation->pid, $company, true)) {
@@ -169,7 +172,7 @@ class MetaFieldsHelper
     {
         $locationsTemp = [];
 
-        $locations = StringUtil::deserialize($jobOffer->jobLocation);
+        $locations = StringUtil::deserialize($jobOffer->jobLocation, true);
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
