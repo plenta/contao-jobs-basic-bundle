@@ -14,8 +14,10 @@ namespace Plenta\ContaoJobsBasic\Helper;
 
 use Composer\InstalledVersions;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicSettingsEmploymentTypeModel;
+use Plenta\ContaoJobsBasic\Events\EmploymentTypesEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class EmploymentType
 {
@@ -24,17 +26,21 @@ class EmploymentType
     protected string $customEmploymentTypePrefix = 'CUSTOM_';
     private ?array $customEmploymentTypes = null;
 
+    protected EventDispatcherInterface $eventDispatcher;
+
     public function __construct(
         LocaleAwareInterface $translator,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->translator = $translator;
         $this->requestStack = $requestStack;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function getGoogleForJobsEmploymentTypes(): array
     {
-        return [
+        $employmentTypes = [
             'FULL_TIME',
             'PART_TIME',
             'CONTRACTOR',
@@ -44,6 +50,13 @@ class EmploymentType
             'PER_DIEM',
             'OTHER',
         ];
+
+        $customEmploymentTypesEvent = new EmploymentTypesEvent();
+        $customEmploymentTypesEvent->setEmploymentTypes($employmentTypes);
+        $this->eventDispatcher->dispatch($customEmploymentTypesEvent, $customEmploymentTypesEvent::NAME);
+        $employmentTypes = $customEmploymentTypesEvent->getEmploymentTypes();
+
+        return $employmentTypes;
     }
 
     public function getCustomEmploymentTypes(): array
