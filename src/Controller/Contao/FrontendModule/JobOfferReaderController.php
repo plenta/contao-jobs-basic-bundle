@@ -33,6 +33,7 @@ use Contao\StringUtil;
 use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Plenta\ContaoJobsBasic\Events\JobOfferObjectEvent;
 use Plenta\ContaoJobsBasic\Events\JobOfferReaderBeforeParseTemplateEvent;
 use Plenta\ContaoJobsBasic\Events\JobOfferReaderContentPartEvent;
 use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
@@ -75,6 +76,10 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $alias = Input::get('auto_item');
 
         $jobOffer = PlentaJobsBasicOfferModel::findPublishedByIdOrAlias($alias);
+
+        $objectEvent = new JobOfferObjectEvent($jobOffer);
+        $this->eventDispatcher->dispatch($objectEvent, $objectEvent::NAME);
+        $jobOffer = $objectEvent->getJobOffer();
 
         if (null === $jobOffer) {
             throw new PageNotFoundException('Page not found: '.Environment::get('uri'));
