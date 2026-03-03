@@ -70,11 +70,16 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'children',
             'copy',
             'delete',
-            'toggle',
+            'toggle' => [
+                'href' => 'act=toggle&amp;field=published',
+                'icon' => 'visible.svg',
+                'primary' => true,
+            ],
             'renewDatePosted' => [
                 'attributes' => 'onclick="Backend.getScrollOffset()"',
                 'route' => 'jobsBasic_renewDatePosted',
                 'icon' => 'sync.svg',
+                'primary' => true,
             ],
             'show',
         ],
