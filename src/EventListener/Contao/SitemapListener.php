@@ -53,6 +53,12 @@ class SitemapListener
                         continue;
                     }
 
+                    $readerPage = $job->getReaderPage($objPage->language);
+
+                    if (!in_array($objPage->id, $readerPage->trail)) {
+                        continue;
+                    }
+
                     if ($page = $job->getAbsoluteUrl($objPage->language)) {
                         if (!\in_array($page, $arrPages, true)) {
                             $arrPages[] = $page;
