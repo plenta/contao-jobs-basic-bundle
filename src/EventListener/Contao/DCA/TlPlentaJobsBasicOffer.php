@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\DCA;
 
 use Composer\InstalledVersions;
+use Contao\CoreBundle\DataContainer\DataContainerOperation;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Slug\Slug;
 use Contao\CoreBundle\Util\PackageUtil;
 use Contao\DataContainer;
@@ -27,6 +29,7 @@ use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\NumberHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment as TwigEnvironment;
 
 class TlPlentaJobsBasicOffer
@@ -38,17 +41,19 @@ class TlPlentaJobsBasicOffer
     protected RequestStack $requestStack;
 
     protected TwigEnvironment $twig;
+    private RouterInterface $router;
 
     public function __construct(
-        EmploymentType $employmentTypeHelper,
-        Slug $slugGenerator,
-        RequestStack $requestStack,
-        TwigEnvironment $twig
+        EmploymentType  $employmentTypeHelper,
+        Slug            $slugGenerator,
+        RequestStack    $requestStack,
+        TwigEnvironment $twig, RouterInterface $router
     ) {
         $this->employmentTypeHelper = $employmentTypeHelper;
         $this->slugGenerator = $slugGenerator;
         $this->requestStack = $requestStack;
         $this->twig = $twig;
+        $this->router = $router;
     }
 
     /**
@@ -238,5 +243,11 @@ class TlPlentaJobsBasicOffer
         $strSuffix = '/';
 
         return sprintf(preg_replace('/%(?!s)/', '%%', $strSuffix), $offer->alias ?: $offer->id);
+    }
+
+    #[AsCallback(table: 'tl_plenta_jobs_basic_offer', target: 'list.operations.preview.button')]
+    public function onPreviewButton(DataContainerOperation $operation)
+    {
+        $operation->setUrl($this->router->generate('contao_backend_preview', ['jobsBasicOffer' => $operation->getRecord()['id']]));
     }
 }

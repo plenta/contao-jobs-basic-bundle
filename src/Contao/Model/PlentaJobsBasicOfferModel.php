@@ -109,7 +109,21 @@ class PlentaJobsBasicOfferModel extends Model
 
     public static function findPublishedByIdOrAlias($alias)
     {
-        $jobOffer = self::findOneBy(['(id = ? OR alias = ?)', 'published = ?'], [$alias, $alias, 1]);
+        $options = [];
+        $values = [];
+
+        if (!System::getContainer()->get('contao.security.token_checker')->isPreviewMode()) {
+            $options[] = 'published = ?';
+            $values[] = 1;
+            $options[] = '(start < ? OR start = ?)';
+            $values[] = time();
+            $values[] = '';
+            $options[] = '(stop > ? OR stop = ?)';
+            $values[] = time();
+            $values[] = '';
+        }
+
+        $jobOffer = self::findOneBy(array_merge($options, ['(id = ? OR alias = ?)']), array_merge($values, [$alias, $alias]));
         $requestStack = System::getContainer()->get('request_stack');
 
         $language = $requestStack->getCurrentRequest()->getLocale();
@@ -119,7 +133,7 @@ class PlentaJobsBasicOfferModel extends Model
         }
 
         if (!$jobOffer) {
-            $offers = self::findBy(['translations LIKE ?', 'published = ?'], ['%"'.$alias.'"%', 1]);
+            $offers = self::findBy(array_merge($options, ['translations LIKE ?']), array_merge($values, ['%"'.$alias.'"%']));
             if ($offers) {
                 foreach ($offers as $offer) {
                     $translations = StringUtil::deserialize($offer->translations);

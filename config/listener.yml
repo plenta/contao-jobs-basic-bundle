@@ -1,11 +1,8 @@
 services:
     Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer:
         public: true
-        arguments:
-            - '@Plenta\ContaoJobsBasic\Helper\EmploymentType'
-            - '@contao.slug'
-            - '@request_stack'
-            - '@twig'
+        autoconfigure: true
+        autowire: true
 
     Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicJobLocation:
         public: true
