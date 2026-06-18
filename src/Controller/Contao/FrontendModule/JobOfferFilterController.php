@@ -255,7 +255,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         $form = $event->getForm();
         $form->handleRequest($request);
 
-        $template->form = $form;
+        $template->form = $form->createView();
         $template->ajaxRoute = $event->getRoute();
         $template->locale = $request->getLocale();
 
