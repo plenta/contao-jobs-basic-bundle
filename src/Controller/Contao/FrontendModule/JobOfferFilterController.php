@@ -204,7 +204,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
         foreach ($options as $key => $option) {
             $options[$key]['name'] = $option['name'].$this->addLocationCounter($model, $option['name']);
-            $options[$key]['count'] = $this->counterLocation[$key];
+            $options[$key]['count'] = $this->counterLocation[$key] ?? 0;
         }
 
         return $this->sortingHelper->sort($options, $model);
