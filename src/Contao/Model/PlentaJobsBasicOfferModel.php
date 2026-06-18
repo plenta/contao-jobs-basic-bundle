@@ -171,7 +171,7 @@ class PlentaJobsBasicOfferModel extends Model
                     }
                     if ($isCorrectModule) {
                         $page = PageModel::findPublishedById($module->jumpTo)?->loadDetails();
-                        if ($page->rootLanguage === $language) {
+                        if ($page?->rootLanguage === $language) {
                             $this->readerPage[$language] = $page;
                             break;
                         }
