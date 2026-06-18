@@ -55,7 +55,7 @@ class SitemapListener
 
                     $readerPage = $job->getReaderPage($objPage->language);
 
-                    if (!in_array($objPage->id, $readerPage->trail)) {
+                    if (!$readerPage || !in_array($objPage->id, $readerPage->trail)) {
                         continue;
                     }
 
