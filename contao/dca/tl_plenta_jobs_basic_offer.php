@@ -72,7 +72,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'delete',
             'preview' => [
                 'href' => '',
-                'icon' => 'preview',
+                'icon' => 'exit',
                 'primary' => true,
                 'attributes' => 'target="_blank"',
             ],
