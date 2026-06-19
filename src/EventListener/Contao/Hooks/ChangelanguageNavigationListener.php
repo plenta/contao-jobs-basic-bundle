@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao\Hooks;
 
-use Contao\Config;
 use Contao\Input;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -20,15 +19,18 @@ use Terminal42\ChangeLanguage\Event\ChangelanguageNavigationEvent;
 
 class ChangelanguageNavigationListener
 {
-    protected RequestStack $requestStack;
-
-    public function __construct(RequestStack $requestStack)
+    public function __construct(protected RequestStack $requestStack)
     {
-        $this->requestStack = $requestStack;
     }
 
+    /**
+     * @phpstan-ignore class.notFound
+     */
     public function onChangelanguageNavigation(ChangelanguageNavigationEvent $event): void
     {
+        /**
+         * @phpstan-ignore class.notFound
+         */
         $targetRoot = $event->getNavigationItem()->getRootPage();
         $language = $targetRoot->language;
 
@@ -49,6 +51,9 @@ class ChangelanguageNavigationListener
                     }
                 }
 
+                /*
+                 * @phpstan-ignore class.notFound
+                 */
                 $event->getUrlParameterBag()->setUrlAttribute('auto_item', $newAlias);
             }
         }

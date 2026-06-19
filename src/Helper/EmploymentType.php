@@ -14,29 +14,29 @@ namespace Plenta\ContaoJobsBasic\Helper;
 
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicSettingsEmploymentTypeModel;
 use Plenta\ContaoJobsBasic\Events\EmploymentTypesEvent;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmploymentType
 {
-    protected LocaleAwareInterface $translator;
-    protected RequestStack $requestStack;
     protected string $customEmploymentTypePrefix = 'CUSTOM_';
-    private ?array $customEmploymentTypes = null;
 
-    protected EventDispatcherInterface $eventDispatcher;
+    /**
+     * @var array<int, PlentaJobsBasicSettingsEmploymentTypeModel>|null
+     */
+    private array|null $customEmploymentTypes = null;
 
     public function __construct(
-        LocaleAwareInterface $translator,
-        RequestStack $requestStack,
-        EventDispatcherInterface $eventDispatcher
+        protected TranslatorInterface $translator,
+        protected RequestStack $requestStack,
+        protected EventDispatcherInterface $eventDispatcher,
     ) {
-        $this->translator = $translator;
-        $this->requestStack = $requestStack;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getGoogleForJobsEmploymentTypes(): array
     {
         return [
@@ -51,6 +51,9 @@ class EmploymentType
         ];
     }
 
+    /**
+     * @return array<string>
+     */
     public function getCustomEmploymentTypes(): array
     {
         $customEmploymentTypes = $this->getAndSetCustomEmploymentTypes();
@@ -68,7 +71,7 @@ class EmploymentType
     }
 
     /**
-     * @return PlentaJobsBasicSettingsEmploymentTypeModel[]
+     * @return array<PlentaJobsBasicSettingsEmploymentTypeModel>
      */
     public function getAndSetCustomEmploymentTypes()
     {
@@ -86,11 +89,14 @@ class EmploymentType
         return $this->customEmploymentTypes;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getEmploymentTypes(): array
     {
         $employmentTypes = array_merge(
             $this->getGoogleForJobsEmploymentTypes(),
-            $this->getCustomEmploymentTypes()
+            $this->getCustomEmploymentTypes(),
         );
 
         $customEmploymentTypesEvent = new EmploymentTypesEvent();
@@ -100,9 +106,9 @@ class EmploymentType
         return $customEmploymentTypesEvent->getEmploymentTypes();
     }
 
-    public function getEmploymentTypeName(string $employmentType): ?string
+    public function getEmploymentTypeName(string $employmentType): string|null
     {
-        if (0 === strpos($employmentType, $this->customEmploymentTypePrefix)) {
+        if (str_starts_with($employmentType, $this->customEmploymentTypePrefix)) {
             $translation = $this->getEmploymentTypeNameFromDatabase($employmentType);
         } else {
             $translation = $this->getEmploymentTypeNameFromTranslator($employmentType);
@@ -111,9 +117,9 @@ class EmploymentType
         return $translation;
     }
 
-    public function getEmploymentTypeNameFromDatabase(string $identifier): ?string
+    public function getEmploymentTypeNameFromDatabase(string $identifier): string|null
     {
-        /** @var PlentaJobsBasicSettingsEmploymentTypeModel[] $employmentTypes */
+        /** @var array<PlentaJobsBasicSettingsEmploymentTypeModel> $employmentTypes */
         $employmentTypes = $this->getAndSetCustomEmploymentTypes();
 
         if (empty($employmentTypes)) {
@@ -131,11 +137,13 @@ class EmploymentType
         $language = substr(
             $request->getLocale(),
             0,
-            2
+            2,
         );
 
-        if (!is_null($employmentTypes[$employmentTypeId]->translation) && 
-            false === empty($translatedTitle = json_decode($employmentTypes[$employmentTypeId]->translation, true)[$language]['title'] ?? null)) {
+        if (
+            null !== $employmentTypes[$employmentTypeId]->translation
+            && false === empty($translatedTitle = json_decode($employmentTypes[$employmentTypeId]->translation, true)[$language]['title'] ?? null)
+        ) {
             $translation = $translatedTitle;
         } else {
             $translation = $employmentTypes[$employmentTypeId]->title;
@@ -144,12 +152,12 @@ class EmploymentType
         return $translation;
     }
 
-    public function getEmploymentTypeNameFromTranslator(string $employmentType): ?string
+    public function getEmploymentTypeNameFromTranslator(string $employmentType): string|null
     {
         $translation = $this->translator->trans(
             'MSC.PLENTA_JOBS.'.$employmentType,
             [],
-            'contao_default'
+            'contao_default',
         );
 
         if ($translation === 'MSC.PLENTA_JOBS.'.$employmentType) {
@@ -159,7 +167,10 @@ class EmploymentType
         return $translation;
     }
 
-    public function getEmploymentTypesFormatted(?array $employmentTypes): string
+    /**
+     * @param array<string>|null $employmentTypes
+     */
+    public function getEmploymentTypesFormatted(array|null $employmentTypes): string
     {
         if (null === $employmentTypes) {
             return '';
@@ -179,13 +190,17 @@ class EmploymentType
         return $this->customEmploymentTypePrefix;
     }
 
+    /**
+     * @param  array<string> $employmentTypesUnmapped
+     * @return array<string>
+     */
     public function getMappedEmploymentTypesForGoogleForJobs(array $employmentTypesUnmapped): array
     {
         $employmentTypes = $this->getAndSetCustomEmploymentTypes();
         $return = [];
 
         foreach ($employmentTypesUnmapped as $employmentTypeUnmapped) {
-            if (0 === strpos($employmentTypeUnmapped, $this->customEmploymentTypePrefix)) {
+            if (str_starts_with($employmentTypeUnmapped, $this->customEmploymentTypePrefix)) {
                 $employmentTypeId = str_replace($this->customEmploymentTypePrefix, '', $employmentTypeUnmapped);
 
                 if (false === isset($employmentTypes[$employmentTypeId])) {

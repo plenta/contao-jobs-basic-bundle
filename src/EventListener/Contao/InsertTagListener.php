@@ -12,9 +12,8 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
-use Composer\InstalledVersions;
 use Contao\Config;
-use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\Date;
 use Contao\Input;
 use Contao\UserModel;
@@ -22,29 +21,20 @@ use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-/**
- * @Hook("replaceInsertTags")
- */
+#[AsHook('replaceInsertTags')]
 class InsertTagListener
 {
     public const TAG = 'job';
 
-    protected RequestStack $requestStack;
+    protected string|null $autoItem = null;
 
-    protected MetaFieldsHelper $metaFieldsHelper;
-
-    /**
-     * @var string|null
-     */
-    protected ?string $autoItem = null;
-
-    public function __construct(RequestStack $requestStack, MetaFieldsHelper $metaFieldsHelper)
-    {
-        $this->requestStack = $requestStack;
-        $this->metaFieldsHelper = $metaFieldsHelper;
+    public function __construct(
+        protected RequestStack $requestStack,
+        protected MetaFieldsHelper $metaFieldsHelper,
+    ) {
     }
 
-    public function __invoke(string $tag)
+    public function __invoke(string $tag): bool|string
     {
         $chunks = explode('::', $tag);
 
@@ -67,8 +57,8 @@ class InsertTagListener
             if ('id' === $chunks[1]) {
                 return (string) $jobOfferData->id;
             }
-            
-           if ('teasertext' === $chunks[1]) {
+
+            if ('teasertext' === $chunks[1]) {
                 return $translation['teaser'] ?? (string) $jobOfferData->teaser;
             }
             if ('description' === $chunks[1]) {
@@ -108,11 +98,11 @@ class InsertTagListener
             }
 
             if ('location' === $chunks[1]) {
-                return $this->metaFieldsHelper->formatAddressLocality($jobOfferData) ?? '';
+                return $this->metaFieldsHelper->formatAddressLocality($jobOfferData);
             }
 
             if ('locationTitle' === $chunks[1]) {
-                return $this->metaFieldsHelper->formatAddressLocalityTitle($jobOfferData) ?? '';
+                return $this->metaFieldsHelper->formatAddressLocalityTitle($jobOfferData);
             }
         }
 

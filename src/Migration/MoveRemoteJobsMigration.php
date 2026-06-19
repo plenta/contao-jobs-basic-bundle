@@ -2,29 +2,27 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\Migration;
 
+use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Contao\StringUtil;
 use Contao\System;
 use Doctrine\DBAL\Connection;
 use Plenta\ContaoJobsBasic\GoogleForJobs\GoogleForJobs;
 
-class MoveRemoteJobsMigration extends \Contao\CoreBundle\Migration\AbstractMigration
+class MoveRemoteJobsMigration extends AbstractMigration
 {
-    protected Connection $database;
-
-    public function __construct(Connection $connection)
+    public function __construct(protected Connection $database)
     {
-        $this->database = $connection;
     }
 
     public function getName(): string
@@ -47,7 +45,8 @@ class MoveRemoteJobsMigration extends \Contao\CoreBundle\Migration\AbstractMigra
             return false;
         }
 
-        if (true === (bool) $this->database
+        if (
+            true === (bool) $this->database
                 ->executeQuery("
                     SELECT EXISTS(
                         SELECT id
@@ -73,6 +72,7 @@ class MoveRemoteJobsMigration extends \Contao\CoreBundle\Migration\AbstractMigra
         foreach ($offers as $offer) {
             $locations = StringUtil::deserialize($offer['jobLocation']);
             $newLocation = null;
+
             foreach ($locations as $location) {
                 $locationArr = $this->database->prepare('SELECT * FROM tl_plenta_jobs_basic_job_location WHERE id = ?')->executeQuery([$location])->fetchAssociative();
                 if ('Telecommute' === $locationArr['jobTypeLocation']) {
@@ -88,7 +88,7 @@ class MoveRemoteJobsMigration extends \Contao\CoreBundle\Migration\AbstractMigra
                     $requirements = [];
                 }
 
-                $requirements = array_filter($requirements, fn ($item) => \in_array($item['key'], GoogleForJobs::ALLOWED_TYPES, true));
+                $requirements = array_filter($requirements, static fn ($item) => \in_array($item['key'], GoogleForJobs::ALLOWED_TYPES, true));
 
                 if (empty($requirements)) {
                     $requirements = [
@@ -127,7 +127,7 @@ class MoveRemoteJobsMigration extends \Contao\CoreBundle\Migration\AbstractMigra
                     ],
                     [
                         'id' => $offer['id'],
-                    ]
+                    ],
                 );
             }
         }

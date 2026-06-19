@@ -2,27 +2,25 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\Migration;
 
+use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\TextType;
 
-class RefactorTranslationsMigration extends \Contao\CoreBundle\Migration\AbstractMigration
+class RefactorTranslationsMigration extends AbstractMigration
 {
-    protected Connection $database;
-
-    public function __construct(Connection $connection)
+    public function __construct(protected Connection $database)
     {
-        $this->database = $connection;
     }
 
     public function getName(): string
@@ -54,7 +52,8 @@ class RefactorTranslationsMigration extends \Contao\CoreBundle\Migration\Abstrac
             }
         }
 
-        if (true === (bool) $this->database
+        if (
+            true === (bool) $this->database
                 ->executeQuery('
                     SELECT EXISTS(
                         SELECT id
@@ -77,6 +76,7 @@ class RefactorTranslationsMigration extends \Contao\CoreBundle\Migration\Abstrac
             $translations = $this->database->prepare('SELECT * FROM tl_plenta_jobs_basic_offer_translation WHERE offer_id = ?')->executeQuery([$offer['id']])->fetchAllAssociative();
             if (!empty($translations)) {
                 $translationsArr = [];
+
                 foreach ($translations as $translation) {
                     $translationArr = [
                         'description' => $translation['description'],

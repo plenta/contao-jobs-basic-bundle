@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\Events;
 
+use Contao\Model\Collection;
 use Contao\ModuleModel;
 use Contao\Template;
+use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule\JobOfferListController;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -21,35 +23,25 @@ class JobOfferListBeforeParseTemplateEvent extends Event
 {
     public const NAME = 'plenta_jobs_basic.job_offer_list.before_parse_template';
 
-    private Template $template;
-
-    private $jobOffers;
-
     private JobOfferListController $objModule;
 
-    private ModuleModel $model;
-
-    public function __construct($jobOffers, Template $template, ModuleModel $model, JobOfferListController $objModule)
-    {
-        $this->jobOffers = $jobOffers;
-        $this->template = $template;
-        $this->model = $model;
+    /**
+     * @param Collection<PlentaJobsBasicOfferModel>|null $jobOffers
+     */
+    public function __construct(
+        private Collection|null $jobOffers,
+        private Template $template,
+        private ModuleModel $model,
+        JobOfferListController $objModule,
+    ) {
         $this->objModule = $objModule;
     }
 
-    /**
-     * @return Template
-     */
     public function getTemplate(): Template
     {
         return $this->template;
     }
 
-    /**
-     * @param Template $template
-     *
-     * @return JobOfferListBeforeParseTemplateEvent
-     */
     public function setTemplate(Template $template): self
     {
         $this->template = $template;
@@ -58,38 +50,28 @@ class JobOfferListBeforeParseTemplateEvent extends Event
     }
 
     /**
-     * @return mixed
+     * @return Collection<PlentaJobsBasicOfferModel>|null
      */
-    public function getJobOffers()
+    public function getJobOffers(): Collection|null
     {
         return $this->jobOffers;
     }
 
     /**
-     * @param mixed $jobOffers
-     *
-     * @return JobOfferListBeforeParseTemplateEvent
+     * @param Collection<PlentaJobsBasicOfferModel>|null $jobOffers
      */
-    public function setJobOffers($jobOffers)
+    public function setJobOffers(Collection|null $jobOffers): self
     {
         $this->jobOffers = $jobOffers;
 
         return $this;
     }
 
-    /**
-     * @return JobOfferListController
-     */
     public function getObjModule(): JobOfferListController
     {
         return $this->objModule;
     }
 
-    /**
-     * @param JobOfferListController $objModule
-     *
-     * @return JobOfferListBeforeParseTemplateEvent
-     */
     public function setObjModule(JobOfferListController $objModule): self
     {
         $this->objModule = $objModule;
@@ -97,19 +79,11 @@ class JobOfferListBeforeParseTemplateEvent extends Event
         return $this;
     }
 
-    /**
-     * @return ModuleModel
-     */
     public function getModel(): ModuleModel
     {
         return $this->model;
     }
 
-    /**
-     * @param ModuleModel $model
-     *
-     * @return JobOfferListBeforeParseTemplateEvent
-     */
     public function setModel(ModuleModel $model): self
     {
         $this->model = $model;

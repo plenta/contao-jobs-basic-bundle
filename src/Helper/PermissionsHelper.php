@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -18,7 +18,7 @@ use Contao\UserGroupModel;
 
 class PermissionsHelper
 {
-    public static function canAccessModule($name, $module = 'plenta_jobs_basic_settings'): bool
+    public static function canAccessModule(string $name, string $module = 'plenta_jobs_basic_settings'): bool
     {
         $user = BackendUser::getInstance();
 

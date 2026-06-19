@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -18,7 +18,9 @@ use Doctrine\DBAL\Connection;
 
 class RenameDatabaseColumnsMigration extends AbstractMigration
 {
-    private Connection $database;
+    /**
+     * @var array<string>
+     */
     private array $oldColumnNames = [
         'plentaJobsMethod' => "varchar(12) NOT NULL default 'POST'",
         'plentaJobsShowButton' => "char(1) NOT NULL default ''",
@@ -33,14 +35,13 @@ class RenameDatabaseColumnsMigration extends AbstractMigration
         'plentaJobsShowLocationQuantity' => "char(1) NOT NULL default ''",
     ];
 
-    public function __construct(Connection $database)
+    public function __construct(private readonly Connection $database)
     {
-        $this->database = $database;
     }
 
     public function shouldRun(): bool
     {
-        $schemaManager = $this->database->getSchemaManager();
+        $schemaManager = $this->database->createSchemaManager();
 
         if (!$schemaManager->tablesExist(['tl_module'])) {
             return false;
@@ -63,7 +64,7 @@ class RenameDatabaseColumnsMigration extends AbstractMigration
 
     public function run(): MigrationResult
     {
-        $schemaManager = $this->database->getSchemaManager();
+        $schemaManager = $this->database->createSchemaManager();
         $columns = $schemaManager->listTableColumns('tl_module');
 
         foreach ($columns as $currentColumn) {
@@ -75,7 +76,7 @@ class RenameDatabaseColumnsMigration extends AbstractMigration
                 $this->database
                     ->executeQuery(
                         'ALTER TABLE tl_module
-                        CHANGE '.$currentColumnName.' '.$newColumnName.' '.$this->oldColumnNames[$currentColumnName]
+                        CHANGE '.$currentColumnName.' '.$newColumnName.' '.$this->oldColumnNames[$currentColumnName],
                     )
                 ;
             }
@@ -83,7 +84,7 @@ class RenameDatabaseColumnsMigration extends AbstractMigration
 
         return $this->createResult(
             true,
-            'All Plenta Jobs Basic Columns have been renamed.'
+            'All Plenta Jobs Basic Columns have been renamed.',
         );
     }
 }

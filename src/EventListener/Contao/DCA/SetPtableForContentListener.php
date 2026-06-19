@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2021, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -17,13 +17,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class SetPtableForContentListener
 {
-    private RequestStack $requestStack;
-    private ScopeMatcher $scopeMatcher;
-
-    public function __construct(RequestStack $requestStack, ScopeMatcher $scopeMatcher)
-    {
-        $this->requestStack = $requestStack;
-        $this->scopeMatcher = $scopeMatcher;
+    public function __construct(
+        private readonly RequestStack $requestStack,
+        private readonly ScopeMatcher $scopeMatcher,
+    ) {
     }
 
     public function setPtableForContentListener(string $table): void

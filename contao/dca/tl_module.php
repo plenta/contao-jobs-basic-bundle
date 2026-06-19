@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022-2023, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -25,23 +25,20 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     {config_legend},numberOfItems,perPage,plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicCompanies,plentaJobsBasicLocations,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize,plentaJobsBasicHideOffersWithoutTranslation;
     {redirect_legend},jumpTo;
     {template_legend:hide},plentaJobsBasicElementTpl,customTpl;
-    {expert_legend:hide},cssID'
-;
+    {expert_legend:hide},cssID';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
     '{title_legend},name,type;
     {config_legend},plentaJobsBasicHeadlineTag,imgSize,plentaJobsBasicTemplateParts,plentaJobsBasicShowCompany,plentaJobsBasicShowLogo,plentaJobsBasicHideRemoteRequirements;
     {template_legend:hide},customTpl;
-    {expert_legend:hide},cssID'
-;
+    {expert_legend:hide},cssID';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_filter'] =
     '{title_legend},name,type;
     {config_legend},plentaJobsBasicShowButton,plentaJobsBasicCompanies,plentaJobsBasicShowKeyword,plentaJobsBasicShowTypes,plentaJobsBasicShowLocations,plentaJobsBasicHideOffersWithoutTranslation,plentaJobsBasic_filterSort;
     {template_legend:hide},customTpl;
     {redirect_legend},jumpTo;
-    {expert_legend:hide},cssID'
-;
+    {expert_legend:hide},cssID';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowButton'] = 'plentaJobsBasicSubmit,plentaJobsBasicDynamicButton';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['plentaJobsBasicShowTypes'] = 'plentaJobsBasicTypesHeadline,plentaJobsBasicEmploymentTypes,plentaJobsBasicShowAllTypes,plentaJobsBasicShowQuantity';

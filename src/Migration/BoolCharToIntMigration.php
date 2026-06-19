@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -19,13 +19,13 @@ use Doctrine\DBAL\Types\BooleanType;
 
 class BoolCharToIntMigration extends AbstractMigration
 {
-    private Connection $database;
-
+    /**
+     * @var array<string>
+     */
     private array $columns = ['addImage', 'addSalary'];
 
-    public function __construct(Connection $database)
+    public function __construct(private readonly Connection $database)
     {
-        $this->database = $database;
     }
 
     public function getName(): string
@@ -35,7 +35,7 @@ class BoolCharToIntMigration extends AbstractMigration
 
     public function shouldRun(): bool
     {
-        $schemaManager = $this->database->getSchemaManager();
+        $schemaManager = $this->database->createSchemaManager();
 
         if (!$schemaManager->tablesExist(['tl_plenta_jobs_basic_offer'])) {
             return false;
@@ -64,7 +64,7 @@ class BoolCharToIntMigration extends AbstractMigration
 
     public function run(): MigrationResult
     {
-        $schemaManager = $this->database->getSchemaManager();
+        $schemaManager = $this->database->createSchemaManager();
         $columns = $schemaManager->listTableColumns('tl_plenta_jobs_basic_offer');
 
         foreach ($columns as $currentColumn) {
@@ -73,7 +73,7 @@ class BoolCharToIntMigration extends AbstractMigration
             if (true === \in_array($currentColumnName, $this->columns, true)) {
                 $this->database
                     ->executeQuery(
-                        'UPDATE tl_plenta_jobs_basic_offer SET '.$currentColumnName.' = 0 WHERE '.$currentColumnName." = ''"
+                        'UPDATE tl_plenta_jobs_basic_offer SET '.$currentColumnName.' = 0 WHERE '.$currentColumnName." = ''",
                     )
                 ;
             }
@@ -81,7 +81,7 @@ class BoolCharToIntMigration extends AbstractMigration
 
         return $this->createResult(
             true,
-            'All empty boolean values have been changed to 0.'
+            'All empty boolean values have been changed to 0.',
         );
     }
 }

@@ -2,22 +2,18 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2024, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
-use Contao\ArticleModel;
-use Contao\ContentModel;
 use Contao\CoreBundle\Event\SitemapEvent;
 use Contao\CoreBundle\Framework\ContaoFramework;
-use Contao\Database;
-use Contao\ModuleModel;
 use Contao\PageModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -25,7 +21,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 #[AsEventListener(event: SitemapEvent::class)]
 class SitemapListener
 {
-    public function __construct(private ContaoFramework $framework)
+    public function __construct(private readonly ContaoFramework $framework)
     {
     }
 
@@ -55,7 +51,7 @@ class SitemapListener
 
                     $readerPage = $job->getReaderPage($objPage->language);
 
-                    if (!$readerPage || !in_array($objPage->id, $readerPage->trail)) {
+                    if (!$readerPage || !\in_array($objPage->id, $readerPage->trail, true)) {
                         continue;
                     }
 

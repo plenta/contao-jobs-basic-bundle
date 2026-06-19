@@ -26,37 +26,47 @@ use Plenta\ContaoJobsBasic\Form\Type\JobOfferFilterType;
 use Plenta\ContaoJobsBasic\Helper\EmploymentType;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Plenta\ContaoJobsBasic\Helper\SortingHelper;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[AsFrontendModule(type: 'plenta_jobs_basic_filter', category: 'plentaJobsBasic')]
 class JobOfferFilterController extends AbstractFrontendModuleController
 {
-    protected MetaFieldsHelper $metaFieldsHelper;
-    protected EmploymentType $employmentTypeHelper;
-    protected RouterInterface $router;
+    /**
+     * @var array<string, int>
+     */
     protected array $counterEmploymentType = [];
+
+    /**
+     * @var array<string, int>
+     */
     protected array $counterLocation = [];
+
+    /**
+     * @var array<int, PlentaJobsBasicJobLocationModel>
+     */
     protected array $locations = [];
+
+    /**
+     * @var array<PlentaJobsBasicOfferModel>
+     */
     protected array $offers = [];
-    protected EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
-        MetaFieldsHelper $metaFieldsHelper,
-        EmploymentType $employmentTypeHelper,
-        RouterInterface $router,
-        EventDispatcherInterface $eventDispatcher,
+        protected MetaFieldsHelper $metaFieldsHelper,
+        protected EmploymentType $employmentTypeHelper,
+        protected RouterInterface $router,
+        protected EventDispatcherInterface $eventDispatcher,
         protected SortingHelper $sortingHelper,
     ) {
-        $this->metaFieldsHelper = $metaFieldsHelper;
-        $this->employmentTypeHelper = $employmentTypeHelper;
-        $this->router = $router;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function getTypes(ModuleModel $model): ?array
+    /**
+     * @return array<string, array<string, mixed>>|null
+     */
+    public function getTypes(ModuleModel $model): array|null
     {
         $options = [];
         $employmentTypes = [];
@@ -88,7 +98,8 @@ class JobOfferFilterController extends AbstractFrontendModuleController
 
     public function addItemCounter(ModuleModel $model, string $key): string
     {
-        if (true === (bool) $model->plentaJobsBasicShowQuantity
+        if (
+            true === (bool) $model->plentaJobsBasicShowQuantity
             && \array_key_exists($key, $this->counterEmploymentType)
         ) {
             return '<span class="item-counter">['.$this->counterEmploymentType[$key].']</span>';
@@ -106,7 +117,10 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return '';
     }
 
-    public function getAllOffers($model): array
+    /**
+     * @return array<PlentaJobsBasicOfferModel>
+     */
+    public function getAllOffers(ModuleModel $model): array
     {
         if (empty($this->offers)) {
             $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
@@ -127,11 +141,11 @@ class JobOfferFilterController extends AbstractFrontendModuleController
                 }
             }
 
-            $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($moduleEmploymentTypes, $moduleLocations, 0, 0, null, null, $model->plentaJobsBasicHideOffersWithoutTranslation, $model, false);
+            $jobOffers = PlentaJobsBasicOfferModel::findAllPublishedByTypesAndLocation($moduleEmploymentTypes, $moduleLocations, 0, 0, null, null, (bool) $model->plentaJobsBasicHideOffersWithoutTranslation, $model, false);
 
             if ($jobOffers) {
                 foreach ($jobOffers as $jobOffer) {
-                    $this->collectEmploymenttypes(json_decode($jobOffer->employmentType, true));
+                    $this->collectEmploymenttypes(json_decode((string) $jobOffer->employmentType, true));
                     $this->collectLocations($jobOffer, $model);
                     $this->offers[] = $jobOffer;
                 }
@@ -141,7 +155,10 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return $this->offers;
     }
 
-    public function collectEmploymenttypes(?array $employmentTypes): void
+    /**
+     * @param array<string>|null $employmentTypes
+     */
+    public function collectEmploymenttypes(array|null $employmentTypes): void
     {
         if (\is_array($employmentTypes)) {
             foreach ($employmentTypes as $employmentType) {
@@ -154,7 +171,7 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         }
     }
 
-    public function collectLocations(?PlentaJobsBasicOfferModel $jobOffer, $model): void
+    public function collectLocations(PlentaJobsBasicOfferModel|null $jobOffer, ModuleModel $model): void
     {
         $locations = StringUtil::deserialize($jobOffer->jobLocation);
         $addedLocations = [];
@@ -184,7 +201,10 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         }
     }
 
-    public function getLocations(ModuleModel $model): ?array
+    /**
+     * @return array<string, array<string, mixed>>|null
+     */
+    public function getLocations(ModuleModel $model): array|null
     {
         $this->getAllOffers($model);
 
@@ -210,7 +230,10 @@ class JobOfferFilterController extends AbstractFrontendModuleController
         return $this->sortingHelper->sort($options, $model);
     }
 
-    public function getAllLocations($model): array
+    /**
+     * @return array<PlentaJobsBasicJobLocationModel>
+     */
+    public function getAllLocations(ModuleModel $model): array
     {
         if (empty($this->locations)) {
             $moduleLocations = StringUtil::deserialize($model->plentaJobsBasicLocations);
@@ -240,9 +263,11 @@ class JobOfferFilterController extends AbstractFrontendModuleController
             'fmd' => $model,
         ];
 
-        if (($jumpTo = PageModel::findByPk($model->jumpTo)) && $jumpTo->id !== $this->getPageModel()->id) {
+        if (($jumpTo = PageModel::findById($model->jumpTo)) && $jumpTo->id !== $this->getPageModel()->id) {
             $options['action'] = $jumpTo->getFrontendUrl();
         }
+
+        $options = array_merge($options, $this->getCsrfFormOptions());
 
         $form = $this->createForm(JobOfferFilterType::class, null, $options);
 

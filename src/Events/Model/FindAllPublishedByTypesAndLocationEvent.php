@@ -19,32 +19,35 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
 {
     public const NAME = 'plenta_jobs_basic.model.find_all_published_by_types_and_location';
 
+    /**
+     * @var array<string>
+     */
     private array $columns;
 
+    /**
+     * @var array<mixed>
+     */
     private array $values;
 
+    /**
+     * @var array<mixed>
+     */
     private array $options;
 
     private bool $applyRequestFilters = false;
 
-    private ?ModuleModel $model = null;
-
-    public function __construct()
-    {
-    }
+    private ModuleModel|null $model = null;
 
     /**
-    * @return array
-    */
+     * @return array<string>
+     */
     public function getColumns(): array
     {
         return $this->columns;
     }
 
     /**
-     * @param array $columns
-     *
-     * @return FindAllPublishedByTypesAndLocationEvent
+     * @param array<string> $columns
      */
     public function setColumns(array $columns): self
     {
@@ -54,7 +57,7 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getValues(): array
     {
@@ -62,9 +65,7 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
     }
 
     /**
-     * @param array $values
-     *
-     * @return FindAllPublishedByTypesAndLocationEvent
+     * @param array<mixed> $values
      */
     public function setValues(array $values): self
     {
@@ -74,7 +75,7 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getOptions(): array
     {
@@ -82,9 +83,7 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
     }
 
     /**
-     * @param array $options
-     *
-     * @return FindAllPublishedByTypesAndLocationEvent
+     * @param array<mixed> $options
      */
     public function setOptions(array $options): self
     {
@@ -98,20 +97,22 @@ class FindAllPublishedByTypesAndLocationEvent extends Event
         return $this->applyRequestFilters;
     }
 
-    public function setApplyRequestFilters(bool $applyRequestFilters): FindAllPublishedByTypesAndLocationEvent
+    public function setApplyRequestFilters(bool $applyRequestFilters): self
     {
         $this->applyRequestFilters = $applyRequestFilters;
+
         return $this;
     }
 
-    public function getModel(): ?ModuleModel
+    public function getModel(): ModuleModel|null
     {
         return $this->model;
     }
 
-    public function setModel(?ModuleModel $model): FindAllPublishedByTypesAndLocationEvent
+    public function setModel(ModuleModel|null $model): self
     {
         $this->model = $model;
+
         return $this;
     }
 }

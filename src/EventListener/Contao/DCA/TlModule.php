@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -24,6 +24,9 @@ class TlModule
     {
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function jobLocationOptionsCallback(DataContainer $dc): array
     {
         if ($dc->activeRecord->plentaJobsBasicCompanies) {
@@ -39,6 +42,7 @@ class TlModule
         }
 
         $return = [];
+
         foreach ($jobLocations as $jobLocation) {
             $return[$jobLocation->id] = $jobLocation->getRelated('pid')->name.': ';
             if ('onPremise' === $jobLocation->jobTypeLocation) {
@@ -55,14 +59,18 @@ class TlModule
         return $return;
     }
 
+    /**
+     * @return array<string, string>
+     */
     #[AsCallback(table: 'tl_module', target: 'fields.plentaJobsBasicElementTpl.options')]
-    public function onElementTplOptionsCallback()
+    public function onElementTplOptionsCallback(): array
     {
         return $this->finderFactory
             ->create()
             ->identifier('jobs_basic/plenta_jobs_basic_offer_default')
             ->extension('html.twig')
             ->withVariants()
-            ->asTemplateOptions();
+            ->asTemplateOptions()
+        ;
     }
 }

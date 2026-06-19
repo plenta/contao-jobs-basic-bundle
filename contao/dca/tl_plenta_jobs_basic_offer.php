@@ -2,27 +2,20 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2023, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace contao\dca;
 
-use Contao;
-use Contao\Backend;
 use Contao\BackendUser;
-use Contao\CoreBundle\Exception\AccessDeniedException;
 use Contao\DataContainer;
 use Contao\DC_Table;
-use Contao\Input;
-use Contao\Versions;
-use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\EventListener\Contao\DCA\TlPlentaJobsBasicOffer;
-use Plenta\ContaoJobsBasic\Contao\Backend\OfferPanel;
 use Symfony\Component\Intl\Currencies;
 
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
@@ -62,7 +55,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'all' => [
                 'href' => 'act=select',
                 'class' => 'header_edit_all',
-                'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"'
+                'attributes' => 'onclick="Backend.getScrollOffset()" accesskey="e"',
             ],
         ],
         'operations' => [
@@ -441,21 +434,21 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
             'exclude' => true,
             'inputType' => 'checkbox',
             'eval' => ['submitOnChange' => true, 'tl_class' => 'w50 clr'],
-            'sql' => "char(1) COLLATE ascii_bin NOT NULL default ''"
+            'sql' => "char(1) COLLATE ascii_bin NOT NULL default ''",
         ],
         'alt' => [
             'exclude' => true,
             'search' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
-            'sql' => "varchar(255) NOT NULL default ''"
+            'sql' => "varchar(255) NOT NULL default ''",
         ],
         'imageTitle' => [
             'exclude' => true,
             'search' => true,
             'inputType' => 'text',
-            'eval' => ['maxlength'=>255, 'tl_class'=>'w50'],
-            'sql' => "varchar(255) NOT NULL default ''"
+            'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
+            'sql' => "varchar(255) NOT NULL default ''",
         ],
         'imageUrl' => [
             'exclude' => true,
@@ -466,16 +459,16 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer'] = [
                 'decodeEntities' => true,
                 'maxlength' => 2048,
                 'dcaPicker' => true,
-                'tl_class' => 'w50'
+                'tl_class' => 'w50',
             ],
-            'sql' => "text NULL"
+            'sql' => 'text NULL',
         ],
         'caption' => [
             'exclude' => true,
             'search' => true,
             'inputType' => 'text',
             'eval' => ['maxlength' => 255, 'allowHtml' => true, 'tl_class' => 'w50'],
-            'sql' => "varchar(255) NOT NULL default ''"
+            'sql' => "varchar(255) NOT NULL default ''",
         ],
         'entryDate' => [
             'exclude' => true,

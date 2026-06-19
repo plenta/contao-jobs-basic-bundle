@@ -15,14 +15,13 @@ namespace Plenta\ContaoJobsBasic;
 use Plenta\ContaoJobsBasic\DependencyInjection\PlentaContaoJobsBasicExtension;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Configures the bundle.
  */
 class PlentaContaoJobsBasicBundle extends AbstractBundle
 {
-    public function getContainerExtension(): ?ExtensionInterface
+    public function getContainerExtension(): ExtensionInterface|null
     {
         return new PlentaContaoJobsBasicExtension();
     }

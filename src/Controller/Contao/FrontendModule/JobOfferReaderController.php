@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\FrontendModule;
 
-use Contao\Config;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
@@ -25,7 +24,6 @@ use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Date;
 use Contao\Environment;
 use Contao\FilesModel;
-use Contao\Frontend;
 use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\ModuleModel;
@@ -47,14 +45,13 @@ use Symfony\Component\HttpFoundation\Response;
 #[AsFrontendModule(type: 'plenta_jobs_basic_offer_reader', category: 'plentaJobsBasic')]
 class JobOfferReaderController extends AbstractFrontendModuleController
 {
-
     public function __construct(
         protected MetaFieldsHelper $metaFieldsHelper,
         protected GoogleForJobs $googleForJobs,
         protected RequestStack $requestStack,
         protected EventDispatcherInterface $eventDispatcher,
         protected HtmlDecoder $htmlDecoder,
-        protected ResponseContextAccessor $responseContextAccessor
+        protected ResponseContextAccessor $responseContextAccessor,
     ) {
     }
 
@@ -92,7 +89,8 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $template->jobOfferMeta = $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize);
 
         $responseContext = $this->responseContextAccessor
-            ->getResponseContext();
+            ->getResponseContext()
+        ;
 
         if ($responseContext && $responseContext->has(HtmlHeadBag::class)) {
             $htmlHeadBag = $responseContext->get(HtmlHeadBag::class);
@@ -111,11 +109,12 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $content = '';
 
         if (\in_array('title', $parts, true)) {
-            $template->headline = ['text' => StringUtil::stripInsertTags($metaFields['title']), 'tag_name' => $model->plentaJobsBasicHeadlineTag];
+            $template->set('headline', ['text' => StringUtil::stripInsertTags($metaFields['title']), 'tag_name' => $model->plentaJobsBasicHeadlineTag]);
         }
 
         foreach ($parts as $part) {
             $tempContent = '';
+
             switch ($part) {
                 case 'image':
                     $tempContent = $this->getImage($jobOffer, $model);
@@ -168,7 +167,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $StructuredData = $this->googleForJobs->generatestructuredData($jobOffer);
 
         if ($jobOffer->cssClass) {
-            $template->element_css_classes .= ('' != $template->element_css_classes ? ' ' : '').$jobOffer->cssClass;
+            $template->element_css_classes .= ('' !== $template->element_css_classes ? ' ' : '').$jobOffer->cssClass;
         }
 
         $event = new JobOfferReaderBeforeParseTemplateEvent($jobOffer, $template, $model, $this, $StructuredData);
@@ -176,7 +175,6 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         $this->eventDispatcher->dispatch($event, $event::NAME);
 
         $template = $event->getTemplate();
-        $model = $event->getModel();
         $StructuredData = $event->getStructuredData();
 
         if (null !== $StructuredData) {
@@ -195,7 +193,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         }
     }
 
-    private function getContentElements($request, $parentId): ?string
+    private function getContentElements(Request $request, int $parentId): string|null
     {
         $elements = ContentModel::findPublishedByPidAndTable($parentId, 'tl_plenta_jobs_basic_offer');
 
@@ -216,7 +214,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         return $content;
     }
 
-    private function getImage(PlentaJobsBasicOfferModel $jobOffer, $model): ?string
+    private function getImage(PlentaJobsBasicOfferModel $jobOffer, ModuleModel $model): string
     {
         if ($jobOffer->addImage) {
             return $this->metaFieldsHelper->getMetaFields($jobOffer, $model->imgSize)['image'] ?? '';
@@ -225,7 +223,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         return '';
     }
 
-    private function getDescription(PlentaJobsBasicOfferModel $jobOffer): ?string
+    private function getDescription(PlentaJobsBasicOfferModel $jobOffer): string
     {
         $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_description');
         $template->text = $this->metaFieldsHelper->getMetaFields($jobOffer)['description'];
@@ -234,7 +232,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         return $template->parse();
     }
 
-    private function getEmploymentType(PlentaJobsBasicOfferModel $jobOffer): ?string
+    private function getEmploymentType(PlentaJobsBasicOfferModel $jobOffer): string
     {
         $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_attribute');
         $metaFields = $this->metaFieldsHelper->getMetaFields($jobOffer);
@@ -245,7 +243,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         return $template->parse();
     }
 
-    private function getValidThrough(PlentaJobsBasicOfferModel $jobOffer): ?string
+    private function getValidThrough(PlentaJobsBasicOfferModel $jobOffer): string
     {
         if ($jobOffer->validThrough) {
             $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_attribute');
@@ -259,7 +257,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         return '';
     }
 
-    private function getJobLocation(PlentaJobsBasicOfferModel $jobOffer, $model): ?string
+    private function getJobLocation(PlentaJobsBasicOfferModel $jobOffer, ModuleModel $model): string
     {
         $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_job_location');
 
@@ -271,6 +269,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
 
         if (\is_array($locationsArr)) {
             $locations = PlentaJobsBasicJobLocationModel::findMultipleByIds($locationsArr);
+
             foreach ($locations as $location) {
                 $organization = $location->getRelated('pid');
                 if (!\array_key_exists($organization->id, $organizations)) {
@@ -305,7 +304,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         return $template->parse();
     }
 
-    private function getSalary(PlentaJobsBasicOfferModel $jobOffer)
+    private function getSalary(PlentaJobsBasicOfferModel $jobOffer): string
     {
         if ($jobOffer->addSalary) {
             $numberHelper = new NumberHelper($jobOffer->salaryCurrency, $this->requestStack->getCurrentRequest()->getLocale());
@@ -333,11 +332,11 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         return '';
     }
 
-    private function setMetaTitle(
-        PlentaJobsBasicOfferModel $jobOffer,
-        HtmlHeadBag $htmlHeadBag,
-        ?array $translation
-    ): void {
+    /**
+     * @param array<string, mixed>|null $translation
+     */
+    private function setMetaTitle(PlentaJobsBasicOfferModel $jobOffer, HtmlHeadBag $htmlHeadBag, array|null $translation): void
+    {
         if ($jobOffer->pageTitle || (null !== $translation)) {
             if ($jobOffer->pageTitle) {
                 $htmlHeadBag->setTitle($this->htmlDecoder->inputEncodedToPlainText($jobOffer->pageTitle));
@@ -357,11 +356,11 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         }
     }
 
-    private function setMetaDescription(
-        PlentaJobsBasicOfferModel $jobOffer,
-        HtmlHeadBag $htmlHeadBag,
-        ?array $translation
-    ): void {
+    /**
+     * @param array<string, mixed>|null $translation
+     */
+    private function setMetaDescription(PlentaJobsBasicOfferModel $jobOffer, HtmlHeadBag $htmlHeadBag, array|null $translation): void
+    {
         if ($jobOffer->pageDescription || (null !== $translation)) {
             if ($jobOffer->pageDescription) {
                 $htmlHeadBag->setMetaDescription($this->htmlDecoder->inputEncodedToPlainText($jobOffer->pageDescription));
@@ -378,8 +377,8 @@ class JobOfferReaderController extends AbstractFrontendModuleController
                 if ($translation['pageDescription']) {
                     $htmlHeadBag->setMetaDescription(
                         $this->htmlDecoder->inputEncodedToPlainText(
-                            $translation['pageDescription']
-                        )
+                            $translation['pageDescription'],
+                        ),
                     );
                 }
             }
@@ -394,7 +393,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         }
     }
 
-    private function getTeaser(PlentaJobsBasicOfferModel $jobOffer): ?string
+    private function getTeaser(PlentaJobsBasicOfferModel $jobOffer): string
     {
         $template = new FrontendTemplate('jobs_basic_reader_parts/plenta_jobs_basic_reader_teaser');
         $template->text = $this->metaFieldsHelper->getMetaFields($jobOffer)['teaser'];
@@ -403,7 +402,7 @@ class JobOfferReaderController extends AbstractFrontendModuleController
         return $template->parse();
     }
 
-    private function getDate(PlentaJobsBasicOfferModel $jobOffer, string $part): ?string
+    private function getDate(PlentaJobsBasicOfferModel $jobOffer, string $part): string
     {
         $value = $this->metaFieldsHelper->getMetaFields($jobOffer)[$part.'Formatted'] ?? '';
 

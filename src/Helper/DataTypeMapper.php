@@ -12,21 +12,19 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Helper;
 
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\StringUtil;
 
 class DataTypeMapper
 {
-    private ContaoFramework $framework;
-
-    public function __construct(ContaoFramework $framework)
+    public function __construct(private readonly ContaoFramework $framework)
     {
-        $this->framework = $framework;
     }
 
     public function serializedToJson(string $serializedData): string
     {
-        /** @var StringUtil $stringUtil */
+        /** @var Adapter<StringUtil> $stringUtil */
         $stringUtil = $this->framework->getAdapter(StringUtil::class);
 
         $data = $stringUtil->deserialize($serializedData);
@@ -34,7 +32,7 @@ class DataTypeMapper
         return json_encode($data);
     }
 
-    public function jsonToSerialized(?string $jsonData): ?string
+    public function jsonToSerialized(string|null $jsonData): string|null
     {
         if (null === $jsonData) {
             return serialize([]);

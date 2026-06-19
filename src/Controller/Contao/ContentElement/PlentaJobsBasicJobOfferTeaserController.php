@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022-2025, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -15,30 +15,32 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao\ContentElement;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
-use Contao\CoreBundle\Routing\ScopeMatcher;
-use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
-use Contao\StringUtil;
-use Contao\Template;
 use Contao\FrontendTemplate;
+use Contao\StringUtil;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsContentElement(category: 'plentaJobsBasic')]
 class PlentaJobsBasicJobOfferTeaserController extends AbstractContentElementController
 {
-    protected $metaFields;
+    /**
+     * @var array<string, mixed>|null
+     */
+    protected array|null $metaFields = null;
 
     public function __construct(
         protected MetaFieldsHelper $metaFieldsHelper,
-        protected TranslatorInterface $translator
+        protected TranslatorInterface $translator,
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getMetaFields(ContentModel $model, PlentaJobsBasicOfferModel $jobOffer): array
     {
         if (null !== $this->metaFields) {

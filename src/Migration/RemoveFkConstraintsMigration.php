@@ -2,28 +2,29 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\Migration;
 
+use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
 
-class RemoveFkConstraintsMigration extends \Contao\CoreBundle\Migration\AbstractMigration
+class RemoveFkConstraintsMigration extends AbstractMigration
 {
-    protected $tables = ['tl_plenta_jobs_basic_offer_translation', 'tl_plenta_jobs_basic_job_location'];
+    /**
+     * @var array<string>
+     */
+    protected array $tables = ['tl_plenta_jobs_basic_offer_translation', 'tl_plenta_jobs_basic_job_location'];
 
-    protected Connection $database;
-
-    public function __construct(Connection $connection)
+    public function __construct(protected Connection $database)
     {
-        $this->database = $connection;
     }
 
     public function getName(): string
@@ -33,7 +34,7 @@ class RemoveFkConstraintsMigration extends \Contao\CoreBundle\Migration\Abstract
 
     public function shouldRun(): bool
     {
-        $schemaManager = $this->database->getSchemaManager();
+        $schemaManager = $this->database->createSchemaManager();
 
         foreach ($this->tables as $table) {
             if ($schemaManager->tablesExist([$table])) {
@@ -49,7 +50,7 @@ class RemoveFkConstraintsMigration extends \Contao\CoreBundle\Migration\Abstract
 
     public function run(): MigrationResult
     {
-        $schemaManager = $this->database->getSchemaManager();
+        $schemaManager = $this->database->createSchemaManager();
 
         foreach ($this->tables as $table) {
             if ($schemaManager->tablesExist([$table])) {

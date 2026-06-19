@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2023, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -15,6 +15,7 @@ namespace Plenta\ContaoJobsBasic\Controller\Contao;
 use Contao\CoreBundle\Controller\AbstractBackendController;
 use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,10 +24,10 @@ use Symfony\Component\Routing\Attribute\Route;
 class BackendController extends AbstractBackendController
 {
     #[Route('/renewDatePosted', name: 'jobsBasic_renewDatePosted')]
-    public function renewDatePosted(Request $request, RequestStack $requestStack)
+    public function renewDatePosted(Request $request, RequestStack $requestStack): RedirectResponse
     {
         $id = $request->get('id');
-        $objJobOffer = PlentaJobsBasicOfferModel::findByPk($id);
+        $objJobOffer = PlentaJobsBasicOfferModel::findById($id);
         $objJobOffer->datePosted = time();
         $objJobOffer->save();
 

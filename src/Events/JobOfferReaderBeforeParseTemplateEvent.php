@@ -22,38 +22,23 @@ class JobOfferReaderBeforeParseTemplateEvent extends Event
 {
     public const NAME = 'plenta_jobs_basic.job_offer_reader.before_parse_template';
 
-    private Template $template;
-
-    private PlentaJobsBasicOfferModel $jobOffer;
-
     private JobOfferReaderController $objModule;
 
-    private ModuleModel $model;
-
-    private ?string $structuredData;
-
-    public function __construct(PlentaJobsBasicOfferModel $jobOffer, Template $template, ModuleModel $model, JobOfferReaderController $objModule, ?string $structuredData)
-    {
-        $this->jobOffer = $jobOffer;
-        $this->template = $template;
-        $this->model = $model;
+    public function __construct(
+        private PlentaJobsBasicOfferModel $jobOffer,
+        private Template $template,
+        private ModuleModel $model,
+        JobOfferReaderController $objModule,
+        private string|null $structuredData,
+    ) {
         $this->objModule = $objModule;
-        $this->structuredData = $structuredData;
     }
 
-    /**
-     * @return Template
-     */
     public function getTemplate(): Template
     {
         return $this->template;
     }
 
-    /**
-     * @param Template $template
-     *
-     * @return JobOfferReaderBeforeParseTemplateEvent
-     */
     public function setTemplate(Template $template): self
     {
         $this->template = $template;
@@ -61,19 +46,11 @@ class JobOfferReaderBeforeParseTemplateEvent extends Event
         return $this;
     }
 
-    /**
-     * @return PlentaJobsBasicOfferModel
-     */
     public function getJobOffer(): PlentaJobsBasicOfferModel
     {
         return $this->jobOffer;
     }
 
-    /**
-     * @param PlentaJobsBasicOfferModel $jobOffer
-     *
-     * @return JobOfferReaderBeforeParseTemplateEvent
-     */
     public function setJobOffer(PlentaJobsBasicOfferModel $jobOffer): self
     {
         $this->jobOffer = $jobOffer;
@@ -81,19 +58,11 @@ class JobOfferReaderBeforeParseTemplateEvent extends Event
         return $this;
     }
 
-    /**
-     * @return JobOfferReaderController
-     */
     public function getObjModule(): JobOfferReaderController
     {
         return $this->objModule;
     }
 
-    /**
-     * @param JobOfferReaderController $objModule
-     *
-     * @return JobOfferReaderBeforeParseTemplateEvent
-     */
     public function setObjModule(JobOfferReaderController $objModule): self
     {
         $this->objModule = $objModule;
@@ -101,19 +70,11 @@ class JobOfferReaderBeforeParseTemplateEvent extends Event
         return $this;
     }
 
-    /**
-     * @return ModuleModel
-     */
     public function getModel(): ModuleModel
     {
         return $this->model;
     }
 
-    /**
-     * @param ModuleModel $model
-     *
-     * @return JobOfferReaderBeforeParseTemplateEvent
-     */
     public function setModel(ModuleModel $model): self
     {
         $this->model = $model;
@@ -121,20 +82,12 @@ class JobOfferReaderBeforeParseTemplateEvent extends Event
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStructuredData(): ?string
+    public function getStructuredData(): string|null
     {
         return $this->structuredData;
     }
 
-    /**
-     * @param string|null $structuredData
-     *
-     * @return JobOfferReaderBeforeParseTemplateEvent
-     */
-    public function setStructuredData(?string $structuredData): self
+    public function setStructuredData(string|null $structuredData): self
     {
         $this->structuredData = $structuredData;
 

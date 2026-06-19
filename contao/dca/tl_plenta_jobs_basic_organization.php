@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
+use Contao\Config;
 use Contao\DC_Table;
 
 $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
@@ -52,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
         'operations' => [
             'edit',
             'children',
-            'delete'
+            'delete',
         ],
     ],
 
@@ -116,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_plenta_jobs_basic_organization'] = [
             'eval' => [
                 'fieldType' => 'radio',
                 'filesOnly' => true,
-                'extensions' => Contao\Config::get('validImageTypes'),
+                'extensions' => Config::get('validImageTypes'),
             ],
             'sql' => [
                 'type' => 'binary_string',

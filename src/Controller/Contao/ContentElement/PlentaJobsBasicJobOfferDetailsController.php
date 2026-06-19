@@ -12,16 +12,13 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller\Contao\ContentElement;
 
-use Contao\Config;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Routing\ScopeMatcher;
-use Contao\CoreBundle\ServiceAnnotation\ContentElement;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\Input;
 use Contao\StringUtil;
-use Contao\Template;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Helper\MetaFieldsHelper;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,18 +28,23 @@ use Symfony\Component\HttpFoundation\Response;
 #[AsContentElement(category: 'plentaJobsBasic')]
 class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementController
 {
+    protected PlentaJobsBasicOfferModel|null $jobOffer = null;
 
-    protected ?PlentaJobsBasicOfferModel $jobOffer = null;
-
-    protected ?array $metaFields = null;
+    /**
+     * @var array<string, mixed>|null
+     */
+    protected array|null $metaFields = null;
 
     public function __construct(
         protected MetaFieldsHelper $metaFieldsHelper,
         protected RequestStack $requestStack,
-        protected ScopeMatcher $matcher
+        protected ScopeMatcher $matcher,
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getMetaFields(ContentModel $model): array
     {
         if (null !== $this->metaFields) {
@@ -54,7 +56,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
         return $this->metaFields;
     }
 
-    public function getJobOffer($language = null): ?PlentaJobsBasicOfferModel
+    public function getJobOffer(): PlentaJobsBasicOfferModel|null
     {
         if (null !== $this->jobOffer) {
             return $this->jobOffer;
@@ -83,7 +85,7 @@ class PlentaJobsBasicJobOfferDetailsController extends AbstractContentElementCon
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         if ($this->matcher->isFrontendRequest($this->requestStack->getCurrentRequest())) {
-            if (null === $this->getJobOffer($request->getLocale())) {
+            if (null === $this->getJobOffer()) {
                 return new Response('');
             }
 

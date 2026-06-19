@@ -1,5 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Plenta Jobs Basic Bundle for Contao Open Source CMS
+ *
+ * @copyright     Copyright (c) 2026, Plenta.io
+ * @author        Plenta.io <https://plenta.io>
+ * @link          https://github.com/plenta/
+ */
+
 namespace Plenta\ContaoJobsBasic\EventListener\Contao;
 
 use Contao\CoreBundle\Event\ContaoCoreEvents;
@@ -11,14 +21,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class PreviewConvertListener
 {
-    public function __construct(
-        protected TokenStorageInterface $tokenStorage,
-    )
+    public function __construct(protected TokenStorageInterface $tokenStorage)
     {
     }
 
     #[AsEventListener(ContaoCoreEvents::PREVIEW_URL_CONVERT, priority: 100)]
-    public function onConvert(PreviewUrlConvertEvent $event)
+    public function onConvert(PreviewUrlConvertEvent $event): void
     {
         $request = $event->getRequest();
 

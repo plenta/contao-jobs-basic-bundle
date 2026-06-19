@@ -20,7 +20,6 @@ use Contao\Image\PictureConfiguration;
 use Contao\Image\PictureConfigurationItem;
 use Contao\Image\ResizeConfiguration;
 use Contao\StringUtil;
-use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
@@ -29,29 +28,18 @@ use Plenta\ContaoJobsBasic\Helper\NumberHelper;
 
 class GoogleForJobs
 {
-    public const ALLOWED_TYPES = ['Country'/*, 'State', 'City', 'SchoolDistrict'*/]; // Google Search Console Validator allows only Country atm
-
-    protected PictureFactoryInterface $pictureFactory;
-    protected ContaoContext $contaoFileContext;
-    protected EmploymentType $employmentTypeHelper;
-
-    protected string $projectDir;
+    public const ALLOWED_TYPES = ['Country'/* , 'State', 'City', 'SchoolDistrict' */];
 
     public function __construct(
-        PictureFactoryInterface $pictureFactory,
-        ContaoContext $contaoFileContext,
-        EmploymentType $employmentTypeHelper,
-        string $projectDir
+        protected PictureFactoryInterface $pictureFactory,
+        protected ContaoContext $contaoFileContext,
+        protected EmploymentType $employmentTypeHelper,
+        protected string $projectDir,
     ) {
-        $this->pictureFactory = $pictureFactory;
-        $this->contaoFileContext = $contaoFileContext;
-        $this->employmentTypeHelper = $employmentTypeHelper;
-        $this->projectDir = $projectDir;
-
         // contao.string.html_decoder
     }
 
-    public function generateStructuredData(?PlentaJobsBasicOfferModel $jobOffer): ?string
+    public function generateStructuredData(PlentaJobsBasicOfferModel|null $jobOffer): string|null
     {
         if (false === $this->checkPrerequisites($jobOffer)) {
             return null;
@@ -72,12 +60,10 @@ class GoogleForJobs
 
         $employmentType = $this->employmentTypeHelper->getMappedEmploymentTypesForGoogleForJobs(json_decode($jobOffer->employmentType, true));
 
-        if (null !== $employmentType) {
-            if (1 === \count($employmentType)) {
-                $arrStructuredData['employmentType'] = $employmentType[0];
-            } else {
-                $arrStructuredData['employmentType'] = $employmentType;
-            }
+        if (1 === \count($employmentType)) {
+            $arrStructuredData['employmentType'] = $employmentType[0];
+        } else {
+            $arrStructuredData['employmentType'] = $employmentType;
         }
 
         $arrStructuredData['directApply'] = (bool) $jobOffer->directApply;
@@ -95,6 +81,10 @@ class GoogleForJobs
         return '<script type="application/ld+json">'.$json.'</script>';
     }
 
+    /**
+     * @param  array<string, mixed> $structuredData
+     * @return array<string, mixed>
+     */
     public function generateHiringOrganization(PlentaJobsBasicOfferModel $jobOffer, array $structuredData): array
     {
         $jobLocationIds = $jobOffer->jobLocation;
@@ -102,7 +92,23 @@ class GoogleForJobs
         if (null !== $jobLocationIds) {
             $jobLocations = StringUtil::deserialize($jobLocationIds);
 
-            $jobLocation = PlentaJobsBasicJobLocationModel::findByPk($jobLocations[0]);
+            $jobLocation = null;
+
+            foreach ($jobLocations as $jobLocationId) {
+                $jobLocation = PlentaJobsBasicJobLocationModel::findById($jobLocationId);
+
+                if ($jobLocation) {
+                    break;
+                }
+            }
+
+            if (!$jobLocation) {
+                return $structuredData;
+            }
+
+            /**
+             * @var PlentaJobsBasicOrganizationModel $hiringOrganization
+             */
             $hiringOrganization = $jobLocation->getRelated('pid');
 
             $structuredData['hiringOrganization'] = [];
@@ -113,7 +119,7 @@ class GoogleForJobs
             if ('' !== $hiringOrganization->sameAs) {
                 $sameAs = $hiringOrganization->sameAs;
 
-                if ('http' != substr($sameAs, 0, 4)) {
+                if (!str_starts_with($sameAs, 'http')) {
                     $sameAs = 'https://'.$sameAs;
                 }
 
@@ -126,6 +132,10 @@ class GoogleForJobs
         return $structuredData;
     }
 
+    /**
+     * @param  array<string, mixed> $structuredData
+     * @return array<string, mixed>
+     */
     public function generateLogo(PlentaJobsBasicOrganizationModel $hiringOrganization, array $structuredData): array
     {
         $uuid = $hiringOrganization->logo;
@@ -149,7 +159,7 @@ class GoogleForJobs
                 // Create Contao picture factory object
                 $picture = $this->pictureFactory->create(
                     $this->projectDir.'/'.$image->path,
-                    $pictureConfiguration
+                    $pictureConfiguration,
                 );
 
                 $imgSrc = $picture->getImg($this->projectDir, $staticUrl)['src'];
@@ -161,6 +171,10 @@ class GoogleForJobs
         return $structuredData;
     }
 
+    /**
+     * @param  array<string, mixed> $structuredData
+     * @return array<string, mixed>
+     */
     public function generateJobLocation(PlentaJobsBasicOfferModel $jobOffer, array $structuredData): array
     {
         $jobLocationIds = $jobOffer->jobLocation;
@@ -171,7 +185,7 @@ class GoogleForJobs
             $jobLocations = StringUtil::deserialize($jobLocationIds);
 
             foreach ($jobLocations as $jobLocationId) {
-                $jobLocation = PlentaJobsBasicJobLocationModel::findByPk($jobLocationId);
+                $jobLocation = PlentaJobsBasicJobLocationModel::findById($jobLocationId);
                 if ('onPremise' === $jobLocation->jobTypeLocation) {
                     $jobLocationTemp = [];
                     $jobLocationTemp['@type'] = 'Place';
@@ -223,16 +237,20 @@ class GoogleForJobs
         return $structuredData;
     }
 
-    public function checkPrerequisites(?PlentaJobsBasicOfferModel $jobsOffer): bool
+    public function checkPrerequisites(PlentaJobsBasicOfferModel|null $jobsOffer): bool
     {
         if (null === $jobsOffer) {
+            return false;
+        }
+
+        if (empty(PlentaJobsBasicJobLocationModel::findMultipleByIds(StringUtil::deserialize($jobsOffer->jobLocation)))) {
             return false;
         }
 
         return true;
     }
 
-    public function sanitizeDescription(?string $description): ?string
+    public function sanitizeDescription(string|null $description): string|null
     {
         if (null === $description) {
             return null;
@@ -244,6 +262,10 @@ class GoogleForJobs
         return StringUtil::restoreBasicEntities($description);
     }
 
+    /**
+     * @param  array<string, mixed> $structuredData
+     * @return array<string, mixed>
+     */
     public function generateSalary(PlentaJobsBasicOfferModel $jobOffer, array $structuredData)
     {
         $numberHelper = new NumberHelper($jobOffer->salaryCurrency, 'en');

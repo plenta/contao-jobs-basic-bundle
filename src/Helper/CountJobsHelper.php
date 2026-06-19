@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2025, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -26,14 +26,14 @@ class CountJobsHelper
     {
     }
 
-    public function countJobs(bool $filtered = true)
+    public function countJobs(bool $filtered = true): int
     {
         $request = $this->requestStack->getCurrentRequest();
 
         $model = $request->attributes->get('moduleModel');
 
         if ($model && !$model instanceof ModuleModel) {
-            $model = ModuleModel::findByPk($model);
+            $model = ModuleModel::findById($model);
         }
 
         if ('plenta_jobs_basic_offer_list' !== $model?->type && 'plenta_jobs_basic_filter' !== $model?->type) {
@@ -50,7 +50,7 @@ class CountJobsHelper
 
                 foreach ($contents as $content) {
                     if ('module' === $content->type) {
-                        $module = ModuleModel::findByPk($content->module);
+                        $module = ModuleModel::findById($content->module);
 
                         if ('plenta_jobs_basic_offer_list' === $module->type) {
                             $model = $module;
@@ -83,8 +83,8 @@ class CountJobsHelper
             $queryTypes = $requestData['types'] ?? [];
             $queryLocations = $requestData['location'] ?? [];
 
-            $types = array_merge($types, (is_array($queryTypes) || empty($queryTypes) ? $queryTypes : [$queryTypes]));
-            $locations = array_merge($locations, (is_array($queryLocations) || empty($queryLocations) ? $queryLocations : [$queryLocations]));
+            $types = array_merge($types, \is_array($queryTypes) || empty($queryTypes) ? $queryTypes : [$queryTypes]);
+            $locations = array_merge($locations, \is_array($queryLocations) || empty($queryLocations) ? $queryLocations : [$queryLocations]);
 
             return PlentaJobsBasicOfferModel::countAllPublishedByTypesAndLocation($types, $locations, true, $model);
         }

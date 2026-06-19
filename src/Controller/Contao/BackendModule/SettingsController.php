@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -20,7 +20,6 @@ use Contao\System;
 use Plenta\ContaoJobsBasic\Helper\PermissionsHelper;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Twig\Environment as TwigEnvironment;
 
 class SettingsController extends AbstractBackendController
 {
@@ -46,17 +45,14 @@ class SettingsController extends AbstractBackendController
             }
         }
 
-        return $this->render(
-            '@PlentaContaoJobsBasic/be_plenta_jobs_basic_settings.html.twig',
-            [
-                'title' => $GLOBALS['TL_LANG']['MOD']['plenta_jobs_basic_settings'][0],
-                'mods' => $mods,
-                'version' => InstalledVersions::getVersion('plenta/contao-jobs-basic-bundle'),
-            ]
-        );
+        return $this->render('@PlentaContaoJobsBasic/be_plenta_jobs_basic_settings.html.twig', [
+            'title' => $GLOBALS['TL_LANG']['MOD']['plenta_jobs_basic_settings'][0],
+            'mods' => $mods,
+            'version' => InstalledVersions::getVersion('plenta/contao-jobs-basic-bundle'),
+        ]);
     }
 
-    public static function isActive(RequestStack $requestStack)
+    public static function isActive(RequestStack $requestStack): bool
     {
         $do = $requestStack->getCurrentRequest()->get('do');
         if (isset($GLOBALS['BE_MOD']['plenta_jobs_basic'][$do], $GLOBALS['BE_MOD']['plenta_jobs_basic'][$do]['hideInNavigation']) && $GLOBALS['BE_MOD']['plenta_jobs_basic'][$do]['hideInNavigation']) {

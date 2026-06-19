@@ -3,11 +3,11 @@
 declare(strict_types=1);
 
 /*
- * This file is part of Contao.
+ * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * (c) Leo Feyer
- *
- * @license LGPL-3.0-or-later
+ * @copyright     Copyright (c) 2026, Plenta.io
+ * @author        Plenta.io <https://plenta.io>
+ * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\Migration;
@@ -16,16 +16,15 @@ use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
 
-
 class JobLocationCountryUppercaseMigration extends AbstractMigration
 {
-    public function getName(): string
+    public function __construct(private readonly Connection $connection)
     {
-        return "Contao Jobs Basic - migrate countries to uppercase";
     }
 
-    public function __construct(private Connection $connection)
+    public function getName(): string
     {
+        return 'Contao Jobs Basic - migrate countries to uppercase';
     }
 
     public function shouldRun(): bool

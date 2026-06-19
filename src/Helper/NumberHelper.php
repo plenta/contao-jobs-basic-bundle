@@ -16,16 +16,13 @@ use Symfony\Component\Intl\Currencies;
 
 class NumberHelper
 {
-    protected string $currency;
-    protected string $locale;
-
-    public function __construct($currency, $locale)
-    {
-        $this->currency = $currency;
-        $this->locale = $locale;
+    public function __construct(
+        protected string $currency,
+        protected string $locale,
+    ) {
     }
 
-    public function reformatDecimalForDb($value): ?int
+    public function reformatDecimalForDb(string|null $value): int|null
     {
         if (null === $value || '' === $value) {
             return null;
@@ -36,8 +33,8 @@ class NumberHelper
         $threshold = $decimalPlaces + 1;
 
         // No decimal places
-        if (false === strpos($value, '.')) {
-            return (int) ($value * $exp);
+        if (!str_contains($value, '.')) {
+            return (int) ((int) $value * $exp);
         }
 
         $pos = \strlen($value) - strpos($value, '.');
@@ -47,7 +44,7 @@ class NumberHelper
 
         // One decimal place
         if ($pos < $threshold) {
-            return (int) ($value * (10 ** ($threshold - $pos)));
+            return (int) ((int) $value * (10 ** ($threshold - $pos)));
         }
 
         if ($pos > $threshold) {
@@ -57,7 +54,7 @@ class NumberHelper
         return (int) $value;
     }
 
-    public function formatNumberFromDbForDCAField(?string $number): ?string
+    public function formatNumberFromDbForDCAField(string|null $number): string|null
     {
         if (null === $number) {
             return null;
@@ -69,10 +66,10 @@ class NumberHelper
         $thousandSeparator = '';
         $decimalSeparator = '.';
 
-        return number_format($number / $exp, $decimalPlaces, $decimalSeparator, $thousandSeparator);
+        return number_format((int) $number / $exp, $decimalPlaces, $decimalSeparator, $thousandSeparator);
     }
 
-    public function formatNumberFromDb(?int $number): ?string
+    public function formatNumberFromDb(int|null $number): string|null
     {
         if (null === $number) {
             return null;
@@ -88,7 +85,7 @@ class NumberHelper
         return number_format($number / $exp, $decimalPlaces, $decimalSeparator, $thousandSeparator);
     }
 
-    public function formatCurrency(?int $number): ?string
+    public function formatCurrency(int|null $number): string|null
     {
         if (null === $number) {
             return null;
@@ -97,6 +94,7 @@ class NumberHelper
         $numberFormatter = \NumberFormatter::create($this->locale, \NumberFormatter::CURRENCY);
         $decimalPlaces = Currencies::getFractionDigits($this->currency);
         $exp = 10 ** $decimalPlaces;
+
         return $numberFormatter->formatCurrency($number / $exp, $this->currency);
     }
 }

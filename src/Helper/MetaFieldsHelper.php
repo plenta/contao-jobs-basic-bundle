@@ -2,18 +2,16 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2023, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 namespace Plenta\ContaoJobsBasic\Helper;
 
-use Contao\CoreBundle\File\Metadata;
-use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\CoreBundle\InsertTag\InsertTagParser;
 use Contao\Date;
 use Contao\FilesModel;
@@ -38,7 +36,11 @@ class MetaFieldsHelper
     ) {
     }
 
-    public function getMetaFields(PlentaJobsBasicOfferModel $jobOffer, $imageSize = null): array
+    /**
+     * @param  array<mixed>|string|int|null $imageSize
+     * @return array<string, mixed>
+     */
+    public function getMetaFields(PlentaJobsBasicOfferModel $jobOffer, array|int|string|null $imageSize = null): array
     {
         $metaFields = [];
 
@@ -92,10 +94,10 @@ class MetaFieldsHelper
 
                 if (!empty($meta)) {
                     $data['overwriteMeta'] = true;
-                    $data['alt'] = $meta['alt'] ?? '';
-                    $data['imageTitle'] = $meta['imageTitle'] ?? '';
-                    $data['imageUrl'] = $meta['imageUrl'] ?? '';
-                    $data['caption'] = $meta['caption'] ?? '';
+                    $data['alt'] = $meta['alt'];
+                    $data['imageTitle'] = $meta['imageTitle'];
+                    $data['imageUrl'] = $meta['imageUrl'];
+                    $data['caption'] = $meta['caption'];
                 }
 
                 $tpl->data = $data;
@@ -123,7 +125,7 @@ class MetaFieldsHelper
         $locations = StringUtil::deserialize($jobOffer->jobLocation, true);
 
         foreach ($locations as $location) {
-            $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            $objLocation = PlentaJobsBasicJobLocationModel::findById($location);
             $name = 'onPremise' === $objLocation->jobTypeLocation ? $objLocation->addressLocality : ('Country' === $objLocation->requirementType ? $objLocation->requirementValue : null);
             if (!\in_array($name, $locationsTemp, true)) {
                 $locationsTemp[] = $name;
@@ -142,7 +144,7 @@ class MetaFieldsHelper
         System::loadLanguageFile('countries');
 
         foreach ($locations as $location) {
-            $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            $objLocation = PlentaJobsBasicJobLocationModel::findById($location);
             $name = 'onPremise' === $objLocation->jobTypeLocation ? Countries::getName($objLocation->addressCountry) : ('Country' === $objLocation->requirementType ? $objLocation->requirementValue : null);
             if ($name && !\in_array($name, $countriesTemp, true)) {
                 $countriesTemp[] = $name;
@@ -159,9 +161,9 @@ class MetaFieldsHelper
         $locations = StringUtil::deserialize($jobOffer->jobLocation, true);
 
         foreach ($locations as $location) {
-            $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            $objLocation = PlentaJobsBasicJobLocationModel::findById($location);
             if (!\in_array($objLocation->pid, $company, true)) {
-                $company[$objLocation->pid] = PlentaJobsBasicOrganizationModel::findByPk($objLocation->pid)->name;
+                $company[$objLocation->pid] = PlentaJobsBasicOrganizationModel::findById($objLocation->pid)->name;
             }
         }
 
@@ -175,7 +177,7 @@ class MetaFieldsHelper
         $locations = StringUtil::deserialize($jobOffer->jobLocation, true);
 
         foreach ($locations as $location) {
-            $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            $objLocation = PlentaJobsBasicJobLocationModel::findById($location);
             $name = 'onPremise' === $objLocation->jobTypeLocation ? $objLocation->title : '';
             if (!\in_array($name, $locationsTemp, true)) {
                 $locationsTemp[] = $name;

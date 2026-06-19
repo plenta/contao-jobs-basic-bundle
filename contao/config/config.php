@@ -2,21 +2,23 @@
 
 declare(strict_types=1);
 
-/**
+/*
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022, Plenta.io
+ * @copyright     Copyright (c) 2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
 
 use Composer\InstalledVersions;
 use Contao\ArrayUtil;
+use Contao\System;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicJobLocationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOfferModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicOrganizationModel;
 use Plenta\ContaoJobsBasic\Contao\Model\PlentaJobsBasicSettingsEmploymentTypeModel;
 use Plenta\ContaoJobsBasic\EventListener\Contao\Hooks\ChangelanguageNavigationListener;
+use Symfony\Component\HttpFoundation\Request;
 
 ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, [
     'plenta_jobs_basic' => [
@@ -34,7 +36,7 @@ ArrayUtil::arrayInsert($GLOBALS['BE_MOD'], 1, [
     ],
 ]);
 
-if (defined('TL_MODE') && TL_MODE == 'BE') {
+if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))) {
     $GLOBALS['TL_CSS'][] = 'bundles/plentacontaojobsbasic/backend.css|static';
 }
 

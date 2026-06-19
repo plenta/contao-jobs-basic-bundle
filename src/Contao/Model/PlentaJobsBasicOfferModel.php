@@ -12,10 +12,9 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Contao\Model;
 
-use Composer\InstalledVersions;
-use Contao\Config;
 use Contao\Controller;
 use Contao\Model;
+use Contao\Model\Collection;
 use Contao\ModuleModel;
 use Contao\PageModel;
 use Contao\StringUtil;
@@ -32,9 +31,17 @@ class PlentaJobsBasicOfferModel extends Model
      */
     protected static $strTable = 'tl_plenta_jobs_basic_offer';
 
-    protected $readerPage = [];
+    /**
+     * @var array<string, PageModel>
+     */
+    protected array $readerPage = [];
 
-    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, int $limit = 0, int $offset = 0, string $sortBy = null, string $order = null, $onlyTranslated = false, $model = null, $applyFilterRequests = true)
+    /**
+     * @param  array<int|string>     $types
+     * @param  array<int|string>     $locations
+     * @return Collection<self>|null
+     */
+    public static function findAllPublishedByTypesAndLocation(array $types, array $locations, int $limit = 0, int $offset = 0, string|null $sortBy = null, string|null $order = null, bool $onlyTranslated = false, ModuleModel|null $model = null, bool $applyFilterRequests = true): Collection|null
     {
         $columns = [];
         $values = [];
@@ -48,7 +55,11 @@ class PlentaJobsBasicOfferModel extends Model
         return self::findBy($columns, $values, $arrOptions);
     }
 
-    public static function countAllPublishedByTypesAndLocation(array $types, array $locations, $onlyTranslated = false, $model = null, $applyFilterRequests = true)
+    /**
+     * @param array<int|string> $types
+     * @param array<int|string> $locations
+     */
+    public static function countAllPublishedByTypesAndLocation(array $types, array $locations, bool $onlyTranslated = false, ModuleModel|null $model = null, bool $applyFilterRequests = true): int
     {
         $columns = [];
         $values = [];
@@ -59,7 +70,7 @@ class PlentaJobsBasicOfferModel extends Model
         return self::countBy($columns, $values, $arrOptions);
     }
 
-    public static function doesAliasExist($alias, $id = null, $language = null): bool
+    public static function doesAliasExist(string $alias, int|null $id = null, string|null $language = null): bool
     {
         $columns = ['alias = ?'];
         $values = [$alias];
@@ -81,6 +92,7 @@ class PlentaJobsBasicOfferModel extends Model
         if ($offers) {
             foreach ($offers as $offer) {
                 $translations = StringUtil::deserialize($offer->translations);
+
                 foreach ($translations as $translation) {
                     if ($translation['alias'] === $alias && (null === $language || $language === $translation['language']) && $offer->id !== $id) {
                         return true;
@@ -92,7 +104,10 @@ class PlentaJobsBasicOfferModel extends Model
         return false;
     }
 
-    public function getTranslation($locale): ?array
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function getTranslation(string $locale): array|null
     {
         $translations = StringUtil::deserialize($this->translations);
 
@@ -107,7 +122,7 @@ class PlentaJobsBasicOfferModel extends Model
         return null;
     }
 
-    public static function findPublishedByIdOrAlias($alias)
+    public static function findPublishedByIdOrAlias(int|string $alias): self|null
     {
         $options = [];
         $values = [];
@@ -137,6 +152,7 @@ class PlentaJobsBasicOfferModel extends Model
             if ($offers) {
                 foreach ($offers as $offer) {
                     $translations = StringUtil::deserialize($offer->translations);
+
                     foreach ($translations as $translation) {
                         if ($translation['language'] === $language && $translation['alias'] === $alias) {
                             $jobOffer = $offer;
@@ -150,7 +166,7 @@ class PlentaJobsBasicOfferModel extends Model
         return $jobOffer;
     }
 
-    public function getReaderPage($language): ?PageModel
+    public function getReaderPage(string $language): PageModel|null
     {
         if (empty($this->readerPage[$language])) {
             $modules = ModuleModel::findByType('plenta_jobs_basic_offer_list');
@@ -183,7 +199,7 @@ class PlentaJobsBasicOfferModel extends Model
         return $this->readerPage[$language] ?? null;
     }
 
-    public function getAbsoluteUrl($language)
+    public function getAbsoluteUrl(string $language): string|null
     {
         $objPage = $this->getReaderPage($language);
 
@@ -196,18 +212,32 @@ class PlentaJobsBasicOfferModel extends Model
         return StringUtil::ampersand($objPage->getAbsoluteUrl($params));
     }
 
-    public function getFrontendUrl($language)
+    public function getFrontendUrl(string $language): string|null
     {
-        $objPage = $this->getReaderPage($language);
-        if (!$objPage) {
-            return null;
-        }
-        $params = $this->getParams($language);
-
-        return StringUtil::ampersand($objPage->getAbsoluteUrl($params));
+        return $this->getAbsoluteUrl($language);
     }
 
-    protected static function buildSearchQuery(array &$columns, array &$arrOptions, array &$values, array $types, array $locations, string $sortBy = null, string $order = null, $onlyTranslated = false, ?ModuleModel $model = null, $applyFilterRequests = true): void
+    /**
+     * @return Collection<self>|null
+     */
+    public static function findAllPublished(): Collection|null
+    {
+        $t = static::$strTable;
+        $time = time();
+
+        $arrColumns[] = "$t.published='1' AND ($t.start='' OR $t.start<=$time) AND ($t.stop='' OR $t.stop>$time)";
+
+        return static::findBy($arrColumns, null);
+    }
+
+    /**
+     * @param array<string>     $columns
+     * @param array<mixed>      $arrOptions
+     * @param array<mixed>      $values
+     * @param array<string|int> $types
+     * @param array<string|int> $locations
+     */
+    protected static function buildSearchQuery(array &$columns, array &$arrOptions, array &$values, array $types, array $locations, string|null $sortBy = null, string|null $order = null, bool $onlyTranslated = false, ModuleModel|null $model = null, bool $applyFilterRequests = true): void
     {
         $time = time();
 
@@ -221,6 +251,7 @@ class PlentaJobsBasicOfferModel extends Model
 
         if (!empty($types)) {
             $criteria = [];
+
             foreach ($types as $type) {
                 $criteria[] = 'employmentType LIKE ?';
                 $values[] = '%"'.$type.'"%';
@@ -231,6 +262,7 @@ class PlentaJobsBasicOfferModel extends Model
 
         if (!empty($locations)) {
             $criteria = [];
+
             foreach ($locations as $location) {
                 foreach (explode('|', (string) $location) as $l) {
                     $criteria[] = 'jobLocation LIKE ?';
@@ -244,9 +276,9 @@ class PlentaJobsBasicOfferModel extends Model
         $requestStack = System::getContainer()->get('request_stack');
         if ($onlyTranslated) {
             $language = $requestStack->getCurrentRequest()->getLocale();
-            $page = PageModel::findBy(['type = ?', 'language = ?', '(dns = ? OR dns = ?)'], ['root', $language, '', $requestStack->getCurrentRequest()->getHost()]);
+            $page = PageModel::findOneBy(['type = ?', 'language = ?', '(dns = ? OR dns = ?)'], ['root', $language, '', $requestStack->getCurrentRequest()->getHost()]);
             if ($page && !$page->fallback) {
-                $str = 's:8:"language";s:'.\strlen($language).':"'.$language.'"';
+                $str = 's:8:"language";s:'.\strlen((string) $language).':"'.$language.'"';
                 $columns[] = 'translations LIKE ?';
                 $values[] = '%'.$str.'%';
             }
@@ -281,6 +313,7 @@ class PlentaJobsBasicOfferModel extends Model
 
         $sortingFields = [];
         Controller::loadDataContainer('tl_plenta_jobs_basic_offer');
+
         foreach ($GLOBALS['TL_DCA']['tl_plenta_jobs_basic_offer']['fields'] as $name => $field) {
             if (!empty($field['sorting'])) {
                 $sortingFields[] = $name;
@@ -313,7 +346,7 @@ class PlentaJobsBasicOfferModel extends Model
         $arrOptions = $findAllPublishedByTypesAndLocationEvent->getOptions();
     }
 
-    protected function getParams($language)
+    protected function getParams(string $language): string
     {
         $alias = $this->alias;
 
@@ -322,15 +355,5 @@ class PlentaJobsBasicOfferModel extends Model
         }
 
         return '/'.($alias ?: $this->id);
-    }
-
-    public static function findAllPublished()
-    {
-        $t = static::$strTable;
-        $time = time();
-
-        $arrColumns[] = "$t.published='1' AND ($t.start='' OR $t.start<=$time) AND ($t.stop='' OR $t.stop>$time)";
-
-        return static::findBy($arrColumns, null);
     }
 }
