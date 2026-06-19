@@ -110,7 +110,6 @@ class JobOfferFilterType extends AbstractType
             'locations' => [],
             'method' => 'GET',
             'csrf_protection' => false,
-            'allow_extra_fields' => true,
         ]);
     }
 

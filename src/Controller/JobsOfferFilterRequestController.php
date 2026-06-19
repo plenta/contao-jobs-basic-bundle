@@ -12,8 +12,10 @@ declare(strict_types=1);
 
 namespace Plenta\ContaoJobsBasic\Controller;
 
+use Contao\CoreBundle\Controller\AbstractController;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Module;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Contao\PageModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,6 +23,12 @@ class JobsOfferFilterRequestController extends AbstractController
 {
     public function filterOffersAction(Request $request): Response
     {
+        $this->initializeContaoFramework();
+
+        $page = $request->query->get('page');
+        $pageModel = PageModel::findByPk($page);
+        $request->attributes->set('pageModel', $pageModel);
+
         $module = Module::getFrontendModule($request->get('id'));
 
         return new Response($module);
