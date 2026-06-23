@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plenta Jobs Basic Bundle for Contao Open Source CMS
  *
- * @copyright     Copyright (c) 2022-2023, Plenta.io
+ * @copyright     Copyright (c) 2022-2026, Plenta.io
  * @author        Plenta.io <https://plenta.io>
  * @link          https://github.com/plenta/
  */
@@ -25,7 +25,8 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     {config_legend},numberOfItems,perPage,plentaJobsBasicHeadlineTag,plentaJobsBasicSortingDefaultField,plentaJobsBasicSortingDefaultDirection,plentaJobsBasicShowSorting,plentaJobsBasicCompanies,plentaJobsBasicLocations,plentaJobsBasicEmploymentTypes,plentaJobsBasicNoFilter,plentaJobsBasicListParts,imgSize,plentaJobsBasicHideOffersWithoutTranslation;
     {redirect_legend},jumpTo;
     {template_legend:hide},plentaJobsBasicElementTpl,customTpl;
-    {expert_legend:hide},cssID'
+    {expert_legend:hide},cssID;
+    {jobs_basic_legend},plentaJobsBasicEmpty'
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =
@@ -305,4 +306,17 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasic_filterSort'] = [
     'eval' => ['includeBlankOption' => true, 'tl_class' => 'clr w50'],
     'reference' => &$GLOBALS['TL_LANG']['tl_module']['plentaJobsBasic_filterSortRef'],
     'sql' => "varchar(8) COLLATE ascii_bin NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['plentaJobsBasicEmpty'] = [
+    'inputType' => 'textarea',
+    'eval' => [
+        'rte' => 'tinyMCE',
+        'tl_class' => 'clr',
+    ],
+    'sql' => [
+        'type' => 'text',
+        'notnull' => false,
+        'default' => null,
+    ],
 ];

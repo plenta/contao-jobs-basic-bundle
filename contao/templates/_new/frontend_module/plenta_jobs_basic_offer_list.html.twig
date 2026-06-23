@@ -1,4 +1,5 @@
 {% extends '@Contao/frontend_module/_base.html.twig' %}
+{% use '@Contao/component/_rich_text.html.twig' %}
 
 {% block content %}
     {% block sorting %}
@@ -21,7 +22,7 @@
     {% for item in items %}
         {{ item|raw }}
     {% else %}
-        <p class="empty">{{ empty }}</p>
+        {% with {text: empty, attributes: attrs().addClass('empty')} %}{{ block('rich_text_component') }}{% endwith %}
     {% endfor %}
     {% if pagination is defined %}
         {{ pagination|raw }}
