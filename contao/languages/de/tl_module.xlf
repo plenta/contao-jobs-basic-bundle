@@ -242,6 +242,15 @@
             <trans-unit id="tl_module.plentaJobsBasic_filterSortRef.90">
                 <target>Treffer, absteigend</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicEmpty.0">
+                <target>Hinweis-Text, wenn keine Angebote verfügbar sind</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicEmpty.1">
+                <target>Dieser Text wird angezeigt, wenn keine Stellenanzeigen vorhanden sind. Lässt du das Feld leer, wird der Standardtext verwendet.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.jobs_basic_empty_legend">
+                <target>Hinweistext bei keinen Angeboten</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

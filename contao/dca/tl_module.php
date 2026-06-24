@@ -26,7 +26,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_list'] =
     {redirect_legend},jumpTo;
     {template_legend:hide},plentaJobsBasicElementTpl,customTpl;
     {expert_legend:hide},cssID;
-    {jobs_basic_legend},plentaJobsBasicEmpty'
+    {jobs_basic_empty_legend},plentaJobsBasicEmpty'
 ;
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['plenta_jobs_basic_offer_reader'] =

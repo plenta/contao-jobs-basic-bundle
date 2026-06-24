@@ -62,6 +62,15 @@
             <trans-unit id="FMD.plenta_jobs_basic_filter.1">
                 <target>Job offer filter</target>
             </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicEmpty.0">
+                <target>Notice text when no offers are available</target>
+            </trans-unit>
+            <trans-unit id="tl_module.plentaJobsBasicEmpty.1">
+                <target>This text is displayed when no job offers are available. If you leave this field empty, the default text will be used.</target>
+            </trans-unit>
+            <trans-unit id="tl_module.jobs_basic_empty_legend">
+                <target>Notice text for no offers</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
