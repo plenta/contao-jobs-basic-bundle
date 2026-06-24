@@ -124,6 +124,9 @@ class MetaFieldsHelper
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            if (null === $objLocation) {
+                continue;
+            }
             $name = 'onPremise' === $objLocation->jobTypeLocation ? $objLocation->addressLocality : ('Country' === $objLocation->requirementType ? $objLocation->requirementValue : null);
             if (!\in_array($name, $locationsTemp, true)) {
                 $locationsTemp[] = $name;
@@ -143,6 +146,9 @@ class MetaFieldsHelper
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            if (null === $objLocation) {
+                continue;
+            }
             $name = 'onPremise' === $objLocation->jobTypeLocation ? Countries::getName($objLocation->addressCountry) : ('Country' === $objLocation->requirementType ? $objLocation->requirementValue : null);
             if ($name && !\in_array($name, $countriesTemp, true)) {
                 $countriesTemp[] = $name;
@@ -160,6 +166,9 @@ class MetaFieldsHelper
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            if (null === $objLocation) {
+                continue;
+            }
             if (!\in_array($objLocation->pid, $company, true)) {
                 $company[$objLocation->pid] = PlentaJobsBasicOrganizationModel::findByPk($objLocation->pid)->name;
             }
@@ -176,6 +185,9 @@ class MetaFieldsHelper
 
         foreach ($locations as $location) {
             $objLocation = PlentaJobsBasicJobLocationModel::findByPk($location);
+            if (null === $objLocation) {
+                continue;
+            }
             $name = 'onPremise' === $objLocation->jobTypeLocation ? $objLocation->title : '';
             if (!\in_array($name, $locationsTemp, true)) {
                 $locationsTemp[] = $name;

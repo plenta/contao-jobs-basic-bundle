@@ -172,6 +172,9 @@ class GoogleForJobs
 
             foreach ($jobLocations as $jobLocationId) {
                 $jobLocation = PlentaJobsBasicJobLocationModel::findByPk($jobLocationId);
+                if (null === $jobLocation) {
+                    continue;
+                }
                 if ('onPremise' === $jobLocation->jobTypeLocation) {
                     $jobLocationTemp = [];
                     $jobLocationTemp['@type'] = 'Place';
